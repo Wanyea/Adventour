@@ -1,0 +1,40 @@
+
+
+.meet h1 {
+    font-weight: lighter;
+    font-size: 4.0rem;
+}
+
+.meet p {
+    font-size: 2.0rem;
+    text-align: justify;
+}
+
+.photo {
+    max-width: 350px;
+}
+
+.gap {
+    margin-bottom: 1rem;
+}
+
+.spaced {
+    margin-top: 15rem;
+    margin-bottom: 20rem;
+}
+
+.padding {
+    padding: 5rem 15rem 5rem 15rem;
+}
+
+@media (max-width: 1024px) {
+
+    .spaced {
+        margin-top: 7rem;
+        margin-bottom: 10rem;
+    }
+
+    .margins {
+        margin: 5rem 4rem 5rem 4rem;
+    }
+}
