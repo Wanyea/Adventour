@@ -16,7 +16,7 @@
 		2A9EBF7E28B5823B009ED151 /* storyboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF7D28B5823B009ED151 /* storyboardUITests.swift */; };
 		2A9EBF8028B5823B009ED151 /* storyboardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF7F28B5823B009ED151 /* storyboardUITestsLaunchTests.swift */; };
 		2A9EBF8D28B69114009ED151 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF8C28B69114009ED151 /* LoginViewController.swift */; };
-		2AF4A5C628B6DD560080AD82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AF4A5C528B6DD560080AD82 /* Assets.xcassets */; };
+		2AF4A5C828B80B150080AD82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AF4A5C728B80B130080AD82 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,7 @@
 		2A9EBF7D28B5823B009ED151 /* storyboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyboardUITests.swift; sourceTree = "<group>"; };
 		2A9EBF7F28B5823B009ED151 /* storyboardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyboardUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2A9EBF8C28B69114009ED151 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		2AF4A5C528B6DD560080AD82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../Documents/GitHub/Adventour/iOS/Adventour/Assets.xcassets; sourceTree = "<group>"; };
+		2AF4A5C728B80B130080AD82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Adventour/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +106,7 @@
 				2A9EBF6028B58239009ED151 /* ViewController.swift */,
 				2A9EBF8C28B69114009ED151 /* LoginViewController.swift */,
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
-				2AF4A5C528B6DD560080AD82 /* Assets.xcassets */,
+				2AF4A5C728B80B130080AD82 /* Assets.xcassets */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
 				2A9EBF6A28B5823B009ED151 /* Info.plist */,
 			);
@@ -235,7 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A9EBF6928B5823B009ED151 /* LaunchScreen.storyboard in Resources */,
-				2AF4A5C628B6DD560080AD82 /* Assets.xcassets in Resources */,
+				2AF4A5C828B80B150080AD82 /* Assets.xcassets in Resources */,
 				2A9EBF6428B58239009ED151 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
