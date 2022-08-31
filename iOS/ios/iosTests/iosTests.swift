@@ -1,12 +1,12 @@
 //
-//  storyboardTests.swift
-//  storyboardTests
+//  iosTests.swift
+//  iosTests
 //
 //  Created by Cassidy Moore on 8/23/22.
 //
 
 import XCTest
-@testable import storyboard
+@testable import ios
 
 class storyboardTests: XCTestCase {
 
