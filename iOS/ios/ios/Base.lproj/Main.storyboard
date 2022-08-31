@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zk9-Gj-fmq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zk9-Gj-fmq">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,7 +13,7 @@
         <!--Start Page-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Start Page" id="BYZ-38-t0r" customClass="LoginViewController" customModule="storyboard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Start Page" id="BYZ-38-t0r" customClass="LoginViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,7 +110,7 @@
         <!--Login View Controller-->
         <scene sceneID="vR0-Jg-7Bb">
             <objects>
-                <viewController id="Pav-Fz-s1e" customClass="LoginViewController" customModule="storyboard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Pav-Fz-s1e" customClass="LoginViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wQ8-z2-MHK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -475,7 +475,7 @@
         <!--Login View Controller-->
         <scene sceneID="f63-fT-yXT">
             <objects>
-                <viewController id="WXS-qO-0SX" customClass="LoginViewController" customModule="storyboard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="WXS-qO-0SX" customClass="LoginViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="woJ-ji-MDm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -680,7 +680,7 @@
     <resources>
         <image name="Cloud_1" width="1409" height="774"/>
         <image name="Cloud_3" width="1205" height="550"/>
-        <image name="Logo_Adventour_Transparent" width="3976" height="1728"/>
+        <image name="Logo_Adventour_Transparent" width="1988" height="864"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="envelope.fill" catalog="system" width="128" height="93"/>
         <image name="lock.fill" catalog="system" width="128" height="128"/>
