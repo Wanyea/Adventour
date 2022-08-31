@@ -675,12 +675,12 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="yjW-z6-LL1"/>
-        <segue reference="wLZ-wx-zfS"/>
+        <segue reference="vIG-Er-enq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Cloud_1" width="1409" height="774"/>
         <image name="Cloud_3" width="1205" height="550"/>
-        <image name="Logo_Adventour_Transparent" width="1988" height="864"/>
+        <image name="Logo_Adventour_Transparent" width="3976" height="1728"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="envelope.fill" catalog="system" width="128" height="93"/>
         <image name="lock.fill" catalog="system" width="128" height="128"/>
