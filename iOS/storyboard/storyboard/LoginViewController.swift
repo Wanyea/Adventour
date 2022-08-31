@@ -18,8 +18,43 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var usernameError: UILabel!
+    @IBOutlet weak var errorAlert: UILabel!
+    @IBOutlet weak var passwordError: UILabel!
+    var flag: Bool!
+    var flag2: Bool!
     
-
+    
+    @IBAction func Button(sender: AnyObject) {
+        if let text = username.text, text.isEmpty {
+            usernameError.isHidden = false
+            flag = false
+            
+        }
+        else{
+            usernameError.isHidden = true
+            flag = true
+        }
+        if let text = password.text, text.isEmpty {
+            passwordError.isHidden = false
+            flag2 = false
+            
+        }
+        else{
+            passwordError.isHidden = true
+            flag2 = true
+        }
+        
+        if (flag == true) && (flag2 == true) {
+            errorAlert.isHidden = true
+        }
+        
+        else{
+            errorAlert.isHidden = false
+        }
+    }
 
     @IBAction func loginTapped(_ sender: Any) {
         
