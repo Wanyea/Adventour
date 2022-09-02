@@ -8,7 +8,7 @@
 import UIKit
 
 
-class LoginViewController: UIViewController {
+class SignUpViewController: UIViewController {
     
    
     
@@ -19,13 +19,18 @@ class LoginViewController: UIViewController {
     }
     
     @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var birthday: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var usernameError: UILabel!
+    @IBOutlet weak var emailError: UILabel!
+    @IBOutlet weak var birthdayError: UILabel!
     @IBOutlet weak var errorAlert: UILabel!
     @IBOutlet weak var passwordError: UILabel!
     var userFlag: Bool!
     var passwordFlag: Bool!
-    
+    var emailFlag: Bool!
+    var birthdayFlag: Bool!
     
     @IBAction func Button(sender: AnyObject) {
         if let text = username.text, text.isEmpty {
@@ -46,8 +51,25 @@ class LoginViewController: UIViewController {
             passwordError.isHidden = true
             passwordFlag = true
         }
-        
-        if (userFlag == true) && (passwordFlag == true) {
+        if let text = email.text, text.isEmpty {
+            emailError.isHidden = false
+            emailFlag = false
+            
+        }
+        else{
+            emailError.isHidden = true
+            emailFlag = true
+        }
+        if let text = birthday.text, text.isEmpty {
+            birthdayError.isHidden = false
+            birthdayFlag = false
+            
+        }
+        else{
+            birthdayError.isHidden = true
+            birthdayFlag = true
+        }
+        if (userFlag == true) && (passwordFlag == true) && (emailFlag == true) && (birthdayFlag == true){
             errorAlert.isHidden = true
         }
         
