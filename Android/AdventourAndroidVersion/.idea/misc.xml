@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.264" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.264" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.36277173913043476" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.36277173913043476" />
