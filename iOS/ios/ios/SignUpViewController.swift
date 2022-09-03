@@ -15,18 +15,38 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        username.leftViewMode = UITextField.ViewMode.always
+        username.leftView = displayNameIcon
+        email.leftViewMode = UITextField.ViewMode.always
+        email.leftView = emailIcon
+        
+        birthday.leftViewMode = UITextField.ViewMode.always
+        birthday.leftView = birthdayIcon
+        
+        password.leftViewMode = UITextField.ViewMode.always
+        password.leftView = passwordIcon
+        
+        passwordConfirm.leftViewMode = UITextField.ViewMode.always
+        passwordConfirm.leftView = passwordConfirmIcon
         // Do any additional setup after loading the view.
     }
     
+    @IBOutlet weak var displayNameIcon: UIImageView!
+    @IBOutlet weak var emailIcon: UIImageView!
+    @IBOutlet weak var birthdayIcon: UIImageView!
+    @IBOutlet weak var passwordIcon: UIImageView!
+    @IBOutlet weak var passwordConfirmIcon: UIImageView!
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var birthday: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var passwordConfirm: UITextField!
     @IBOutlet weak var usernameError: UILabel!
     @IBOutlet weak var emailError: UILabel!
     @IBOutlet weak var birthdayError: UILabel!
     @IBOutlet weak var errorAlert: UILabel!
     @IBOutlet weak var passwordError: UILabel!
+    @IBOutlet weak var passwordConfirmError: UILabel!
     var userFlag: Bool!
     var passwordFlag: Bool!
     var emailFlag: Bool!
