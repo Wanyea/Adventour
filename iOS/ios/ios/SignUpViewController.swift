@@ -112,10 +112,10 @@ class SignUpViewController: UIViewController {
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
             }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
+    //override func viewWillAppear(_ animated: Bool) {
+    //    super.viewWillAppear(animated)
+    //    navigationController?.setNavigationBarHidden(true, animated: animated)
+    //}
 }
 
 

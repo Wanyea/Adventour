@@ -13,13 +13,23 @@ class LoginViewController: UIViewController {
    
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        username.leftViewMode = UITextField.ViewMode.always
+        username.leftView = displayNameIcon
+        
+        
+        password.leftViewMode = UITextField.ViewMode.always
+        password.leftView = passwordIcon
         // Do any additional setup after loading the view.
     }
     
     @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var displayNameIcon: UIImageView!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var passwordIcon: UIImageView!
     @IBOutlet weak var usernameError: UILabel!
     @IBOutlet weak var errorAlert: UILabel!
     @IBOutlet weak var passwordError: UILabel!
@@ -70,10 +80,10 @@ class LoginViewController: UIViewController {
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
             }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
+    //override func viewWillAppear(_ animated: Bool) {
+        //super.viewWillAppear(animated)
+        //navigationController?.setNavigationBarHidden(true, animated: animated)
+    //}
 }
 
 
