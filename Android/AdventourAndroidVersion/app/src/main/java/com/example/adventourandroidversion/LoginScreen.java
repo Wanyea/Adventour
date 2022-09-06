@@ -32,6 +32,7 @@ public class LoginScreen extends AppCompatActivity {
 
                 //Make a call to Firebase to store this information in the appropriate collection.
                 // If successful, go to Home intent.
+                startActivity(new Intent(v.getContext(), Home.class)); // TESTING ONLY
             }
         });
 
