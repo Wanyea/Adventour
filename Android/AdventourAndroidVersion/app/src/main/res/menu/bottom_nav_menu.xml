@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/account"
+        android:title="@string/account" />
+    <item
+        android:id="@+id/start_adventour"
+        android:title="@string/start_adventour" />
+    <item
+        android:id="@+id/beacons"
+        android:title="@string/beacons"/>
+</menu>
+
+
+<!--Note for bug:
+Add android:icon="icon_id_here" to each item
+For example:
+<item
+    android:id="@+id/account"
+    android:title="@string/account"
+    android:icon="icon_id_here"/>-->
