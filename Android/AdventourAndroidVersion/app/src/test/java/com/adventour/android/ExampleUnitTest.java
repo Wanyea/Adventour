@@ -1,4 +1,4 @@
-package com.example.adventourandroidversion;
+package com.adventour.android;
 
 import org.junit.Test;
 

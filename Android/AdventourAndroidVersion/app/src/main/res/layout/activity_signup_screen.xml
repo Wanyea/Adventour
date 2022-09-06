@@ -39,13 +39,13 @@
         android:textColor="#0E315C"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/nicknameEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/adventour_logo_inline_2" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/usernameEditText"
+        android:id="@+id/nicknameEditText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
@@ -53,7 +53,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="#1D66C0"
-        android:hint="Username"
+        android:hint="Nickname"
         android:textColor="#0E315C"
         android:textColorHint="#1D66C0"
         app:layout_constraintBottom_toTopOf="@+id/emailEditText"
@@ -77,7 +77,7 @@
         app:layout_constraintBottom_toTopOf="@+id/birthdateEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/nicknameEditText" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/birthdateEditText"
@@ -89,6 +89,10 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="#1D66C0"
         android:hint="Birthdate - MM/DD/YYYY"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:textColor="#0E315C"
         android:textColorHint="#1D66C0"
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"

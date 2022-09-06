@@ -1,4 +1,4 @@
-package com.example.adventourandroidversion;
+package com.adventour.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class LoginScreen extends AppCompatActivity {
 
-    EditText usernameEditText, passwordEditText;
+    EditText nicknameEditText, passwordEditText;
     TextView signupTextView;
     Button loginButton;
 
@@ -20,14 +20,14 @@ public class LoginScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
 
-        usernameEditText = (EditText) findViewById(R.id.usernameEditText);
+        nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
         signupTextView = (TextView) findViewById(R.id.signupTextView);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String username = usernameEditText.getText().toString().trim();
+                String nickname = nicknameEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
 
                 //Make a call to Firebase to store this information in the appropriate collection.
