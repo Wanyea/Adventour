@@ -1,4 +1,4 @@
-package com.example.adventourandroidversion;
+package com.adventour.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
