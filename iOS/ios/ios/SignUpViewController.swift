@@ -15,8 +15,8 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        username.leftViewMode = UITextField.ViewMode.always
-        username.leftView = displayNameIcon
+        nickname.leftViewMode = UITextField.ViewMode.always
+        nickname.leftView = nicknameIcon
         email.leftViewMode = UITextField.ViewMode.always
         email.leftView = emailIcon
         
@@ -31,36 +31,37 @@ class SignUpViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBOutlet weak var displayNameIcon: UIImageView!
+    @IBOutlet weak var nicknameIcon: UIImageView!
     @IBOutlet weak var emailIcon: UIImageView!
     @IBOutlet weak var birthdayIcon: UIImageView!
     @IBOutlet weak var passwordIcon: UIImageView!
     @IBOutlet weak var passwordConfirmIcon: UIImageView!
-    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var nickname: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var birthday: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var passwordConfirm: UITextField!
-    @IBOutlet weak var usernameError: UILabel!
+    @IBOutlet weak var nicknameError: UILabel!
     @IBOutlet weak var emailError: UILabel!
     @IBOutlet weak var birthdayError: UILabel!
     @IBOutlet weak var errorAlert: UILabel!
     @IBOutlet weak var passwordError: UILabel!
     @IBOutlet weak var passwordConfirmError: UILabel!
-    var userFlag: Bool!
+    var nicknameFlag: Bool!
     var passwordFlag: Bool!
+    var passwordConfirmFlag: Bool!
     var emailFlag: Bool!
     var birthdayFlag: Bool!
     
     @IBAction func Button(sender: AnyObject) {
-        if let text = username.text, text.isEmpty {
-            usernameError.isHidden = false
-            userFlag = false
+        if let text = nickname.text, text.isEmpty {
+            nicknameError.isHidden = false
+            nicknameFlag = false
             
         }
         else{
-            usernameError.isHidden = true
-            userFlag = true
+            nicknameError.isHidden = true
+            nicknameFlag = true
         }
         if let text = password.text, text.isEmpty {
             passwordError.isHidden = false
@@ -70,6 +71,16 @@ class SignUpViewController: UIViewController {
         else{
             passwordError.isHidden = true
             passwordFlag = true
+        }
+        
+        if let text = passwordConfirm.text, text.isEmpty {
+            passwordConfirmError.isHidden = false
+            passwordConfirmFlag = false
+            
+        }
+        else{
+            passwordConfirmError.isHidden = true
+            passwordConfirmFlag = true
         }
         if let text = email.text, text.isEmpty {
             emailError.isHidden = false
@@ -89,7 +100,7 @@ class SignUpViewController: UIViewController {
             birthdayError.isHidden = true
             birthdayFlag = true
         }
-        if (userFlag == true) && (passwordFlag == true) && (emailFlag == true) && (birthdayFlag == true){
+        if (nicknameFlag == true) && (passwordFlag == true) && (passwordConfirmFlag == true) && (emailFlag == true) && (birthdayFlag == true){
             errorAlert.isHidden = true
         }
         

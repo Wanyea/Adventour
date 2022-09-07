@@ -32,7 +32,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jru-cf-cNR">
-                                <rect key="frame" x="142" y="334" width="91.5" height="43"/>
+                                <rect key="frame" x="142" y="412" width="91.5" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="ada-84-sw6"/>
                                 </constraints>
@@ -46,7 +46,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9id-PN-mTi">
-                                <rect key="frame" x="132" y="396" width="111.5" height="43"/>
+                                <rect key="frame" x="132" y="474" width="111.5" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="zhc-TT-Lyh"/>
                                 </constraints>
@@ -72,12 +72,13 @@
                         <constraints>
                             <constraint firstItem="Jru-cf-cNR" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="008-3S-5Ae"/>
                             <constraint firstItem="9id-PN-mTi" firstAttribute="top" secondItem="Jru-cf-cNR" secondAttribute="bottom" constant="19" id="0GF-8P-97K"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VDZ-k3-agH" secondAttribute="trailing" constant="67.5" id="36q-vz-l1z"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="V53-lj-yNq" secondAttribute="leading" constant="83" id="8dA-iR-Kx5"/>
                             <constraint firstItem="9id-PN-mTi" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="EaP-he-9gk"/>
+                            <constraint firstItem="VDZ-k3-agH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="114" id="Gah-K6-W6P"/>
                             <constraint firstItem="V53-lj-yNq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="21" id="Hlk-TN-Tze"/>
                             <constraint firstItem="VDZ-k3-agH" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Ujv-mm-1uT"/>
-                            <constraint firstItem="Jru-cf-cNR" firstAttribute="top" secondItem="VDZ-k3-agH" secondAttribute="bottom" constant="48" id="VGg-CA-URB"/>
-                            <constraint firstItem="Jru-cf-cNR" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="hnB-qE-EOq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9id-PN-mTi" secondAttribute="bottom" constant="150" id="gX4-u6-FyO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2lS-d9-TjT" secondAttribute="bottom" constant="120" id="kha-6h-UuU"/>
                             <constraint firstItem="2lS-d9-TjT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="82" id="w5w-0S-K32"/>
                         </constraints>
@@ -169,7 +170,7 @@
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="date-time"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTe-I5-Mmm">
+                                    <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nickname" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTe-I5-Mmm">
                                         <rect key="frame" x="50" y="193" width="196" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="193" id="44h-Lf-Wob"/>
@@ -292,7 +293,7 @@
                                     <constraint firstAttribute="width" constant="188" id="vuu-P9-wwY"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cloud_1" translatesAutoresizingMaskIntoConstraints="NO" id="aWw-JG-oYm">
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cloud_1" translatesAutoresizingMaskIntoConstraints="NO" id="aWw-JG-oYm">
                                 <rect key="frame" x="-145" y="462" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="8ad-46-3ig"/>
@@ -320,19 +321,19 @@
                         <outlet property="birthday" destination="tap-YZ-F4g" id="nt3-Dd-NuW"/>
                         <outlet property="birthdayError" destination="25j-6b-jMR" id="XoB-ss-6nK"/>
                         <outlet property="birthdayIcon" destination="ey9-vO-qhw" id="xLp-AQ-xNw"/>
-                        <outlet property="displayNameIcon" destination="nyQ-r5-cyj" id="dZx-hP-ibM"/>
                         <outlet property="email" destination="QGf-TX-0HN" id="1YM-dF-I7u"/>
                         <outlet property="emailError" destination="OdS-X0-6SA" id="8Df-e9-PaE"/>
                         <outlet property="emailIcon" destination="efk-x4-60y" id="cyq-Mp-pkg"/>
                         <outlet property="errorAlert" destination="n9Q-8q-HcF" id="nPA-pF-lHx"/>
+                        <outlet property="nickname" destination="eTe-I5-Mmm" id="PSA-EA-KMd"/>
+                        <outlet property="nicknameError" destination="sEe-E6-14h" id="cnW-ZX-ZdP"/>
+                        <outlet property="nicknameIcon" destination="nyQ-r5-cyj" id="xrr-bW-WWw"/>
                         <outlet property="password" destination="sV3-yR-L6Z" id="oAw-LK-WbN"/>
                         <outlet property="passwordConfirm" destination="cMb-Wh-z6q" id="DEH-y6-1bc"/>
                         <outlet property="passwordConfirmError" destination="8y0-Nf-CtX" id="AYZ-Ki-iAd"/>
                         <outlet property="passwordConfirmIcon" destination="sMo-Dy-Xoz" id="84W-ZB-pmP"/>
                         <outlet property="passwordError" destination="eoE-Tc-aoi" id="79r-m4-HIf"/>
                         <outlet property="passwordIcon" destination="m3w-RX-WAg" id="iBx-3Q-01C"/>
-                        <outlet property="username" destination="eTe-I5-Mmm" id="cGE-dO-Cg2"/>
-                        <outlet property="usernameError" destination="sEe-E6-14h" id="Yo8-Eh-H9L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HDS-A4-r2M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -342,11 +343,11 @@
         <!--Profile-->
         <scene sceneID="jD1-EL-gkG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pue-rG-xIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="ProfilePage" referencedIdentifier="Profile" id="UkY-6r-Irz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="sZc-Tm-wev"/>
                     <navigationItem key="navigationItem" id="y9s-wA-jns"/>
                 </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pue-rG-xIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3733" y="-329"/>
         </scene>
@@ -382,7 +383,13 @@
                         <color key="tintColor" name="adv-navyblue"/>
                         <color key="barTintColor" name="adv-white"/>
                         <color key="selectedImageTintColor" name="adv-white"/>
+                        <tabBarAppearance key="standardAppearance"/>
                     </tabBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="UkY-6r-Irz" kind="relationship" relationship="viewControllers" id="xF6-l5-sJR"/>
                         <segue destination="Leu-gm-d0K" kind="relationship" relationship="viewControllers" id="LHV-JE-Kzf"/>
@@ -404,7 +411,7 @@
                             <view opaque="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="sYQ-XI-Uau">
                                 <rect key="frame" x="40" y="99" width="295" height="513"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6F-yQ-Arh">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6F-yQ-Arh">
                                         <rect key="frame" x="50" y="239.5" width="195" height="34"/>
                                         <color key="textColor" name="adv-royalblue"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
@@ -426,8 +433,8 @@
                                             <action selector="loginTapped:" destination="7gq-vp-ARI" eventType="touchUpInside" id="7vj-kc-em5"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pdb-gC-PKf">
-                                        <rect key="frame" x="38" y="175" width="18" height="17"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="envelope.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pdb-gC-PKf">
+                                        <rect key="frame" x="38" y="175" width="22.5" height="16.5"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="lock.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WEz-aL-YRN">
                                         <rect key="frame" x="36" y="212" width="18.5" height="18.5"/>
@@ -530,13 +537,13 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="3B3-bJ-SPt"/>
                     <connections>
-                        <outlet property="displayNameIcon" destination="Pdb-gC-PKf" id="7Po-h2-qWo"/>
+                        <outlet property="email" destination="T6F-yQ-Arh" id="uBy-bO-MHM"/>
+                        <outlet property="emailError" destination="RU2-A3-Gcs" id="Y3Z-Rs-7G3"/>
+                        <outlet property="emailIcon" destination="Pdb-gC-PKf" id="uj1-Eb-FFW"/>
                         <outlet property="errorAlert" destination="7Uf-xk-gZr" id="6tI-Y3-PIh"/>
                         <outlet property="password" destination="BKR-l4-wz0" id="Sys-wj-QfC"/>
                         <outlet property="passwordError" destination="8LF-fP-8d8" id="Ks4-kb-0fN"/>
                         <outlet property="passwordIcon" destination="WEz-aL-YRN" id="MOr-s0-ZIo"/>
-                        <outlet property="username" destination="T6F-yQ-Arh" id="zQn-Q0-lYQ"/>
-                        <outlet property="usernameError" destination="RU2-A3-Gcs" id="5QS-LW-ICe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PgC-DC-3Sn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

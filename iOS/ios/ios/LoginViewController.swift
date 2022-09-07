@@ -17,8 +17,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        username.leftViewMode = UITextField.ViewMode.always
-        username.leftView = displayNameIcon
+        email.leftViewMode = UITextField.ViewMode.always
+        email.leftView = emailIcon
         
         
         password.leftViewMode = UITextField.ViewMode.always
@@ -26,26 +26,26 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBOutlet weak var username: UITextField!
-    @IBOutlet weak var displayNameIcon: UIImageView!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var emailIcon: UIImageView!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var passwordIcon: UIImageView!
-    @IBOutlet weak var usernameError: UILabel!
+    @IBOutlet weak var emailError: UILabel!
     @IBOutlet weak var errorAlert: UILabel!
     @IBOutlet weak var passwordError: UILabel!
-    var userFlag: Bool!
+    var emailFlag: Bool!
     var passwordFlag: Bool!
     
     
     @IBAction func Button(sender: AnyObject) {
-        if let text = username.text, text.isEmpty {
-            usernameError.isHidden = false
-            userFlag = false
+        if let text = email.text, text.isEmpty {
+            emailError.isHidden = false
+            emailFlag = false
             
         }
         else{
-            usernameError.isHidden = true
-            userFlag = true
+            emailError.isHidden = true
+            emailFlag = true
         }
         if let text = password.text, text.isEmpty {
             passwordError.isHidden = false
@@ -57,7 +57,7 @@ class LoginViewController: UIViewController {
             passwordFlag = true
         }
         
-        if (userFlag == true) && (passwordFlag == true) {
+        if (emailFlag == true) && (passwordFlag == true) {
             errorAlert.isHidden = true
         }
         
@@ -79,6 +79,8 @@ class LoginViewController: UIViewController {
                 // then call the change root view controller function to change to main tab bar
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
             }
+    
+    
     
     //override func viewWillAppear(_ animated: Bool) {
         //super.viewWillAppear(animated)
