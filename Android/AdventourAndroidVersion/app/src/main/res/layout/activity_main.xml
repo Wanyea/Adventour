@@ -4,64 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BAF3FF"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/adventour_text"
-        android:layout_width="200dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="150dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_adventour_text" />
 
     <TextView
         android:id="@+id/loginTextView"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="30dp"
         android:clickable="true"
         android:gravity="center"
         android:text="Log in"
+        android:textColor="@color/navy_main"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#0E315C"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/signupTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupTextView" />
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/signupTextView"
         android:layout_width="113dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="120dp"
         android:clickable="true"
         android:gravity="center"
         android:text="Sign up"
+        android:textColor="@color/navy_main"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#0E315C"
-        app:layout_constraintBottom_toTopOf="@+id/loginTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adventour_text" />
-
-    <ImageView
-        android:id="@+id/logo_balloon"
-        android:layout_width="60dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="70dp"
-        android:rotation="15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/adventour_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo_balloon_orig" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/cloud_1_3"
@@ -82,5 +56,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cloud_3" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_adventour_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
