@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zk9-Gj-fmq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zk9-Gj-fmq">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -127,6 +127,7 @@
                                         <buttonConfiguration key="configuration" style="filled" title="Sign Up" cornerStyle="capsule"/>
                                         <connections>
                                             <action selector="ButtonWithSender:" destination="Pav-Fz-s1e" eventType="touchUpInside" id="9gR-CI-9lk"/>
+                                            <action selector="signUpTapped:" destination="Pav-Fz-s1e" eventType="touchUpInside" id="rPp-6v-Fh3"/>
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚠" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdS-X0-6SA">
@@ -318,6 +319,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="b8J-YA-ugf"/>
                     <connections>
+                        <outlet property="birthdate" destination="1bw-4k-IGI" id="mR1-pa-dQA"/>
                         <outlet property="birthday" destination="tap-YZ-F4g" id="nt3-Dd-NuW"/>
                         <outlet property="birthdayError" destination="25j-6b-jMR" id="XoB-ss-6nK"/>
                         <outlet property="birthdayIcon" destination="ey9-vO-qhw" id="xLp-AQ-xNw"/>
@@ -334,6 +336,7 @@
                         <outlet property="passwordConfirmIcon" destination="sMo-Dy-Xoz" id="84W-ZB-pmP"/>
                         <outlet property="passwordError" destination="eoE-Tc-aoi" id="79r-m4-HIf"/>
                         <outlet property="passwordIcon" destination="m3w-RX-WAg" id="iBx-3Q-01C"/>
+                        <outlet property="signUpButton" destination="yjn-5u-sUb" id="5NM-MN-e5u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HDS-A4-r2M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
