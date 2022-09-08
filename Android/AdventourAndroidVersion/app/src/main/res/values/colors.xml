@@ -7,4 +7,22 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- CUSTOM ADVENTOUR COLORS: -->
+    <color name="red_main">#ff4b47</color>
+    <color name="red_variant">#cf393e</color>
+
+    <color name="cyan_main">#baf3ff</color>
+
+    <color name="blue_main">#1d66c0</color>
+    <color name="blue_variant">#184da9</color>
+
+    <color name="navy_main">#0e315c</color>
+    <color name="nave_variant">#0b2551</color>
+
+    <color name="orange_main">#ffa44f</color>
+    <color name="orange_variant">#cf7c45</color>
+
+    <color name="brown_main">#caa583</color>
+    <color name="brown_variant">#a47d73</color>
 </resources>
