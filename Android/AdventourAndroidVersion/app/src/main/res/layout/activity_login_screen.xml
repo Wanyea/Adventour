@@ -34,7 +34,7 @@
         android:textSize="36sp"
 
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/nicknameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,16 +51,21 @@
         app:layout_constraintBottom_toTopOf="@+id/signupTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nicknameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/nicknameEditText"
+        android:id="@+id/emailEditText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/blue_main"
         android:hint="Nickname"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#1D66C0"
+        android:hint="Email"
+        android:textColor="#0e315c"
+        android:textColorHint="#1D66C0"
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

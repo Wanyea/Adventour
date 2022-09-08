@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView loginTextView;
@@ -17,22 +20,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+            finish();
+        }
+
         signupTextView = (TextView) findViewById(R.id.signupTextView);
         loginTextView = (TextView) findViewById(R.id.loginTextView);
 
 
         loginTextView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LoginScreen.class);
-                startActivity(intent);
+                switchToLogin();
             }
         });
 
         signupTextView.setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
-               Intent intent = new Intent(v.getContext(), SignupScreen.class);
-               startActivity(intent);
+               switchToSignUp();
            }
         });
+    }
+
+    private void switchToLogin() {
+        Intent intent = new Intent(this, LoginScreen.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void switchToSignUp() {
+        Intent intent = new Intent(this, SignupScreen.class);
+        startActivity(intent);
+        finish();
     }
 }
