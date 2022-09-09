@@ -50,7 +50,7 @@ public class SignupScreen extends AppCompatActivity {
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(this, Home.class);
+            Intent intent = new Intent(this, StartAdventour.class);
             startActivity(intent);
             finish();
         }
@@ -178,7 +178,7 @@ public class SignupScreen extends AppCompatActivity {
     }
 
     private void switchToHome() {
-        Intent intent = new Intent(this, Home.class);
+        Intent intent = new Intent(this, StartAdventour.class);
         startActivity(intent);
         finish();
     }

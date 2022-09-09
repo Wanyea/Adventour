@@ -13,7 +13,13 @@
         android:theme="@style/Theme.AdventourAndroidVersion"
         tools:targetApi="31">
         <activity
-            android:name="com.adventour.android.Home"
+            android:name="com.adventour.android.Beacons"
+            android:exported="false" />
+        <activity
+            android:name="com.adventour.android.Account"
+            android:exported="false" />
+        <activity
+            android:name="com.adventour.android.StartAdventour"
             android:exported="false" />
         <activity
             android:name="com.adventour.android.SignupScreen"
@@ -22,7 +28,7 @@
             android:name="com.adventour.android.LoginScreen"
             android:exported="false" />
         <activity
-            android:name="com.adventour.android.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
