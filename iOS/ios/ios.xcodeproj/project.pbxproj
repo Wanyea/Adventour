@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5C28B58239009ED151 /* AppDelegate.swift */; };
 		2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */; };
-		2A9EBF6128B58239009ED151 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6028B58239009ED151 /* ViewController.swift */; };
+		2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6028B58239009ED151 /* LoggedOutViewController.swift */; };
 		2A9EBF6428B58239009ED151 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6228B58239009ED151 /* Main.storyboard */; };
 		2A9EBF6928B5823B009ED151 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */; };
 		2A9EBF7428B5823B009ED151 /* iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF7328B5823B009ED151 /* iosTests.swift */; };
@@ -25,6 +25,7 @@
 		F038D4AB28C960D6006D953A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F038D4AA28C960D6006D953A /* FirebaseFirestoreSwift */; };
 		F038D4AD28C960D6006D953A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = F038D4AC28C960D6006D953A /* FirebaseFunctions */; };
 		F038D4AF28C96FBD006D953A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */; };
+		F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */; };
 		F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D227BD28C02B65003E3100 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +50,7 @@
 		2A9EBF5928B58238009ED151 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A9EBF5C28B58239009ED151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2A9EBF6028B58239009ED151 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2A9EBF6028B58239009ED151 /* LoggedOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
 		2A9EBF6328B58239009ED151 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2A9EBF6828B5823B009ED151 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A9EBF6A28B5823B009ED151 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		2AC1B40B28C9269E00F4D8B9 /* BeaconBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BeaconBoard.storyboard; sourceTree = "<group>"; };
 		2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F0D227BD28C02B65003E3100 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,9 +123,10 @@
 			children = (
 				2A9EBF5C28B58239009ED151 /* AppDelegate.swift */,
 				2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */,
-				2A9EBF6028B58239009ED151 /* ViewController.swift */,
+				2A9EBF6028B58239009ED151 /* LoggedOutViewController.swift */,
 				2A9EBF8C28B69114009ED151 /* LoginViewController.swift */,
 				2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */,
+				F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
 				2AC1B40728C91F3C00F4D8B9 /* ProfilePage.storyboard */,
@@ -299,8 +302,9 @@
 			files = (
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
 				2A9EBF8D28B69114009ED151 /* LoginViewController.swift in Sources */,
-				2A9EBF6128B58239009ED151 /* ViewController.swift in Sources */,
+				2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */,
 				2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */,
+				F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */,
 				2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

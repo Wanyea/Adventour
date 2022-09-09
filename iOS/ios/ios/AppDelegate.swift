@@ -11,7 +11,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 
-@main
+             @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
