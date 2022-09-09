@@ -34,7 +34,7 @@ public class LoginScreen extends AppCompatActivity {
         // Check for user logged in
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(this, Home.class);
+            Intent intent = new Intent(this, StartAdventour.class);
             startActivity(intent);
             finish();
         }
@@ -53,9 +53,9 @@ public class LoginScreen extends AppCompatActivity {
 
                 //Make a call to Firebase to store this information in the appropriate collection.
                 // If successful, go to Home intent.
-//                startActivity(new Intent(v.getContext(), Home.class)); // TESTING ONLY
+                startActivity(new Intent(v.getContext(), StartAdventour.class)); // TESTING ONLY
 
-                logIn(email, password);
+//                logIn(email, password);
             }
         });
 
@@ -74,7 +74,7 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     private void switchToHome() {
-        Intent intent = new Intent(this, Home.class);
+        Intent intent = new Intent(this, StartAdventour.class);
         startActivity(intent);
         finish();
     }
