@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A7F520928CD190400F6D30E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7F520828CD190400F6D30E /* StartViewController.swift */; };
 		2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5C28B58239009ED151 /* AppDelegate.swift */; };
 		2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */; };
 		2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6028B58239009ED151 /* LoggedOutViewController.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A7F520828CD190400F6D30E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		2A9EBF5928B58238009ED151 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A9EBF5C28B58239009ED151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				2A9EBF8C28B69114009ED151 /* LoginViewController.swift */,
 				2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */,
 				F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */,
+				2A7F520828CD190400F6D30E /* StartViewController.swift */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
 				2AC1B40728C91F3C00F4D8B9 /* ProfilePage.storyboard */,
@@ -306,6 +309,7 @@
 				2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */,
 				F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */,
 				2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */,
+				2A7F520928CD190400F6D30E /* StartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
