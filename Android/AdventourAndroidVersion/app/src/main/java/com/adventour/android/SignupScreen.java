@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,8 +39,10 @@ public class SignupScreen extends AppCompatActivity {
     final Calendar birthdateCalendar = Calendar.getInstance();
     String nickname, email, birthdate, password, confirmPassword;
     Button signupButton;
-    TextView loginTextView;
+    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView;
+    ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
     EditText birthdateDatePicker;
+    int day, month, year;
 
     private FirebaseAuth mAuth;
 
@@ -60,6 +66,19 @@ public class SignupScreen extends AppCompatActivity {
         loginTextView = (TextView) findViewById(R.id.loginTextView);
         signupButton = (Button) findViewById(R.id.signupButton);
         birthdateDatePicker = (EditText) findViewById(R.id.birthdateEditText);
+
+        nicknameErrorTextView = (TextView) findViewById(R.id.nicknameSignupErrorTextView);
+        emailErrorTextView = (TextView) findViewById(R.id.emailSignupErrorTextView);
+        birthdateErrorTextView = (TextView) findViewById(R.id.birthdateSignupErrorTextView);
+        passwordErrorTextView = (TextView) findViewById(R.id.passwordSignupErrorTextView);
+        confirmPasswordErrorTextView = (TextView) findViewById(R.id.confirmPasswordSignupErrorTextView);
+
+        nicknameErrorImageView = (ImageView) findViewById(R.id.nicknameSignupErrorIcon);
+        emailErrorImageView = (ImageView) findViewById(R.id.emailSignupErrorIcon);
+        birthdateErrorImageView = (ImageView) findViewById(R.id.birthdateSignupErrorIcon);
+        passwordErrorImageView = (ImageView) findViewById(R.id.passwordLoginErrorIcon);
+        confirmPasswordErrorImageView = (ImageView) findViewById(R.id.confirmPasswordSignupErrorIcon);
+
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -96,30 +115,116 @@ public class SignupScreen extends AppCompatActivity {
                 password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString().trim();
                 confirmPassword = ((EditText) findViewById(R.id.confirmPasswordEditText)).getText().toString().trim();
 
+                // Parse birthdate
+                String myFormat = "MM/dd/yyyy";
+                SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+                String date = dateFormat.format(birthdateCalendar.getTime());
+                day = Integer.parseInt(date.substring(0, 2));
+                month = Integer.parseInt(date.substring(3, 5));
+                year = Integer.parseInt(date.substring(6, 10));
+                
+                //Check if nickname is valid.
+                if (!AdventourUtils.isValidNickname(nickname))
+                {
+                    displayNicknameError();
+                } else {
+                    noNicknameError();
+                }
+
+                // Check if email address is valid.
+                if (!AdventourUtils.isValidEmail(email))
+                {
+                    displayEmailError();
+                } else {
+                    noEmailError();
+                }
+
+                // Check if user is at least 13 years old.
+                if (!AdventourUtils.isUserOver13(day, month, year))
+                {
+                    displayBirthdateError();
+                } else {
+                   noBirthdateError();
+                }
                 // Check passwords match
                 if (!AdventourUtils.checkPasswordsMatch(password, confirmPassword))
                 {
                     displayPasswordError();
-                    return;
+                } else {
+                    noPasswordError();
                 }
                 // Create new document in Firebase with the user information.
-                signUp(nickname, email, password, birthdate);
+                //signUp(nickname, email, password, birthdate);
 
 
                 // If successful, go to Home intent.
+                // Finish SignUpScreen Intent.
 
             }
         });
     }
 
+    private void displayNicknameError() {
+        Log.d("NicknameInvalid", "Nickname must be between 6 and 20 characters.");
+        // Render error message and icon
+        nicknameErrorTextView.setVisibility(View.VISIBLE);
+        nicknameErrorImageView.setVisibility(View.VISIBLE);
+    }
+
+    private void displayEmailError() {
+        Log.d("EmailInvalid", "Invalid email.");
+        //Render error message and icon
+        emailErrorTextView.setVisibility(View.VISIBLE);
+        emailErrorImageView.setVisibility(View.VISIBLE);
+    }
+
+    private void displayBirthdateError() {
+        Log.d("BirthdateInvalid", "User is not 13 years of age.");
+        //Render error message and icon
+        birthdateErrorTextView.setVisibility(View.VISIBLE);
+        birthdateErrorImageView.setVisibility(View.VISIBLE);
+
+    }
     private void displayPasswordError() {
         Log.d("PasswordsDoNotMatch", "Passwords must match to sign up.");
+        //Render error message and icon
+        passwordErrorTextView.setVisibility(View.VISIBLE);
+        passwordErrorImageView.setVisibility(View.VISIBLE);
+
+        confirmPasswordErrorTextView.setVisibility(View.VISIBLE);
+        confirmPasswordErrorImageView.setVisibility(View.VISIBLE);
     }
+
 
     private void displaySignUpError() {
         Log.d("BadSignUp", "There was a problem with sign up, please try again later.");
     }
 
+    private void noNicknameError()
+    {
+        nicknameErrorTextView.setVisibility(View.INVISIBLE);
+        nicknameErrorImageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void noEmailError()
+    {
+        emailErrorTextView.setVisibility(View.INVISIBLE);
+        emailErrorImageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void noBirthdateError()
+    {
+        birthdateErrorTextView.setVisibility(View.INVISIBLE);
+        birthdateErrorImageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void noPasswordError()
+    {
+        passwordErrorTextView.setVisibility(View.INVISIBLE);
+        passwordErrorImageView.setVisibility(View.INVISIBLE);
+        confirmPasswordErrorTextView.setVisibility(View.INVISIBLE);
+        confirmPasswordErrorImageView.setVisibility(View.INVISIBLE);
+    }
     private void updateLabel(){
         String myFormat = "MM/dd/yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);

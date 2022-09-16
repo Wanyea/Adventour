@@ -61,15 +61,16 @@
 
     <TextView
         android:id="@+id/nicknameSignupErrorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="308dp"
+        android:layout_height="28dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="-8dp"
-        android:text="Error Label"
+        android:text="Nickname must be between 6 and 20 characters"
         android:textColor="@color/red_variant"
-
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/nicknameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/nicknameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/nicknameEditText"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/nicknameSignupErrorIcon"
@@ -79,7 +80,8 @@
         app:layout_constraintEnd_toEndOf="@id/nicknameEditText"
         app:srcCompat="@drawable/ic_alert_triangle_icon"
         app:tint="@color/red_variant"
-        app:layout_constraintTop_toTopOf="@id/nicknameSignupErrorTextView" />
+        app:layout_constraintTop_toTopOf="@id/nicknameSignupErrorTextView"
+        android:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/emailEditText"
@@ -105,11 +107,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="-8dp"
-        android:text="Error Label"
+        android:text="Invalid email address"
         android:textColor="@color/red_variant"
 
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/emailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/emailSignupErrorIcon"
@@ -119,7 +123,8 @@
         app:layout_constraintEnd_toEndOf="@id/emailEditText"
         app:layout_constraintTop_toTopOf="@id/emailSignupErrorTextView"
         app:srcCompat="@drawable/ic_alert_triangle_icon"
-        app:tint="@color/red_variant" />
+        app:tint="@color/red_variant"
+        android:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/birthdateEditText"
@@ -151,7 +156,8 @@
         app:layout_constraintEnd_toEndOf="@id/birthdateEditText"
         app:layout_constraintTop_toTopOf="@id/birthdateSignupErrorTextView"
         app:srcCompat="@drawable/ic_alert_triangle_icon"
-        app:tint="@color/red_variant" />
+        app:tint="@color/red_variant"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/birthdateSignupErrorTextView"
@@ -159,11 +165,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="-8dp"
-        android:text="Error Label"
-
+        android:text="You must be 13 years or older to create an account"
         android:textColor="@color/red_variant"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/birthdateEditText"
-        app:layout_constraintTop_toBottomOf="@+id/birthdateEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/birthdateEditText"
+        android:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/passwordEditText"
@@ -191,10 +198,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="-8dp"
 
-        android:text="Error Label"
+        android:text="Passwords do not match"
         android:textColor="@color/red_variant"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/passwordSignupErrorIcon"
@@ -204,7 +212,8 @@
         app:layout_constraintEnd_toEndOf="@id/passwordEditText"
         app:layout_constraintTop_toTopOf="@id/passwordSignupErrorTextView"
         app:srcCompat="@drawable/ic_alert_triangle_icon"
-        app:tint="@color/red_variant" />
+        app:tint="@color/red_variant"
+        android:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/confirmPasswordEditText"
@@ -232,11 +241,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="-8dp"
-
-        android:text="Error Label"
+        android:text="Passwords do not match"
         android:textColor="@color/red_variant"
         app:layout_constraintStart_toStartOf="@+id/confirmPasswordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/confirmPasswordSignupErrorIcon"
@@ -246,7 +255,8 @@
         app:layout_constraintEnd_toEndOf="@id/confirmPasswordEditText"
         app:layout_constraintTop_toTopOf="@id/confirmPasswordSignupErrorTextView"
         app:srcCompat="@drawable/ic_alert_triangle_icon"
-        app:tint="@color/red_variant" />
+        app:tint="@color/red_variant"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/alreadyTextView"
