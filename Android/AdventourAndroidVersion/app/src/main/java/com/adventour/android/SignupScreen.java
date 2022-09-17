@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,7 +42,7 @@ public class SignupScreen extends AppCompatActivity {
     Button signupButton;
     TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView;
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
-    EditText birthdateDatePicker;
+    EditText birthdateDatePicker, nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
 
     private FirebaseAuth mAuth;
@@ -76,9 +77,14 @@ public class SignupScreen extends AppCompatActivity {
         nicknameErrorImageView = (ImageView) findViewById(R.id.nicknameSignupErrorIcon);
         emailErrorImageView = (ImageView) findViewById(R.id.emailSignupErrorIcon);
         birthdateErrorImageView = (ImageView) findViewById(R.id.birthdateSignupErrorIcon);
-        passwordErrorImageView = (ImageView) findViewById(R.id.passwordLoginErrorIcon);
+        passwordErrorImageView = (ImageView) findViewById(R.id.passwordSignupErrorIcon);
         confirmPasswordErrorImageView = (ImageView) findViewById(R.id.confirmPasswordSignupErrorIcon);
 
+        nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
+        emailEditText = (EditText) findViewById(R.id.emailEditText);
+        birthdateEditText = (EditText) findViewById(R.id.birthdateEditText);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -149,12 +155,12 @@ public class SignupScreen extends AppCompatActivity {
                 // Check passwords match
                 if (!AdventourUtils.checkPasswordsMatch(password, confirmPassword))
                 {
-                    displayPasswordError();
+                    displayConfirmPasswordError();
                 } else {
-                    noPasswordError();
+                    noConfirmPasswordError();
                 }
                 // Create new document in Firebase with the user information.
-                //signUp(nickname, email, password, birthdate);
+               // signUp(nickname, email, password, birthdate);
 
 
                 // If successful, go to Home intent.
@@ -166,31 +172,52 @@ public class SignupScreen extends AppCompatActivity {
 
     private void displayNicknameError() {
         Log.d("NicknameInvalid", "Nickname must be between 6 and 20 characters.");
-        // Render error message and icon
+
+        // Render error message and icon, make edit text 'red_variant'
+
+        int red_variant = getResources().getColor(R.color.red_variant);
+        nicknameEditText.getBackground().setColorFilter(red_variant, PorterDuff.Mode.SRC_ATOP);
         nicknameErrorTextView.setVisibility(View.VISIBLE);
         nicknameErrorImageView.setVisibility(View.VISIBLE);
     }
 
     private void displayEmailError() {
         Log.d("EmailInvalid", "Invalid email.");
-        //Render error message and icon
+
+        // Render error message and icon, make edit text 'red_variant'
+        int red_variant = getResources().getColor(R.color.red_variant);
+        emailEditText.getBackground().setColorFilter(red_variant, PorterDuff.Mode.SRC_ATOP);
         emailErrorTextView.setVisibility(View.VISIBLE);
         emailErrorImageView.setVisibility(View.VISIBLE);
     }
 
     private void displayBirthdateError() {
         Log.d("BirthdateInvalid", "User is not 13 years of age.");
-        //Render error message and icon
+
+        // Render error message and icon, make edit text 'red_variant'
+        int red_variant = getResources().getColor(R.color.red_variant);
+        birthdateEditText.getBackground().setColorFilter(red_variant, PorterDuff.Mode.SRC_ATOP);
         birthdateErrorTextView.setVisibility(View.VISIBLE);
         birthdateErrorImageView.setVisibility(View.VISIBLE);
 
     }
     private void displayPasswordError() {
         Log.d("PasswordsDoNotMatch", "Passwords must match to sign up.");
-        //Render error message and icon
+
+        // Render error message and icon, make edit text 'red_variant'
+
+        int red_variant = getResources().getColor(R.color.red_variant);
+
+        passwordEditText.getBackground().setColorFilter(red_variant, PorterDuff.Mode.SRC_ATOP);
         passwordErrorTextView.setVisibility(View.VISIBLE);
         passwordErrorImageView.setVisibility(View.VISIBLE);
 
+    }
+
+    private void displayConfirmPasswordError() {
+        int red_variant = getResources().getColor(R.color.red_variant);
+
+        confirmPasswordEditText.getBackground().setColorFilter(red_variant, PorterDuff.Mode.SRC_ATOP);
         confirmPasswordErrorTextView.setVisibility(View.VISIBLE);
         confirmPasswordErrorImageView.setVisibility(View.VISIBLE);
     }
@@ -202,29 +229,48 @@ public class SignupScreen extends AppCompatActivity {
 
     private void noNicknameError()
     {
+        // Update handled errors by removing error message and icon, update edit text to 'blue_main'
+        int blue_main = getResources().getColor(R.color.blue_main);
+        nicknameEditText.getBackground().setColorFilter(blue_main, PorterDuff.Mode.SRC_ATOP);
         nicknameErrorTextView.setVisibility(View.INVISIBLE);
         nicknameErrorImageView.setVisibility(View.INVISIBLE);
     }
 
     private void noEmailError()
     {
+        // Update handled errors by removing error message and icon, update edit text to 'blue_main'
+        int blue_main = getResources().getColor(R.color.blue_main);
+        emailEditText.getBackground().setColorFilter(blue_main, PorterDuff.Mode.SRC_ATOP);
         emailErrorTextView.setVisibility(View.INVISIBLE);
         emailErrorImageView.setVisibility(View.INVISIBLE);
     }
 
     private void noBirthdateError()
     {
+        // Update handled errors by removing error message and icon, update edit text to 'blue_main'
+        int blue_main = getResources().getColor(R.color.blue_main);
+        birthdateEditText.getBackground().setColorFilter(blue_main, PorterDuff.Mode.SRC_ATOP);
         birthdateErrorTextView.setVisibility(View.INVISIBLE);
         birthdateErrorImageView.setVisibility(View.INVISIBLE);
     }
 
     private void noPasswordError()
     {
+        // Update handled errors by removing error message and icon, update edit text to 'blue_main'
+        int blue_main = getResources().getColor(R.color.blue_main);
+        passwordEditText.getBackground().setColorFilter(blue_main, PorterDuff.Mode.SRC_ATOP);
         passwordErrorTextView.setVisibility(View.INVISIBLE);
         passwordErrorImageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void noConfirmPasswordError() {
+        // Update handled errors by removing error message and icon, update edit text to 'blue_main'
+        int blue_main = getResources().getColor(R.color.blue_main);
+        confirmPasswordEditText.getBackground().setColorFilter(blue_main, PorterDuff.Mode.SRC_ATOP);
         confirmPasswordErrorTextView.setVisibility(View.INVISIBLE);
         confirmPasswordErrorImageView.setVisibility(View.INVISIBLE);
     }
+
     private void updateLabel(){
         String myFormat = "MM/dd/yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);

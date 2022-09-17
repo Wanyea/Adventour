@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Adventour Android Version</string>
+    <string name="app_name">Adventour</string>
     <string name="beacons">beacons</string>
     <string name="start_adventour">start_adventour</string>
     <string name="account">account</string>

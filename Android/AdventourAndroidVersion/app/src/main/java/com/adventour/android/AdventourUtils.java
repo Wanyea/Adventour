@@ -18,7 +18,7 @@ public class AdventourUtils {
 
     public static boolean isValidNickname(String nickname)
     {
-        if (nickname.length() > 20 || nickname.length() < 6)
+        if (nickname.length() > 20 || nickname.length() == 0)
             return false;
         else
             return true;
@@ -61,4 +61,21 @@ public class AdventourUtils {
         else
             return false;
     }
+
+    public static boolean isEmailEmpty(String email) {
+        if(email.isEmpty())
+            return true;
+        else
+            return false;
+
+    }
+
+    public static boolean isPasswordEmpty(String password) {
+        if(password.isEmpty())
+            return true;
+        else
+            return false;
+    }
 }
+
+
