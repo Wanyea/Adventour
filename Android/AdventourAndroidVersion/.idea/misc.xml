@@ -15,10 +15,13 @@
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_lock_icon.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_logo_balloon_orig.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon.xml" value="0.24" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/navbar_selector.xml" value="0.24" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_account.xml" value="0.24365942028985507" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_home.xml" value="0.19655797101449277" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.264" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.264" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_start_adventour.xml" value="0.24365942028985507" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.2234375" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/fragment_start_adventour.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.36277173913043476" />
