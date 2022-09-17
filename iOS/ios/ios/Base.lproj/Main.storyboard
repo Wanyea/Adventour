@@ -393,10 +393,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="adv-navyblue"/>
-                        <color key="tintColor" name="adv-navyblue"/>
-                        <color key="barTintColor" name="adv-white"/>
                         <color key="selectedImageTintColor" name="adv-white"/>
-                        <tabBarAppearance key="standardAppearance"/>
+                        <tabBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="adv-navyblue"/>
+                        </tabBarAppearance>
+                        <tabBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="adv-navyblue"/>
+                        </tabBarAppearance>
                     </tabBar>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
@@ -444,6 +447,7 @@
                                             <action selector="button:" destination="7gq-vp-ARI" eventType="touchUpInside" id="Gfh-z1-gGp"/>
                                             <action selector="loginTapped:" destination="WXS-qO-0SX" eventType="touchUpInside" id="2z0-4I-QSt"/>
                                             <action selector="loginTapped:" destination="7gq-vp-ARI" eventType="touchUpInside" id="7vj-kc-em5"/>
+                                            <segue destination="KLu-vf-Gtc" kind="show" id="Psg-GY-g8R"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="envelope.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pdb-gC-PKf">
