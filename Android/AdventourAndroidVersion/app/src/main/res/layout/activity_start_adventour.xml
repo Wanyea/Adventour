@@ -6,15 +6,133 @@
     android:layout_height="match_parent"
     tools:context=".StartAdventour">
 
+    <ImageView
+        android:id="@+id/cloud_1_4"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="-50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cloud_2" />
+
+    <ImageView
+        android:id="@+id/cloud_1_5"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="-60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cloud_2" />
+
+    <ImageView
+        android:id="@+id/cloud_3_1"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_cloud_3" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-100dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/startAnAdventourEditText"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/edit_text_round"
+                android:drawableLeft="@drawable/ic_magnifying_glass_icon"
+                android:drawableRight="@drawable/ic_location_icon"
+
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/navy_main"
+                android:inputType="text"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/sampleButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView" />
+
+            <TextView
+                android:id="@+id/startAnAdventourTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Start an Adventour"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/sampleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="#1D66C0"
+                android:drawableLeft="@drawable/ic_x_icon"
+                android:gravity="left"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:text="Sample"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:cornerRadius="100dp"
+                app:layout_constraintStart_toStartOf="@id/startAnAdventourEditText"
+                app:layout_constraintTop_toBottomOf="@+id/startAnAdventourEditText" />
+
+            <Button
+                android:id="@+id/plusButton"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="#1D66C0"
+                android:drawableLeft="@drawable/ic_plus_icon"
+                android:paddingLeft="9dp"
+
+                app:cornerRadius="100dp"
+                app:layout_constraintStart_toEndOf="@id/sampleButton"
+                app:layout_constraintTop_toTopOf="@id/sampleButton" />
+
+            <ImageView
+                android:id="@+id/balloonRopeCardImageView"
+                android:layout_width="350dp"
+                android:layout_height="1250dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_balloon_rope_card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        app:itemBackground="@color/navy_main"
         android:layout_marginBottom="0dp"
         app:itemIconTint="@drawable/navbar_selector"
         app:itemTextColor="@drawable/navbar_selector"
-        app:itemBackground="@color/teal_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
