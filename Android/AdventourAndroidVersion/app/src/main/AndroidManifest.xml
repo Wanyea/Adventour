@@ -13,19 +13,19 @@
         android:theme="@style/Theme.AdventourAndroidVersion"
         tools:targetApi="31">
         <activity
-            android:name="com.adventour.android.Beacons"
+            android:name=".Passport"
             android:exported="false" />
         <activity
-            android:name="com.adventour.android.Account"
+            android:name=".Beacons"
             android:exported="false" />
         <activity
-            android:name="com.adventour.android.StartAdventour"
+            android:name=".StartAdventour"
             android:exported="false" />
         <activity
-            android:name="com.adventour.android.SignupScreen"
+            android:name=".SignupScreen"
             android:exported="false" />
         <activity
-            android:name="com.adventour.android.LoginScreen"
+            android:name=".LoginScreen"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -37,6 +37,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
