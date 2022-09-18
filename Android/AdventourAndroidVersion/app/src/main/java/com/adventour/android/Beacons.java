@@ -25,8 +25,8 @@ public class Beacons extends AppCompatActivity {
 
             switch(item.getItemId())
             {
-                case R.id.account:
-                    startActivity(new Intent(getApplicationContext(), Account.class));
+                case R.id.passport:
+                    startActivity(new Intent(getApplicationContext(), Passport.class));
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.start_adventour:
