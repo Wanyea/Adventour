@@ -2,12 +2,23 @@ package com.adventour.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class StartAdventour extends AppCompatActivity {
+
+    ImageButton filterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +30,15 @@ public class StartAdventour extends AppCompatActivity {
 
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.start_adventour);
+
+        // Filter button
+        filterButton = (ImageButton) findViewById(R.id.filterButton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickFilterButton(view);
+            }
+        });
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
@@ -38,5 +58,26 @@ public class StartAdventour extends AppCompatActivity {
             }
             return false;
         });
+
     }
+
+    public void onClickFilterButton(View view) {
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View filterPopupWindowView = inflater.inflate(R.layout.popup_filter, null);
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        final PopupWindow filterPopupWindow = new PopupWindow(filterPopupWindowView, width, height, focusable);
+        filterPopupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        filterPopupWindowView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                filterPopupWindow.dismiss();
+                return true;
+            }
+        });
+    }
+
 }
