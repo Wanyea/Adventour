@@ -107,8 +107,8 @@ public class LoginScreen extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            switchToStartAdventour();
                             noError();
+                            switchToStartAdventour();
                             Log.d(TAG, "Login attempt SUCCESS!");
                         } else {
                             Log.d(TAG, "Login attempt failed!");

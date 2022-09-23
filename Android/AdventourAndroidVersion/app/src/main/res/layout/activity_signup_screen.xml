@@ -269,8 +269,8 @@
 
     <TextView
         android:id="@+id/passwordSignupErrorTextView"
-        android:layout_width="316dp"
-        android:layout_height="33dp"
+        android:layout_width="329dp"
+        android:layout_height="75dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="-8dp"
         android:text="Password must be 8 characters, contain one UPPER CASE letter, one LOWER CASE letter, one NUMBER, and one SPECIAL (!@#$&amp;*) character"

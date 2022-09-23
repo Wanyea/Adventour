@@ -152,6 +152,14 @@ public class SignupScreen extends AppCompatActivity {
                 } else {
                    noBirthdateError();
                 }
+
+                // Check if email is valid
+                if (!AdventourUtils.isValidPassword(password)) {
+                    displayPasswordError();
+                } else {
+                    noPasswordError();
+                }
+
                 // Check passwords match
                 if (!AdventourUtils.checkPasswordsMatch(password, confirmPassword))
                 {
@@ -159,13 +167,11 @@ public class SignupScreen extends AppCompatActivity {
                 } else {
                     noConfirmPasswordError();
                 }
-                // Create new document in Firebase with the user information.
-               // signUp(nickname, email, password, birthdate);
 
-
-                // If successful, go to Home intent.
-                // Finish SignUpScreen Intent.
-
+                // If all fields are valid: create new document in Firebase with the user information.
+                if(AdventourUtils.isValidNickname(nickname) && AdventourUtils.isValidEmail(email) &&
+                   AdventourUtils.isUserOver13(day, month, year) && AdventourUtils.checkPasswordsMatch(password, confirmPassword))
+                    signUp(nickname, email, password, birthdate);
             }
         });
     }
@@ -201,8 +207,9 @@ public class SignupScreen extends AppCompatActivity {
         birthdateErrorImageView.setVisibility(View.VISIBLE);
 
     }
+    
     private void displayPasswordError() {
-        Log.d("PasswordsDoNotMatch", "Passwords must match to sign up.");
+        Log.d("Invalid password", "Invalid pass, missing components.");
 
         // Render error message and icon, make edit text 'red_variant'
 

@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class AdventourUtils {
     public static String formatBirthdateForDB(Calendar calendar) {
@@ -27,10 +30,14 @@ public class AdventourUtils {
 
     public static boolean isValidEmail(String email)
     {
-        /*if ()
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        if (matcher.matches())
+            return true;
+        else
             return false;
-        else*/
-            return true; //CHECK REGEX
 
     }
 
@@ -52,6 +59,17 @@ public class AdventourUtils {
         else
             return false;
 
+    }
+
+    public static boolean isValidPassword(String password) {
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
     }
 
     public static boolean checkPasswordsMatch(String password, String confirmPassword) {
