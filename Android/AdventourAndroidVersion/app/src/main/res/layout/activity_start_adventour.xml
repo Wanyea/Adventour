@@ -46,6 +46,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/balloonRopeCardImageView"
+                android:layout_width="350dp"
+                android:layout_height="1250dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_balloon_rope_card" />
+
             <EditText
                 android:id="@+id/startAnAdventourEditText"
                 android:layout_width="0dp"
@@ -53,27 +63,40 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
 
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/edit_text_round"
+
                 android:drawableLeft="@drawable/ic_magnifying_glass_icon"
                 android:drawableRight="@drawable/ic_location_icon"
-
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/navy_main"
                 android:inputType="text"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/sampleButton"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/filterButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView" />
+
+            <ImageButton
+                android:id="@+id/filterButton"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="50dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@id/startAnAdventourEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/startAnAdventourEditText"
+                app:srcCompat="@drawable/ic_filter_icon"
+                app:tint="@color/blue_main" />
 
             <TextView
                 android:id="@+id/startAnAdventourTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:text="Start an Adventour"
+                android:text="@string/start_an_adventour"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,16 +133,6 @@
                 app:cornerRadius="100dp"
                 app:layout_constraintStart_toEndOf="@id/sampleButton"
                 app:layout_constraintTop_toTopOf="@id/sampleButton" />
-
-            <ImageView
-                android:id="@+id/balloonRopeCardImageView"
-                android:layout_width="350dp"
-                android:layout_height="1250dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.491"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_balloon_rope_card" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

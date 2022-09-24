@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/passport"
-        android:title="@string/passport" />
+        android:icon="@drawable/ic_user_icon"
+        android:title="@string/passport"/>
     <item
         android:id="@+id/start_adventour"
-        android:title="@string/start_adventour" />
+        android:icon="@drawable/ic_pin_icon"
+        android:title="@string/start_adventour"/>
     <item
         android:id="@+id/beacons"
+        android:icon="@drawable/ic_beacon_icon"
         android:title="@string/beacons"/>
 </menu>
 
