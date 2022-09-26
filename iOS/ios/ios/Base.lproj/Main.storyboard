@@ -93,7 +93,7 @@
         <scene sceneID="vR0-Jg-7Bb">
             <objects>
                 <viewController id="Pav-Fz-s1e" customClass="SignUpViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="wQ8-z2-MHK">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="wQ8-z2-MHK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -372,7 +372,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AZC-dA-RTN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3757" y="-123"/>
+            <point key="canvasLocation" x="4143" y="-137"/>
         </scene>
         <!--Beacon-->
         <scene sceneID="RdZ-Z0-fN2">
@@ -393,10 +393,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="adv-navyblue"/>
-                        <color key="tintColor" name="adv-navyblue"/>
-                        <color key="barTintColor" name="adv-white"/>
                         <color key="selectedImageTintColor" name="adv-white"/>
-                        <tabBarAppearance key="standardAppearance"/>
+                        <tabBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="adv-navyblue"/>
+                        </tabBarAppearance>
+                        <tabBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="adv-navyblue"/>
+                        </tabBarAppearance>
                     </tabBar>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
@@ -417,7 +420,7 @@
         <scene sceneID="f63-fT-yXT">
             <objects>
                 <viewController id="WXS-qO-0SX" customClass="LoginViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="woJ-ji-MDm">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="woJ-ji-MDm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -572,6 +575,15 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QdH-K7-Fs9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" name="adv-skyblue"/>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
