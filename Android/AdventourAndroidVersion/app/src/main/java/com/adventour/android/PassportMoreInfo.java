@@ -1,32 +1,18 @@
 package com.adventour.android;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Passport extends AppCompatActivity {
-
-    ImageButton imageButton;
+public class PassportMoreInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_passport);
-
-        imageButton = (ImageButton) findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PassportMoreInfo.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_passport_more_info);
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -39,6 +25,8 @@ public class Passport extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.passport:
+                    startActivity(new Intent(getApplicationContext(), Passport.class));
+                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.start_adventour:
                     startActivity(new Intent(getApplicationContext(), StartAdventour.class));
@@ -51,5 +39,6 @@ public class Passport extends AppCompatActivity {
             }
             return false;
         });
+
     }
 }
