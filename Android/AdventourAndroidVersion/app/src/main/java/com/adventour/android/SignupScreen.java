@@ -2,6 +2,7 @@ package com.adventour.android;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class SignupScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_screen);
 
@@ -169,9 +171,11 @@ public class SignupScreen extends AppCompatActivity {
                 }
 
                 // If all fields are valid: create new document in Firebase with the user information.
-                if(AdventourUtils.isValidNickname(nickname) && AdventourUtils.isValidEmail(email) &&
-                   AdventourUtils.isUserOver13(day, month, year) && AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                    signUp(nickname, email, password, birthdate);
+                if(AdventourUtils.isValidNickname(nickname) &&
+                   AdventourUtils.isValidEmail(email) &&
+                   AdventourUtils.isUserOver13(day, month, year) &&
+                   AdventourUtils.checkPasswordsMatch(password, confirmPassword))
+                    signUp(nickname, email, password, birthdate); // Attempt to create user document and add to firebase.
             }
         });
     }

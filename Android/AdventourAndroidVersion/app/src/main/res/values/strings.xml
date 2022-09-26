@@ -10,4 +10,18 @@
     <string name="this_is_the_start_an_adventour_page">This is the start an Adventour page!</string>
     <string name="this_the_the_account_page">This the the account page!</string>
     <string name="this_is_the_beacons_page">This is the beacons page!</string>
+    <string name="edit_account_button">Edit Account Button</string>
+    <string name="last_adventour">Last Adventour:</string>
+    <string name="last_online">Last Online:</string>
+    <string name="first_name"><i>First Name</i></string>
+    <string name="middle_name"><i>Middle Name</i></string>
+    <string name="last_name"><i>Last Name</i></string>
+    <string name="_1_xxx_xxx_xxxx"><i>+1 (xxx) xxx-xxxx</i></string>
+    <string name="mantra"><i>Mantra</i></string>
+    <string name="bio"><i>Bio</i></string>
+    <string name="date_joined">Date Joined:</string>
+    <string name="profile_pictures">Profile Pictures:</string>
+    <string name="favorite_beacons">Favorite Beacons</string>
+    <string name="never_recommend">Never Recommend</string>
+    <string name="private_account">Private Account</string>
 </resources>

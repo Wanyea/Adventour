@@ -48,11 +48,8 @@ public class AdventourUtils {
 
         int age = Math.abs(year - cal.get(Calendar.YEAR));
 
-        if ((month < cal.get(Calendar.MONTH))
-                || ((month == cal.get(Calendar.MONTH)) && (day < cal
-                .get(Calendar.DAY_OF_MONTH)))) {
+        if ((month < cal.get(Calendar.MONTH)) || ((month == cal.get(Calendar.MONTH)) && (day < cal.get(Calendar.DAY_OF_MONTH))))
             --age;
-        }
 
         if(age > 13)
             return true;
@@ -73,7 +70,6 @@ public class AdventourUtils {
     }
 
     public static boolean checkPasswordsMatch(String password, String confirmPassword) {
-
         if (password.equals(confirmPassword))
             return true;
         else
