@@ -1,0 +1,7 @@
+# Ignore server files
+/server/.env
+/server/node_modules/
+
+
+# Ignore iOS files
+**/.DS_Store
