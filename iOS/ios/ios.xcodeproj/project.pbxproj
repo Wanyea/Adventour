@@ -135,6 +135,7 @@
 				2A9EBF8C28B69114009ED151 /* LoginViewController.swift */,
 				2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */,
 				F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */,
+				4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */,
 				2A7F520828CD190400F6D30E /* StartViewController.swift */,
 				2AA16D8228D91A0400A7D16D /* MapViewController.swift */,
 				2AA16D8428DCBC9000A7D16D /* CongratsViewController.swift */,
@@ -145,7 +146,6 @@
 				2AC1B40B28C9269E00F4D8B9 /* BeaconBoard.storyboard */,
 				F0D227BD28C02B65003E3100 /* Assets.xcassets */,
 				2A9EBF6A28B5823B009ED151 /* Info.plist */,
-				4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */,
 				F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */,
 			);
 			path = ios;
@@ -505,7 +505,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -515,7 +515,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -533,7 +533,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -543,7 +543,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
