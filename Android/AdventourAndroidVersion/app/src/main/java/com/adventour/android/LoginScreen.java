@@ -151,8 +151,6 @@ public class LoginScreen extends AppCompatActivity {
         emailEditText.getBackground().setColorFilter(red_variant, PorterDuff.Mode.SRC_ATOP);
         emailLoginErrorTextView.setVisibility(View.VISIBLE);
         emailLoginErrorIcon.setVisibility(View.VISIBLE);
-
-
     }
 
     private void displayNullPasswordError()
