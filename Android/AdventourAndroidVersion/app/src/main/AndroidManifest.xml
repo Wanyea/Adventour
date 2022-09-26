@@ -32,7 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-        android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
             android:label="Adventour"
             android:exported="true">
             <intent-filter>
