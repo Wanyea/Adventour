@@ -3,14 +3,85 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#62def8">
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="20dp"
+    android:background="@drawable/popup_rectangle">
 
     <TextView
+        android:id="@+id/searchFilterTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="30dp"
-        android:textSize="22sp"
-        android:text="This is a popup window."/>
+        android:layout_centerHorizontal="true"
+        android:text="Search Filter"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchFilterTextView"
+        android:layout_centerHorizontal="true"
+        android:text="Price\n   $                  $$                 $$$           $$$$"
+        android:gravity="center"
+        android:textSize="14sp" />
+
+
+    <SeekBar
+        android:id="@+id/priceSeekBar"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceTextView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceSeekBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Distance\n0                                                           25"
+        android:gravity="center"
+        android:textSize="14sp" />
+
+    <SeekBar
+        android:id="@+id/distanceSeekBar"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distanceTextView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/categoriesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distanceSeekBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Categories"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Switch
+        android:id="@+id/firstSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoriesTextView"
+        android:text="First" />
+    <Switch
+        android:id="@+id/secondSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstSwitch"
+
+        android:text="Second" />
+    <Switch
+        android:id="@+id/thirdSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/secondSwitch"
+
+        android:text="Third" />
 
 </RelativeLayout>
