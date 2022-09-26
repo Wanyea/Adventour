@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="-8dp"
-        android:text="Invalid email address"
+        android:text="Invalid email address!"
         android:textColor="@color/red_variant"
         android:textSize="14sp"
         android:visibility="invisible"
@@ -147,8 +147,8 @@
 
     <TextView
         android:id="@+id/birthdateSignupErrorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="251dp"
+        android:layout_height="48dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="-8dp"
         android:text="You must be at least 13 years old to sign up!"
@@ -207,6 +207,7 @@
         android:focusableInTouchMode="false"
         android:hint="Birthdate - MM/DD/YYYY"
         android:textColor="@color/navy_main"
+        android:inputType="textNoSuggestions"
 
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -269,11 +270,11 @@
 
     <TextView
         android:id="@+id/passwordSignupErrorTextView"
-        android:layout_width="329dp"
-        android:layout_height="75dp"
+        android:layout_width="277dp"
+        android:layout_height="51dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="-8dp"
-        android:text="Password must be 8 characters, contain one UPPER CASE letter, one LOWER CASE letter, one NUMBER, and one SPECIAL (!@#$&amp;*) character"
+        android:text="Must have at least 8 characters, an uppercase letter, a lowercase letter, a number, and a special (!@#$&amp;*) character!"
         android:textColor="@color/red_variant"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText"
@@ -281,11 +282,11 @@
 
     <TextView
         android:id="@+id/nicknameSignupErrorTextView"
-        android:layout_width="308dp"
-        android:layout_height="28dp"
+        android:layout_width="269dp"
+        android:layout_height="47dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="-8dp"
-        android:text="Nickname must be between 6 and 20 characters"
+        android:text="Nickname must be less than 20 characters!"
         android:textColor="@color/red_variant"
         android:textSize="14sp"
         android:visibility="invisible"
@@ -298,7 +299,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="-8dp"
-        android:text="Passwords do not match"
+        android:text="Passwords do not match!"
         android:textColor="@color/red_variant"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/confirmPasswordEditText"
