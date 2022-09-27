@@ -172,9 +172,12 @@ public class SignupScreen extends AppCompatActivity {
                 }
 
                 // If all fields are valid: create new document in Firebase with the user information.
-                if(AdventourUtils.isValidNickname(nickname) && AdventourUtils.isValidEmail(email) &&
-                   AdventourUtils.isUserOver13(day, month, year) && AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                    signUp(nickname, email, password, birthdate, defaultMantra);
+
+                if(AdventourUtils.isValidNickname(nickname) &&
+                   AdventourUtils.isValidEmail(email) &&
+                   AdventourUtils.isUserOver13(day, month, year) &&
+                   AdventourUtils.checkPasswordsMatch(password, confirmPassword))
+                    signUp(nickname, email, password, birthdate, defaultMantra); // Attempt to create user document and add to firebase.
             }
         });
     }
