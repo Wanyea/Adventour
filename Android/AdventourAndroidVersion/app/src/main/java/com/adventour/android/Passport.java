@@ -1,18 +1,31 @@
 package com.adventour.android;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 public class Passport extends AppCompatActivity {
-
+    private static final String TAG = "PassportActivity";
     ImageButton imageButton;
+    TextView nicknameTextView, birthdateTextView, mantraTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +34,13 @@ public class Passport extends AppCompatActivity {
         setContentView(R.layout.activity_passport);
 
         imageButton = (ImageButton) findViewById(R.id.imageButton);
+
+        nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
+        birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
+        mantraTextView = (TextView) findViewById(R.id.mantraTextView);
+
+        populateUserPassport();
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PassportMoreInfo.class);
@@ -52,4 +72,37 @@ public class Passport extends AppCompatActivity {
             return false;
         });
     }
+
+    public void populateUserPassport()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get a reference to the user
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+
+        // Check if user document exists. If they do in this instance, populate passport wth user data.
+        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+
+                        nicknameTextView.setText(document.getString("nickname"));
+                        birthdateTextView.setText(document.getString("birthdate"));
+                        mantraTextView.setText(document.getString("mantra"));
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
 }
