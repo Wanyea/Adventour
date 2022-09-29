@@ -74,6 +74,14 @@
                                                         <color key="textColor" name="adv-black"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSr-gu-qP5">
+                                                        <rect key="frame" x="241" y="16" width="44" height="31"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="✏️"/>
+                                                        <connections>
+                                                            <segue destination="kl5-Ir-X4a" kind="show" id="kwD-f9-ccP"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -81,8 +89,10 @@
                                                     <constraint firstAttribute="trailing" secondItem="eDw-nU-Gu3" secondAttribute="trailing" constant="260" id="9Nh-6s-bZQ"/>
                                                     <constraint firstAttribute="trailing" secondItem="jGz-mR-TiN" secondAttribute="trailing" constant="36" id="CiI-dq-rE7"/>
                                                     <constraint firstAttribute="bottom" secondItem="Uo1-X5-z0k" secondAttribute="bottom" constant="118" id="EMi-Sa-MN7"/>
+                                                    <constraint firstItem="ZSr-gu-qP5" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="16" id="FOY-CF-Tco"/>
                                                     <constraint firstItem="V5B-lj-3ma" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="3" id="H9a-ih-B9z"/>
                                                     <constraint firstAttribute="bottom" secondItem="V5B-lj-3ma" secondAttribute="bottom" constant="2" id="HUe-Yc-sF0"/>
+                                                    <constraint firstItem="ZSr-gu-qP5" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="241" id="OYb-YX-wwq"/>
                                                     <constraint firstItem="V5B-lj-3ma" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="-36" id="Or2-cN-J9M"/>
                                                     <constraint firstAttribute="height" constant="214" id="PcE-zk-75g"/>
                                                     <constraint firstItem="Uo1-X5-z0k" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="75" id="QFn-Zd-5tQ"/>
@@ -90,6 +100,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="eDw-nU-Gu3" secondAttribute="bottom" constant="118.5" id="TPD-6q-2uw"/>
                                                     <constraint firstAttribute="trailing" secondItem="Uo1-X5-z0k" secondAttribute="trailing" constant="48" id="YlD-Vr-Wef"/>
                                                     <constraint firstItem="eDw-nU-Gu3" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="38" id="aap-8L-9ae"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ZSr-gu-qP5" secondAttribute="bottom" constant="167" id="eBo-1X-rJ2"/>
                                                     <constraint firstAttribute="trailing" secondItem="te8-tP-ImB" secondAttribute="trailing" id="f2p-ht-w8h"/>
                                                     <constraint firstItem="te8-tP-ImB" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" id="lko-X8-147"/>
                                                     <constraint firstAttribute="bottom" secondItem="jGz-mR-TiN" secondAttribute="bottom" constant="41" id="mKk-Rv-fxS"/>
@@ -99,6 +110,7 @@
                                                     <constraint firstItem="eDw-nU-Gu3" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="75" id="rsU-LZ-bPj"/>
                                                     <constraint firstItem="te8-tP-ImB" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="47" id="tHY-bJ-Cfb"/>
                                                     <constraint firstItem="Uo1-X5-z0k" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="65" id="x67-gH-qf4"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ZSr-gu-qP5" secondAttribute="trailing" constant="36" id="zDd-g6-FfA"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shg-UL-OvO">
@@ -354,6 +366,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="23.199999999999999" y="80.50974512743629"/>
+        </scene>
+        <!--EditProfile-->
+        <scene sceneID="Ptn-7w-DCB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EditProfilePage" referencedIdentifier="EditProfile" id="kl5-Ir-X4a" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="5CW-UB-IAy"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1la-N8-Iw4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="450" y="-154"/>
         </scene>
     </scenes>
     <resources>
