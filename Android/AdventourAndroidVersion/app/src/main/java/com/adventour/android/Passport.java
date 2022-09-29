@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class Passport extends AppCompatActivity {
 
     ImageButton imageButton;
+    ImageButton hamburgerMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,14 @@ public class Passport extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PassportMoreInfo.class);
+                startActivity(intent);
+            }
+        });
+
+        hamburgerMenu = (ImageButton) findViewById(R.id.hamburger_menu);
+        hamburgerMenu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Settings.class);
                 startActivity(intent);
             }
         });
