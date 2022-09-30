@@ -15,6 +15,7 @@ class StartViewController: UIViewController {
         super.viewDidLoad()
         
         
+        
         //Adding the bordercolor on the not now button. Actual border is in its runtime attributes.
         
         notNow?.layer.borderColor = UIColor.red.cgColor
