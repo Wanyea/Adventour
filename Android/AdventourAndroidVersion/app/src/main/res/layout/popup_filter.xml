@@ -136,27 +136,117 @@
         app:layout_constraintTop_toBottomOf="@id/distanceSlider" />
 
     <Switch
-        android:id="@+id/firstSwitch"
+        android:id="@+id/socialSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First"
+        android:text="Social"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/categoriesTextView" />
 
     <Switch
-        android:id="@+id/secondSwitch"
+        android:id="@+id/outdoorsySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Second"
+        android:text="Outdoorsy"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/firstSwitch" />
+        app:layout_constraintTop_toBottomOf="@id/socialSwitch" />
 
     <Switch
-        android:id="@+id/thirdSwitch"
+        android:id="@+id/culturedSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Second"
+        android:text="Cultured"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/secondSwitch" />
+        app:layout_constraintTop_toBottomOf="@id/outdoorsySwitch" />
+
+    <Switch
+        android:id="@+id/romanticSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Romantic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/culturedSwitch" />
+
+    <Switch
+        android:id="@+id/geekySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Geeky"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/romanticSwitch" />
+
+    <Switch
+        android:id="@+id/spiritualSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spiritual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/geekySwitch" />
+
+    <Switch
+        android:id="@+id/sportySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sporty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spiritualSwitch" />
+
+    <Switch
+        android:id="@+id/chillSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:text="Chill"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/socialSwitch" />
+
+    <Switch
+        android:id="@+id/shoppableSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shoppable"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/chillSwitch" />
+
+    <Switch
+        android:id="@+id/pamperedSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pampered"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/shoppableSwitch" />
+
+    <Switch
+        android:id="@+id/courageousSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courageous"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/pamperedSwitch" />
+
+    <Switch
+        android:id="@+id/starvingSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Starving"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/courageousSwitch" />
+
+    <Switch
+        android:id="@+id/snackSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snack"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/starvingSwitch" />
+
+    <Switch
+        android:id="@+id/twentyOnePlusSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21+"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/snackSwitch" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
