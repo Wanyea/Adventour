@@ -6,6 +6,8 @@ public class Adventour {
 
     private int id;
     private int numLocations;
+    private String dateCreated;
+    private String dateUpdated;
 
     // We might just do one of these
     private String[] categories;
@@ -15,8 +17,6 @@ public class Adventour {
     private Location[] locations;
     private boolean isPrivate;
     private boolean isBeacon;
-
-    private String dateCreated;
 
     public String[] getCategories() {
         return categories;
@@ -33,8 +33,6 @@ public class Adventour {
     public void setMoods(String[] moods) {
         this.moods = moods;
     }
-
-    private String dateUpdated;
 
     public int getId() {
         return id;

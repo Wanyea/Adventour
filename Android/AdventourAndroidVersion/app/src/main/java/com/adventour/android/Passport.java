@@ -16,9 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
@@ -39,7 +42,8 @@ public class Passport extends AppCompatActivity {
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
 
-        populateUserPassport();
+        populatePassportTextViews();
+        populatePreviousAdventours();
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -73,7 +77,7 @@ public class Passport extends AppCompatActivity {
         });
     }
 
-    public void populateUserPassport()
+    public void populatePassportTextViews()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -81,7 +85,6 @@ public class Passport extends AppCompatActivity {
 
         // Get a reference to the user
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
-
         // Check if user document exists. If they do in this instance, populate passport wth user data.
         documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -90,7 +93,6 @@ public class Passport extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-
                         nicknameTextView.setText(document.getString("nickname"));
                         birthdateTextView.setText(document.getString("birthdate"));
                         mantraTextView.setText(document.getString("mantra"));
@@ -102,7 +104,49 @@ public class Passport extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    public void populatePreviousAdventours()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get a reference to the user
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+        documentRef.collection("adventours")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot adventour : task.getResult()) {
+                                Log.d(TAG, adventour.getId() + " => " + adventour.getData());
+                                db.collection("Adventourists")
+                                        .document(user.getUid())
+                                        .collection("adventours")
+                                        .document(adventour.getId())
+                                        .collection("locations")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()) {
+                                                    for(QueryDocumentSnapshot location : task.getResult()) {
+
+                                                        Log.d(TAG, "locations: " + location.getData());
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                                }
+                                            }
+
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
 }
