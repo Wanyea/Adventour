@@ -1,5 +1,6 @@
 package com.adventour.android;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -10,16 +11,22 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.slider.LabelFormatter;
+import com.google.android.material.slider.Slider;
+
+
 
 public class StartAdventour extends AppCompatActivity {
 
     ImageButton filterButton;
+    Slider priceSlider;
+    TextView priceTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,22 @@ public class StartAdventour extends AppCompatActivity {
                 return true;
             }
         });
+
+        /*
+        // Filter Price slider
+        priceSlider = (Slider) findViewById(R.id.priceSlider);
+        priceSlider.setLabelFormatter(new LabelFormatter() {
+            @NonNull
+            @Override
+            public String getFormattedValue(float value) {
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                currencyFormat.setCurrency(Currency.getInstance("USD"));
+                return currencyFormat.format(value);
+            }
+        });*/
+
+        // Filter Price Text View
+
     }
 
 }
