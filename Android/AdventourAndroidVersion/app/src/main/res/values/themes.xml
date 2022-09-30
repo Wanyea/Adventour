@@ -20,4 +20,27 @@
         <item name="android:statusBarColor">@color/cyan_main</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
+
+    <!-- Slider theme. -->
+    <style name="AdventourSlider" parent="@style/Widget.MaterialComponents.Slider">
+        <item name="thumbColor">@color/blue_main</item>
+        <item name="trackColor">@color/blue_main_40</item>
+        <item name="haloColor">@color/blue_main_40</item>
+        <item name="tickColor">@color/blue_main</item>
+
+        <item name="labelStyle">@style/Adventour.Tooltip</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Slider</item>
+    </style>
+
+    <style name="Adventour.Tooltip" parent="Widget.MaterialComponents.Tooltip">
+        <!-- Background color of the Tooltip -->
+        <item name="backgroundTint">@color/blue_main</item>
+    </style>
+
+    <style name="ThemeOverlay.Slider" parent="">
+        <!-- Color used by the text in the Tooltip -->
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
 </resources>
