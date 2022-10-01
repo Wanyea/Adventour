@@ -24,4 +24,5 @@
     <string name="favorite_beacons">Favorite Beacons</string>
     <string name="never_recommend">Never Recommend</string>
     <string name="private_account">Private Account</string>
+    <string name="settings_menu">settings menu</string>
 </resources>

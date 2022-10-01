@@ -1,16 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="#62def8">
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="20dp"
+    android:background="@drawable/popup_rectangle">
 
     <TextView
+        android:id="@+id/searchFilterTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="30dp"
-        android:textSize="22sp"
-        android:text="This is a popup window."/>
+        android:text="Search Filter"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchFilterTextView" />
+
+    <TextView
+        android:id="@+id/dollar1TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="$"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+    <TextView
+        android:id="@+id/dollar2TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="$$"
+        app:layout_constraintEnd_toStartOf="@id/dollar3TextView"
+        app:layout_constraintStart_toEndOf="@+id/dollar1TextView"
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+    <TextView
+        android:id="@+id/dollar3TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$$$"
+        app:layout_constraintEnd_toStartOf="@+id/dollar4TextView"
+        app:layout_constraintStart_toEndOf="@+id/dollar2TextView"
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+    <TextView
+        android:id="@+id/dollar4TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$$$$"
+        app:layout_constraintBottom_toBottomOf="@id/dollar1TextView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/priceSlider"
+        style="@style/AdventourSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dollar1TextView"
+        android:stepSize="1"
+        android:valueFrom="1"
+        android:valueTo="4"
+        />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceSlider"
+        android:layout_centerHorizontal="true"
+        android:text="Distance (miles)"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceSlider" />
+
+    <TextView
+        android:id="@+id/startDistanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/distanceTextView" />
+
+    <TextView
+        android:id="@+id/endDistanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="25"
+        app:layout_constraintBottom_toBottomOf="@id/startDistanceTextView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/distanceSlider"
+        style="@style/AdventourSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startDistanceTextView"
+        android:stepSize="1"
+        android:valueFrom="1"
+        android:valueTo="25" />
+
+
+    <TextView
+        android:id="@+id/categoriesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distanceSlider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Categories"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/distanceSlider" />
+
+    <Switch
+        android:id="@+id/socialSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Social"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoriesTextView" />
+
+    <Switch
+        android:id="@+id/outdoorsySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Outdoorsy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/socialSwitch" />
+
+    <Switch
+        android:id="@+id/culturedSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cultured"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/outdoorsySwitch" />
+
+    <Switch
+        android:id="@+id/romanticSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Romantic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/culturedSwitch" />
+
+    <Switch
+        android:id="@+id/geekySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Geeky"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/romanticSwitch" />
+
+    <Switch
+        android:id="@+id/spiritualSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spiritual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/geekySwitch" />
+
+    <Switch
+        android:id="@+id/sportySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sporty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spiritualSwitch" />
+
+    <Switch
+        android:id="@+id/chillSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:text="Chill"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/socialSwitch" />
+
+    <Switch
+        android:id="@+id/shoppableSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shoppable"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/chillSwitch" />
+
+    <Switch
+        android:id="@+id/pamperedSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pampered"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/shoppableSwitch" />
+
+    <Switch
+        android:id="@+id/courageousSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courageous"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/pamperedSwitch" />
+
+    <Switch
+        android:id="@+id/starvingSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Starving"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/courageousSwitch" />
+
+    <Switch
+        android:id="@+id/snackSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snack"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/starvingSwitch" />
+
+    <Switch
+        android:id="@+id/twentyOnePlusSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21+"
+        app:layout_constraintStart_toStartOf="@id/chillSwitch"
+        app:layout_constraintTop_toBottomOf="@id/snackSwitch" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

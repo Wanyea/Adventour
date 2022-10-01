@@ -26,9 +26,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.w3c.dom.Text;
 
 public class Passport extends AppCompatActivity {
+    
     private static final String TAG = "PassportActivity";
+
     ImageButton imageButton;
+
     TextView nicknameTextView, birthdateTextView, mantraTextView;
+
+    ImageButton hamburgerMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,14 @@ public class Passport extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PassportMoreInfo.class);
+                startActivity(intent);
+            }
+        });
+
+        hamburgerMenu = (ImageButton) findViewById(R.id.hamburger_menu);
+        hamburgerMenu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Settings.class);
                 startActivity(intent);
             }
         });
