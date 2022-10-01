@@ -87,61 +87,7 @@
                     android:orientation="vertical"
                     android:focusableInTouchMode="true">
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/imageView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="20dp"
-                            app:srcCompat="@drawable/ic_stamp_card" />
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="3/18/2000 - 3/19/2000"
-                            android:textColor="#ff4b47"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="50dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="\u25CF University of Central Florida\n\u25CF The Cloak and Blaster\n\u25CF American Escape Rooms Orlando"
-                            android:textColor="#ff4b47"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="150dp"
-                            android:fontFamily="@font/roboto_bold_italic"
-                            android:text="> More..."
-                            android:textColor="#ff4b47"
-                            android:textSize="18sp" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/imageView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_stamp_card" />
-                    </FrameLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -217,10 +163,20 @@
                 android:textSize="20sp"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toTopOf="@id/scrollView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView4" />
+
+            <Button
+                android:id="@+id/addCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card"
+                app:layout_constraintStart_toEndOf="@id/previousAdventoursHeader"
+                app:layout_constraintTop_toTopOf="@id/previousAdventoursHeader"/>
 
             <TextView
                 android:id="@+id/myLitBeaconsHeader"
