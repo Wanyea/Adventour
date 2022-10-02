@@ -43,6 +43,7 @@ public class Passport extends AppCompatActivity {
         setContentView(R.layout.activity_passport);
 
         imageButton = (ImageButton) findViewById(R.id.imageButton);
+        hamburgerMenu = (ImageButton) findViewById(R.id.hamburger_menu);
 
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
@@ -53,16 +54,14 @@ public class Passport extends AppCompatActivity {
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PassportMoreInfo.class);
-                startActivity(intent);
+                switchToPassportMoreInfo();
             }
         });
 
-        hamburgerMenu = (ImageButton) findViewById(R.id.hamburger_menu);
+
         hamburgerMenu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Settings.class);
-                startActivity(intent);
+                switchToSettings();
             }
         });
 
@@ -161,6 +160,20 @@ public class Passport extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void switchToPassportMoreInfo()
+    {
+        Intent intent = new Intent(this, PassportMoreInfo.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void switchToSettings()
+    {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+        finish();
     }
 
 }
