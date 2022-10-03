@@ -250,11 +250,10 @@
                 app:layout_constraintVertical_bias="0.773" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/nicknameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Nickname"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"
@@ -264,11 +263,10 @@
                 app:layout_constraintVertical_bias="0.312" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/birthdateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="1/1/1000"
                 android:textColor="#1d66c0"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
@@ -289,11 +287,10 @@
                 app:srcCompat="@drawable/ic_cake_icon" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/mantraTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="I love to go on many Adventours!"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"

@@ -37,6 +37,7 @@ import java.util.Map;
 
 public class SignupScreen extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
+    static String defaultMantra = "I love to go on many Adventours!";
 
     final Calendar birthdateCalendar = Calendar.getInstance();
     String nickname, email, birthdate, password, confirmPassword;
@@ -171,11 +172,12 @@ public class SignupScreen extends AppCompatActivity {
                 }
 
                 // If all fields are valid: create new document in Firebase with the user information.
+
                 if(AdventourUtils.isValidNickname(nickname) &&
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                    signUp(nickname, email, password, birthdate); // Attempt to create user document and add to firebase.
+                    signUp(nickname, email, password, birthdate, defaultMantra); // Attempt to create user document and add to firebase.
             }
         });
     }
@@ -288,13 +290,14 @@ public class SignupScreen extends AppCompatActivity {
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, String birthdate) {
+    private void addUserToFirestore(String nickname, String email, String birthdate, String defaultMantra) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
         adventourist.put("email", email);
         adventourist.put("birthdate", birthdate);
         adventourist.put("isPrivate", true);
+        adventourist.put("mantra", defaultMantra);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -317,7 +320,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, String birthdate) {
+    private void signUp(String nickname, String email, String password, String birthdate, String defaultMantra) {
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -327,7 +330,7 @@ public class SignupScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            addUserToFirestore(nickname, email, birthdate);
+                            addUserToFirestore(nickname, email, birthdate, defaultMantra);
                             switchToHome();
                         } else {
                             // If sign in fails, display a message to the user.

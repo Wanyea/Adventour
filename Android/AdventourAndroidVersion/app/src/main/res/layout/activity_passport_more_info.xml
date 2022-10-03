@@ -47,10 +47,12 @@
                 android:id="@+id/longCardImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.498"
                 app:srcCompat="@drawable/ic_passport_edit_top_card" />
 
             <View
@@ -262,7 +264,7 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="7dp"
@@ -272,7 +274,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/back_button"
+        android:id="@+id/backButton"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="15dp"
