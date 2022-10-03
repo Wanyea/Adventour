@@ -1,6 +1,5 @@
 package com.adventour.android;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -18,7 +17,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.Slider;
 
 
@@ -28,7 +26,7 @@ public class StartAdventour extends AppCompatActivity {
     ImageButton filterButton;
     Slider priceSlider;
     TextView priceTextView;
-    Button inProgessButton;
+    Button inProgressButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +49,9 @@ public class StartAdventour extends AppCompatActivity {
             }
         });
 
-        inProgessButton = (Button) findViewById(R.id.inProgessButton);
+        inProgressButton = (Button) findViewById(R.id.inProgressButton);
 
-        inProgessButton.setOnClickListener(new View.OnClickListener() {
+        inProgressButton.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View view)
            {
