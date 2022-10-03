@@ -1,36 +1,29 @@
 package com.adventour.android;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -195,24 +188,13 @@ public class PassportMoreInfo extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                if (email != changedEmail) {
-                                    changes.put("email", changedEmail);
-                                }
-                                if (nickname != changedNickname) {
-                                    changes.put("nickname", changedNickname);
-                                }
-                                if (birthdate != changedBirthdate) {
-                                    changes.put("birthdate", changedBirthdate);
-                                }
-                                if (mantra != changedMantra) {
-                                    changes.put("mantra", changedMantra);
-                                }
-                                if (firstName != changedFirstName) {
-                                    changes.put("firstName", changedFirstName);
-                                }
-                                if (lastName != changedLastName) {
-                                    changes.put("lastName", changedLastName);
-                                }
+
+                                if (!email.equals(changedEmail)) { changes.put("email", changedEmail); }
+                                if (!nickname.equals(changedNickname)) { changes.put("nickname", changedNickname); }
+                                if (!birthdate.equals(changedBirthdate)) { changes.put("birthdate", changedBirthdate); }
+                                if (!mantra.equals(changedMantra)) { changes.put("mantra", changedMantra); }
+                                if (!firstName.equals(changedFirstName)) { changes.put("firstName", changedFirstName); }
+                                if (!lastName.equals(changedLastName)) { changes.put("lastName", changedLastName); }
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
