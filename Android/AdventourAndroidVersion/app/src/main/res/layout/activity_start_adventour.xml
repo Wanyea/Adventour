@@ -134,6 +134,14 @@
                 app:layout_constraintStart_toEndOf="@id/sampleButton"
                 app:layout_constraintTop_toTopOf="@id/sampleButton" />
 
+            <Button
+                android:id="@+id/inProgessButton"
+                android:layout_width="142dp"
+                android:layout_height="47dp"
+                android:text="In progress"
+                tools:layout_editor_absoluteX="253dp"
+                tools:layout_editor_absoluteY="612dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

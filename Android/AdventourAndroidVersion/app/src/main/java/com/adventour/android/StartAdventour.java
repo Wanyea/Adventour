@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -27,6 +28,7 @@ public class StartAdventour extends AppCompatActivity {
     ImageButton filterButton;
     Slider priceSlider;
     TextView priceTextView;
+    Button inProgessButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,16 @@ public class StartAdventour extends AppCompatActivity {
             public void onClick(View view) {
                 onClickFilterButton(view);
             }
+        });
+
+        inProgessButton = (Button) findViewById(R.id.inProgessButton);
+
+        inProgessButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View view)
+           {
+              switchToInProgress();
+           }
         });
 
         // Perform item selected listener
@@ -103,6 +115,13 @@ public class StartAdventour extends AppCompatActivity {
 
         // Filter Price Text View
 
+    }
+
+    public void switchToInProgress()
+    {
+        Intent intent = new Intent(this, InProgress.class);
+        startActivity(intent);
+        finish();
     }
 
 
