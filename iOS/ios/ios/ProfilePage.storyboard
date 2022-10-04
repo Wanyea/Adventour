@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,9 +46,6 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gl-A1-ZFk">
                                                 <rect key="frame" x="27" y="50" width="321" height="214"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Passport_Card-1" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-lj-3ma">
-                                                        <rect key="frame" x="-36" y="3" width="394" height="209"/>
-                                                    </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te8-tP-ImB">
                                                         <rect key="frame" x="0.0" y="47" width="321" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -74,6 +70,17 @@
                                                         <color key="textColor" name="adv-black"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSr-gu-qP5">
+                                                        <rect key="frame" x="241" y="16" width="44" height="31"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="✏️"/>
+                                                        <connections>
+                                                            <segue destination="kl5-Ir-X4a" kind="show" id="kwD-f9-ccP"/>
+                                                        </connections>
+                                                    </button>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Passport_Card-1" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-lj-3ma">
+                                                        <rect key="frame" x="-36" y="3" width="394" height="209"/>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -81,8 +88,10 @@
                                                     <constraint firstAttribute="trailing" secondItem="eDw-nU-Gu3" secondAttribute="trailing" constant="260" id="9Nh-6s-bZQ"/>
                                                     <constraint firstAttribute="trailing" secondItem="jGz-mR-TiN" secondAttribute="trailing" constant="36" id="CiI-dq-rE7"/>
                                                     <constraint firstAttribute="bottom" secondItem="Uo1-X5-z0k" secondAttribute="bottom" constant="118" id="EMi-Sa-MN7"/>
+                                                    <constraint firstItem="ZSr-gu-qP5" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="16" id="FOY-CF-Tco"/>
                                                     <constraint firstItem="V5B-lj-3ma" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="3" id="H9a-ih-B9z"/>
                                                     <constraint firstAttribute="bottom" secondItem="V5B-lj-3ma" secondAttribute="bottom" constant="2" id="HUe-Yc-sF0"/>
+                                                    <constraint firstItem="ZSr-gu-qP5" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="241" id="OYb-YX-wwq"/>
                                                     <constraint firstItem="V5B-lj-3ma" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="-36" id="Or2-cN-J9M"/>
                                                     <constraint firstAttribute="height" constant="214" id="PcE-zk-75g"/>
                                                     <constraint firstItem="Uo1-X5-z0k" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="75" id="QFn-Zd-5tQ"/>
@@ -90,6 +99,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="eDw-nU-Gu3" secondAttribute="bottom" constant="118.5" id="TPD-6q-2uw"/>
                                                     <constraint firstAttribute="trailing" secondItem="Uo1-X5-z0k" secondAttribute="trailing" constant="48" id="YlD-Vr-Wef"/>
                                                     <constraint firstItem="eDw-nU-Gu3" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="38" id="aap-8L-9ae"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ZSr-gu-qP5" secondAttribute="bottom" constant="167" id="eBo-1X-rJ2"/>
                                                     <constraint firstAttribute="trailing" secondItem="te8-tP-ImB" secondAttribute="trailing" id="f2p-ht-w8h"/>
                                                     <constraint firstItem="te8-tP-ImB" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" id="lko-X8-147"/>
                                                     <constraint firstAttribute="bottom" secondItem="jGz-mR-TiN" secondAttribute="bottom" constant="41" id="mKk-Rv-fxS"/>
@@ -99,6 +109,7 @@
                                                     <constraint firstItem="eDw-nU-Gu3" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="75" id="rsU-LZ-bPj"/>
                                                     <constraint firstItem="te8-tP-ImB" firstAttribute="top" secondItem="1gl-A1-ZFk" secondAttribute="top" constant="47" id="tHY-bJ-Cfb"/>
                                                     <constraint firstItem="Uo1-X5-z0k" firstAttribute="leading" secondItem="1gl-A1-ZFk" secondAttribute="leading" constant="65" id="x67-gH-qf4"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ZSr-gu-qP5" secondAttribute="trailing" constant="36" id="zDd-g6-FfA"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shg-UL-OvO">
@@ -116,11 +127,12 @@
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="muF-Rl-lAj">
                                                 <rect key="frame" x="44.5" y="324" width="286" height="215"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="215" id="8eD-NN-gIx"/>
                                                     <constraint firstAttribute="width" constant="286" id="zw3-hM-niJ"/>
                                                 </constraints>
+                                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdvCard" rowHeight="149" id="wX6-dX-tCh">
@@ -231,12 +243,16 @@
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FuE-IN-dAK">
                                                 <rect key="frame" x="44.5" y="599" width="286" height="215"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="215" id="clt-wR-alM"/>
                                                     <constraint firstAttribute="width" constant="286" id="gaw-Va-qRG"/>
                                                 </constraints>
+                                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaCard" rowHeight="149" id="Bty-oP-fbe">
                                                         <rect key="frame" x="0.0" y="44.5" width="286" height="149"/>
@@ -355,6 +371,16 @@
             </objects>
             <point key="canvasLocation" x="23.199999999999999" y="80.50974512743629"/>
         </scene>
+        <!--EditProfile-->
+        <scene sceneID="Ptn-7w-DCB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EditProfilePage" referencedIdentifier="EditProfile" id="kl5-Ir-X4a" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="5CW-UB-IAy"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1la-N8-Iw4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="450" y="-154"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Beacon_Card" width="1920" height="1440"/>
@@ -382,8 +408,5 @@
         <namedColor name="adv-skyblue">
             <color red="0.72941176470588232" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
