@@ -16,6 +16,8 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegion(center: location, span: span)
         
         mapView?.setRegion(region, animated: true)
+        
+        
     }
 }
     
