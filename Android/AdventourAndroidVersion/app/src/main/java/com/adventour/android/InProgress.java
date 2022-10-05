@@ -100,31 +100,29 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         locationParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         addPhotoParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
-        showOnMap.setPadding(0, 0, 0, 40);
+        showOnMap.setPadding(0, 0, 0, 0);
 
-        locationParams.setMargins(30, 25, 0, 0);
-        showOnMapParams.setMargins(70, 150, 0, 0);
-        addPhotoParams.setMargins(30, 420, 0, 0);
+        locationParams.setMargins(90, 90, 0, 0);
+        showOnMapParams.setMargins(90, 150, 0, 0);
+        addPhotoParams.setMargins(90, 205, 0, 30);
+
+        locations.setLayoutParams(locationParams);
+        locations.setText("University of Central Florida");
+        locations.setTextSize(18);
+        locations.setTextColor(getResources().getColor(R.color.black));
 
         showOnMap.setLayoutParams(showOnMapParams);
         showOnMap.setText("Show on Map");
-        showOnMap.setTextSize(18);
+        showOnMap.setTextSize(16);
         showOnMap.setTextColor(getResources().getColor(R.color.red_variant));
         showOnMap.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         showOnMap.setClickable(true);
 
-
-        locations.setLayoutParams(locationParams);
-        locations.setText("University of Central Florida");
-        locations.setTextSize(16);
-        locations.setTextColor(getResources().getColor(R.color.red_variant));
-        locations.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
         addPhoto.setLayoutParams(addPhotoParams);
         addPhoto.setText("Add Photo");
         addPhoto.setTextSize(16);
-        addPhoto.setTextColor(getResources().getColor(R.color.red_variant));
-        addPhoto.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD_ITALIC));
+        addPhoto.setTextColor(getResources().getColor(R.color.blue_main));
+        addPhoto.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         addPhoto.setClickable(true);
         addPhoto.setFocusable(true);
 

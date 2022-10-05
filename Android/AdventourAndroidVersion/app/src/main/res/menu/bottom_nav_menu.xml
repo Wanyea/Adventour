@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/passport"
-        android:icon="@drawable/ic_user_icon"
+        android:icon="@drawable/passport_selector"
         android:title="@string/passport"/>
     <item
         android:id="@+id/start_adventour"
-        android:icon="@drawable/ic_pin_icon"
+        android:icon="@drawable/start_adventour_selector"
         android:title="@string/start_adventour"/>
     <item
         android:id="@+id/beacons"
-        android:icon="@drawable/ic_beacon_icon"
+        android:icon="@drawable/beacons_selector"
         android:title="@string/beacons"/>
 </menu>
 
