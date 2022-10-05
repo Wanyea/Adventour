@@ -20,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
-public class InProgress extends AppCompatActivity implements OnMapReadyCallback {
+public class InProgress extends AppCompatActivity /*implements OnMapReadyCallback*/ {
     
     Context context;
     LinearLayout linearLayout;
@@ -66,17 +66,22 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
             return false;
         });
 
+        /*
         // Google Maps API
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapsContainerView);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);*/
+
 
     }
 
+    /*
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap)
     {
 
     }
+
+         */
 
     public void newInProgressCard()
     {

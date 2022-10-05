@@ -27,9 +27,23 @@
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon_outline.xml" value="0.2285" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_x_icon.xml" value="0.2595" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/navbar_selector.xml" value="0.24" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/passport_selector.xml" value="0.2285" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/popup_rectangle.xml" value="0.1055" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/start_adventour_selector.xml" value="0.2285" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_account.xml" value="0.24365942028985507" />
-        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacons.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacons.xml" value="0.14963503649635038" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_congratulations.xml" value="0.1" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_home.xml" value="0.19655797101449277" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_in_progress.xml" value="0.1" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.264" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_passport.xml" value="0.1" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_passport_more_info.xml" value="0.1" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_settings.xml" value="0.1" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.4" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_start_adventour.xml" value="0.2" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/popup_filter.xml" value="0.1" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.2234375" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_passport.xml" value="0.3625" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.25" />
