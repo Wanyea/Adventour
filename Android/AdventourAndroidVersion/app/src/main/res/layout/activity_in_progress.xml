@@ -4,8 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Beacons">
+    tools:context=".InProgress">
 
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapsContainerView"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,48 +35,30 @@
         app:menu="@menu/bottom_nav_menu" />
 
     <ScrollView
+        android:id="@+id/scrollView5"
         android:layout_width="350dp"
         android:layout_height="420dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/ic_notepad_paper"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapsContainerView">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/destinationTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Sample Destination"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/openMapTextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Open Map"
-                android:textColor="@color/red_main"
-                android:textColorLink="@color/red_main"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/addPhotoTextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Add Photo"
-                android:textColor="@color/blue_main"
-                android:textSize="14sp" />
+            android:orientation="vertical"
+            android:focusableInTouchMode="true">
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/cardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Card"
+        tools:layout_editor_absoluteX="14dp"
+        tools:layout_editor_absoluteY="15dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
