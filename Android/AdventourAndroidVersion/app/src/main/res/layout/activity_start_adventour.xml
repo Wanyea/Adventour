@@ -38,23 +38,61 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-100dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="200dp">
 
             <ImageView
-                android:id="@+id/balloonRopeCardImageView"
+                android:id="@+id/balloonRopeImageView"
                 android:layout_width="350dp"
-                android:layout_height="1250dp"
+                android:layout_height="603.2dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_balloon_rope_card" />
+                app:layout_constraintTop_toBottomOf="@id/sampleButton"
+                app:srcCompat="@drawable/ic_balloon_rope" />
+
+            <ImageView
+                android:id="@+id/ticketCardImageView"
+                android:layout_width="350dp"
+                android:layout_height="262.5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/balloonRopeImageView"
+                app:srcCompat="@drawable/ic_ticket_card" />
+
+            <Button
+                android:id="@+id/notNowButton"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/blue_main"
+                android:text="Not Now"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="120dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ticketCardImageView" />
+
+            <Button
+                android:id="@+id/yesButton"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:backgroundTint="@color/blue_main"
+                android:text="Yes"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="120dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/notNowButton"
+                app:layout_constraintTop_toBottomOf="@id/ticketCardImageView" />
 
             <EditText
                 android:id="@+id/startAnAdventourEditText"
@@ -107,7 +145,7 @@
                 android:id="@+id/sampleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:backgroundTint="#1D66C0"
+                android:backgroundTint="@color/blue_main"
                 android:drawableLeft="@drawable/ic_x_icon"
                 android:gravity="left"
                 android:paddingLeft="5dp"
@@ -126,7 +164,7 @@
                 android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
-                android:backgroundTint="#1D66C0"
+                android:backgroundTint="@color/blue_main"
                 android:drawableLeft="@drawable/ic_plus_icon"
                 android:paddingLeft="9dp"
 
@@ -135,29 +173,32 @@
                 app:layout_constraintTop_toTopOf="@id/sampleButton" />
 
             <Button
-                android:id="@+id/inProgessButton"
+                android:id="@+id/inProgressButton"
                 android:layout_width="142dp"
                 android:layout_height="47dp"
                 android:text="In progress"
-                tools:layout_editor_absoluteX="253dp"
-                tools:layout_editor_absoluteY="612dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/navy_main"
-        android:layout_marginBottom="0dp"
-        app:itemIconTint="@drawable/navbar_selector"
-        app:itemTextColor="@drawable/navbar_selector"
+
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+
+        app:itemBackground="@color/navy_main"
+        app:itemIconTint="@drawable/navbar_selector"
+        app:itemTextColor="@drawable/navbar_selector"
         app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
