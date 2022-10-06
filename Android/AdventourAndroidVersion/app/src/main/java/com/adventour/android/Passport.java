@@ -32,12 +32,16 @@ public class Passport extends AppCompatActivity {
 
     ImageButton hamburgerMenu;
 
+    FirebaseAuth auth;
+    FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passport);
+
 
         imageButton = (ImageButton) findViewById(R.id.imageButton);
         hamburgerMenu = (ImageButton) findViewById(R.id.hamburger_menu);
@@ -46,6 +50,7 @@ public class Passport extends AppCompatActivity {
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
 
+        handleAuth();
         populatePassportTextViews();
         populatePreviousAdventours();
 
@@ -173,4 +178,21 @@ public class Passport extends AppCompatActivity {
         finish();
     }
 
+    public void switchToLoggedOut()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void handleAuth()
+    {
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null)
+        {
+            switchToLoggedOut();
+        }
+    }
 }

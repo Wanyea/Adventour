@@ -19,6 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class InProgress extends AppCompatActivity implements OnMapReadyCallback {
     
@@ -26,13 +28,18 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     LinearLayout linearLayout;
     Button cardButton;
 
+    FirebaseAuth auth;
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_progress);
 
+        handleAuth();
+
         // Initialize and assign variable
-        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.beacons);
@@ -134,5 +141,23 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         frameLayout.addView(locations);
         frameLayout.addView(addPhoto);
         linearLayout.addView(frameLayout);
+    }
+
+    public void switchToLoggedOut()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void handleAuth()
+    {
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null)
+        {
+            switchToLoggedOut();
+        }
     }
 }
