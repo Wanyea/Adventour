@@ -32,17 +32,20 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
+
+        app:itemBackground="@color/navy_main"
         app:itemIconTint="@drawable/navbar_selector"
         app:itemTextColor="@drawable/navbar_selector"
-        app:itemBackground="@color/navy_main"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
     <ScrollView
@@ -87,68 +90,14 @@
                     android:orientation="vertical"
                     android:focusableInTouchMode="true">
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/imageView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="20dp"
-                            app:srcCompat="@drawable/ic_stamp_card" />
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="3/18/2000 - 3/19/2000"
-                            android:textColor="#ff4b47"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="50dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="\u25CF University of Central Florida\n\u25CF The Cloak and Blaster\n\u25CF American Escape Rooms Orlando"
-                            android:textColor="#ff4b47"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="150dp"
-                            android:fontFamily="@font/roboto_bold_italic"
-                            android:text="> More..."
-                            android:textColor="#ff4b47"
-                            android:textSize="18sp" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/imageView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_stamp_card" />
-                    </FrameLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/scrollView2"
                 android:layout_width="wrap_content"
-                android:layout_height="240dp"
+                android:layout_height="300dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -160,51 +109,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/imageView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="20dp"
-                            app:srcCompat="@drawable/ic_stamp_card" />
-
-                        <ImageView
-                            android:id="@+id/imageView15"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="45dp"
-                            app:srcCompat="@drawable/ic_map_scroll" />
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="240dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/roboto_italic"
-                            android:text="3/19/2022"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/textView7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="180dp"
-                            android:layout_marginTop="35dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="\u25CF University of\n\t Central Florida\n\u25CF The Cloak\n\t and Blaster\n\u25CF American\n\t Escape Rooms\n\t Orlando"
-                            android:textSize="16sp"/>
-                    </FrameLayout>
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_stamp_card" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -217,6 +121,8 @@
                 android:textSize="20sp"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toTopOf="@id/scrollView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
