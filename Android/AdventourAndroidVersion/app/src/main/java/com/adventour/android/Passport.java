@@ -353,7 +353,7 @@ public class Passport extends AppCompatActivity {
         finish();
     }
 
-    public void switchToLoggedOut()
+     public void switchToLoggedOut()
     {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
