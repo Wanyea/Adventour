@@ -27,6 +27,7 @@
 		2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */; };
 		4A15DD1E28E4EA0E00F763A7 /* EditProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A15DD1D28E4EA0E00F763A7 /* EditProfilePage.storyboard */; };
 		4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */; };
+		4A8D880328F3414700E722D4 /* AdventourSummaryPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */; };
 		F038D4A728C960D6006D953A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F038D4A628C960D6006D953A /* FirebaseAuth */; };
 		F038D4A928C960D6006D953A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F038D4A828C960D6006D953A /* FirebaseFirestore */; };
 		F038D4AB28C960D6006D953A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F038D4AA28C960D6006D953A /* FirebaseFirestoreSwift */; };
@@ -78,6 +79,7 @@
 		2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		4A15DD1D28E4EA0E00F763A7 /* EditProfilePage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditProfilePage.storyboard; sourceTree = "<group>"; };
 		4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdventourSummaryPage.storyboard; sourceTree = "<group>"; };
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F0D227BD28C02B65003E3100 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				2A9EBF6A28B5823B009ED151 /* Info.plist */,
 				F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */,
 				4A15DD1D28E4EA0E00F763A7 /* EditProfilePage.storyboard */,
+				4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				2A9EBF6928B5823B009ED151 /* LaunchScreen.storyboard in Resources */,
 				F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */,
 				2AAB4E2C28E72BC700868DB2 /* BeaconPost.storyboard in Resources */,
+				4A8D880328F3414700E722D4 /* AdventourSummaryPage.storyboard in Resources */,
 				2A9EBF6428B58239009ED151 /* Main.storyboard in Resources */,
 				2AC1B40828C91F3D00F4D8B9 /* ProfilePage.storyboard in Resources */,
 				2AC1B40A28C9267900F4D8B9 /* StartPage.storyboard in Resources */,
