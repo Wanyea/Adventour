@@ -32,9 +32,20 @@
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_passport_more_info.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.264" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_start_adventour.xml" value="0.2" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_pin_icon.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_pin_icon_outline.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_plus_icon.xml" value="0.2645" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_save_icon.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_stamp_card.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_ticket_card.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon_blue.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_x_icon.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/plus_alt.xml" value="0.261" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/popup_rectangle.xml" value="0.261" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacons.xml" value="0.2046875" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_congratulations.xml" value="0.2046875" />
-        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_in_progress.xml" value="0.16" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_in_progress.xml" value="0.25" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.2234375" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_passport.xml" value="0.3625" />
@@ -45,7 +56,10 @@
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/in_progress_card_layout.xml" value="0.21875" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/in_progress_resource.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/popup_filter.xml" value="0.3625" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/previous_adventour_card_layout.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/menu/hamburger_menu.xml" value="0.2965811965811966" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/menu/test.xml" value="0.2965811965811966" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.36277173913043476" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/wanye/source/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.36277173913043476" />

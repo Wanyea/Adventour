@@ -41,13 +41,13 @@
         android:id="@+id/inProgressScrollView"
         android:layout_width="350dp"
         android:layout_height="420dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/ic_notepad_paper"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapsContainerView">
+        app:layout_constraintTop_toTopOf="parent">
 
-   <!--     <LinearLayout
+        <!--     <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,12 +62,17 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/cardButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/finishAdventourButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generate Card"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="15dp" />
+        android:layout_gravity="end|bottom"
+        android:text="Finish Adventour"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.874"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inProgressScrollView"
+        app:layout_constraintVertical_bias="0.67" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
