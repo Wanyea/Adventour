@@ -55,7 +55,7 @@ public class StartAdventour extends AppCompatActivity {
            @Override
             public void onClick(View view)
            {
-              switchToInProgress();
+              switchToAdventourSummary();
            }
         });
 
@@ -118,6 +118,13 @@ public class StartAdventour extends AppCompatActivity {
     public void switchToInProgress()
     {
         Intent intent = new Intent(this, InProgress.class);
+        startActivity(intent);
+        finish();
+    }
+
+    // Testing only, delete before prod
+    public void switchToAdventourSummary() {
+        Intent intent = new Intent(this, AdventourSummary.class);
         startActivity(intent);
         finish();
     }
