@@ -12,6 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AdventourAndroidVersion"
         tools:targetApi="31">
+           <activity
+            android:name=".BeaconPost"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdventourSummary"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait />
         <activity
             android:name=".Congratulations"
             android:exported="false" />

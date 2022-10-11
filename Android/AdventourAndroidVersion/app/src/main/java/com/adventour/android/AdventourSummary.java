@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,55 +19,47 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class InProgress extends AppCompatActivity /*implements OnMapReadyCallback*/ {
-    
+public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyCallback*/ {
+
     Context context;
+    LinearLayout linearLayout;
+    Button cardButton;
 
     FirebaseAuth auth;
     FirebaseUser user;
 
-    Button finishAdventourButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_in_progress);
-
+        setContentView(R.layout.activity_adventour_summary);
 
         handleAuth();
 
-        RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
-        InProgressRV.setNestedScrollingEnabled(false);
-
-        finishAdventourButton = (Button) findViewById(R.id.finishAdventourButton);
+        RecyclerView adventourSummaryRV = findViewById(R.id.adventourSummaryRV);
+        adventourSummaryRV.setNestedScrollingEnabled(false);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
+        ArrayList<AdventourSummaryModel> adventourArrayList = new ArrayList<AdventourSummaryModel>();
+        adventourArrayList.add(new AdventourSummaryModel("UCF1", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF2", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF3", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF4", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF5", "University of Central Florida"));
 
-        ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
-        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("American Escape Rooms Orlando", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("Arcade Monsters", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("Congo River Golf", String.valueOf(Math.random()), String.valueOf(Math.random())));
-
-        InProgressAdapter inProgressAdapter = new InProgressAdapter(this, inProgressModelArrayList);
+        AdventourSummaryAdapter adventourSummaryAdapter = new AdventourSummaryAdapter(this, adventourArrayList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        InProgressRV.setLayoutManager(linearLayoutManager);
-        InProgressRV.setAdapter(inProgressAdapter);
+        adventourSummaryRV.setLayoutManager(linearLayoutManager);
+        adventourSummaryRV.setAdapter(adventourSummaryAdapter);
+
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.beacons);
-
-        context = getApplicationContext();
-
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
-
             switch(item.getItemId())
             {
                 case R.id.passport:
@@ -82,44 +75,11 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
             }
             return false;
         });
-
-        finishAdventourButton.setOnClickListener(new  View.OnClickListener() {
-           @Override
-           public void onClick(View view)
-           {
-                switchToCongratulations();
-           }
-        });
-
-
-
-        /*
-        // Google Maps API
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapsContainerView);
-        mapFragment.getMapAsync(this);*/
-
-
     }
-
-    /*
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap)
-    {
-
-    }
-
-         */
 
     public void switchToLoggedOut()
     {
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void switchToCongratulations()
-    {
-        Intent intent = new Intent(this, Congratulations.class);
         startActivity(intent);
         finish();
     }
