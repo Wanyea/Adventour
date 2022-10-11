@@ -6,12 +6,15 @@
         <entry key="..\:/Users/frass/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.22644927536231885" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/edit_text_round.xml" value="0.24" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/frame_brown_variant.xml" value="0.2595" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_adventour_logo.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_ballon_rope_card.xml" value="0.2125" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_beacon_card_2.xml" value="0.259" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_calendar_icon.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_cloud_1.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_cloud_2.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_cloud_3.xml" value="0.24" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_edit_icon.xml" value="0.2545" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_email_icon.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_launcher_background.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_lock_icon.xml" value="0.24" />
@@ -20,7 +23,9 @@
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon.xml" value="0.24" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_x_icon.xml" value="0.2595" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/navbar_selector.xml" value="0.24" />
+
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_account.xml" value="0.24365942028985507" />
+        <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacon_post.xml" value="0.2" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacons.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_home.xml" value="0.19655797101449277" />
         <entry key="..\:/Users/scarab/Documents/Git/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_in_progress.xml" value="0.2" />
