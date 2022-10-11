@@ -40,11 +40,11 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
         ArrayList<AdventourSummaryModel> adventourArrayList = new ArrayList<AdventourSummaryModel>();
-        adventourArrayList.add(new AdventourSummaryModel("UCF", "University of Central Florida"));
-        adventourArrayList.add(new AdventourSummaryModel("UCF", "University of Central Florida"));
-        adventourArrayList.add(new AdventourSummaryModel("UCF", "University of Central Florida"));
-        adventourArrayList.add(new AdventourSummaryModel("UCF", "University of Central Florida"));
-        adventourArrayList.add(new AdventourSummaryModel("UCF", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF1", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF2", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF3", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF4", "University of Central Florida"));
+        adventourArrayList.add(new AdventourSummaryModel("UCF5", "University of Central Florida"));
 
         AdventourSummaryAdapter adventourSummaryAdapter = new AdventourSummaryAdapter(this, adventourArrayList);
 
