@@ -23,6 +23,9 @@
             android:exported="false"
             android:screenOrientation="portrait />
         <activity
+            android:name=".Congratulations"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:configChanges="orientation"
             android:exported="false"

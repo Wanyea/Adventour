@@ -6,11 +6,16 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -46,15 +51,14 @@ public class Passport extends AppCompatActivity {
 
     TextView nicknameTextView, birthdateTextView, mantraTextView;
 
-    ImageButton hamburgerMenu;
-
-
     FirebaseAuth auth;
     FirebaseUser user;
 
 
     Context context;
     LinearLayout linearLayout, linearLayout2;
+
+    Menu hamburgerMenu;
 
 
     @Override
@@ -70,7 +74,6 @@ public class Passport extends AppCompatActivity {
 
 
         imageButton = (ImageButton) findViewById(R.id.imageButton);
-        hamburgerMenu = (ImageButton) findViewById(R.id.hamburger_menu);
 
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
@@ -80,6 +83,8 @@ public class Passport extends AppCompatActivity {
         populatePassportTextViews();
         populatePreviousAdventours();
 
+
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switchToPassportMoreInfo();
@@ -87,11 +92,6 @@ public class Passport extends AppCompatActivity {
         });
 
 
-        hamburgerMenu.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                switchToSettings();
-            }
-        });
 
         for (int i = 0; i < 3; i++) {
             newPreviousAdventourCard();
@@ -126,6 +126,53 @@ public class Passport extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.hamburger_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        // Build AlertDialog that will alert users when they try to log out.
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setMessage("Are you sure you want to log out?");
+        alertBuilder.setCancelable(true);
+
+        alertBuilder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        FirebaseAuth.getInstance().signOut();
+                        switchToLoggedOut();
+                    }
+                });
+
+        alertBuilder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        switch(item.getItemId())
+        {
+            case R.id.logOut:
+                AlertDialog alert = alertBuilder.create();
+                alert.show();
+                return true;
+
+            case R.id.settings:
+                switchToSettings();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void newPreviousAdventourCard() {
         FrameLayout.LayoutParams layoutParams;

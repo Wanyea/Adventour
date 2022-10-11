@@ -21,11 +21,11 @@ import java.util.ArrayList;
 public class InProgress extends AppCompatActivity /*implements OnMapReadyCallback*/ {
     
     Context context;
-    LinearLayout linearLayout;
-    Button cardButton;
 
     FirebaseAuth auth;
     FirebaseUser user;
+
+    Button finishAdventourButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -37,6 +37,8 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
         InProgressRV.setNestedScrollingEnabled(false);
+
+        finishAdventourButton = (Button) findViewById(R.id.finishAdventourButton);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
 
@@ -62,16 +64,6 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
 
         context = getApplicationContext();
 
-       // linearLayout = findViewById(R.id.linearLayout);
-
-        cardButton = (Button) findViewById(R.id.cardButton);
-
-        cardButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-               /* newInProgressCard();*/
-            }
-        });
-
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
 
@@ -91,6 +83,16 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
             return false;
         });
 
+        finishAdventourButton.setOnClickListener(new  View.OnClickListener() {
+           @Override
+           public void onClick(View view)
+           {
+                switchToCongratulations();
+           }
+        });
+
+
+
         /*
         // Google Maps API
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapsContainerView);
@@ -108,65 +110,16 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
 
          */
 
-   /* public void newInProgressCard()
-    {
-        FrameLayout.LayoutParams layoutParams;
-        FrameLayout.LayoutParams showOnMapParams;
-        FrameLayout.LayoutParams locationParams;
-        FrameLayout.LayoutParams addPhotoParams;
-        FrameLayout frameLayout;
-        ImageView imageView;
-        TextView showOnMap;
-        TextView locations;
-        TextView addPhoto;
-
-        imageView = new ImageView(context);
-        showOnMap = new TextView(context);
-        locations = new TextView(context);
-        frameLayout = new FrameLayout(context);
-        addPhoto = new TextView(context);
-        layoutParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        showOnMapParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        locationParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        addPhotoParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-        showOnMap.setPadding(0, 0, 0, 0);
-
-        locationParams.setMargins(90, 90, 0, 0);
-        showOnMapParams.setMargins(90, 150, 0, 0);
-        addPhotoParams.setMargins(90, 205, 0, 30);
-
-        locations.setLayoutParams(locationParams);
-        locations.setText("University of Central Florida");
-        locations.setTextSize(18);
-        locations.setTextColor(getResources().getColor(R.color.black));
-
-        showOnMap.setLayoutParams(showOnMapParams);
-        showOnMap.setText("Show on Map");
-        showOnMap.setTextSize(16);
-        showOnMap.setTextColor(getResources().getColor(R.color.red_variant));
-        showOnMap.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        showOnMap.setClickable(true);
-
-        addPhoto.setLayoutParams(addPhotoParams);
-        addPhoto.setText("Add Photo");
-        addPhoto.setTextSize(16);
-        addPhoto.setTextColor(getResources().getColor(R.color.blue_main));
-        addPhoto.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        addPhoto.setClickable(true);
-        addPhoto.setFocusable(true);
-
-        frameLayout.setLayoutParams(layoutParams);
-        frameLayout.addView(imageView);
-        frameLayout.addView(showOnMap);
-        frameLayout.addView(locations);
-        frameLayout.addView(addPhoto);
-        linearLayout.addView(frameLayout);
-    }
-*/
     public void switchToLoggedOut()
     {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void switchToCongratulations()
+    {
+        Intent intent = new Intent(this, Congratulations.class);
         startActivity(intent);
         finish();
     }
