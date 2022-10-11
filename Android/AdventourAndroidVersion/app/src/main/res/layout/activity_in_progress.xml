@@ -47,13 +47,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapsContainerView">
 
-        <LinearLayout
+   <!--     <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:focusableInTouchMode="true">
-        </LinearLayout>
+        </LinearLayout>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inProgressRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </ScrollView>
 
     <Button

@@ -25,20 +25,18 @@ public class Settings extends AppCompatActivity {
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-
         logoutButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View V) {
-               /*switchToLoggedOut();
-               auth.getInstance().signOut();*/
+               FirebaseAuth.getInstance().signOut();
+               switchToLoggedOut();
            }
         });
     }
 
     public void switchToLoggedOut()
     {
-        Intent intent = new Intent(this, PassportMoreInfo.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

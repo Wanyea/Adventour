@@ -1,24 +1,22 @@
 package com.adventour.android;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class InProgress extends AppCompatActivity /*implements OnMapReadyCallback*/ {
     
@@ -26,24 +24,51 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
     LinearLayout linearLayout;
     Button cardButton;
 
+    FirebaseAuth auth;
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_progress);
 
+
+        handleAuth();
+
+        RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
+        InProgressRV.setNestedScrollingEnabled(false);
+
+        // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
+
+        ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
+        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", String.valueOf(Math.random()), String.valueOf(Math.random())));
+        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", String.valueOf(Math.random()), String.valueOf(Math.random())));
+        inProgressModelArrayList.add(new InProgressModel("American Escape Rooms Orlando", String.valueOf(Math.random()), String.valueOf(Math.random())));
+        inProgressModelArrayList.add(new InProgressModel("Arcade Monsters", String.valueOf(Math.random()), String.valueOf(Math.random())));
+        inProgressModelArrayList.add(new InProgressModel("Congo River Golf", String.valueOf(Math.random()), String.valueOf(Math.random())));
+
+        InProgressAdapter inProgressAdapter = new InProgressAdapter(this, inProgressModelArrayList);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        InProgressRV.setLayoutManager(linearLayoutManager);
+        InProgressRV.setAdapter(inProgressAdapter);
+
         // Initialize and assign variable
-        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.beacons);
 
         context = getApplicationContext();
-        linearLayout = findViewById(R.id.linearLayout);
+
+       // linearLayout = findViewById(R.id.linearLayout);
+
         cardButton = (Button) findViewById(R.id.cardButton);
 
         cardButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                newInProgressCard();
+               /* newInProgressCard();*/
             }
         });
 
@@ -83,7 +108,7 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
 
          */
 
-    public void newInProgressCard()
+   /* public void newInProgressCard()
     {
         FrameLayout.LayoutParams layoutParams;
         FrameLayout.LayoutParams showOnMapParams;
@@ -137,5 +162,23 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         frameLayout.addView(locations);
         frameLayout.addView(addPhoto);
         linearLayout.addView(frameLayout);
+    }
+*/
+    public void switchToLoggedOut()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void handleAuth()
+    {
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null)
+        {
+            switchToLoggedOut();
+        }
     }
 }
