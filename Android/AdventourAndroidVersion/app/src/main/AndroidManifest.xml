@@ -21,7 +21,7 @@
             android:name=".AdventourSummary"
             android:configChanges="orientation"
             android:exported="false"
-            android:screenOrientation="portrait />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Congratulations"
             android:exported="false" />

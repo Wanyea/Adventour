@@ -93,7 +93,7 @@
         android:drawableLeft="@drawable/ic_lock_icon"
         android:drawableTint="@color/blue_main"
         android:drawablePadding="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/signupTextView"
+        app:layout_constraintBottom_toTopOf="@+id/signupTextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
@@ -128,13 +128,13 @@
         android:layout_marginEnd="10dp"
         android:text="Don't have an account?"
         android:textColor="@color/blue_main"
-        app:layout_constraintBaseline_toBaselineOf="@+id/signupTextView"
-        app:layout_constraintEnd_toStartOf="@+id/signupTextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/signupTextButton"
+        app:layout_constraintEnd_toStartOf="@+id/signupTextButton"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/signupTextView"
+        android:id="@+id/signupTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -145,6 +145,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dontTextView"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+    <TextView
+        android:id="@+id/forgotTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Forgot password?"
+        android:textColor="@color/blue_main"
+        app:layout_constraintTop_toBottomOf="@id/dontTextView"
+        app:layout_constraintEnd_toStartOf="@+id/resetPasswordTextButton"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/resetPasswordTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="Reset Password"
+        android:textColor="@color/red_main"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/forgotTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/forgotTextView" />
 
     <Button
         android:id="@+id/loginButton"
@@ -161,7 +186,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/signupTextButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

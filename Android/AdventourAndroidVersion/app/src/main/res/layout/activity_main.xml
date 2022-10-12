@@ -17,13 +17,13 @@
         android:textColor="@color/navy_main"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/signupTextView"
+        app:layout_constraintBottom_toTopOf="@+id/signupTextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/signupTextView"
+        android:id="@+id/signupTextButton"
         android:layout_width="113dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"

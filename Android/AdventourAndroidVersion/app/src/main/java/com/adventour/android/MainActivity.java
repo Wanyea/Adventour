@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        signupTextView = (TextView) findViewById(R.id.signupTextView);
+        signupTextView = (TextView) findViewById(R.id.signupTextButton);
         loginTextView = (TextView) findViewById(R.id.loginTextView);
 
 

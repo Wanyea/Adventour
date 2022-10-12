@@ -24,4 +24,12 @@
         app:itemTextColor="@drawable/navbar_selector"
         app:menu="@menu/bottom_nav_menu" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beacon Post"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

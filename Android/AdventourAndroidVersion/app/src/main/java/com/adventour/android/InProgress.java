@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.controls.actions.FloatAction;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,7 +26,7 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
     FirebaseAuth auth;
     FirebaseUser user;
 
-    Button finishAdventourButton;
+    FloatingActionButton finishAdventourButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,7 +39,7 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
         InProgressRV.setNestedScrollingEnabled(false);
 
-        finishAdventourButton = (Button) findViewById(R.id.finishAdventourButton);
+        finishAdventourButton = (FloatingActionButton) findViewById(R.id.finishAdventourButton);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
 

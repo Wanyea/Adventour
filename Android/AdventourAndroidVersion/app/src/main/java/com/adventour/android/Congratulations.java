@@ -31,7 +31,7 @@ public class Congratulations extends AppCompatActivity {
         viewAdventourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                switchToAdventourSummary();
             }
         });
 
@@ -50,11 +50,11 @@ public class Congratulations extends AppCompatActivity {
         // finish();
     }
 
-    public void switchToAdventourSummary()
-    {
-        // Put intent here once Ryan has finished this page
-        // startActivity(intent);
-        // finish();
+    // Testing only, delete before prod
+    public void switchToAdventourSummary() {
+        Intent intent = new Intent(this, AdventourSummary.class);
+        startActivity(intent);
+        finish();
     }
 
     public void switchToStartAdventour()
@@ -63,4 +63,6 @@ public class Congratulations extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }
