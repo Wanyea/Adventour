@@ -21,14 +21,14 @@ router.post('/get-foursquare-places', async (req, res, next) => {
         .then(userRecord => {
             console.log(`Successfully fetched user data: ${userRecord.toJSON()}`)
 
-            // console.log("Body")
-            // console.log("===============")
-            // console.log(req.body)
-            // console.log("===============")
-            // console.log("ids")
-            // console.log("===============")
-            // console.log(ids)
-            // console.log("===============")
+             console.log("Body")
+             console.log("===============")
+             console.log(req.body)
+             console.log("===============")
+             console.log("ids")
+             console.log("===============")
+             console.log(ids)
+             console.log("===============")
 
 
             foursquare.auth(key);
@@ -40,10 +40,10 @@ router.post('/get-foursquare-places', async (req, res, next) => {
                 })
             }))
             .then(results => {
-                // console.log("Results")
-                // console.log("===============")
-                // console.log(results)
-                // console.log("===============")
+                 console.log("Results")
+                 console.log("===============")
+                 console.log(results)
+                 console.log("===============")
                 
                 var ret = {
                     status: 200,
