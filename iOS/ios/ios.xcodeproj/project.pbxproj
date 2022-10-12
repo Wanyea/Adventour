@@ -34,7 +34,11 @@
 		F038D4AD28C960D6006D953A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = F038D4AC28C960D6006D953A /* FirebaseFunctions */; };
 		F038D4AF28C96FBD006D953A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */; };
 		F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */; };
+		F0A9D67328ECD0A00028A718 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D67228ECD0A00028A718 /* Location.swift */; };
+		F0A9D67528ECD4920028A718 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */; };
+		F0A9D67828ECF3C90028A718 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F0A9D67728ECF3C90028A718 /* Alamofire */; };
 		F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D227BD28C02B65003E3100 /* Assets.xcassets */; };
+		F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +86,10 @@
 		4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdventourSummaryPage.storyboard; sourceTree = "<group>"; };
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		F0A9D67228ECD0A00028A718 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
 		F0D227BD28C02B65003E3100 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0A9D67828ECF3C90028A718 /* Alamofire in Frameworks */,
 				F038D4A728C960D6006D953A /* FirebaseAuth in Frameworks */,
 				F038D4A928C960D6006D953A /* FirebaseFirestore in Frameworks */,
 				F038D4AB28C960D6006D953A /* FirebaseFirestoreSwift in Frameworks */,
@@ -146,6 +154,8 @@
 				4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */,
 				2A7F520828CD190400F6D30E /* StartViewController.swift */,
 				2AA16D8228D91A0400A7D16D /* MapViewController.swift */,
+				F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */,
+				F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */,
 				2AA16D8428DCBC9000A7D16D /* CongratsViewController.swift */,
 				2AAB4E2D28E72C0000868DB2 /* BeaconPostViewController.swift */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
@@ -159,6 +169,7 @@
 				F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */,
 				4A15DD1D28E4EA0E00F763A7 /* EditProfilePage.storyboard */,
 				4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */,
+				F0A9D67228ECD0A00028A718 /* Location.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -201,6 +212,7 @@
 				F038D4A828C960D6006D953A /* FirebaseFirestore */,
 				F038D4AA28C960D6006D953A /* FirebaseFirestoreSwift */,
 				F038D4AC28C960D6006D953A /* FirebaseFunctions */,
+				F0A9D67728ECF3C90028A718 /* Alamofire */,
 			);
 			productName = storyboard;
 			productReference = 2A9EBF5928B58238009ED151 /* ios.app */;
@@ -276,6 +288,7 @@
 			mainGroup = 2A9EBF5028B58238009ED151;
 			packageReferences = (
 				F038D4A528C960D6006D953A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F0A9D67628ECF3C90028A718 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 2A9EBF5A28B58238009ED151 /* Products */;
 			projectDirPath = "";
@@ -328,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
+				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
 				2A9EBF8D28B69114009ED151 /* LoginViewController.swift in Sources */,
 				2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */,
@@ -336,7 +350,9 @@
 				F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */,
 				2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */,
 				2AAB4E2E28E72C0000868DB2 /* BeaconPostViewController.swift in Sources */,
+				F0A9D67528ECD4920028A718 /* MapTableViewCell.swift in Sources */,
 				2A7F520928CD190400F6D30E /* StartViewController.swift in Sources */,
+				F0A9D67328ECD0A00028A718 /* Location.swift in Sources */,
 				2AA16D8328D91A0400A7D16D /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,6 +701,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		F0A9D67628ECF3C90028A718 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -707,6 +731,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F038D4A528C960D6006D953A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
+		};
+		F0A9D67728ECF3C90028A718 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0A9D67628ECF3C90028A718 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
