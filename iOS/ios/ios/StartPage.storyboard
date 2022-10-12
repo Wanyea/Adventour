@@ -845,8 +845,8 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0iu-If-ybR">
-                                                                    <rect key="frame" x="140" y="37.5" width="15" height="16"/>
-                                                                    <color key="tintColor" name="adv-orange"/>
+                                                                    <rect key="frame" x="287" y="37.5" width="15" height="16"/>
+                                                                    <color key="tintColor" name="adv-red"/>
                                                                     <accessibility key="accessibilityConfiguration">
                                                                         <bool key="isElement" value="YES"/>
                                                                     </accessibility>
@@ -855,16 +855,26 @@
                                                                         <constraint firstAttribute="width" secondItem="0iu-If-ybR" secondAttribute="height" multiplier="1:1" id="iCH-Z6-miM"/>
                                                                     </constraints>
                                                                 </imageView>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jJ-wp-d67">
+                                                                    <rect key="frame" x="162" y="29" width="133" height="35"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Get Directions">
+                                                                        <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                                        <color key="baseForegroundColor" name="adv-red"/>
+                                                                    </buttonConfiguration>
+                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstItem="0iu-If-ybR" firstAttribute="leading" secondItem="VdF-ec-WQv" secondAttribute="trailing" constant="-12" id="ECE-hd-5wU"/>
+                                                                <constraint firstItem="0iu-If-ybR" firstAttribute="leading" secondItem="3jJ-wp-d67" secondAttribute="trailing" constant="-8" id="ECE-hd-5wU"/>
                                                                 <constraint firstItem="VdF-ec-WQv" firstAttribute="top" secondItem="rgm-Py-4w1" secondAttribute="bottom" id="F4Q-E7-DnZ"/>
                                                                 <constraint firstItem="rgm-Py-4w1" firstAttribute="centerX" secondItem="y5u-0M-nL8" secondAttribute="centerX" id="Nz0-ct-9RM"/>
+                                                                <constraint firstItem="3jJ-wp-d67" firstAttribute="leading" secondItem="VdF-ec-WQv" secondAttribute="trailing" constant="10" id="Qbs-o7-jXb"/>
                                                                 <constraint firstItem="0iu-If-ybR" firstAttribute="centerY" secondItem="VdF-ec-WQv" secondAttribute="centerY" id="SDT-t1-ktt"/>
                                                                 <constraint firstAttribute="bottom" secondItem="VdF-ec-WQv" secondAttribute="bottom" constant="10" id="Ue9-28-bJY"/>
                                                                 <constraint firstItem="VdF-ec-WQv" firstAttribute="leading" secondItem="y5u-0M-nL8" secondAttribute="leading" constant="22" id="pbu-lO-oPx"/>
                                                                 <constraint firstItem="rgm-Py-4w1" firstAttribute="top" secondItem="y5u-0M-nL8" secondAttribute="top" constant="7.5" id="zBE-ed-OpC"/>
+                                                                <constraint firstAttribute="bottom" secondItem="3jJ-wp-d67" secondAttribute="bottom" constant="4" id="zgn-nd-BWv"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
