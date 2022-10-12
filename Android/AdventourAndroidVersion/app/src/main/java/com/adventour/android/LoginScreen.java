@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,7 +49,7 @@ public class LoginScreen extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
-        signupTextView = (TextView) findViewById(R.id.signupTextView);
+        signupTextView = (TextView) findViewById(R.id.signupTextButton);
 
         emailLoginErrorTextView = (TextView) findViewById(R.id.emailLoginErrorTextView);
         passwordLoginErrorTextView = (TextView) findViewById(R.id.passwordLoginErrorTextView);
