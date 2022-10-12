@@ -8,9 +8,56 @@
 import UIKit
 import FirebaseAuth
 
+
+
+
+extension UIView{
+    @IBInspectable var shadowColor:
+    UIColor? {
+        get{
+            if let color = layer.shadowColor{
+                return UIColor(cgColor: color)
+            }
+            else{
+                return nil
+            }
+        }
+        set {layer.shadowColor = newValue?.cgColor}
+        
+
+}
+    func addShadow(shadowColor: CGColor = UIColor.black.cgColor, shadowOffset: CGSize = CGSize(width: 1.0, height: 2.0), shadowOpacity: Float = 0.4, shadowRadius: CGFloat = 3.0)
+    {
+        layer.shadowColor = shadowColor
+        layer.shadowOffset = shadowOffset
+        layer.shadowOpacity = shadowOpacity
+        layer.masksToBounds = false
+    }
+}
+
+
+
+class forgotPassword: UIViewController
+{
+    @IBOutlet weak var text: UIView!
+    
+    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        text.layer.shadowOpacity = 1.0
+        text.layer.shadowOffset = CGSize(width: 1.0,height: 1.0)
+        text.layer.shadowColor = UIColor.black.cgColor
+    }
+}
+
 class LoginViewController: UIViewController {
     
    
+    
     
     
     
