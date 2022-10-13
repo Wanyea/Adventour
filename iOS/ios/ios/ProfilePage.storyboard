@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -345,16 +346,17 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="HiL-p9-b0j"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Jm9-B3-CqZ"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCa-cw-IEh">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCa-cw-IEh">
                                 <rect key="frame" x="314" y="15" width="45" height="31"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="Tbk-7g-9Vb"/>
                                     <constraint firstAttribute="height" constant="31" id="wBt-VL-Bn3"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="slider.horizontal.3" catalog="system">
+                                <buttonConfiguration key="configuration" style="plain" title="☰">
+                                    <fontDescription key="titleFontDescription" name="ArialUnicodeMS" family="Arial Unicode MS" pointSize="30"/>
                                     <color key="baseForegroundColor" name="adv-black"/>
-                                    <color key="baseBackgroundColor" name="adv-white"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <segue destination="fvD-44-n4q" kind="presentation" id="PnL-j5-1Nf"/>
@@ -430,12 +432,22 @@
                                                     </attributedString>
                                                 </buttonConfiguration>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhF-mb-GK1">
+                                                <rect key="frame" x="27" y="8" width="321" height="6"/>
+                                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="6" id="RID-GC-TUD"/>
+                                                    <constraint firstAttribute="width" constant="321" id="ZFE-eJ-fAV"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" name="adv-white"/>
                                         <constraints>
                                             <constraint firstItem="igD-fq-Uf3" firstAttribute="centerX" secondItem="A3A-0k-L69" secondAttribute="centerX" id="6BY-1x-Z9V"/>
                                             <constraint firstItem="igD-fq-Uf3" firstAttribute="leading" secondItem="A3A-0k-L69" secondAttribute="leading" constant="113" id="BfF-2H-xyP"/>
                                             <constraint firstItem="igD-fq-Uf3" firstAttribute="top" secondItem="A3A-0k-L69" secondAttribute="top" constant="40" id="XV1-wZ-NCG"/>
+                                            <constraint firstItem="xhF-mb-GK1" firstAttribute="centerX" secondItem="A3A-0k-L69" secondAttribute="centerX" id="nTx-4F-91Y"/>
+                                            <constraint firstItem="xhF-mb-GK1" firstAttribute="top" secondItem="A3A-0k-L69" secondAttribute="top" constant="8" id="wMp-8u-aoh"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -486,7 +498,6 @@
         <image name="Passport_Card-1" width="330" height="248"/>
         <image name="Stamp_Card" width="330" height="186"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -508,5 +519,8 @@
         <namedColor name="adv-white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
