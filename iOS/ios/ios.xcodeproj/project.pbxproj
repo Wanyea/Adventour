@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A7F520928CD190400F6D30E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7F520828CD190400F6D30E /* StartViewController.swift */; };
+		2A94FB8428F7C69D006B5291 /* InProgress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A94FB8328F7C69D006B5291 /* InProgress.storyboard */; };
 		2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5C28B58239009ED151 /* AppDelegate.swift */; };
 		2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */; };
 		2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6028B58239009ED151 /* LoggedOutViewController.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		2A7F520828CD190400F6D30E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		2A94FB8328F7C69D006B5291 /* InProgress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InProgress.storyboard; sourceTree = "<group>"; };
 		2A9EBF5928B58238009ED151 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A9EBF5C28B58239009ED151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
 				2AC1B40728C91F3C00F4D8B9 /* ProfilePage.storyboard */,
 				2AC1B40928C9267900F4D8B9 /* StartPage.storyboard */,
+				2A94FB8328F7C69D006B5291 /* InProgress.storyboard */,
 				2AC1B40B28C9269E00F4D8B9 /* BeaconBoard.storyboard */,
 				2AAB4E2B28E72BC700868DB2 /* BeaconPost.storyboard */,
 				F0D227BD28C02B65003E3100 /* Assets.xcassets */,
@@ -310,6 +313,7 @@
 				F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */,
 				2AAB4E2C28E72BC700868DB2 /* BeaconPost.storyboard in Resources */,
 				4A8D880328F3414700E722D4 /* AdventourSummaryPage.storyboard in Resources */,
+				2A94FB8428F7C69D006B5291 /* InProgress.storyboard in Resources */,
 				2A9EBF6428B58239009ED151 /* Main.storyboard in Resources */,
 				2AC1B40828C91F3D00F4D8B9 /* ProfilePage.storyboard in Resources */,
 				2AC1B40A28C9267900F4D8B9 /* StartPage.storyboard in Resources */,
