@@ -469,8 +469,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="gray" title="X" cornerStyle="capsule"/>
                                         <connections>
-                                            <action selector="unwindHome:" destination="eos-e9-0To" eventType="touchUpInside" id="Zfn-FE-rVe"/>
-                                            <segue destination="amh-qs-WkU" kind="unwind" unwindAction="unwindHome:" id="Zl2-aj-pLu"/>
+                                            <action selector="back:" destination="eos-e9-0To" eventType="touchUpInside" id="xgK-ej-262"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -510,11 +509,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="text" destination="kz8-FH-jbh" id="73W-uR-GT2"/>
+                        <outlet property="backButton" destination="HCW-Kd-XDG" id="7hq-IC-LeJ"/>
+                        <outlet property="text" destination="kz8-FH-jbh" id="r4Z-yW-fOx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h2P-dA-sVG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="amh-qs-WkU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1864.8" y="-955.77211394302856"/>
         </scene>
@@ -610,7 +609,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Forgot password?"/>
                                         <connections>
-                                            <segue destination="eos-e9-0To" kind="presentation" id="zlU-w8-ZxB"/>
+                                            <segue destination="eos-e9-0To" kind="presentation" id="ltD-j3-Fc3"/>
                                         </connections>
                                     </button>
                                 </subviews>
