@@ -425,7 +425,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kz8-FH-jbh">
-                                <rect key="frame" x="40" y="120" width="295" height="387"/>
+                                <rect key="frame" x="40" y="120" width="295" height="400"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Reset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTp-tf-pGk">
                                         <rect key="frame" x="62" y="51" width="171" height="30"/>
@@ -483,6 +483,7 @@
                                     <constraint firstAttribute="trailing" secondItem="HCW-Kd-XDG" secondAttribute="trailing" constant="20.5" id="KVo-Ti-Q5e"/>
                                     <constraint firstItem="tCf-Bv-XhT" firstAttribute="leading" secondItem="kz8-FH-jbh" secondAttribute="leading" constant="80" id="MpO-9S-QrM"/>
                                     <constraint firstItem="HCW-Kd-XDG" firstAttribute="top" secondItem="kz8-FH-jbh" secondAttribute="top" constant="23" id="NTO-zU-Gtr"/>
+                                    <constraint firstAttribute="height" constant="400" id="Wja-Pf-0CF"/>
                                     <constraint firstItem="hoG-6S-XvF" firstAttribute="leading" secondItem="kz8-FH-jbh" secondAttribute="leading" constant="30" id="jpn-9Q-Ad5"/>
                                     <constraint firstItem="hoG-6S-XvF" firstAttribute="top" secondItem="jTp-tf-pGk" secondAttribute="bottom" constant="28" id="qHF-xo-1Nk"/>
                                     <constraint firstItem="tCf-Bv-XhT" firstAttribute="top" secondItem="D3K-xL-cfB" secondAttribute="bottom" constant="43" id="uYg-m8-IKT"/>
@@ -503,7 +504,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kz8-FH-jbh" firstAttribute="top" secondItem="nDh-FE-mQz" secondAttribute="top" constant="120" id="91x-Ge-MBL"/>
-                            <constraint firstItem="nDh-FE-mQz" firstAttribute="bottom" secondItem="kz8-FH-jbh" secondAttribute="bottom" constant="140" id="hQB-eN-rse"/>
                             <constraint firstItem="kz8-FH-jbh" firstAttribute="leading" secondItem="nDh-FE-mQz" secondAttribute="leading" constant="40" id="lTE-d2-7uj"/>
                             <constraint firstItem="kz8-FH-jbh" firstAttribute="centerX" secondItem="nDh-FE-mQz" secondAttribute="centerX" id="vzY-XN-VXV"/>
                         </constraints>
