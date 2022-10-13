@@ -46,6 +46,9 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gl-A1-ZFk">
                                                 <rect key="frame" x="27" y="50" width="321" height="214"/>
                                                 <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Passport_Card-1" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-lj-3ma">
+                                                        <rect key="frame" x="-36" y="3" width="394" height="209"/>
+                                                    </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te8-tP-ImB">
                                                         <rect key="frame" x="0.0" y="47" width="321" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -78,9 +81,6 @@
                                                             <segue destination="kl5-Ir-X4a" kind="show" id="kwD-f9-ccP"/>
                                                         </connections>
                                                     </button>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Passport_Card-1" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-lj-3ma">
-                                                        <rect key="frame" x="-36" y="3" width="394" height="209"/>
-                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -345,6 +345,21 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="HiL-p9-b0j"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Jm9-B3-CqZ"/>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCa-cw-IEh">
+                                <rect key="frame" x="314" y="15" width="45" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="Tbk-7g-9Vb"/>
+                                    <constraint firstAttribute="height" constant="31" id="wBt-VL-Bn3"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="slider.horizontal.3" catalog="system">
+                                    <color key="baseForegroundColor" name="adv-black"/>
+                                    <color key="baseBackgroundColor" name="adv-white"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="fvD-44-n4q" kind="presentation" id="PnL-j5-1Nf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OTC-wd-lge"/>
                         <color key="backgroundColor" name="adv-skyblue"/>
@@ -355,9 +370,11 @@
                             <constraint firstItem="l38-iz-tO4" firstAttribute="top" secondItem="OTC-wd-lge" secondAttribute="top" constant="498" id="6le-vc-oZV"/>
                             <constraint firstItem="OTC-wd-lge" firstAttribute="leading" secondItem="3cI-3a-YUV" secondAttribute="leading" constant="66" id="80n-OU-TaV"/>
                             <constraint firstItem="82F-HP-6yE" firstAttribute="bottom" secondItem="OTC-wd-lge" secondAttribute="bottom" id="Fg9-YP-zft"/>
+                            <constraint firstItem="yCa-cw-IEh" firstAttribute="top" secondItem="OTC-wd-lge" secondAttribute="top" constant="15" id="LC0-4w-CQQ"/>
                             <constraint firstItem="82F-HP-6yE" firstAttribute="trailing" secondItem="OTC-wd-lge" secondAttribute="trailing" id="Mzf-1t-rg6"/>
                             <constraint firstItem="82F-HP-6yE" firstAttribute="top" secondItem="OTC-wd-lge" secondAttribute="top" id="P3S-7P-Ukx"/>
                             <constraint firstItem="82F-HP-6yE" firstAttribute="leading" secondItem="OTC-wd-lge" secondAttribute="leading" id="Wpm-Zw-w3P"/>
+                            <constraint firstItem="OTC-wd-lge" firstAttribute="trailing" secondItem="yCa-cw-IEh" secondAttribute="trailing" constant="16" id="aYK-BO-GJ7"/>
                             <constraint firstItem="l38-iz-tO4" firstAttribute="leading" secondItem="OTC-wd-lge" secondAttribute="leading" constant="253" id="kdl-dE-ox1"/>
                             <constraint firstItem="OTC-wd-lge" firstAttribute="bottom" secondItem="3cI-3a-YUV" secondAttribute="bottom" constant="455" id="oL8-dJ-Mdd"/>
                             <constraint firstItem="3cI-3a-YUV" firstAttribute="top" secondItem="OTC-wd-lge" secondAttribute="top" constant="35" id="r2h-nz-N8K"/>
@@ -381,6 +398,85 @@
             </objects>
             <point key="canvasLocation" x="450" y="-154"/>
         </scene>
+        <!--Start View Controller-->
+        <scene sceneID="690-Ot-no1">
+            <objects>
+                <viewController id="fvD-44-n4q" customClass="StartViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Men-a4-sS9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iar-TD-fxU">
+                                <rect key="frame" x="0.0" y="297" width="375" height="350"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3A-0k-L69">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="350"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igD-fq-Uf3">
+                                                <rect key="frame" x="113" y="40" width="149" height="52"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="149" id="6hA-ZV-cUu"/>
+                                                    <constraint firstAttribute="height" constant="52" id="one-df-WBc"/>
+                                                </constraints>
+                                                <color key="tintColor" name="adv-red"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="Sign Out">
+                                                            <attributes>
+                                                                <font key="NSFont" size="24" name="Helvetica"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </buttonConfiguration>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="adv-white"/>
+                                        <constraints>
+                                            <constraint firstItem="igD-fq-Uf3" firstAttribute="centerX" secondItem="A3A-0k-L69" secondAttribute="centerX" id="6BY-1x-Z9V"/>
+                                            <constraint firstItem="igD-fq-Uf3" firstAttribute="leading" secondItem="A3A-0k-L69" secondAttribute="leading" constant="113" id="BfF-2H-xyP"/>
+                                            <constraint firstItem="igD-fq-Uf3" firstAttribute="top" secondItem="A3A-0k-L69" secondAttribute="top" constant="40" id="XV1-wZ-NCG"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="40"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="A3A-0k-L69" secondAttribute="bottom" id="1JL-Z7-RoB"/>
+                                    <constraint firstItem="A3A-0k-L69" firstAttribute="leading" secondItem="iar-TD-fxU" secondAttribute="leading" id="Fku-97-7bj"/>
+                                    <constraint firstAttribute="trailing" secondItem="A3A-0k-L69" secondAttribute="trailing" id="GVy-rs-Hcz"/>
+                                    <constraint firstItem="A3A-0k-L69" firstAttribute="top" secondItem="iar-TD-fxU" secondAttribute="top" id="dOE-iH-A5A"/>
+                                    <constraint firstItem="A3A-0k-L69" firstAttribute="height" secondItem="iar-TD-fxU" secondAttribute="height" priority="250" id="eSA-Y1-m7e"/>
+                                    <constraint firstItem="A3A-0k-L69" firstAttribute="width" secondItem="iar-TD-fxU" secondAttribute="width" id="fJZ-pj-pgT"/>
+                                    <constraint firstItem="A3A-0k-L69" firstAttribute="centerX" secondItem="iar-TD-fxU" secondAttribute="centerX" id="x4O-2Y-9Ss"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="2w7-nV-P7f"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="qaA-pd-C7c"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="40"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zXh-ee-aHG"/>
+                        <constraints>
+                            <constraint firstItem="zXh-ee-aHG" firstAttribute="trailing" secondItem="iar-TD-fxU" secondAttribute="trailing" id="2L7-RW-dwb"/>
+                            <constraint firstItem="zXh-ee-aHG" firstAttribute="bottom" secondItem="iar-TD-fxU" secondAttribute="bottom" id="fwj-XX-7Ce"/>
+                            <constraint firstItem="iar-TD-fxU" firstAttribute="top" secondItem="zXh-ee-aHG" secondAttribute="top" constant="297" id="hee-wd-NtF"/>
+                            <constraint firstItem="iar-TD-fxU" firstAttribute="leading" secondItem="zXh-ee-aHG" secondAttribute="leading" id="owe-vS-9AA"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YHG-0N-364" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="21.600000000000001" y="-704.79760119940033"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Beacon_Card" width="1920" height="1440"/>
@@ -390,6 +486,7 @@
         <image name="Passport_Card-1" width="330" height="248"/>
         <image name="Stamp_Card" width="330" height="186"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -407,6 +504,9 @@
         </namedColor>
         <namedColor name="adv-skyblue">
             <color red="0.72941176470588232" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="adv-white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
