@@ -2,6 +2,8 @@ package com.adventour.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.widget.Button;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class Beacons extends AppCompatActivity {
 
@@ -26,13 +30,33 @@ public class Beacons extends AppCompatActivity {
 
         handleAuth();
 
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToBeaconPost();
-            }
-        });
+//        button = findViewById(R.id.button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                switchToBeaconPost();
+//            }
+//        });
+
+
+        RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
+        beaconsRV.setNestedScrollingEnabled(false);
+
+        // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
+        ArrayList<BeaconsModel> beaconsArrayList = new ArrayList<BeaconsModel>();
+        beaconsArrayList.add(new BeaconsModel("\u25CFUniversity of Central Florida\n\u25CFThe Cloak and Blaster\n\u25CF American Escape Rooms Orlando", "01/01/2001", "imageURL"));
+        beaconsArrayList.add(new BeaconsModel("\u25CFUniversity of Central Florida\n\u25CFThe Cloak and Blaster\n\u25CF American Escape Rooms Orlando", "01/01/2001", "imageURL"));
+        beaconsArrayList.add(new BeaconsModel("\u25CFUniversity of Central Florida\n\u25CFThe Cloak and Blaster\n\u25CF American Escape Rooms Orlando", "01/01/2001", "imageURL"));
+        beaconsArrayList.add(new BeaconsModel("\u25CFUniversity of Central Florida\n\u25CFThe Cloak and Blaster\n\u25CF American Escape Rooms Orlando", "01/01/2001", "imageURL"));
+        beaconsArrayList.add(new BeaconsModel("\u25CFUniversity of Central Florida\n\u25CFThe Cloak and Blaster\n\u25CF American Escape Rooms Orlando", "01/01/2001", "imageURL"));
+
+        BeaconsAdapter beaconsAdapter = new BeaconsAdapter(this, beaconsArrayList);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        beaconsRV.setLayoutManager(linearLayoutManager);
+        beaconsRV.setAdapter(beaconsAdapter);
+
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -85,3 +109,4 @@ public class Beacons extends AppCompatActivity {
         finish();
     }
 }
+
