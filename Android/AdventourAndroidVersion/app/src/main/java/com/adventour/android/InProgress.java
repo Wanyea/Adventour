@@ -37,7 +37,7 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
-        InProgressRV.setNestedScrollingEnabled(false);
+        InProgressRV.setNestedScrollingEnabled(true);
 
         finishAdventourButton = (FloatingActionButton) findViewById(R.id.finishAdventourButton);
 
