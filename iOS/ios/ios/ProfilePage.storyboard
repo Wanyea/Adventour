@@ -385,6 +385,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="person.fill" catalog="system" id="mol-rB-XPg"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="birthday" destination="Uo1-X5-z0k" id="VeA-km-g1b"/>
+                        <outlet property="mantra" destination="jGz-mR-TiN" id="0kO-4I-nfu"/>
+                        <outlet property="username" destination="te8-tP-ImB" id="466-lZ-I7S"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
