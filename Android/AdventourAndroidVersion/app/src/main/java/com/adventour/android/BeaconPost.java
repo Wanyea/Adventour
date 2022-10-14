@@ -16,7 +16,8 @@ public class BeaconPost extends AppCompatActivity {
         setContentView(R.layout.activity_beacon_post);
 
         RecyclerView beaconPostRV = findViewById(R.id.beaconPostRV);
-        beaconPostRV.setNestedScrollingEnabled(false);
+        beaconPostRV.setNestedScrollingEnabled(true);
+
         ArrayList<BeaconPostModel> BeaconPostModelArrayList = new ArrayList<BeaconPostModel>();
         BeaconPostModelArrayList.add(new BeaconPostModel("University of Central Florida", "1", "1", "123 Hello", "dfjkhbdfjdfjkdffldjkhdfkljhdfkjlhdfjkhdfgjkhdfgjdfg"));
         BeaconPostModelArrayList.add(new BeaconPostModel("The Cloak & Blaster", "2", "2", "456 AAaaAAaaAa", "oh"));
