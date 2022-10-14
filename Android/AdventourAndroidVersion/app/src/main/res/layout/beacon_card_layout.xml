@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="262.5dp"
+    android:layout_marginBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_beacon_card">
+
+<!--        <TextView-->
+<!--            android:id="@+id/locationNameTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/roboto_bold"-->
+<!--            android:text="locationName"-->
+<!--            android:layout_marginTop="45dp"-->
+<!--            android:layout_marginStart="171dp"-->
+<!--            android:width="132dp"-->
+<!--            android:height="46dp"/>-->
+
+        <TextView
+            android:id="@+id/placesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:text="Title"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="181dp"
+            android:width="139dp"
+            android:height="147dp"/>
+
+        <ImageView
+            android:id="@+id/locationImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_border_tan"
+            android:layout_marginTop="47dp"
+            android:layout_marginStart="32dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="124dp"
+            android:maxHeight="164dp"
+            app:srcCompat="@drawable/ic_map_scroll"/>
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="date"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_italic"
+            android:textColor="@color/navy_main"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="254dp" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
