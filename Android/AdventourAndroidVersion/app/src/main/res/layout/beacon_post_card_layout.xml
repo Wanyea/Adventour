@@ -16,18 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/lineView"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/brown_variant"
-            android:layout_marginBottom="5dp"/>
-
         <TextView
             android:id="@+id/locationNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lineView"
             android:text="locationNameTextView"
             android:textColor="@color/blue_main"
             android:textSize="18sp"
@@ -79,6 +71,7 @@
             android:textSize="16sp" />
 
         <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_below="@id/locationDescriptionTextView"
@@ -115,6 +108,14 @@
 
             </LinearLayout>
         </HorizontalScrollView>
+
+        <View
+            android:id="@+id/lineView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/horizontalScrollView"
+            android:background="@color/brown_variant" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
