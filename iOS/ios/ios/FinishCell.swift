@@ -7,11 +7,13 @@
 
 import UIKit
 
+
 class FinishCell: UITableViewCell {
 
     
     @IBOutlet weak var finishButton: UIButton!
     
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,6 +23,7 @@ class FinishCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+
     }
 
 }
