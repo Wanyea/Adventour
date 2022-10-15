@@ -10,11 +10,10 @@ class StartViewController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var notNow: UIButton!
     
+    var ids: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         //Adding the bordercolor on the not now button. Actual border is in its runtime attributes.
         
@@ -23,7 +22,19 @@ class StartViewController: UIViewController {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let ids = self.ids {
+            print("These is the ids: ", ids)
+        } else {
+            print("The ids is nil")
+        }
+    }
     
+    @IBAction func unwindHome(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? MapViewController {
+            self.ids = sourceViewController.ids
+        }
+    }
     
     
     //makes the sliders "step".

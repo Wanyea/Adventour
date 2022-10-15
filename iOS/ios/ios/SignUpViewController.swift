@@ -45,11 +45,17 @@ class SignUpViewController: UIViewController {
     var birthdateString: String!
     
     
-    
+    var user: User!
     
     // Set up SignUpViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.user = user
+            }
+        }
         
         // Set icons into textfield
         nickname.leftViewMode = UITextField.ViewMode.always
@@ -103,7 +109,7 @@ class SignUpViewController: UIViewController {
                                 "nickname": self.nickname.text!,
                                 "email": self.email.text!,
                                 "isPrivate": true,
-                                "birthday:": self.birthdateString!,
+                                "birthday": self.birthdateString!,
                             ]) { err in
                                 if let err = err {
                                     print("Error writing document: \(err)")

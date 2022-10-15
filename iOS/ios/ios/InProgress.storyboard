@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,7 +43,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MapCell" rowHeight="68" id="jyL-Pc-aGg" customClass="MapTableViewCell" customModule="ios" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MapCell" rowHeight="68" id="jyL-Pc-aGg" customClass="MapTableViewCell" customModule="ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="44.5" width="320" height="68"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jyL-Pc-aGg" id="DbQ-Zz-ABR">
@@ -60,6 +61,9 @@
                                                                     <buttonConfiguration key="configuration" style="plain" title="Show on Map">
                                                                         <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
                                                                     </buttonConfiguration>
+                                                                    <connections>
+                                                                        <action selector="showOnMap:" destination="jyL-Pc-aGg" eventType="touchUpInside" id="MN6-VE-t1B"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="University of Central Florida" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irB-bO-NuY">
                                                                     <rect key="frame" x="14.5" y="7.5" width="291" height="26.5"/>
@@ -110,10 +114,10 @@
                                                             <outlet property="showMapButton" destination="gqF-il-0Dc" id="6JK-ca-sdW"/>
                                                         </connections>
                                                     </tableViewCell>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="112.5" width="320" height="65"/>
                                                         <autoresizingMask key="autoresizingMask"/>
-                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
@@ -132,15 +136,11 @@
                                                                     </buttonConfiguration>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
-                                                                            <exclude reference="xYz-Nx-azc"/>
                                                                             <exclude reference="CXD-ZM-OMz"/>
                                                                             <exclude reference="a9P-1k-Jla"/>
+                                                                            <exclude reference="xYz-Nx-azc"/>
                                                                         </mask>
                                                                     </variation>
-                                                                    <connections>
-                                                                        <action selector="finishButton:" destination="2hB-4n-hwA" eventType="touchUpInside" id="hcn-O0-RL7"/>
-                                                                        <segue destination="SA0-Kd-Lhx" kind="show" id="Opj-Fc-Fja"/>
-                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -188,6 +188,22 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="f1Q-hh-xFd"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="qwf-AB-feb"/>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKB-vm-efy">
+                                <rect key="frame" x="305" y="558" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="FeX-Il-g8F"/>
+                                    <constraint firstAttribute="height" constant="50" id="Ygk-gC-wLE"/>
+                                </constraints>
+                                <size key="titleShadowOffset" width="3" height="3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
+                                    <color key="baseBackgroundColor" name="adv-royalblue"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="2hB-4n-hwA" kind="unwind" unwindAction="unwindHome:" id="YfA-ng-mCV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jkn-kn-Drg"/>
                         <color key="backgroundColor" name="adv-skyblue"/>
@@ -196,6 +212,8 @@
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="centerX" secondItem="jkn-kn-Drg" secondAttribute="centerX" id="8Jh-9f-kZ6"/>
                             <constraint firstItem="xKv-Jd-wwd" firstAttribute="top" secondItem="jkn-kn-Drg" secondAttribute="top" constant="35" id="Cwt-sS-mo8"/>
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="width" secondItem="xKv-Jd-wwd" secondAttribute="width" id="RwS-dG-wbE"/>
+                            <constraint firstItem="jkn-kn-Drg" firstAttribute="bottom" secondItem="IKB-vm-efy" secondAttribute="bottom" constant="10" id="e7l-FF-nML"/>
+                            <constraint firstItem="jkn-kn-Drg" firstAttribute="trailing" secondItem="IKB-vm-efy" secondAttribute="trailing" constant="20" id="ioa-q6-Ovg"/>
                             <constraint firstItem="xKv-Jd-wwd" firstAttribute="leading" secondItem="jkn-kn-Drg" secondAttribute="leading" constant="15" id="jcb-ev-MP6"/>
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="leading" secondItem="jkn-kn-Drg" secondAttribute="leading" constant="15" id="ucb-ga-jbt"/>
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="top" secondItem="xKv-Jd-wwd" secondAttribute="bottom" constant="21" id="v0e-eg-LxC"/>
@@ -206,6 +224,7 @@
                     <navigationItem key="navigationItem" id="wOi-fI-nlf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="IKB-vm-efy" id="8RN-xx-T1A"/>
                         <outlet property="locationsTable" destination="ioy-om-bZY" id="jUp-Ev-hBe"/>
                         <outlet property="mapView" destination="xKv-Jd-wwd" id="Oi1-Fi-Qcb"/>
                     </connections>
@@ -220,7 +239,7 @@
             <objects>
                 <viewController id="SA0-Kd-Lhx" customClass="CongratsViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MiL-g0-RYx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-wP-A39">
@@ -230,13 +249,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Map_Scroll" translatesAutoresizingMaskIntoConstraints="NO" id="r2K-YT-Ebz">
-                                <rect key="frame" x="7" y="87" width="361" height="361"/>
+                                <rect key="frame" x="-3" y="87" width="381" height="381"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="r2K-YT-Ebz" secondAttribute="height" multiplier="1:1" id="ZxT-S5-GEx"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-wy-afl">
-                                <rect key="frame" x="60" y="488" width="255" height="31"/>
+                                <rect key="frame" x="60" y="508" width="255" height="31"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
@@ -244,7 +263,7 @@
                                 </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24D-uQ-rHa">
-                                <rect key="frame" x="80" y="527" width="215" height="31"/>
+                                <rect key="frame" x="80" y="547" width="215" height="31"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="View Adventour"/>
@@ -262,7 +281,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq4-q6-3j6">
-                                <rect key="frame" x="130" y="566" width="115" height="31"/>
+                                <rect key="frame" x="130" y="586" width="115" height="31"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Home" cornerStyle="capsule"/>
@@ -314,6 +333,7 @@
         <image name="Map_Scroll" width="1652" height="913"/>
         <image name="Notepad_Paper" width="1920" height="2254"/>
         <image name="mappin" catalog="system" width="105" height="128"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="adv-orange">
             <color red="1" green="0.64313725490196083" blue="0.30980392156862746" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
