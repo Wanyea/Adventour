@@ -39,10 +39,12 @@ extension UIView{
 
 class forgotPassword: UIViewController
 {
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var text: UIView!
     
-    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
-        
+
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -59,7 +61,9 @@ class LoginViewController: UIViewController {
    
     
     
-    
+    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
+        
+    }
     
     
     override func viewDidLoad() {
