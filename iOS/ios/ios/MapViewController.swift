@@ -23,8 +23,6 @@ extension MapViewController: MapTableViewCellDelegate {
     
 }
 
-
-
 class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
@@ -120,7 +118,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let params: [String: Any] = [
             "uid": user!.uid,
-            "ids": ids
+            "ids": self.ids!
         ]
         
         if (ids.isEmpty) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -136,7 +136,7 @@
                                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdvCard" rowHeight="149" id="wX6-dX-tCh">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PrevAdventourCell" rowHeight="149" id="wX6-dX-tCh" customClass="PrevAdventoursTableViewCell" customModule="ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="44.5" width="286" height="149"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wX6-dX-tCh" id="WJ5-NE-uY9">
@@ -226,6 +226,12 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <connections>
+                                                            <outlet property="dateCreated" destination="JmC-Hj-ySw" id="zY1-wL-vvN"/>
+                                                            <outlet property="location1" destination="wws-TC-jxz" id="82a-UY-6Jt"/>
+                                                            <outlet property="location2" destination="wbz-vm-Bch" id="e48-V7-wtv"/>
+                                                            <outlet property="location3" destination="bVs-RS-dKr" id="nXq-sq-9Cn"/>
+                                                        </connections>
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
@@ -255,7 +261,7 @@
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaCard" rowHeight="149" id="Bty-oP-fbe">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaconCell" rowHeight="149" id="Bty-oP-fbe" customClass="BeaconsTableViewCell" customModule="ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="44.5" width="286" height="149"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bty-oP-fbe" id="Am2-1w-7Mh">
@@ -330,6 +336,12 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <connections>
+                                                            <outlet property="dateCreated" destination="qgl-0f-qK4" id="10t-2o-cTx"/>
+                                                            <outlet property="location1" destination="in1-BB-iu9" id="Ohb-fu-Sfn"/>
+                                                            <outlet property="location2" destination="Vd6-fa-Wjo" id="e9G-IL-Uwc"/>
+                                                            <outlet property="location3" destination="4Ca-bP-wJ6" id="CTz-qu-vWr"/>
+                                                        </connections>
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
@@ -386,8 +398,10 @@
                     <tabBarItem key="tabBarItem" title="" image="person.fill" catalog="system" id="mol-rB-XPg"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="beaconsTable" destination="FuE-IN-dAK" id="kis-NN-zGX"/>
                         <outlet property="birthday" destination="Uo1-X5-z0k" id="VeA-km-g1b"/>
                         <outlet property="mantra" destination="jGz-mR-TiN" id="0kO-4I-nfu"/>
+                        <outlet property="prevAdventoursTable" destination="muF-Rl-lAj" id="5J3-x7-OTU"/>
                         <outlet property="username" destination="te8-tP-ImB" id="466-lZ-I7S"/>
                     </connections>
                 </viewController>
