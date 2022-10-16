@@ -1,6 +1,6 @@
 import UIKit
 import MapKit
-import Alamofire
+
 import FirebaseAuth
 
 extension MapViewController: MapTableViewCellDelegate {
@@ -31,10 +31,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var mapView: MKMapView!
     var locations: [[String: Any]] = []
-    var ids: [String] = ["4c06dcb92e80a59384c774f9",
-                         "4c324f2aed37a59360a76b03",
-                         "50a9122190e76d9fc7558c05",
-                         "562a9519498ed4a52fb6b936"]
+    var ids: [String]!
     
     @IBOutlet weak var locationsTable: UITableView!
     @IBOutlet weak var addButton: UIButton!
@@ -48,7 +45,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {
-            self.performSegue(withIdentifier: "LoginNavigationController", sender: self)
+            print("No user")
+            self.switchToLoggedOut()
         }
         
         self.locationsTable.delegate = self
@@ -56,6 +54,14 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         getLocationData()
                 
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let ids = self.ids {
+            print("Map, These is the ids: ", ids)
+        } else {
+            print("Map, The ids is nil")
+        }
     }
     
     
@@ -147,5 +153,16 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             task.resume()
         }
     }
+    
+    func switchToLoggedOut() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       
+        let loggedOutVc = storyboard.instantiateViewController(identifier: "LoggedOutViewController")
+        
+        // This is to get the SceneDelegate object from your view controller
+        // then call the change root view controller function to change to main tab bar
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc)
+    }
+    
 }
     

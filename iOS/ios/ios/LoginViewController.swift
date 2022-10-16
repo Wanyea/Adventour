@@ -104,6 +104,7 @@ class LoginViewController: UIViewController {
                 self.errorMessage.isHidden = false
             } else {
                 self.errorMessage.isHidden = true
+                UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
                 self.switchToTabController()
             }
         }
