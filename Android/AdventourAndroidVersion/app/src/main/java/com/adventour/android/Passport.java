@@ -3,9 +3,7 @@ package com.adventour.android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -30,10 +27,6 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.google.common.io.Resources;
-
-import org.w3c.dom.Text;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -388,7 +381,7 @@ public class Passport extends AppCompatActivity {
 
     public void switchToPassportMoreInfo()
     {
-        Intent intent = new Intent(this, PassportMoreInfo.class);
+        Intent intent = new Intent(this, EditPassport.class);
         startActivity(intent);
         finish();
     }
@@ -402,7 +395,7 @@ public class Passport extends AppCompatActivity {
 
      public void switchToLoggedOut()
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
         finish();
     }

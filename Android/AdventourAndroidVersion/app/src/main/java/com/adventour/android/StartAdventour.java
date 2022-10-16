@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,7 +19,20 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.slider.Slider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class StartAdventour extends AppCompatActivity {
@@ -28,11 +42,17 @@ public class StartAdventour extends AppCompatActivity {
     TextView priceTextView;
     Button inProgressButton;
 
+    FirebaseAuth auth;
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_adventour);
+
+        handleAuth();
+        populateLocationCard();
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -120,6 +140,83 @@ public class StartAdventour extends AppCompatActivity {
         Intent intent = new Intent(this, InProgress.class);
         startActivity(intent);
         finish();
+    }
+
+    public void handleAuth()
+    {
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null)
+        {
+            switchToLoggedOut();
+        }
+    }
+
+    public void switchToLoggedOut()
+    {
+        Intent intent = new Intent(this, LoggedOut.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void populateLocationCard()
+    {
+
+        JSONObject jsonBody = new JSONObject();
+
+        try {
+            jsonBody.put("uid", user.getUid());
+            jsonBody.put("ll", "28.592474256389895,-81.3500389284532");
+            jsonBody.put("radius", "10000");
+            jsonBody.put("categories", "10014,10044,10055,10056,16002,16003,16004,16005,16006,16008,16009,16011,16012,16013,16016,16017,16019,16018,16021,16022,16023,16024,16027,16028,16032,16043,16044,16046,16048,16049,16051,16052,19002,19003,19008,19021");
+
+        } catch (JSONException e) {
+            Log.e("Start Adventour", "exception", e);
+        }
+
+        try {
+            // Call API with user defined location and sentiments
+
+            URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-adventour-place");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setDoOutput( true );
+            conn.setInstanceFollowRedirects( false );
+            conn.setRequestMethod( "POST" );
+            conn.setRequestProperty( "Content-Type", "application/json");
+            conn.setRequestProperty( "Accept", "application/json");
+            conn.setUseCaches( false );
+
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(jsonBody.toString());
+            wr.flush();
+            wr.close();
+            jsonBody = null;
+
+            System.out.println("\nSending 'POST' request to URL : " + url);
+
+            InputStream it = conn.getInputStream();
+            InputStreamReader inputs = new InputStreamReader(it);
+
+            BufferedReader in = new BufferedReader(inputs);
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            in.close();
+
+            System.out.println("Server says : " + response.toString());
+            Log.d("Start Adventour", response.toString());
+
+
+
+        } catch(Exception e) {
+            Log.e("START ADVENTOUR", "Exception", e);
+        }
     }
 
 }

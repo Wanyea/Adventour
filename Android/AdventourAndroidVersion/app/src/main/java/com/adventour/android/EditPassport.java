@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PassportMoreInfo extends AppCompatActivity {
+public class EditPassport extends AppCompatActivity {
     
     private static final String TAG = "PassportMoreInfo";
 
@@ -41,7 +41,7 @@ public class PassportMoreInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_passport_more_info);
+        setContentView(R.layout.edit_passport);
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
