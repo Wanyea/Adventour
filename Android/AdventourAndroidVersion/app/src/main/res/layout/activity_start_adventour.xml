@@ -64,6 +64,117 @@
                 app:layout_constraintTop_toBottomOf="@id/balloonRopeImageView"
                 app:srcCompat="@drawable/ic_ticket_card" />
 
+            <ImageView
+                android:id="@+id/previewImageView"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_margin="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_4by3"
+                app:layout_constraintBottom_toBottomOf="@id/ticketCardImageView"
+                app:layout_constraintStart_toStartOf="@id/ticketCardImageView"
+                app:layout_constraintTop_toTopOf="@id/ticketCardImageView" />
+
+            <TextView
+                android:id="@+id/locationNameTextView"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="locationNameTextView"
+                app:layout_constraintStart_toEndOf="@id/previewImageView"
+                app:layout_constraintTop_toTopOf="@id/previewImageView"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/locationNameTextView"
+                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                android:minHeight="20dp"
+                android:numStars="5"
+                android:rating="5" />
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Distance"
+                app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+                app:layout_constraintStart_toEndOf="@id/ratingBar"
+                android:layout_marginStart="5dp"
+                android:textStyle="italic"
+                android:textSize="16dp"
+                android:maxLines="1"/>
+
+            <ImageView
+                android:id="@+id/phoneImageView"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_phone_icon"
+                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                app:tint="@color/blue_main" />
+
+            <TextView
+                android:id="@+id/phoneNumberTextView"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="0000000000"
+                android:textColor="@color/blue_main"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/phoneImageView"
+                app:layout_constraintBottom_toBottomOf="@id/phoneImageView"
+                app:layout_constraintStart_toEndOf="@id/phoneImageView"
+                android:layout_marginStart="5dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <ImageView
+                android:id="@+id/globeImageView"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_globe_icon"
+                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                app:layout_constraintTop_toBottomOf="@id/phoneImageView"
+                android:layout_marginTop="4dp"
+                app:tint="@color/blue_main" />
+
+            <TextView
+                android:id="@+id/websiteTextView"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="websiteTextView"
+                android:textColor="@color/blue_main"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/globeImageView"
+                app:layout_constraintBottom_toBottomOf="@id/globeImageView"
+                android:layout_marginBottom="3dp"
+                app:layout_constraintStart_toEndOf="@id/globeImageView"
+                android:layout_marginStart="5dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/locationDescriptionTextView"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@string/lorem_ipsum"
+                app:layout_constraintTop_toBottomOf="@id/globeImageView"
+                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
             <Button
                 android:id="@+id/notNowButton"
                 android:layout_width="150dp"
