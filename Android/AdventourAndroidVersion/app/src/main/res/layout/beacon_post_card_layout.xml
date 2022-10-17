@@ -88,7 +88,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:foreground="@drawable/frame_brown_variant"
-                    android:src="@drawable/sample_4by3" />
+                    android:src="@drawable/sample_4by3"
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:id="@+id/sample2ImageView"
@@ -96,7 +97,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:foreground="@drawable/frame_brown_variant"
-                    android:src="@drawable/sample_4by3" />
+                    android:src="@drawable/sample_4by3"
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/sample3ImageView"
@@ -104,7 +106,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:foreground="@drawable/frame_brown_variant"
-                    android:src="@drawable/sample_4by3" />
+                    android:src="@drawable/sample_4by3"
+                    android:scaleType="centerCrop" />
 
             </LinearLayout>
         </HorizontalScrollView>

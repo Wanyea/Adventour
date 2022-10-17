@@ -8,6 +8,7 @@
     android:paddingVertical="20dp"
     android:background="@drawable/popup_rectangle">
 
+    <!--
     <TextView
         android:id="@+id/searchFilterTextView"
         android:layout_width="wrap_content"
@@ -77,18 +78,17 @@
         android:valueFrom="1"
         android:valueTo="4"
         />
-
+        -->
     <TextView
         android:id="@+id/distanceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/priceSlider"
         android:layout_centerHorizontal="true"
         android:text="Distance (miles)"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceSlider" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/startDistanceTextView"
