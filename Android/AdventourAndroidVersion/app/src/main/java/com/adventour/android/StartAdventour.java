@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +43,7 @@ public class StartAdventour extends AppCompatActivity {
     ImageButton filterButton;
     Slider priceSlider;
     TextView priceTextView;
-    Button inProgressButton;
+    Button inProgressButton, beginButton;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -51,8 +54,13 @@ public class StartAdventour extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_adventour);
 
+        // This allows the API call on the main thread.
+        // Moving forward we are going to want to put this on its own thread to increase overall app performance :)
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         handleAuth();
-        populateLocationCard();
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -70,6 +78,7 @@ public class StartAdventour extends AppCompatActivity {
         });
 
         inProgressButton = (Button) findViewById(R.id.inProgressButton);
+        beginButton = (Button) findViewById(R.id.beginButton);
 
         inProgressButton.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -78,6 +87,16 @@ public class StartAdventour extends AppCompatActivity {
               switchToInProgress();
            }
         });
+
+        beginButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view)
+           {
+               getLocations();
+           }
+        });
+
+
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
@@ -160,10 +179,11 @@ public class StartAdventour extends AppCompatActivity {
         finish();
     }
 
-    public void populateLocationCard()
+    public void getLocations()
     {
 
         JSONObject jsonBody = new JSONObject();
+        ArrayList<JSONObject> locations = new ArrayList<JSONObject>(); // when we organize code better make sure this is cleared when users change sentiments.
 
         try {
             jsonBody.put("uid", user.getUid());
@@ -176,8 +196,8 @@ public class StartAdventour extends AppCompatActivity {
         }
 
         try {
-            // Call API with user defined location and sentiments
 
+            // Call API with user defined location and sentiments
             URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-adventour-place");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -209,14 +229,27 @@ public class StartAdventour extends AppCompatActivity {
 
             in.close();
 
-            System.out.println("Server says : " + response.toString());
-            Log.d("Start Adventour", response.toString());
+            JSONObject jsonObject = new JSONObject(response.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
 
+            for (int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject arrayJsonObject = jsonArray.getJSONObject(i);
+                locations.add(arrayJsonObject);
+            }
 
+            populateCard(locations);
 
         } catch(Exception e) {
             Log.e("START ADVENTOUR", "Exception", e);
         }
+    }
+
+    public void populateCard(ArrayList<JSONObject> locations)
+    {
+        for (JSONObject location : locations)
+            System.out.println(location.toString());
+
     }
 
 }
