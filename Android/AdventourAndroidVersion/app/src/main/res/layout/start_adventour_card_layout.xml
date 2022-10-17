@@ -6,6 +6,10 @@
     android:layout_height="262.5dp"
     android:background="@drawable/ic_ticket_card">
 
+    <!--
+    THIS IS NOT UPDATED! CHECK activity_start_adventour.xml FOR LATEST FORMAT
+    -->
+
     <ImageView
         android:id="@+id/previewImageView"
         android:layout_width="120dp"
