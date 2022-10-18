@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,9 +25,9 @@ import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -33,17 +35,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class StartAdventour extends AppCompatActivity {
 
     ImageButton filterButton;
     Slider priceSlider;
-    TextView priceTextView;
+    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
     Button inProgressButton, beginButton;
+    RatingBar ratingBar;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -68,17 +67,26 @@ public class StartAdventour extends AppCompatActivity {
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.start_adventour);
 
-        // Filter button
         filterButton = (ImageButton) findViewById(R.id.filterButton);
+        inProgressButton = (Button) findViewById(R.id.inProgressButton);
+        beginButton = (Button) findViewById(R.id.beginButton);
+
+        nameTextView = (TextView) findViewById(R.id.nameTextView);
+        distanceTextView = (TextView) findViewById(R.id.distanceTextView);
+        phoneTextView = (TextView) findViewById(R.id.phoneNumberTextView);
+        websiteTextView = (TextView) findViewById(R.id.websiteTextView);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+
+
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 onClickFilterButton(view);
             }
         });
-
-        inProgressButton = (Button) findViewById(R.id.inProgressButton);
-        beginButton = (Button) findViewById(R.id.beginButton);
 
         inProgressButton.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -92,11 +100,9 @@ public class StartAdventour extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
-               getLocations();
+               getLocation();
            }
         });
-
-
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
@@ -120,7 +126,6 @@ public class StartAdventour extends AppCompatActivity {
     }
 
     public void onClickFilterButton(View view) {
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View filterPopupWindowView = inflater.inflate(R.layout.popup_filter, null);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -179,11 +184,11 @@ public class StartAdventour extends AppCompatActivity {
         finish();
     }
 
-    public void getLocations()
+    public void getLocation()
     {
-
         JSONObject jsonBody = new JSONObject();
-        ArrayList<JSONObject> locations = new ArrayList<JSONObject>(); // when we organize code better make sure this is cleared when users change sentiments.
+        String fsqId, name, description, tel, website;
+        float rating;
 
         try {
             jsonBody.put("uid", user.getUid());
@@ -229,27 +234,54 @@ public class StartAdventour extends AppCompatActivity {
 
             in.close();
 
-            JSONObject jsonObject = new JSONObject(response.toString());
-            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            JSONObject responseData = new JSONObject(response.toString());
 
-            for (int i = 0; i < jsonArray.length(); i++)
-            {
-                JSONObject arrayJsonObject = jsonArray.getJSONObject(i);
-                locations.add(arrayJsonObject);
+            try {
+                JSONObject data = (JSONObject) responseData.get("data");
+                fsqId = data.get("fsq_id").toString();
+                name = data.get("name").toString();
+                rating = Float.parseFloat(data.get("rating").toString()) / 2;
+
+                try {
+                    tel = data.get("tel").toString();
+                } catch(Exception e) {
+                    tel = "N/A";
+                    Log.e("No tel for location", "Exception", e);
+                }
+
+                try {
+                    website = data.get("website").toString();
+                } catch(Exception e) {
+                    website = "N/A";
+                    Log.e("No web for location", "Exception", e);
+                }
+
+                try {
+                    description = data.get("description").toString();
+                } catch(Exception e) {
+                    description = "No description available for this location... ";
+                    Log.e("No des for location", "Exception", e);
+                }
+
+                Log.d("START ADVENTOUR", fsqId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
+                populateCard(name, rating, tel, website, description);
+
+            } catch (Exception e) {
+                Log.e("START ADVENTOUR", "Exception", e);
             }
-
-            populateCard(locations);
 
         } catch(Exception e) {
             Log.e("START ADVENTOUR", "Exception", e);
         }
     }
 
-    public void populateCard(ArrayList<JSONObject> locations)
+    public void populateCard(String name, float rating, String tel, String website, String description)
     {
-        for (JSONObject location : locations)
-            System.out.println(location.toString());
-
+        nameTextView.setText(name);
+        phoneTextView.setText(tel);
+        websiteTextView.setText(website);
+        descriptionTextView.setText(description);
+        ratingBar.setRating(rating);
     }
 
 }

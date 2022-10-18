@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/locationNameTextView"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="locationNameTextView"
@@ -28,8 +28,8 @@
             android:id="@+id/showOnMapTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/locationNameTextView"
-            android:layout_alignLeft="@id/locationNameTextView"
+            android:layout_below="@id/nameTextView"
+            android:layout_alignLeft="@id/nameTextView"
             android:clickable="true"
             android:text="Show on Map"
             android:textColor="@color/blue_main"
@@ -40,7 +40,7 @@
             android:id="@+id/getDirectionsTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/locationNameTextView"
+            android:layout_below="@id/nameTextView"
             android:layout_marginStart="20dp"
             android:layout_toRightOf="@id/showOnMapTextButton"
             android:clickable="true"

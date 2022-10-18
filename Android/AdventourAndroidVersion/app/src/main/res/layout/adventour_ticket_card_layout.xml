@@ -12,7 +12,7 @@
         android:background="@drawable/ic_ticket_card">
 
         <TextView
-            android:id="@+id/locationNameTextView"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -25,7 +25,7 @@
             android:height="46dp"/>
 
         <TextView
-            android:id="@+id/locationDescriptionTextView"
+            android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"

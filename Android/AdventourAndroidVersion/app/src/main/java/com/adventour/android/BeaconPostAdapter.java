@@ -110,11 +110,11 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         public Viewholder(@NonNull View itemView)
         {
             super(itemView);
-            locationNameTextView = itemView.findViewById(R.id.locationNameTextView);
+            locationNameTextView = itemView.findViewById(R.id.nameTextView);
             priceTextView = itemView.findViewById(R.id.priceTextView);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             addressTextView = itemView.findViewById(R.id.addressTextView);
-            locationDescriptionTextView = itemView.findViewById(R.id.locationDescriptionTextView);
+            locationDescriptionTextView = itemView.findViewById(R.id.descriptionTextView);
         }
     }
 }

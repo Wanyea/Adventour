@@ -37,7 +37,7 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
         InProgressRV.setNestedScrollingEnabled(true);
 
-        finishAdventourButton = (FloatingActionButton) findViewById(R.id.finishAdventourButton);
+        finishAdventourButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
 

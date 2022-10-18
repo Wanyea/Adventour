@@ -130,12 +130,12 @@ public class Passport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        // Build AlertDialog that will alert users when they try to log out.
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setMessage("Are you sure you want to log out?");
-        alertBuilder.setCancelable(true);
+        // Build AlertDialog that will alert users when they try to log out account.
+        AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
+        logOutAlertBuilder.setMessage("Are you sure you want to log out?");
+        logOutAlertBuilder.setCancelable(true);
 
-        alertBuilder.setPositiveButton(
+        logOutAlertBuilder.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -145,7 +145,30 @@ public class Passport extends AppCompatActivity {
                     }
                 });
 
-        alertBuilder.setNegativeButton(
+        logOutAlertBuilder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // Build AlertDialog that will alert users when they try to delete their account.
+        AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
+        deleteAccountAlertBuilder.setMessage("Are you sure you want to log out?");
+        deleteAccountAlertBuilder.setCancelable(true);
+
+        deleteAccountAlertBuilder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        FirebaseAuth.getInstance().signOut();
+                        switchToLoggedOut();
+                    }
+                });
+
+        deleteAccountAlertBuilder.setNegativeButton(
                 "No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -155,15 +178,21 @@ public class Passport extends AppCompatActivity {
 
         switch(item.getItemId())
         {
-            case R.id.logOut:
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
+            case R.id.adventourTOS:
+                openAdventourTOS(); // Prompts user to navigate to Adventour TOS on our site.
                 return true;
 
-            case R.id.settings:
-                switchToSettings();
+            case R.id.logOut:
+                AlertDialog logOutAlert = logOutAlertBuilder.create();
+                logOutAlert.show();
+                return true;
+
+            case R.id.deleteAccount:
+                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
+                deleteAccountAlert.show();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -386,13 +415,6 @@ public class Passport extends AppCompatActivity {
         finish();
     }
 
-    public void switchToSettings()
-    {
-        Intent intent = new Intent(this, Settings.class);
-        startActivity(intent);
-        finish();
-    }
-
      public void switchToLoggedOut()
     {
         Intent intent = new Intent(this, LoggedOut.class);
@@ -409,6 +431,11 @@ public class Passport extends AppCompatActivity {
         {
             switchToLoggedOut();
         }
+    }
+
+    public void openAdventourTOS()
+    {
+        // Prompt user to navigate to Adventour TOS on our site.
     }
 
 }

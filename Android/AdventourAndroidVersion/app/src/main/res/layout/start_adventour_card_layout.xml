@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/locationNameTextView"
+        android:id="@+id/nameTextView"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="locationNameTextView"
@@ -39,8 +39,8 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/locationNameTextView"
-        app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+        app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        app:layout_constraintStart_toStartOf="@id/nameTextView"
         android:minHeight="20dp"
         android:numStars="5"
         android:rating="5" />
@@ -51,19 +51,19 @@
         android:layout_height="wrap_content"
         android:text="distanceTextView"
         app:layout_constraintTop_toBottomOf="@id/ratingBar"
-        app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+        app:layout_constraintStart_toStartOf="@id/nameTextView"
         android:textStyle="italic"
         android:textSize="16dp" />
 
     <TextView
-        android:id="@+id/locationDescriptionTextView"
+        android:id="@+id/descriptionTextView"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="4"
         android:text="@string/lorem_ipsum"
         app:layout_constraintTop_toBottomOf="@id/distanceTextView"
-        app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+        app:layout_constraintStart_toStartOf="@id/nameTextView"
         android:textColor="@color/black"
         android:textSize="16dp" />
 

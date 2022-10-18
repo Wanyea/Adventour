@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/locationNameTextView"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="locationNameTextView"
@@ -29,8 +29,8 @@
             android:id="@+id/priceTextView"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:layout_below="@id/locationNameTextView"
-            android:layout_alignLeft="@id/locationNameTextView"
+            android:layout_below="@id/nameTextView"
+            android:layout_alignLeft="@id/nameTextView"
             android:text="$$$"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -53,17 +53,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/priceTextView"
-            android:layout_alignLeft="@id/locationNameTextView"
+            android:layout_alignLeft="@id/nameTextView"
             android:text="123 Street, Orlando, FL 45678"
             android:textColor="@color/blue_main"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/locationDescriptionTextView"
+            android:id="@+id/descriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/addressTextView"
-            android:layout_alignLeft="@id/locationNameTextView"
+            android:layout_alignLeft="@id/nameTextView"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dapibus dolor diam, sed malesuada quam euismod at. Vestibulum vestibulum."
@@ -74,7 +74,7 @@
             android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@id/locationDescriptionTextView"
+            android:layout_below="@id/descriptionTextView"
             android:layout_marginTop="10dp">
 
             <LinearLayout
