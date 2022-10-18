@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zk9-Gj-fmq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zk9-Gj-fmq">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -217,7 +218,7 @@
                                         <rect key="frame" x="-74" y="286" width="320" height="35"/>
                                     </datePicker>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="lock.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sMo-Dy-Xoz">
-                                        <rect key="frame" x="26.5" y="375.5" width="18.5" height="18.5"/>
+                                        <rect key="frame" x="27" y="375.5" width="18" height="18.5"/>
                                     </imageView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚠" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8y0-Nf-CtX">
                                         <rect key="frame" x="251" y="383.5" width="16" height="28"/>
@@ -454,7 +455,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCf-Bv-XhT">
-                                        <rect key="frame" x="80" y="309" width="135" height="31"/>
+                                        <rect key="frame" x="80" y="309" width="135" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Send" cornerStyle="capsule">
                                             <color key="baseBackgroundColor" name="adv-royalblue"/>
@@ -546,16 +547,16 @@
                                         <rect key="frame" x="50" y="239.5" width="195" height="34"/>
                                         <color key="textColor" name="adv-royalblue"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="username"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" textContentType="username"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BKR-l4-wz0">
                                         <rect key="frame" x="50" y="295.5" width="195" height="34"/>
                                         <color key="textColor" name="adv-royalblue"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" textContentType="password"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1by-ba-Y5D">
-                                        <rect key="frame" x="65" y="379.5" width="165" height="31"/>
+                                        <rect key="frame" x="65" y="379.5" width="165" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="LOG IN" cornerStyle="capsule"/>
                                         <connections>
@@ -605,7 +606,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAK-Bu-H4r">
-                                        <rect key="frame" x="77.5" y="415.5" width="140" height="31"/>
+                                        <rect key="frame" x="67.5" y="419" width="160" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Forgot password?"/>
                                         <connections>
@@ -721,10 +722,10 @@
         <image name="Cloud_2" width="1147" height="662"/>
         <image name="Cloud_3" width="1205" height="550"/>
         <image name="Logo_Adventour_Transparent" width="1988" height="864"/>
-        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="envelope.fill" catalog="system" width="128" height="93"/>
-        <image name="lock" catalog="system" width="128" height="128"/>
-        <image name="lock.fill" catalog="system" width="128" height="128"/>
+        <image name="lock" catalog="system" width="125" height="128"/>
+        <image name="lock.fill" catalog="system" width="125" height="128"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -742,7 +743,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

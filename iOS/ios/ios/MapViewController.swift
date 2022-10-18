@@ -27,6 +27,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var mapView: MKMapView!
     var locations: [[String: Any]] = []
     var ids: [String]!
@@ -49,17 +51,21 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
-        getLocationData()
+        
+        
                 
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         if let ids = self.ids {
             print("Map, These is the ids: ", ids)
         } else {
             print("Map, The ids is nil")
         }
+        self.hideTable()
+        getLocationData()
     }
     
     
@@ -109,12 +115,17 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     
-    
-    
+    func hideTable() {
+        self.locationsTable.isHidden = true
+    }
+        
+    func showTable() {
+        self.locationsTable.isHidden = false
+    }
     
     func getLocationData() {
         
-        
+        self.activityIndicator.startAnimating()
         
         let params: [String: Any] = [
             "uid": user!.uid,
@@ -141,6 +152,9 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                             self.locations = array
                             DispatchQueue.main.async {
                                 self.locationsTable.reloadData()
+                                self.showTable()
+                                self.activityIndicator.stopAnimating()
+                                
                             }
 
                         }

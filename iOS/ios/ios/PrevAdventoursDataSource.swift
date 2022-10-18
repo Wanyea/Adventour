@@ -12,6 +12,7 @@ class PrevAdventoursDataSource: NSObject, UITableViewDataSource {
     var data: [[String: Any]]
     
     init(withDataSource data: [[String: Any]]) {
+//        print("data: ", data)
         self.data = data
     }
 
@@ -22,7 +23,11 @@ class PrevAdventoursDataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PrevAdventourCell", for: indexPath) as! PrevAdventoursTableViewCell
-        cell.dateCreated.text = ""
+//        print(data[indexPath.item])
+        if let dateCreated = data[indexPath.item]["dateCreated"] as? String {
+//            print("Date created: ", data)
+            cell.dateCreated.text = dateCreated
+        }
         cell.location1.text = ""
         cell.location2.text = ""
         cell.location3.text = ""

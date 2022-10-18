@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -44,7 +45,7 @@
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MapCell" rowHeight="68" id="jyL-Pc-aGg" customClass="MapTableViewCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="44.5" width="320" height="68"/>
+                                                        <rect key="frame" x="0.0" y="50" width="320" height="68"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jyL-Pc-aGg" id="DbQ-Zz-ABR">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
@@ -115,14 +116,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="112.5" width="320" height="65"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="69"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HG7-BH-C89">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="31.5"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="CXD-ZM-OMz"/>
                                                                         <constraint firstAttribute="width" constant="150" id="VTj-CK-J5e"/>
@@ -204,10 +205,14 @@
                                     <segue destination="2hB-4n-hwA" kind="unwind" unwindAction="unwindHome:" id="YfA-ng-mCV"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VoM-sn-jMu">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jkn-kn-Drg"/>
                         <color key="backgroundColor" name="adv-skyblue"/>
                         <constraints>
+                            <constraint firstItem="VoM-sn-jMu" firstAttribute="centerY" secondItem="bC4-2a-hW9" secondAttribute="centerY" id="53s-qA-Ym6"/>
                             <constraint firstItem="xKv-Jd-wwd" firstAttribute="centerX" secondItem="jkn-kn-Drg" secondAttribute="centerX" id="6VG-tf-GR8"/>
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="centerX" secondItem="jkn-kn-Drg" secondAttribute="centerX" id="8Jh-9f-kZ6"/>
                             <constraint firstItem="xKv-Jd-wwd" firstAttribute="top" secondItem="jkn-kn-Drg" secondAttribute="top" constant="35" id="Cwt-sS-mo8"/>
@@ -217,6 +222,7 @@
                             <constraint firstItem="xKv-Jd-wwd" firstAttribute="leading" secondItem="jkn-kn-Drg" secondAttribute="leading" constant="15" id="jcb-ev-MP6"/>
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="leading" secondItem="jkn-kn-Drg" secondAttribute="leading" constant="15" id="ucb-ga-jbt"/>
                             <constraint firstItem="3Vb-C1-ke6" firstAttribute="top" secondItem="xKv-Jd-wwd" secondAttribute="bottom" constant="21" id="v0e-eg-LxC"/>
+                            <constraint firstItem="VoM-sn-jMu" firstAttribute="centerX" secondItem="bC4-2a-hW9" secondAttribute="centerX" id="zUF-O2-yhz"/>
                             <constraint firstItem="jkn-kn-Drg" firstAttribute="bottom" secondItem="3Vb-C1-ke6" secondAttribute="bottom" constant="20" id="zk5-Gv-yEu"/>
                         </constraints>
                     </view>
@@ -224,6 +230,7 @@
                     <navigationItem key="navigationItem" id="wOi-fI-nlf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="VoM-sn-jMu" id="CxY-hY-aml"/>
                         <outlet property="addButton" destination="IKB-vm-efy" id="8RN-xx-T1A"/>
                         <outlet property="locationsTable" destination="ioy-om-bZY" id="jUp-Ev-hBe"/>
                         <outlet property="mapView" destination="xKv-Jd-wwd" id="Oi1-Fi-Qcb"/>
@@ -249,13 +256,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Map_Scroll" translatesAutoresizingMaskIntoConstraints="NO" id="r2K-YT-Ebz">
-                                <rect key="frame" x="-3" y="87" width="381" height="381"/>
+                                <rect key="frame" x="2" y="87" width="371" height="371"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="r2K-YT-Ebz" secondAttribute="height" multiplier="1:1" id="ZxT-S5-GEx"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-wy-afl">
-                                <rect key="frame" x="60" y="508" width="255" height="31"/>
+                                <rect key="frame" x="60" y="498" width="255" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
@@ -263,7 +270,7 @@
                                 </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24D-uQ-rHa">
-                                <rect key="frame" x="80" y="547" width="215" height="31"/>
+                                <rect key="frame" x="80" y="540.5" width="215" height="34"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="View Adventour"/>
@@ -281,7 +288,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq4-q6-3j6">
-                                <rect key="frame" x="130" y="586" width="115" height="31"/>
+                                <rect key="frame" x="130" y="582.5" width="115" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Home" cornerStyle="capsule"/>
@@ -332,7 +339,7 @@
     <resources>
         <image name="Map_Scroll" width="1652" height="913"/>
         <image name="Notepad_Paper" width="1920" height="2254"/>
-        <image name="mappin" catalog="system" width="105" height="128"/>
+        <image name="mappin" catalog="system" width="106" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="adv-orange">

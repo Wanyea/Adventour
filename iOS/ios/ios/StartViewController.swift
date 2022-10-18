@@ -10,11 +10,19 @@ class StartViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
 
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var websiteLabel: UILabel!
-    @IBOutlet weak var phoneLabel: UILabel!
+    @IBOutlet weak var websiteClickable: UILabel!
+    @IBOutlet weak var phoneClickable: UILabel!
+    
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
+    
     @IBOutlet weak var notNow: UIButton!
+    
+    @IBOutlet weak var phoneLabel: UILabel!
+    
+    @IBOutlet weak var websiteLabel: UILabel!
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var fsq_id: String!
     var ids: [String]? = []
@@ -22,10 +30,7 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.websiteLabel.adjustsFontSizeToFitWidth = true
-        self.websiteLabel.minimumScaleFactor = 0.75
-        self.websiteLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
-        self.phoneLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
+        
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {
@@ -42,13 +47,21 @@ class StartViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.websiteClickable?.adjustsFontSizeToFitWidth = true
+        self.websiteClickable?.minimumScaleFactor = 0.75
+        self.websiteClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
+        self.phoneClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
+        
         if let ids = self.ids {
             print("Start, These is the ids: ", ids)
         } else {
             print("Start, These ids is nil")
         }
-        
+        self.hideCardInfo()
+        self.activityIndicator?.startAnimating()
         getAdventourLocation()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -115,7 +128,7 @@ class StartViewController: UIViewController {
     }
     
     @objc func websiteTapped() {
-        if let string = websiteLabel.text {
+        if let string = websiteClickable.text {
             if let url = URL(string: string) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
@@ -123,7 +136,7 @@ class StartViewController: UIViewController {
     }
     
     @objc func phoneTapped() {
-        if let string = phoneLabel.text {
+        if let string = self.phoneClickable?.text {
             let phone = string.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "-", with: "")
             if let url = URL(string: "tel://" + phone) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -162,31 +175,34 @@ class StartViewController: UIViewController {
                                 self.fsq_id = fsq_id
                             } else {
                                 print("There was no fsq_id to be found...")
+                                self.hideCardInfo()
                             }
                             
                             if let name = data["name"] as? String {
-                                self.nameLabel.text = name
+                                self.nameLabel?.text = name
                             } else {
-                                self.nameLabel.text = "This place does not have a name."
+                                self.nameLabel?.text = "This place does not have a name."
                             }
                             
                             if let description = data["description"] as? String {
-                                self.descriptionLabel.text = description
+                                self.descriptionLabel?.text = description
                             } else {
-                                self.descriptionLabel.text = "This place does not have a listed description."
+                                self.descriptionLabel?.text = "This place does not have a listed description."
                             }
                             
                             if let tel = data["tel"] as? String {
-                                self.phoneLabel.text = tel
+                                self.phoneClickable?.text = tel
                             } else {
-                                self.phoneLabel.text = "N/A"
+                                self.phoneClickable?.text = "N/A"
                             }
                             
                             if let website = data["website"] as? String {
-                                self.websiteLabel.text = website
+                                self.websiteClickable?.text = website
                             } else {
-                                self.websiteLabel.text = "N/A"
+                                self.websiteClickable?.text = "N/A"
                             }
+                            self.activityIndicator?.stopAnimating()
+                            self.showCardInfo()
                         }
                         
                     }
@@ -197,6 +213,34 @@ class StartViewController: UIViewController {
         task.resume()
     }
 
+    func hideCardInfo() {
+        self.locationPhoto?.isHidden = true
+        self.nameLabel?.isHidden = true
+
+        self.descriptionLabel?.isHidden = true
+        self.websiteClickable?.isHidden = true
+        self.phoneClickable?.isHidden = true
+
+        
+        self.phoneLabel?.isHidden = true
+        self.websiteLabel?.isHidden = true
+    }
+    
+    func showCardInfo() {
+        self.locationPhoto?.isHidden = false
+        self.nameLabel?.isHidden = false
+
+        self.descriptionLabel?.isHidden = false
+        self.websiteClickable?.isHidden = false
+        self.phoneClickable?.isHidden = false
+
+
+        
+        self.phoneLabel?.isHidden = false
+        self.websiteLabel?.isHidden = false
+    }
+    
+    
     func switchToLoggedOut() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
        
