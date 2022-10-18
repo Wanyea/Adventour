@@ -6,6 +6,7 @@ class StartViewController: UIViewController {
     
     var user: User!
     
+    @IBOutlet weak var exitIndicator: UIView!
     @IBOutlet weak var locationPhoto: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
 
@@ -47,7 +48,7 @@ class StartViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.exitIndicator?.layer.cornerRadius = 3
         self.websiteClickable?.adjustsFontSizeToFitWidth = true
         self.websiteClickable?.minimumScaleFactor = 0.75
         self.websiteClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))

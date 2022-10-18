@@ -22,16 +22,17 @@
                                 <rect key="frame" x="0.0" y="247" width="375" height="400"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQw-Qj-C95">
-                                        <rect key="frame" x="130" y="19" width="115" height="2"/>
+                                        <rect key="frame" x="162.5" y="8" width="50" height="6"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="nat-0W-9At"/>
+                                            <constraint firstAttribute="width" constant="50" id="9NL-oq-45H"/>
+                                            <constraint firstAttribute="height" constant="6" id="nat-0W-9At"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" name="adv-white"/>
                                 <constraints>
-                                    <constraint firstItem="yQw-Qj-C95" firstAttribute="top" secondItem="2iK-Vj-Pjf" secondAttribute="top" constant="19" id="fR0-VX-WRE"/>
+                                    <constraint firstItem="yQw-Qj-C95" firstAttribute="top" secondItem="2iK-Vj-Pjf" secondAttribute="top" constant="8" id="fR0-VX-WRE"/>
                                     <constraint firstItem="yQw-Qj-C95" firstAttribute="centerX" secondItem="2iK-Vj-Pjf" secondAttribute="centerX" id="p1B-o7-f8C"/>
                                     <constraint firstItem="yQw-Qj-C95" firstAttribute="leading" secondItem="2iK-Vj-Pjf" secondAttribute="leading" constant="130" id="yD3-u3-WJ6"/>
                                 </constraints>
@@ -41,6 +42,11 @@
                                         <integer key="value" value="40"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="yD3-u3-WJ6"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdr-8M-thc">
                                 <rect key="frame" x="311.5" y="316" width="33.5" height="31"/>
@@ -559,6 +565,7 @@
                     </view>
                     <connections>
                         <outlet property="distanceLabel" destination="Wa5-ex-KfV" id="Hsw-Vn-enZ"/>
+                        <outlet property="exitIndicator" destination="yQw-Qj-C95" id="uyp-fH-Lb2"/>
                         <outlet property="priceLabel" destination="5kM-Dg-o9D" id="S7g-Im-qmb"/>
                     </connections>
                 </viewController>
@@ -968,14 +975,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FinishCell" id="CU8-oO-zWa" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="118" width="320" height="68.5"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="69.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CU8-oO-zWa" id="2Kg-zu-Rd5">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="68.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKa-pc-edD">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="36"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="AuF-VL-VAD"/>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FMB-aN-h6D"/>
@@ -1100,7 +1107,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Map_Scroll" translatesAutoresizingMaskIntoConstraints="NO" id="QCU-rF-Ajw">
-                                <rect key="frame" x="2.5" y="87" width="370.5" height="370.5"/>
+                                <rect key="frame" x="2" y="87" width="371" height="370.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QCU-rF-Ajw" secondAttribute="height" multiplier="1:1" id="9TB-tf-XiZ"/>
                                 </constraints>
