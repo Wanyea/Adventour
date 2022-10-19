@@ -34,15 +34,19 @@
 		4ADE978528F8E3380013F935 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE978428F8E3370013F935 /* EditProfileViewController.swift */; };
 		6313BCCD291F926F18840E70 /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 488E918777FDFEF13F7417BA /* libPods-iosTests.a */; };
 		648F6CF18E04C10683B0D2C9 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D389420CBC8D0300144DB30C /* libPods-ios.a */; };
+		F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */; };
 		F038D4AF28C96FBD006D953A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */; };
 		F066BFB528FB4875004DBCD1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB428FB4875004DBCD1 /* FirebaseAuth */; };
 		F066BFB728FB4875004DBCD1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB628FB4875004DBCD1 /* FirebaseFirestore */; };
 		F066BFB928FB4875004DBCD1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB828FB4875004DBCD1 /* FirebaseFirestoreSwift */; };
 		F066BFBB28FB4875004DBCD1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFBA28FB4875004DBCD1 /* FirebaseStorage */; };
 		F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */; };
-		F0A9D67328ECD0A00028A718 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D67228ECD0A00028A718 /* Location.swift */; };
 		F0A9D67528ECD4920028A718 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */; };
 		F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D227BD28C02B65003E3100 /* Assets.xcassets */; };
+		F0D8780028FB84040054C445 /* PrevAdventoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */; };
+		F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */; };
+		F0D8780428FB853F0054C445 /* PrevAdventoursDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780328FB853F0054C445 /* PrevAdventoursDataSource.swift */; };
+		F0D8780628FB85790054C445 /* BeaconsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780528FB85790054C445 /* BeaconsDataSource.swift */; };
 		F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -101,11 +105,15 @@
 		CD42ABEE6D0BC862B9E82707 /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
 		D389420CBC8D0300144DB30C /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3811895CBB715A1869E52C2 /* Pods-ios-iosUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-iosUITests.debug.xcconfig"; path = "Target Support Files/Pods-ios-iosUITests/Pods-ios-iosUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		F0A9D67228ECD0A00028A718 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
 		F0D227BD28C02B65003E3100 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevAdventoursTableViewCell.swift; sourceTree = "<group>"; };
+		F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsTableViewCell.swift; sourceTree = "<group>"; };
+		F0D8780328FB853F0054C445 /* PrevAdventoursDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevAdventoursDataSource.swift; sourceTree = "<group>"; };
+		F0D8780528FB85790054C445 /* BeaconsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsDataSource.swift; sourceTree = "<group>"; };
 		F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,18 +180,26 @@
 				2A9EBF8C28B69114009ED151 /* LoginViewController.swift */,
 				2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */,
 				F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */,
-				4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */,
 				2A7F520828CD190400F6D30E /* StartViewController.swift */,
+				F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */,
 				2AA16D8228D91A0400A7D16D /* MapViewController.swift */,
-				F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */,
 				F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */,
+				F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */,
 				2AA16D8428DCBC9000A7D16D /* CongratsViewController.swift */,
+				4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */,
+				F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */,
+				F0D8780528FB85790054C445 /* BeaconsDataSource.swift */,
+				F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */,
+				F0D8780328FB853F0054C445 /* PrevAdventoursDataSource.swift */,
+				4ADE978428F8E3370013F935 /* EditProfileViewController.swift */,
 				2AAB4E2D28E72C0000868DB2 /* BeaconPostViewController.swift */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
-				2AC1B40728C91F3C00F4D8B9 /* ProfilePage.storyboard */,
 				2AC1B40928C9267900F4D8B9 /* StartPage.storyboard */,
 				2A94FB8328F7C69D006B5291 /* InProgress.storyboard */,
+				4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */,
+				2AC1B40728C91F3C00F4D8B9 /* ProfilePage.storyboard */,
+				4A15DD1D28E4EA0E00F763A7 /* EditProfilePage.storyboard */,
 				2AC1B40B28C9269E00F4D8B9 /* BeaconBoard.storyboard */,
 				2AAB4E2B28E72BC700868DB2 /* BeaconPost.storyboard */,
 				F0D227BD28C02B65003E3100 /* Assets.xcassets */,
@@ -495,20 +511,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
+				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
+				F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */,
 				2A9EBF8D28B69114009ED151 /* LoginViewController.swift in Sources */,
 				2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */,
+				F0D8780628FB85790054C445 /* BeaconsDataSource.swift in Sources */,
 				2AA16D8528DCBC9000A7D16D /* CongratsViewController.swift in Sources */,
 				2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */,
 				F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */,
 				4ADE978528F8E3380013F935 /* EditProfileViewController.swift in Sources */,
+				F0D8780428FB853F0054C445 /* PrevAdventoursDataSource.swift in Sources */,
 				2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */,
 				2AFC436F28FCC49C00E5318C /* api_key.swift in Sources */,
 				2AAB4E2E28E72C0000868DB2 /* BeaconPostViewController.swift in Sources */,
 				F0A9D67528ECD4920028A718 /* MapTableViewCell.swift in Sources */,
 				2A7F520928CD190400F6D30E /* StartViewController.swift in Sources */,
-				F0A9D67328ECD0A00028A718 /* Location.swift in Sources */,
+				F0D8780028FB84040054C445 /* PrevAdventoursTableViewCell.swift in Sources */,
 				2AA16D8328D91A0400A7D16D /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,6 +705,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCS76ZYPZX;
@@ -716,6 +737,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCS76ZYPZX;

@@ -36,7 +36,6 @@ extension UIView{
 }
 
 
-
 class forgotPassword: UIViewController
 {
     @IBOutlet weak var backButton: UIButton!
@@ -117,7 +116,10 @@ class LoginViewController: UIViewController {
         password.leftViewMode = UITextField.ViewMode.always
         password.leftView = passwordIcon
         // Do any additional setup after loading the view.
-        
+ 
+//        let endEmailEditing = UITapGestureRecognizer(target: self.email, action: #selector(UIView.endEditing(_:)))
+//        endEmailEditing.cancelsTouchesInView = false
+//        email.addGestureRecognizer(endEmailEditing)
         errorMessage.isHidden = true
     }
     
@@ -136,6 +138,10 @@ class LoginViewController: UIViewController {
     var passwordFlag: Bool!
     
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        email.endEditing(true)
+        password.endEditing(true)
+    }
 
     @IBAction func loginTapped(_ sender: Any) {
 
@@ -152,7 +158,6 @@ class LoginViewController: UIViewController {
 
         
     }
-    
     
     func switchToTabController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

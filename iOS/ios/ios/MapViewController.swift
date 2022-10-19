@@ -23,11 +23,11 @@ extension MapViewController: MapTableViewCellDelegate {
     
 }
 
-
-
 class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var mapView: MKMapView!
     var locations: [[String: Any]] = []
@@ -51,19 +51,29 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
-        getLocationData()
+        
+        
                 
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         if let ids = self.ids {
             print("Map, These is the ids: ", ids)
         } else {
             print("Map, The ids is nil")
         }
+        self.hideTable()
+        getLocationData()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? CongratsViewController {
+            destinationVC.locations = self.ids
+        }
+        
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,16 +121,21 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     
-    
-    
+    func hideTable() {
+        self.locationsTable.isHidden = true
+    }
+        
+    func showTable() {
+        self.locationsTable.isHidden = false
+    }
     
     func getLocationData() {
         
-        
+        self.activityIndicator.startAnimating()
         
         let params: [String: Any] = [
             "uid": user!.uid,
-            "ids": ids
+            "ids": self.ids!
         ]
         
         if (ids.isEmpty) {
@@ -143,6 +158,9 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                             self.locations = array
                             DispatchQueue.main.async {
                                 self.locationsTable.reloadData()
+                                self.showTable()
+                                self.activityIndicator.stopAnimating()
+                                
                             }
 
                         }

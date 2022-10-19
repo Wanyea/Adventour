@@ -91,6 +91,14 @@ class SignUpViewController: UIViewController {
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        nickname.endEditing(true)
+        email.endEditing(true)
+        birthday.endEditing(true)
+        password.endEditing(true)
+        passwordConfirm.endEditing(true)
+    }
+    
     @IBAction func signUpTapped(_ sender: Any) {
         
         Auth.auth().createUser(withEmail: email.text!, password: password.text!) { result, error in
