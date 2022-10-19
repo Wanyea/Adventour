@@ -43,8 +43,49 @@ class forgotPassword: UIViewController
     @IBOutlet weak var text: UIView!
     
 
+    @IBOutlet weak var emailLabelText: UILabel!
+    @IBOutlet weak var forgotPassEmail: UITextField!
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func sendPass(_ sender: UIButton)
+    {
+        print(forgotPassEmail.text!)
+        let emailPattern = #"^\S+@\S+\.\S+$"#
+        
+        var result = forgotPassEmail.text!.range(
+            of: emailPattern,
+            options: .regularExpression
+        )
+        
+        let validEmail = (result != nil)
+        print(validEmail)
+        if(validEmail)
+        {
+            Auth.auth().sendPasswordReset(withEmail: forgotPassEmail.text!)
+            {
+                error in
+                if error != nil
+                {
+                    self.emailLabelText.text = "If there is an account associated with this email the password reset has been sent. Please check your spam folder as the reset email sometimes gets sent to spam"
+                    self.emailLabelText.isHidden = false
+                }
+                
+                else
+                {
+                    self.emailLabelText.text = "If there is an account associated with this email the password reset has been sent. Please check your spam folder as the reset email sometimes gets sent to spam"
+                    self.emailLabelText.isHidden = false
+                }
+                
+            }
+        }
+        
+        else{
+            self.emailLabelText.text = "Please enter a valid email."
+            self.emailLabelText.isHidden = false
+        }
+        
     }
     
     override func viewDidLoad() {
