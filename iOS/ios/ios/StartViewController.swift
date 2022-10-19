@@ -1,11 +1,16 @@
 import UIKit
 import MapKit
 import FirebaseAuth
+import GooglePlaces
+var temp = ""
+var lon = Double(0)
+var lat = Double(0)
 
 class StartViewController: UIViewController {
     
     var user: User!
-    
+    private var placesClient: GMSPlacesClient!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var locationPhoto: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
 
@@ -22,10 +27,12 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.websiteLabel.adjustsFontSizeToFitWidth = true
-        self.websiteLabel.minimumScaleFactor = 0.75
-        self.websiteLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
-        self.phoneLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
+        
+        
+        self.websiteLabel?.adjustsFontSizeToFitWidth = true
+        self.websiteLabel?.minimumScaleFactor = 0.75
+        self.websiteLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
+        self.phoneLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {
@@ -38,8 +45,30 @@ class StartViewController: UIViewController {
         notNow?.layer.borderColor = UIColor.red.cgColor
         notNow?.layer.cornerRadius = 15
         // Do any additional setup after loading the view.
+        placesClient = GMSPlacesClient.shared()
+        searchBar?.text = temp
     }
     
+    @IBAction func getCurrentPlace(_ sender: Any){
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue) |  UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue) | UInt(GMSPlaceField.placeID.rawValue))
+        
+        autocompleteController.placeFields = fields
+        
+        
+        let filter = GMSAutocompleteFilter()
+        filter.countries = ["us"]
+        filter.type = .city
+        
+        autocompleteController.autocompleteFilter = filter
+        present(autocompleteController,animated: true, completion: nil)
+        
+    }
+    @IBAction func updateSearch()
+    {
+        searchBar?.text = temp
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         if let ids = self.ids {
@@ -165,27 +194,27 @@ class StartViewController: UIViewController {
                             }
                             
                             if let name = data["name"] as? String {
-                                self.nameLabel.text = name
+                                self.nameLabel?.text = name
                             } else {
-                                self.nameLabel.text = "This place does not have a name."
+                                self.nameLabel?.text = "This place does not have a name."
                             }
                             
                             if let description = data["description"] as? String {
-                                self.descriptionLabel.text = description
+                                self.descriptionLabel?.text = description
                             } else {
-                                self.descriptionLabel.text = "This place does not have a listed description."
+                                self.descriptionLabel?.text = "This place does not have a listed description."
                             }
                             
                             if let tel = data["tel"] as? String {
-                                self.phoneLabel.text = tel
+                                self.phoneLabel?.text = tel
                             } else {
-                                self.phoneLabel.text = "N/A"
+                                self.phoneLabel?.text = "N/A"
                             }
                             
                             if let website = data["website"] as? String {
-                                self.websiteLabel.text = website
+                                self.websiteLabel?.text = website
                             } else {
-                                self.websiteLabel.text = "N/A"
+                                self.websiteLabel?.text = "N/A"
                             }
                         }
                         
@@ -207,4 +236,43 @@ class StartViewController: UIViewController {
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc)
     }
     
+}
+
+extension StartViewController: GMSAutocompleteViewControllerDelegate {
+
+  // Handle the user's selection.
+  func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+    print("Place name: \(place.name)")
+    print("Place ID: \(place.placeID)")
+    print("Place attributions: \(place.attributions)")
+    print("Place address: \(place.formattedAddress))")
+    lat = place.coordinate.latitude
+    lon = place.coordinate.longitude
+    print("Place lat: \(lat)")
+    print("Place lon: \(lon)")
+    temp = place.formattedAddress!
+    updateSearch()
+    dismiss(animated: true, completion: nil)
+    
+  }
+
+  func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+    // TODO: handle the error.
+    print("Error: ", error.localizedDescription)
+  }
+
+  // User canceled the operation.
+  func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+
+  // Turn the network activity indicator on and off again.
+  func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  }
+
+  func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  }
+
 }
