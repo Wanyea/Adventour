@@ -33,6 +33,7 @@
 		4ADE978528F8E3380013F935 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE978428F8E3370013F935 /* EditProfileViewController.swift */; };
 		6313BCCD291F926F18840E70 /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 488E918777FDFEF13F7417BA /* libPods-iosTests.a */; };
 		648F6CF18E04C10683B0D2C9 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D389420CBC8D0300144DB30C /* libPods-ios.a */; };
+		F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */; };
 		F038D4AF28C96FBD006D953A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */; };
 		F066BFB528FB4875004DBCD1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB428FB4875004DBCD1 /* FirebaseAuth */; };
 		F066BFB728FB4875004DBCD1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB628FB4875004DBCD1 /* FirebaseFirestore */; };
@@ -102,6 +103,7 @@
 		CD42ABEE6D0BC862B9E82707 /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
 		D389420CBC8D0300144DB30C /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3811895CBB715A1869E52C2 /* Pods-ios-iosUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-iosUITests.debug.xcconfig"; path = "Target Support Files/Pods-ios-iosUITests/Pods-ios-iosUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				2ADF00AE28C1A084003AB036 /* SignUpViewController.swift */,
 				F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */,
 				2A7F520828CD190400F6D30E /* StartViewController.swift */,
+				F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */,
 				2AA16D8228D91A0400A7D16D /* MapViewController.swift */,
 				F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */,
 				F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */,
@@ -501,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
+				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
 				F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */,

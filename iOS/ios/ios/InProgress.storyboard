@@ -116,14 +116,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="118" width="320" height="69"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="68.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="68.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HG7-BH-C89">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35.5"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="CXD-ZM-OMz"/>
                                                                         <constraint firstAttribute="width" constant="150" id="VTj-CK-J5e"/>
@@ -142,6 +142,9 @@
                                                                             <exclude reference="xYz-Nx-azc"/>
                                                                         </mask>
                                                                     </variation>
+                                                                    <connections>
+                                                                        <segue destination="SA0-Kd-Lhx" kind="show" id="z16-mw-A96"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -246,7 +249,7 @@
             <objects>
                 <viewController id="SA0-Kd-Lhx" customClass="CongratsViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MiL-g0-RYx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-wP-A39">
@@ -256,21 +259,32 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Map_Scroll" translatesAutoresizingMaskIntoConstraints="NO" id="r2K-YT-Ebz">
-                                <rect key="frame" x="2" y="87" width="371" height="371"/>
+                                <rect key="frame" x="20" y="87" width="335" height="335"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="r2K-YT-Ebz" secondAttribute="height" multiplier="1:1" id="ZxT-S5-GEx"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-wy-afl">
-                                <rect key="frame" x="60" y="498" width="255" height="34.5"/>
+                                <rect key="frame" x="60" y="462" width="255" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
                                     <color key="baseBackgroundColor" name="adv-royalblue"/>
                                 </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="1" height="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24D-uQ-rHa">
-                                <rect key="frame" x="80" y="540.5" width="215" height="34"/>
+                                <rect key="frame" x="80" y="504.5" width="215" height="34"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="View Adventour"/>
@@ -285,10 +299,31 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                         <color key="value" name="adv-royalblue"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderRadius">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="1" height="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" name="adv-black"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq4-q6-3j6">
-                                <rect key="frame" x="130" y="582.5" width="115" height="34.5"/>
+                                <rect key="frame" x="130" y="546.5" width="115" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Home" cornerStyle="capsule"/>
@@ -303,13 +338,28 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                         <color key="value" name="adv-royalblue"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="1" height="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xRy-Rs-bBd"/>
                         <color key="backgroundColor" name="adv-skyblue"/>
                         <constraints>
-                            <constraint firstItem="xRy-Rs-bBd" firstAttribute="bottom" secondItem="Rq4-q6-3j6" secondAttribute="bottom" constant="50" id="5yN-Wj-aCM"/>
+                            <constraint firstItem="r2K-YT-Ebz" firstAttribute="leading" secondItem="xRy-Rs-bBd" secondAttribute="leading" constant="20" id="7ym-3Y-FW7"/>
                             <constraint firstItem="9hW-wy-afl" firstAttribute="centerX" secondItem="xRy-Rs-bBd" secondAttribute="centerX" id="HqH-YM-0wA"/>
                             <constraint firstItem="r2K-YT-Ebz" firstAttribute="top" secondItem="ZxI-wP-A39" secondAttribute="bottom" id="Iha-Zx-4Xz"/>
                             <constraint firstItem="9hW-wy-afl" firstAttribute="top" secondItem="r2K-YT-Ebz" secondAttribute="bottom" constant="40" id="P1G-9G-gDh"/>
@@ -317,6 +367,7 @@
                             <constraint firstItem="Rq4-q6-3j6" firstAttribute="centerX" secondItem="xRy-Rs-bBd" secondAttribute="centerX" id="RSv-m5-m7I"/>
                             <constraint firstItem="Rq4-q6-3j6" firstAttribute="top" secondItem="24D-uQ-rHa" secondAttribute="bottom" constant="8" symbolic="YES" id="YfV-ic-A6o"/>
                             <constraint firstItem="Rq4-q6-3j6" firstAttribute="leading" secondItem="xRy-Rs-bBd" secondAttribute="leading" constant="130" id="agE-qZ-ujW"/>
+                            <constraint firstItem="xRy-Rs-bBd" firstAttribute="trailing" secondItem="r2K-YT-Ebz" secondAttribute="trailing" constant="20" id="ffA-fa-OKm"/>
                             <constraint firstItem="9hW-wy-afl" firstAttribute="leading" secondItem="xRy-Rs-bBd" secondAttribute="leading" constant="60" id="giZ-Wg-Fe6"/>
                             <constraint firstItem="24D-uQ-rHa" firstAttribute="top" secondItem="9hW-wy-afl" secondAttribute="bottom" constant="8" symbolic="YES" id="gml-0z-7Hw"/>
                             <constraint firstItem="ZxI-wP-A39" firstAttribute="centerX" secondItem="xRy-Rs-bBd" secondAttribute="centerX" id="ojJ-tA-gfJ"/>
@@ -342,6 +393,9 @@
         <image name="mappin" catalog="system" width="106" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <namedColor name="adv-black">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="adv-orange">
             <color red="1" green="0.64313725490196083" blue="0.30980392156862746" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
