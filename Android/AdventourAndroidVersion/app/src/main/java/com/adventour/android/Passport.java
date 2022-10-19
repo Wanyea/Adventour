@@ -1,6 +1,7 @@
 package com.adventour.android;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -53,6 +54,7 @@ public class Passport extends AppCompatActivity {
 
     Menu hamburgerMenu;
 
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,12 @@ public class Passport extends AppCompatActivity {
         populatePassportTextViews();
         populatePreviousAdventours();
 
-
+        // Action Bar
+        actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            //actionBar.setDisplayShowHomeEnabled(false);
+        }
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
