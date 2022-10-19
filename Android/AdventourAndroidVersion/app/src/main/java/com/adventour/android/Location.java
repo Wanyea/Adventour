@@ -1,6 +1,7 @@
 package com.adventour.android;
 
-public class Location {
+public class Location
+{
     private int fsq_id;
     private String name;
     private String address;

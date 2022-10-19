@@ -42,7 +42,7 @@ public class AdventourSummaryAdapter extends RecyclerView.Adapter<AdventourSumma
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-            locationNameTextView = itemView.findViewById(R.id.locationNameTextView);
+            locationNameTextView = itemView.findViewById(R.id.nameTextView);
         }
     }
 }

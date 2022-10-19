@@ -76,10 +76,10 @@
                 app:layout_constraintTop_toTopOf="@id/ticketCardImageView" />
 
             <TextView
-                android:id="@+id/locationNameTextView"
+                android:id="@+id/nameTextView"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="locationNameTextView"
+                android:text="nameTextView"
                 app:layout_constraintStart_toEndOf="@id/previewImageView"
                 app:layout_constraintTop_toTopOf="@id/previewImageView"
                 android:layout_marginStart="10dp"
@@ -95,8 +95,8 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/locationNameTextView"
-                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                app:layout_constraintTop_toBottomOf="@id/nameTextView"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
                 android:minHeight="20dp"
                 android:numStars="5"
                 android:rating="5" />
@@ -118,7 +118,7 @@
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:src="@drawable/ic_phone_icon"
-                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
                 app:layout_constraintTop_toBottomOf="@id/ratingBar"
                 app:tint="@color/blue_main" />
 
@@ -142,7 +142,7 @@
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:src="@drawable/ic_globe_icon"
-                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
                 app:layout_constraintTop_toBottomOf="@id/phoneImageView"
                 android:layout_marginTop="4dp"
                 app:tint="@color/blue_main" />
@@ -164,14 +164,14 @@
                 android:ellipsize="end" />
 
             <TextView
-                android:id="@+id/locationDescriptionTextView"
+                android:id="@+id/descriptionTextView"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@string/lorem_ipsum"
                 app:layout_constraintTop_toBottomOf="@id/globeImageView"
-                app:layout_constraintStart_toStartOf="@id/locationNameTextView"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
 
@@ -288,6 +288,18 @@
                 android:layout_width="142dp"
                 android:layout_height="47dp"
                 android:text="In progress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/beginButton"
+                android:layout_width="142dp"
+                android:layout_height="47dp"
+                android:backgroundTint="@color/blue_main"
+                android:text="Begin!"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/inProgressButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
