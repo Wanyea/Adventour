@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hqa-Kp-dxV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hqa-Kp-dxV">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -718,7 +718,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ne7-NK-CCa">
                                                 <rect key="frame" x="20" y="20" width="335" height="51"/>
                                                 <subviews>
-                                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="hUA-o5-gaw">
+                                                    <searchBar userInteractionEnabled="NO" contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="hUA-o5-gaw">
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
                                                         <color key="barTintColor" name="adv-skyblue"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -731,7 +731,7 @@
                                                             <color key="baseBackgroundColor" name="adv-white"/>
                                                         </buttonConfiguration>
                                                         <connections>
-                                                            <segue destination="3EB-nq-Jcp" kind="presentation" id="wsx-X9-eML"/>
+                                                            <segue destination="3EB-nq-Jcp" kind="presentation" id="Ycb-ae-v7L"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -764,6 +764,14 @@
                                                 <color key="textColor" name="adv-royalblue"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-lq-Gk2">
+                                                <rect key="frame" x="20" y="35" width="274" height="36"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="getCurrentPlace:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="ZoU-aK-oLH"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" name="adv-skyblue"/>
                                         <color key="tintColor" name="adv-royalblue"/>
@@ -772,7 +780,9 @@
                                             <constraint firstItem="3LC-Vr-9g8" firstAttribute="leading" secondItem="0v9-1Q-zfy" secondAttribute="trailing" constant="-937.5" id="1b3-HZ-MX7"/>
                                             <constraint firstItem="uJi-Zn-v6Y" firstAttribute="top" secondItem="v3b-9Y-zvC" secondAttribute="bottom" constant="8" symbolic="YES" id="1ie-r8-g32"/>
                                             <constraint firstItem="Lia-tA-a8x" firstAttribute="top" secondItem="KJl-Lo-tjK" secondAttribute="bottom" constant="8" symbolic="YES" id="28n-Dv-eec"/>
+                                            <constraint firstItem="M9u-lq-Gk2" firstAttribute="height" secondItem="hUA-o5-gaw" secondAttribute="height" multiplier="0.705882" id="2fj-iY-CHg"/>
                                             <constraint firstItem="Ne7-NK-CCa" firstAttribute="top" secondItem="Tly-LR-DyM" secondAttribute="top" constant="20" symbolic="YES" id="3Rb-0b-p5Q"/>
+                                            <constraint firstItem="M9u-lq-Gk2" firstAttribute="width" secondItem="hUA-o5-gaw" secondAttribute="width" multiplier="0.951389" id="4tb-8h-vfj"/>
                                             <constraint firstItem="Lia-tA-a8x" firstAttribute="centerX" secondItem="Tly-LR-DyM" secondAttribute="centerX" id="8PA-vU-MYR"/>
                                             <constraint firstItem="BT0-tb-AME" firstAttribute="leading" secondItem="3LC-Vr-9g8" secondAttribute="trailing" constant="-941.5" id="Awa-lU-2dE"/>
                                             <constraint firstItem="3LC-Vr-9g8" firstAttribute="centerX" secondItem="Tly-LR-DyM" secondAttribute="centerX" id="B0W-6J-r4q"/>
@@ -790,12 +800,14 @@
                                             <constraint firstItem="7Pd-K9-dE4" firstAttribute="leading" secondItem="uJi-Zn-v6Y" secondAttribute="trailing" constant="-83" id="SEO-y0-ZgU"/>
                                             <constraint firstItem="KJl-Lo-tjK" firstAttribute="centerX" secondItem="Tly-LR-DyM" secondAttribute="centerX" id="TXC-1j-BUv"/>
                                             <constraint firstItem="v3b-9Y-zvC" firstAttribute="leading" secondItem="0v9-1Q-zfy" secondAttribute="trailing" constant="10" id="UkI-98-onh"/>
+                                            <constraint firstItem="hUA-o5-gaw" firstAttribute="bottom" secondItem="M9u-lq-Gk2" secondAttribute="bottom" id="WEz-Xf-qwT"/>
                                             <constraint firstItem="Ne7-NK-CCa" firstAttribute="leading" secondItem="Tly-LR-DyM" secondAttribute="leading" constant="20" id="YOP-Es-k6x"/>
                                             <constraint firstItem="8ly-QK-9m0" firstAttribute="leading" secondItem="0v9-1Q-zfy" secondAttribute="trailing" constant="20" id="aBV-wk-EXo"/>
                                             <constraint firstItem="nUL-Ex-2iB" firstAttribute="top" secondItem="8ly-QK-9m0" secondAttribute="bottom" constant="8" symbolic="YES" id="dIf-3j-ycC"/>
                                             <constraint firstItem="ZYx-cI-UPa" firstAttribute="centerY" secondItem="nUL-Ex-2iB" secondAttribute="centerY" id="eq7-Be-YFf"/>
                                             <constraint firstItem="ZYx-cI-UPa" firstAttribute="leading" secondItem="nUL-Ex-2iB" secondAttribute="trailing" constant="3" id="fNF-hg-xye"/>
                                             <constraint firstItem="UgC-Zt-UYj" firstAttribute="top" secondItem="3LC-Vr-9g8" secondAttribute="bottom" constant="-420" id="ioR-iv-8Tz"/>
+                                            <constraint firstItem="M9u-lq-Gk2" firstAttribute="leading" secondItem="hUA-o5-gaw" secondAttribute="leading" id="kIz-bL-wjg"/>
                                             <constraint firstItem="3LC-Vr-9g8" firstAttribute="top" secondItem="4jM-g1-bBL" secondAttribute="bottom" constant="-93" id="lKg-Je-dQd"/>
                                             <constraint firstItem="3LC-Vr-9g8" firstAttribute="leading" secondItem="UgC-Zt-UYj" secondAttribute="trailing" constant="-921.5" id="oeH-QL-QMe"/>
                                             <constraint firstItem="WCp-Rc-w7H" firstAttribute="leading" secondItem="3LC-Vr-9g8" secondAttribute="trailing" constant="-897.5" id="opa-Bb-wWH"/>
@@ -845,6 +857,7 @@
                         <outlet property="nameLabel" destination="8ly-QK-9m0" id="ZGz-nP-4oU"/>
                         <outlet property="notNow" destination="aTO-FG-uMc" id="KfL-1z-Ctg"/>
                         <outlet property="phoneLabel" destination="ZYx-cI-UPa" id="QMa-dK-an9"/>
+                        <outlet property="searchBar" destination="hUA-o5-gaw" id="rDC-TI-3MV"/>
                         <outlet property="websiteLabel" destination="qWC-dn-njd" id="8IF-yE-dTG"/>
                     </connections>
                 </viewController>
