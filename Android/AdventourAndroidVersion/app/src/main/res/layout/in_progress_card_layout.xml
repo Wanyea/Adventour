@@ -14,7 +14,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp">
 
         <TextView
             android:id="@+id/locationNameTextView"
@@ -31,12 +32,13 @@
             android:layout_below="@id/locationNameTextView"
             android:layout_alignLeft="@id/locationNameTextView"
             android:clickable="true"
-            android:text="Show Map"
+            android:text="Show on Map"
             android:textColor="@color/blue_main"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:focusable="true" />
 
-        <TextView
+<!--        <TextView
             android:id="@+id/addPhotoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +48,6 @@
             android:text="Add Photo"
             android:textColor="@color/blue_main"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
