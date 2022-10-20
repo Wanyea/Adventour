@@ -82,6 +82,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6lH-Do-T0Q">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -113,6 +114,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Jl-li-DBo">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -138,6 +140,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1sn-JB-wjl">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -163,6 +166,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="K3R-8C-5Oz">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -188,6 +192,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="z00-4L-Oih">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -213,6 +218,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ufV-7r-7h0">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -347,6 +353,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tGL-CA-WLg">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -372,6 +379,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V2e-Kr-tcI">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -397,6 +405,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HEo-Ld-xJT">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -423,6 +432,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="d7z-Om-9Kj">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -448,6 +458,7 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EDH-eQ-zYa">
                                                         <rect key="frame" x="289" y="22" width="51" height="31"/>
+                                                        <color key="onTintColor" name="adv-royalblue"/>
                                                     </switch>
                                                 </subviews>
                                                 <constraints>
@@ -1063,14 +1074,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FinishCell" id="CU8-oO-zWa" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="118" width="320" height="69"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="69.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CU8-oO-zWa" id="2Kg-zu-Rd5">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKa-pc-edD">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35.5"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="36"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="AuF-VL-VAD"/>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FMB-aN-h6D"/>
@@ -1157,7 +1168,7 @@
                             <constraint firstItem="Z4H-8q-w2z" firstAttribute="centerX" secondItem="r6t-TD-Z3D" secondAttribute="centerX" id="tV8-FV-har"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="mappin" catalog="system" selectedImage="mappin" id="nsz-Fj-agh"/>
+                    <tabBarItem key="tabBarItem" title="" image="pin" catalog="system" selectedImage="mappin" id="nsz-Fj-agh"/>
                     <navigationItem key="navigationItem" id="C7y-r3-DDE"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -1195,7 +1206,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Map_Scroll" translatesAutoresizingMaskIntoConstraints="NO" id="QCU-rF-Ajw">
-                                <rect key="frame" x="2.5" y="87" width="370.5" height="370.5"/>
+                                <rect key="frame" x="2" y="87" width="371" height="370.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QCU-rF-Ajw" secondAttribute="height" multiplier="1:1" id="9TB-tf-XiZ"/>
                                 </constraints>
@@ -1446,6 +1457,7 @@
         <image name="Notepad_Paper" width="1920" height="2254"/>
         <image name="location.square.fill" catalog="system" width="128" height="114"/>
         <image name="mappin" catalog="system" width="106" height="128"/>
+        <image name="pin" catalog="system" width="116" height="128"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="AccentColor">

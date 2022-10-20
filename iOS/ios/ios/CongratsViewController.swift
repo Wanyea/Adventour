@@ -88,6 +88,13 @@ class CongratsViewController: UIViewController {
             }
             dest.locations = self.locations
         }
+        if let dest = segue.destination as? BeaconPostNavigationController {
+            print(self.locations)
+            if let vc = dest.topViewController as? BeaconPostViewController {
+                vc.ids = self.locations
+            }
+            
+        }
         
     }
     
