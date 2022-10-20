@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LBa-l9-GJY">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,24 +11,24 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Beacon Post View Controller-->
+        <!--Beacon Post-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="BeaconPostViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BeaconPost" id="Y6W-OH-hqX" customClass="BeaconPostViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beacon_card_2" translatesAutoresizingMaskIntoConstraints="NO" id="JBf-Rm-eN7">
-                                <rect key="frame" x="20" y="20" width="335" height="627"/>
+                                <rect key="frame" x="20" y="64" width="335" height="583"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kA6-Vt-Pf7">
-                                <rect key="frame" x="30" y="206" width="309" height="430"/>
+                                <rect key="frame" x="30" y="250" width="309" height="386"/>
                                 <color key="separatorColor" name="adv-ropeshade"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaconPost" rowHeight="316" id="7pq-1m-YP7">
-                                        <rect key="frame" x="0.0" y="44.5" width="309" height="316"/>
+                                        <rect key="frame" x="0.0" y="50" width="309" height="316"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7pq-1m-YP7" id="Zge-cb-gAJ">
                                             <rect key="frame" x="0.0" y="0.0" width="309" height="316"/>
@@ -167,7 +167,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3/19/2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-Rk-IPW">
-                                <rect key="frame" x="40" y="39" width="77.5" height="21"/>
+                                <rect key="frame" x="40" y="83" width="77.5" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="a2G-QU-yqu"/>
                                 </constraints>
@@ -176,13 +176,24 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KyF-S0-Bht">
-                                <rect key="frame" x="100" y="56.5" width="175.5" height="39.5"/>
+                                <rect key="frame" x="100" y="100.5" width="175.5" height="39.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                 <color key="textColor" name="adv-orangeshade"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lorem ipsum whatever the fuck its just a paragraph of gibberish in latin to test a keyboard. who cares" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYy-db-YPf">
-                                <rect key="frame" x="49" y="104" width="277" height="80"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QUX-o3-ALc">
+                                <rect key="frame" x="35" y="148" width="305" height="94"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="94" id="Ubh-aM-AyZ"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lorem ipsum whatever the fuck its just a paragraph of gibberish in latin to test a keyboard. who cares" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYy-db-YPf">
+                                <rect key="frame" x="49" y="148" width="277" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="H7g-uS-Gf2"/>
                                 </constraints>
@@ -191,14 +202,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vto-yD-Bbk">
-                                <rect key="frame" x="49" y="204" width="277" height="2"/>
+                                <rect key="frame" x="49" y="248" width="277" height="2"/>
                                 <color key="backgroundColor" name="adv-ropeshade"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="6Ky-hb-Bk6"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2R-NJ-XQk">
-                                <rect key="frame" x="295" y="39" width="47.5" height="21"/>
+                                <rect key="frame" x="295" y="83" width="52" height="21"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
                                     <imageReference key="image" image="highlighter" catalog="system" symbolScale="large"/>
@@ -223,6 +234,8 @@
                             <constraint firstItem="vTN-Rk-IPW" firstAttribute="leading" secondItem="JBf-Rm-eN7" secondAttribute="leading" constant="20" id="YVL-1N-tEM"/>
                             <constraint firstItem="JBf-Rm-eN7" firstAttribute="leading" secondItem="kYy-db-YPf" secondAttribute="trailing" constant="-306" id="bGB-BC-79q"/>
                             <constraint firstItem="kA6-Vt-Pf7" firstAttribute="bottom" secondItem="JBf-Rm-eN7" secondAttribute="bottom" constant="-11" id="cLw-rH-x4T"/>
+                            <constraint firstItem="QUX-o3-ALc" firstAttribute="leading" secondItem="JBf-Rm-eN7" secondAttribute="leading" constant="15" id="dng-zP-95p"/>
+                            <constraint firstItem="QUX-o3-ALc" firstAttribute="trailing" secondItem="JBf-Rm-eN7" secondAttribute="trailing" constant="-15" id="eYW-AZ-oax"/>
                             <constraint firstItem="KyF-S0-Bht" firstAttribute="centerX" secondItem="JBf-Rm-eN7" secondAttribute="centerX" id="frz-Ya-nKV"/>
                             <constraint firstItem="vto-yD-Bbk" firstAttribute="width" secondItem="kYy-db-YPf" secondAttribute="width" id="gOg-CP-EYe"/>
                             <constraint firstItem="e2R-NJ-XQk" firstAttribute="centerY" secondItem="vTN-Rk-IPW" secondAttribute="centerY" id="hRS-Nv-95Q"/>
@@ -231,18 +244,20 @@
                             <constraint firstItem="vto-yD-Bbk" firstAttribute="centerX" secondItem="JBf-Rm-eN7" secondAttribute="centerX" id="j5f-R8-P5Y"/>
                             <constraint firstItem="e2R-NJ-XQk" firstAttribute="height" secondItem="vTN-Rk-IPW" secondAttribute="height" id="lNT-6f-ffT"/>
                             <constraint firstItem="JBf-Rm-eN7" firstAttribute="top" secondItem="KyF-S0-Bht" secondAttribute="bottom" constant="-76" id="urd-r4-VN8"/>
+                            <constraint firstItem="QUX-o3-ALc" firstAttribute="top" secondItem="KyF-S0-Bht" secondAttribute="bottom" constant="8" symbolic="YES" id="wBA-By-WBR"/>
                             <constraint firstItem="e2R-NJ-XQk" firstAttribute="leading" secondItem="JBf-Rm-eN7" secondAttribute="trailing" constant="-60" id="wMQ-Vb-yyb"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Beacon Post" id="TNQ-W3-abD"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.800000000000001" y="62.518740629685162"/>
+            <point key="canvasLocation" x="1903.2" y="62.518740629685162"/>
         </scene>
         <!--Beacon Post View Controller-->
         <scene sceneID="dpw-0W-69n">
             <objects>
-                <viewController storyboardIdentifier="BeaconPost" id="kEU-Ti-LM1" customClass="BeaconPostViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kEU-Ti-LM1" customClass="BeaconPostViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2q1-TD-0Ww">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -353,14 +368,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYH-GQ-5b5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="727" y="77"/>
+            <point key="canvasLocation" x="2604" y="76.911544227886068"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="QDH-ML-K6d">
+            <objects>
+                <navigationController storyboardIdentifier="BeaconPostNav" automaticallyAdjustsScrollViewInsets="NO" id="LBa-l9-GJY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Mmi-V7-2lz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <textAttributes key="titleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="QaE-8c-1XO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FlT-Tn-3G8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="62.518740629685162"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Beacon_Card_2" width="1921" height="2786"/>
-        <image name="highlighter" catalog="system" width="128" height="119"/>
+        <image name="beacon_card_2" width="1921" height="2786"/>
+        <image name="highlighter" catalog="system" width="128" height="120"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
-        <image name="scribble" catalog="system" width="128" height="118"/>
+        <image name="scribble" catalog="system" width="128" height="117"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -379,6 +420,12 @@
         <namedColor name="adv-skyblue">
             <color red="0.72941176470588232" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="adv-white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
