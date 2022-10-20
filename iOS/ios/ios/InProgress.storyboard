@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XST-2A-zqV">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Adventour In Progress-->
         <scene sceneID="jPI-q2-fQi">
             <objects>
                 <viewController storyboardIdentifier="map" id="rgq-nB-YmZ" customClass="MapViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,16 +19,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xKv-Jd-wwd">
-                                <rect key="frame" x="15" y="35" width="345" height="200"/>
+                                <rect key="frame" x="15" y="79" width="345" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="WlW-M1-nMl"/>
                                 </constraints>
                             </mapView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vb-C1-ke6">
-                                <rect key="frame" x="15" y="256" width="345" height="342"/>
+                                <rect key="frame" x="15" y="300" width="345" height="298"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlY-CV-gtq">
-                                        <rect key="frame" x="0.0" y="0.0" width="345" height="342"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="298"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Notepad_Paper" translatesAutoresizingMaskIntoConstraints="NO" id="pxW-eZ-Oqe">
                                                 <rect key="frame" x="0.0" y="325" width="345" height="350"/>
@@ -40,7 +40,7 @@
                                                 </constraints>
                                             </imageView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ioy-om-bZY">
-                                                <rect key="frame" x="25" y="25" width="320" height="317"/>
+                                                <rect key="frame" x="25" y="25" width="320" height="273"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
@@ -116,14 +116,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="118" width="320" height="68.5"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="69"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="68.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HG7-BH-C89">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="CXD-ZM-OMz"/>
                                                                         <constraint firstAttribute="width" constant="150" id="VTj-CK-J5e"/>
@@ -229,8 +229,7 @@
                             <constraint firstItem="jkn-kn-Drg" firstAttribute="bottom" secondItem="3Vb-C1-ke6" secondAttribute="bottom" constant="20" id="zk5-Gv-yEu"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="mappin" catalog="system" selectedImage="mappin" id="FOF-Ag-qTm"/>
-                    <navigationItem key="navigationItem" id="wOi-fI-nlf"/>
+                    <navigationItem key="navigationItem" title="Adventour In Progress" id="wOi-fI-nlf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="VoM-sn-jMu" id="CxY-hY-aml"/>
@@ -242,30 +241,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBm-tF-P4l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2hB-4n-hwA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="23.199999999999999" y="831.63418290854577"/>
+            <point key="canvasLocation" x="962.39999999999998" y="831.63418290854577"/>
         </scene>
         <!--Congrats View Controller-->
         <scene sceneID="mda-UX-RtW">
             <objects>
                 <viewController id="SA0-Kd-Lhx" customClass="CongratsViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MiL-g0-RYx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-wP-A39">
-                                <rect key="frame" x="77" y="50" width="221" height="37"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="69.5" y="94" width="236.5" height="39"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="31"/>
+                                <color key="textColor" name="adv-royalblue"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" name="adv-white"/>
+                                <size key="shadowOffset" width="1" height="2"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Map_Scroll" translatesAutoresizingMaskIntoConstraints="NO" id="r2K-YT-Ebz">
-                                <rect key="frame" x="20" y="87" width="335" height="335"/>
+                                <rect key="frame" x="20" y="62" width="335" height="335"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="r2K-YT-Ebz" secondAttribute="height" multiplier="1:1" id="ZxT-S5-GEx"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-wy-afl">
-                                <rect key="frame" x="60" y="462" width="255" height="34.5"/>
+                                <rect key="frame" x="60" y="437" width="255" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
@@ -284,7 +285,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24D-uQ-rHa">
-                                <rect key="frame" x="80" y="504.5" width="215" height="34"/>
+                                <rect key="frame" x="80" y="479.5" width="215" height="34"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="View Adventour"/>
@@ -321,9 +322,12 @@
                                         <real key="value" value="0.5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Itm-oA-qaK" kind="show" id="NBp-yf-YEs"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq4-q6-3j6">
-                                <rect key="frame" x="130" y="546.5" width="115" height="34.5"/>
+                                <rect key="frame" x="130" y="521.5" width="115" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Home" cornerStyle="capsule"/>
@@ -354,6 +358,9 @@
                                         <real key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="UrZ-Zm-wk2" kind="unwind" unwindAction="goHomeWithSender:" id="h4c-qK-uhp"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xRy-Rs-bBd"/>
@@ -361,7 +368,7 @@
                         <constraints>
                             <constraint firstItem="r2K-YT-Ebz" firstAttribute="leading" secondItem="xRy-Rs-bBd" secondAttribute="leading" constant="20" id="7ym-3Y-FW7"/>
                             <constraint firstItem="9hW-wy-afl" firstAttribute="centerX" secondItem="xRy-Rs-bBd" secondAttribute="centerX" id="HqH-YM-0wA"/>
-                            <constraint firstItem="r2K-YT-Ebz" firstAttribute="top" secondItem="ZxI-wP-A39" secondAttribute="bottom" id="Iha-Zx-4Xz"/>
+                            <constraint firstAttribute="bottom" secondItem="Rq4-q6-3j6" secondAttribute="bottom" multiplier="1.2" id="MS1-ji-6Ao"/>
                             <constraint firstItem="9hW-wy-afl" firstAttribute="top" secondItem="r2K-YT-Ebz" secondAttribute="bottom" constant="40" id="P1G-9G-gDh"/>
                             <constraint firstItem="r2K-YT-Ebz" firstAttribute="centerX" secondItem="xRy-Rs-bBd" secondAttribute="centerX" id="Qim-qF-moQ"/>
                             <constraint firstItem="Rq4-q6-3j6" firstAttribute="centerX" secondItem="xRy-Rs-bBd" secondAttribute="centerX" id="RSv-m5-m7I"/>
@@ -378,13 +385,74 @@
                     </view>
                     <navigationItem key="navigationItem" id="GQz-QM-c4s"/>
                     <connections>
-                        <outlet property="home" destination="Rq4-q6-3j6" id="v9J-a2-tNk"/>
                         <outlet property="viewAdventour" destination="24D-uQ-rHa" id="aRa-T0-FnM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LJR-L8-2YE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="UrZ-Zm-wk2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="21.600000000000001" y="1489.2053973013494"/>
+        </scene>
+        <!--StartNavigationController-->
+        <scene sceneID="hpJ-4i-CaT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="StartPage" referencedIdentifier="StartNavigationController" id="Xxr-7Q-6kJ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qYy-Ls-auk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="585" y="1519"/>
+        </scene>
+        <!--AdventourSummaryNavigationController-->
+        <scene sceneID="aYF-ub-XKv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AdventourSummaryPage" referencedIdentifier="AdventourSummaryNavigationController" id="Itm-oA-qaK" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="58s-G7-HeE"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="96P-aS-EMJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="662" y="1621"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="DQn-AR-Xxf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XST-2A-zqV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="mappin" catalog="system" selectedImage="mappin" id="FOF-Ag-qTm"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CHC-e8-PPB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" name="adv-royalblue"/>
+                            <color key="textShadowColor" name="adv-white"/>
+                            <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                            <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="10"/>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rgq-nB-YmZ" kind="relationship" relationship="rootViewController" id="5Ic-k5-en6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3dY-TM-5fk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="23.199999999999999" y="831.63418290854577"/>
         </scene>
     </scenes>
     <resources>
@@ -407,6 +475,9 @@
         </namedColor>
         <namedColor name="adv-skyblue">
             <color red="0.72941176470588232" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="adv-white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

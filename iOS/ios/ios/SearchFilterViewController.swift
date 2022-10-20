@@ -94,7 +94,10 @@ class SearchFilterViewController: UIViewController {
         self.chillSwitch?.isOn = UserDefaults.standard.bool(forKey: "chillSwitch")
         self.shoppySwitch?.isOn = UserDefaults.standard.bool(forKey: "shoppySwitch")
         self.pamperedSwitch?.isOn = UserDefaults.standard.bool(forKey: "pamperedSwitch")
-        self.distanceSlider?.value = UserDefaults.standard.value(forKey: "distanceSlider") as! Float
+        if let value = UserDefaults.standard.value(forKey: "distanceSlider") as? Float {
+            self.distanceSlider?.value = value
+        }
+        
     }
     /*
     // MARK: - Navigation

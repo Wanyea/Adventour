@@ -58,7 +58,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationItem.setHidesBackButton(true, animated: true)
         if let ids = self.ids {
             print("Map, These is the ids: ", ids)
         } else {

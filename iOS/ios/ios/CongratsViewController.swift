@@ -65,16 +65,32 @@ class CongratsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
-        if self.locations != nil {
-            print(self.locations)
-        } else {
-            print("Locations not successfully passed in")
-        }
-        //Adding the bordercolor on the not now button. Actual border is in its runtime attributes.
-       
         
-        // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isTranslucent = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print(segue.destination)
+        if segue.destination is StartViewController {
+            self.navigationController?.isNavigationBarHidden = false
+            self.tabBarController?.tabBar.isHidden = false
+            self.tabBarController?.tabBar.isTranslucent = false
+        }
+        if let dest = segue.destination as? AdventourSummaryNavigationController {
+            print(self.locations)
+            if let vc = dest.topViewController as? AdventourSummaryViewController {
+                vc.locations = self.locations
+            }
+            dest.locations = self.locations
+        }
+        
+    }
+    
+    
 }
     

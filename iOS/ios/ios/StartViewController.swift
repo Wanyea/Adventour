@@ -2,11 +2,13 @@ import UIKit
 import MapKit
 import FirebaseAuth
 import GooglePlaces
-var temp = ""
-var lon = Double(0)
-var lat = Double(0)
+
 
 class StartViewController: UIViewController {
+    
+    var temp = ""
+    var lon: Double!
+    var lat: Double!
     
     var user: User!
     
@@ -38,6 +40,7 @@ class StartViewController: UIViewController {
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var websiteLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorMessageLabel: UILabel!
     
     // Button Outlets
     @IBOutlet weak var notNow: UIButton!
@@ -52,7 +55,7 @@ class StartViewController: UIViewController {
         self.websiteLabel?.minimumScaleFactor = 0.75
         self.websiteLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
         self.phoneLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
-
+        
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {
@@ -66,7 +69,7 @@ class StartViewController: UIViewController {
         notNow?.layer.cornerRadius = 15
         // Do any additional setup after loading the view.
         placesClient = GMSPlacesClient.shared()
-        searchBar?.text = temp
+        searchBar?.text = self.temp
     }
     
     @IBAction func getCurrentPlace(_ sender: Any){
@@ -87,11 +90,11 @@ class StartViewController: UIViewController {
     }
     @IBAction func updateSearch()
     {
-        searchBar?.text = temp
+        searchBar?.text = self.temp
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.errorMessageLabel?.isHidden = true
         self.websiteClickable?.adjustsFontSizeToFitWidth = true
         self.websiteClickable?.minimumScaleFactor = 0.75
         self.websiteClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
@@ -201,6 +204,26 @@ class StartViewController: UIViewController {
         
     }
     
+    @IBAction func goHome(sender: UIStoryboardSegue){
+        if let source = sender.source as? CongratsViewController {
+            self.ids = []
+            self.searchBar.text = ""
+            self.lat = nil
+            self.lon = nil
+            self.socialSwitch = UISwitch()
+            self.outdoorsySwitch = UISwitch()
+            self.cultureSwitch = UISwitch()
+            self.hungrySwitch = UISwitch()
+            self.romanticSwitch = UISwitch()
+            self.geekySwitch = UISwitch()
+            self.spirtualSwitch = UISwitch()
+            self.sportySwitch = UISwitch()
+            self.chillSwitch = UISwitch()
+            self.shoppySwitch = UISwitch()
+            self.pamperedSwitch = UISwitch()
+            self.distanceSlider = UISlider()
+        }
+    }
     
     
     func preparePlace() {
@@ -230,15 +253,24 @@ class StartViewController: UIViewController {
 
     @IBAction func getAdventourLocation() {
         
-        
-        
+        self.errorMessageLabel.isHidden = true
+        var latlonString: String
+        if self.lat != nil && self.lon != nil {
+            latlonString = String(self.lat) + "," + String(self.lon)
+        } else {
+            self.errorMessageLabel.isHidden = false
+            self.errorMessageLabel.text = "Please select a location to start an Adventour!"
+            self.activityIndicator.stopAnimating()
+            return
+        }
+         
         let params: [String: Any] = [
             "uid": self.user.uid,
-            "ll": "28.592474256389895,-81.3500389284532",
-            "radius": self.milesToMeters(distanceInMiles: self.distanceSlider?.value ?? 0),
+            "ll": latlonString,
+            "radius": self.milesToMeters(distanceInMiles: self.distanceSlider?.value ?? 5),
             "categories": getCategoryString()
         ]
-        
+        print(params)
         let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-adventour-place")
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = "POST"
@@ -290,6 +322,12 @@ class StartViewController: UIViewController {
                             self.showCardInfo()
                         }
                         
+                    } else {
+                        DispatchQueue.main.async {
+                            self.errorMessageLabel.text = "The search was unable to return a place. Please check your search filters and try again."
+                            self.errorMessageLabel.isHidden = false
+                            self.activityIndicator.stopAnimating()
+                        }
                     }
                     
                 }
@@ -300,49 +338,71 @@ class StartViewController: UIViewController {
     
     func getCategoryString() -> String {
         var categories: String = ""
-        if self.socialSwitch.isOn {
-            let socialString = "10001,10003,10006,10007,10009,10017,10019,10022,10023,10039,10048,10055,10056,12004,14003,14009,10015,"
-            categories.append(socialString)
+        if let s = self.socialSwitch {
+            if s.isOn {
+                let socialString = "10001,10003,10006,10007,10009,10017,10019,10022,10023,10039,10048,10055,10056,12004,14003,14009,10015,"
+                categories.append(socialString)
+            }
         }
-        if self.outdoorsySwitch.isOn {
-            let outdoorsyString = "10014,10044,10055,10056,16002,16003,16004,16005,16006,16008,16009,16011,16012,16013,16016,16017,16018,16019,16021,16022,16023,16024,16027,16028,16032,16043,16044,16046,16048,16049,16051,16052,19002,19003,19008,19021,"
-            categories.append(outdoorsyString)
+        if let s = self.outdoorsySwitch{
+            if s.isOn {
+                let outdoorsyString = "10014,10044,10055,10056,16002,16003,16004,16005,16006,16008,16009,16011,16012,16013,16016,16017,16018,16019,16021,16022,16023,16024,16027,16028,16032,16043,16044,16046,16048,16049,16051,16052,19002,19003,19008,19021,"
+                categories.append(outdoorsyString)
+            }
         }
-        if self.cultureSwitch.isOn {
-            let culturedString = "10002,10004,10016,10024,10028,10031,10030,10042,17002,17003,10043,17018,10047,10056,11005,17098,17113,11140,12005,12065,12066,12080,12081,16011,16024,16007,16020,16025,16026,16031,17103,16047,"
-            categories.append(culturedString)
+        if let s = self.cultureSwitch {
+            if s.isOn {
+                let culturedString = "10002,10004,10016,10024,10028,10031,10030,10042,17002,17003,10043,17018,10047,10056,11005,17098,17113,11140,12005,12065,12066,12080,12081,16011,16024,16007,16020,16025,16026,16031,17103,16047,"
+                categories.append(culturedString)
+            }
         }
-        if self.hungrySwitch.isOn {
-            let hungryString = "13028,13053,13054,13065,13001,13002,13032,13040,13059,13381,13382,"
-            categories.append(hungryString)
+        if let s = self.hungrySwitch {
+            if s.isOn {
+                let hungryString = "13028,13053,13054,13065,13001,13002,13032,13040,13059,13381,13382,"
+                categories.append(hungryString)
+            }
         }
-        if self.romanticSwitch.isOn {
-            let romanticString = "10004,10016,10024,10023,11140,16005,11073,"
-            categories.append(romanticString)
+        if let s = self.romanticSwitch {
+            if s.isOn {
+                let romanticString = "10004,10016,10024,10023,11140,16005,11073,"
+                categories.append(romanticString)
+            }
         }
-        if self.geekySwitch.isOn {
-            let geekyString = "10003,10015,10018,17018,17022,17091,17027,17135,10044,10054,12080,12081,"
-            categories.append(geekyString)
+        if let s = self.geekySwitch {
+            if s.isOn {
+                let geekyString = "10003,10015,10018,17018,17022,17091,17027,17135,10044,10054,12080,12081,"
+                categories.append(geekyString)
+            }
         }
-        if self.spirtualSwitch.isOn {
-            let spirtualString = "12098,"
-            categories.append(spirtualString)
+        if let s = self.spirtualSwitch {
+            if s.isOn {
+                let spirtualString = "12098,"
+                categories.append(spirtualString)
+            }
         }
-        if self.sportySwitch.isOn {
-            let sportyString = "10006,10014,10019,10022,10023,10045,10048,18005,18008,18012,18019,18020,18021,18029,18034,17117,18035,18036,18037,18039,18040,18048,18054,18057,18058,18064,18067,19002,"
-            categories.append(sportyString)
+        if let s = self.sportySwitch {
+            if s.isOn {
+                let sportyString = "10006,10014,10019,10022,10023,10045,10048,18005,18008,18012,18019,18020,18021,18029,18034,17117,18035,18036,18037,18039,18040,18048,18054,18057,18058,18064,18067,19002,"
+                categories.append(sportyString)
+            }
         }
-        if self.chillSwitch.isOn {
-            let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12080,12081,19021,16003,16005,16032"
-            categories.append(chillString)
+        if let s = self.chillSwitch {
+            if s.isOn {
+                let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12080,12081,19021,16003,16005,16032,"
+                categories.append(chillString)
+            }
         }
-        if self.shoppySwitch.isOn {
-            let shoppyString = "14009,17002,17002,17004,17018,17020,17022,17027,17024,17030,17031,17032,17039,17053,17054,17055,17056,17089,17091,17098,17107,17111,17113,17116,17117,17135,17138,17103,"
-            categories.append(shoppyString)
+        if let s = self.shoppySwitch {
+            if s.isOn {
+                let shoppyString = "14009,17002,17002,17004,17018,17020,17022,17027,17024,17030,17031,17032,17039,17053,17054,17055,17056,17089,17091,17098,17107,17111,17113,17116,17117,17135,17138,17103,"
+                categories.append(shoppyString)
+            }
         }
-        if self.pamperedSwitch.isOn {
-            let pamperedString = "11062,11063,11064,11071,11072,11073,11074,11070,17030,11140,15001,17020,"
-            categories.append(pamperedString)
+        if let s = self.pamperedSwitch {
+            if s.isOn {
+                let pamperedString = "11062,11063,11064,11071,11072,11073,11074,11070,17030,11140,15001,17020,"
+                categories.append(pamperedString)
+            }
         }
         print(categories)
         return categories
@@ -380,6 +440,9 @@ class StartViewController: UIViewController {
         self.websiteLabel?.isHidden = false
     }
     
+    func changeTitleColor() {
+        
+    }
     
     func switchToLoggedOut() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -395,17 +458,19 @@ class StartViewController: UIViewController {
 
 extension StartViewController: GMSAutocompleteViewControllerDelegate {
 
+    
+    
   // Handle the user's selection.
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
     print("Place name: \(place.name)")
     print("Place ID: \(place.placeID)")
     print("Place attributions: \(place.attributions)")
     print("Place address: \(place.formattedAddress))")
-    lat = place.coordinate.latitude
-    lon = place.coordinate.longitude
-    print("Place lat: \(lat)")
-    print("Place lon: \(lon)")
-    temp = place.formattedAddress!
+    self.lat = place.coordinate.latitude
+    self.lon = place.coordinate.longitude
+    print("Place lat: \(self.lat)")
+    print("Place lon: \(self.lon)")
+    self.temp = place.formattedAddress!
     updateSearch()
     dismiss(animated: true, completion: nil)
     
