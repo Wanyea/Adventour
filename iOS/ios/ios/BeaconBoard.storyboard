@@ -165,8 +165,9 @@
         <scene sceneID="BNY-Z4-K8K">
             <objects>
                 <navigationController storyboardIdentifier="BeaconBoardNav" automaticallyAdjustsScrollViewInsets="NO" id="O6r-xq-PMT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="person.wave.2.fill" catalog="system" selectedImage="person.wave.2.fill" id="3zx-7a-8a6"/>
+                    <tabBarItem key="tabBarItem" title="" image="beacon_icon" selectedImage="beacon_icon" id="Y2D-aD-rh9"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KPV-GK-mvY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -206,7 +207,7 @@
     <resources>
         <image name="Beacon_Card" width="1920" height="1440"/>
         <image name="Logo_Balloon_Transparent" width="1501" height="2460"/>
-        <image name="person.wave.2.fill" catalog="system" width="128" height="118"/>
+        <image name="beacon_icon" width="30" height="30"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
