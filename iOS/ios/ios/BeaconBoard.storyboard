@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="O6r-xq-PMT">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Beacon Board-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="Beacon" id="Y6W-OH-hqX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Beacon" id="Y6W-OH-hqX" customClass="BeaconBoardViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bBp-T1-6M5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="dNJ-e9-WPf">
-                                <rect key="frame" x="42" y="150" width="330" height="663"/>
+                                <rect key="frame" x="42" y="150" width="291" height="468"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -26,18 +26,18 @@
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaCard" rowHeight="208" id="CkX-wG-Kce">
-                                        <rect key="frame" x="0.0" y="44.5" width="330" height="208"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="291" height="208"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CkX-wG-Kce" id="Edp-in-5DC">
-                                            <rect key="frame" x="0.0" y="0.0" width="330" height="208"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="291" height="208"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Beacon_Card" translatesAutoresizingMaskIntoConstraints="NO" id="zlp-zc-882">
-                                                    <rect key="frame" x="3" y="0.0" width="324" height="208"/>
+                                                    <rect key="frame" x="3" y="0.0" width="285" height="208"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C95-16-x3i">
-                                                    <rect key="frame" x="100" y="11" width="214" height="27"/>
+                                                    <rect key="frame" x="100" y="11" width="175" height="27"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="27" id="R3c-CH-NLs"/>
                                                     </constraints>
@@ -110,60 +110,95 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon Board" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsE-dK-X1Y">
-                                <rect key="frame" x="105" y="49" width="204" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="Gch-eC-r3q"/>
-                                    <constraint firstAttribute="width" constant="204" id="RdN-lJ-K4q"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="30"/>
-                                <color key="textColor" name="adv-navyblueshade"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O57-cu-Xev">
-                                <rect key="frame" x="41" y="95" width="333" height="51"/>
+                                <rect key="frame" x="20" y="51" width="335" height="51"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="dKb-2d-Pne">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="51"/>
                                         <color key="barTintColor" name="adv-skyblue"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfT-r6-oaq">
-                                        <rect key="frame" x="288" y="0.0" width="45" height="51"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" image="slider.horizontal.3" catalog="system">
-                                            <color key="baseForegroundColor" name="adv-black"/>
-                                            <color key="baseBackgroundColor" name="adv-white"/>
-                                        </buttonConfiguration>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="qfT-r6-oaq" firstAttribute="leading" secondItem="dKb-2d-Pne" secondAttribute="trailing" id="4I4-fU-YMh"/>
                                     <constraint firstItem="dKb-2d-Pne" firstAttribute="leading" secondItem="O57-cu-Xev" secondAttribute="leading" id="4JB-kW-ebg"/>
                                     <constraint firstAttribute="height" constant="51" id="Zsl-nk-3hL"/>
-                                    <constraint firstAttribute="trailing" secondItem="qfT-r6-oaq" secondAttribute="trailing" id="u3L-AP-rNb"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlb-lW-sSH">
+                                <rect key="frame" x="20" y="51" width="335" height="51"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="getCurrentPlace:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="klI-2C-DcJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="c1v-CM-3M2"/>
                         <color key="backgroundColor" name="adv-skyblue"/>
                         <color key="tintColor" name="adv-royalblue"/>
                         <constraints>
+                            <constraint firstItem="vlb-lW-sSH" firstAttribute="centerX" secondItem="dKb-2d-Pne" secondAttribute="centerX" id="1gi-Rr-pXq"/>
+                            <constraint firstItem="vlb-lW-sSH" firstAttribute="width" secondItem="dKb-2d-Pne" secondAttribute="width" id="9Nz-sT-rWQ"/>
                             <constraint firstItem="c1v-CM-3M2" firstAttribute="bottom" secondItem="dNJ-e9-WPf" secondAttribute="bottom" id="EEs-NX-f4m"/>
-                            <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="O57-cu-Xev" secondAttribute="trailing" constant="40" id="Qth-W5-P7h"/>
-                            <constraint firstItem="tsE-dK-X1Y" firstAttribute="top" secondItem="c1v-CM-3M2" secondAttribute="top" constant="5" id="c9p-rn-NSK"/>
-                            <constraint firstItem="tsE-dK-X1Y" firstAttribute="centerX" secondItem="c1v-CM-3M2" secondAttribute="centerX" id="gDq-nD-Gbm"/>
+                            <constraint firstItem="vlb-lW-sSH" firstAttribute="centerY" secondItem="dKb-2d-Pne" secondAttribute="centerY" id="HKx-6H-sST"/>
+                            <constraint firstItem="vlb-lW-sSH" firstAttribute="leading" secondItem="dKb-2d-Pne" secondAttribute="leading" id="Olh-ZV-268"/>
+                            <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="O57-cu-Xev" secondAttribute="trailing" constant="20" id="Qth-W5-P7h"/>
+                            <constraint firstItem="O57-cu-Xev" firstAttribute="top" secondItem="c1v-CM-3M2" secondAttribute="top" constant="7" id="b7o-HL-4dJ"/>
+                            <constraint firstItem="vlb-lW-sSH" firstAttribute="height" secondItem="dKb-2d-Pne" secondAttribute="height" id="iU9-K5-1ip"/>
                             <constraint firstItem="dNJ-e9-WPf" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="42" id="jLv-wk-jOr"/>
                             <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="dNJ-e9-WPf" secondAttribute="trailing" constant="42" id="mex-ic-dt3"/>
                             <constraint firstItem="dNJ-e9-WPf" firstAttribute="top" secondItem="c1v-CM-3M2" secondAttribute="top" constant="106" id="nxE-qE-Dz8"/>
-                            <constraint firstItem="O57-cu-Xev" firstAttribute="top" secondItem="tsE-dK-X1Y" secondAttribute="bottom" constant="12" id="qcB-gB-Rei"/>
-                            <constraint firstItem="O57-cu-Xev" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="41" id="usO-Jc-zzD"/>
+                            <constraint firstItem="O57-cu-Xev" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="20" id="usO-Jc-zzD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="person.wave.2.fill" catalog="system" selectedImage="person.wave.2.fill" id="3zx-7a-8a6"/>
+                    <navigationItem key="navigationItem" title="Beacon Board" id="tF3-t9-kJ0"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="searchBar" destination="dKb-2d-Pne" id="5ij-9E-MMM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="934.78260869565224" y="82.366071428571431"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="BNY-Z4-K8K">
+            <objects>
+                <navigationController storyboardIdentifier="BeaconBoardNav" automaticallyAdjustsScrollViewInsets="NO" id="O6r-xq-PMT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="person.wave.2.fill" catalog="system" selectedImage="person.wave.2.fill" id="3zx-7a-8a6"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KPV-GK-mvY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" name="adv-royalblue"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" name="adv-royalblue"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                            <textAttributes key="titleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                            <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="10"/>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="mD9-Ke-AXp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AAZ-Xs-7nT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="24.637681159420293" y="82.366071428571431"/>
         </scene>
@@ -172,21 +207,14 @@
         <image name="Beacon_Card" width="1920" height="1440"/>
         <image name="Logo_Balloon_Transparent" width="1501" height="2460"/>
         <image name="person.wave.2.fill" catalog="system" width="128" height="118"/>
-        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="adv-navyblueshade">
-            <color red="0.043137254901960784" green="0.14509803921568629" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="adv-royalblue">
             <color red="0.11372549019607843" green="0.40000000000000002" blue="0.75294117647058822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="adv-skyblue">
             <color red="0.72941176470588232" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="adv-white">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
