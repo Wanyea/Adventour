@@ -155,7 +155,7 @@ public class Passport extends AppCompatActivity {
 
         // Build AlertDialog that will alert users when they try to delete their account.
         AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
-        deleteAccountAlertBuilder.setMessage("Are you sure you want to log out?");
+        deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
         deleteAccountAlertBuilder.setCancelable(true);
 
         deleteAccountAlertBuilder.setPositiveButton(
@@ -163,8 +163,8 @@ public class Passport extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        FirebaseAuth.getInstance().signOut();
-                        switchToLoggedOut();
+                        // DELETE USER DOCUMENT IN FIREBASE.
+                        // switchToLoggedOut();
                     }
                 });
 
