@@ -1,5 +1,6 @@
 package com.adventour.android;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,8 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class InProgress extends AppCompatActivity /*implements OnMapReadyCallback*/ {
-    
+public class InProgress extends AppCompatActivity implements OnMapReadyCallback {
+
     Context context;
 
     FirebaseAuth auth;
@@ -31,6 +38,10 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_progress);
 
+        // Google map code
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        mapFragment.getMapAsync(this);
+
 
         handleAuth();
 
@@ -40,13 +51,12 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         finishAdventourButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
-
         ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
-        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("American Escape Rooms Orlando", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("Arcade Monsters", String.valueOf(Math.random()), String.valueOf(Math.random())));
-        inProgressModelArrayList.add(new InProgressModel("Congo River Golf", String.valueOf(Math.random()), String.valueOf(Math.random())));
+        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", 28.602427, -81.200058));
+        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", 28.538330, -81.378880));
+        inProgressModelArrayList.add(new InProgressModel("American Escape Rooms Orlando", 28.557010, -81.507600));
+        inProgressModelArrayList.add(new InProgressModel("Arcade Monsters", 28.584830, -81.188840));
+        inProgressModelArrayList.add(new InProgressModel("Congo River Golf", 26.697050, -81.679310));
 
         InProgressAdapter inProgressAdapter = new InProgressAdapter(this, inProgressModelArrayList);
 
@@ -89,25 +99,7 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
                 switchToCongratulations();
            }
         });
-
-
-
-        /*
-        // Google Maps API
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapsContainerView);
-        mapFragment.getMapAsync(this);*/
-
-
     }
-
-    /*
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap)
-    {
-
-    }
-
-         */
 
     public void switchToLoggedOut()
     {
@@ -132,5 +124,10 @@ public class InProgress extends AppCompatActivity /*implements OnMapReadyCallbac
         {
             switchToLoggedOut();
         }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }
