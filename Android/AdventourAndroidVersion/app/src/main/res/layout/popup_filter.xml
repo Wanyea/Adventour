@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="330dp"
     android:layout_height="wrap_content"
+    android:background="@drawable/popup_rectangle"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="20dp"
-    android:background="@drawable/popup_rectangle">
+    android:paddingVertical="20dp">
 
     <!--
     <TextView
@@ -85,10 +85,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Distance (miles)"
-        android:textSize="14sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/startDistanceTextView"
@@ -113,12 +114,12 @@
         style="@style/AdventourSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/startDistanceTextView"
         android:stepSize="1"
         android:valueFrom="1"
-        android:valueTo="25" />
+        android:valueTo="25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startDistanceTextView" />
 
 
     <TextView
@@ -127,7 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/distanceSlider"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-10dp"
         android:text="Categories"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -135,116 +136,230 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/distanceSlider" />
 
+    <TextView
+        android:id="@+id/socialTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Social 👯‍"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/socialSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/socialSwitch"/>
+
     <Switch
         android:id="@+id/socialSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Social"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toStartOf="@id/chillTextView"
         app:layout_constraintTop_toBottomOf="@id/categoriesTextView" />
+
+    <TextView
+        android:id="@+id/outdoorsyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Outdoorsy 🏞"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/outdoorsySwitch"
+        app:layout_constraintBottom_toBottomOf="@id/outdoorsySwitch"/>
 
     <Switch
         android:id="@+id/outdoorsySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Outdoorsy"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/socialSwitch"
         app:layout_constraintTop_toBottomOf="@id/socialSwitch" />
+
+    <TextView
+        android:id="@+id/culturedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cultured 📖"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/culturedSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/culturedSwitch"/>
 
     <Switch
         android:id="@+id/culturedSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cultured"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/socialSwitch"
         app:layout_constraintTop_toBottomOf="@id/outdoorsySwitch" />
+
+    <TextView
+        android:id="@+id/romanticTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Romantic 💘"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/romanticSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/romanticSwitch"/>
 
     <Switch
         android:id="@+id/romanticSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Romantic"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/socialSwitch"
         app:layout_constraintTop_toBottomOf="@id/culturedSwitch" />
+
+    <TextView
+        android:id="@+id/geekyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Geeky 🤓"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/geekySwitch"
+        app:layout_constraintBottom_toBottomOf="@id/geekySwitch"/>
 
     <Switch
         android:id="@+id/geekySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Geeky"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/socialSwitch"
         app:layout_constraintTop_toBottomOf="@id/romanticSwitch" />
+
+    <TextView
+        android:id="@+id/spiritualTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spiritual ✨"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/spiritualSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/spiritualSwitch"/>
 
     <Switch
         android:id="@+id/spiritualSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Spiritual"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/socialSwitch"
         app:layout_constraintTop_toBottomOf="@id/geekySwitch" />
+
+    <TextView
+        android:id="@+id/sportyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sporty 🎾"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sportySwitch"
+        app:layout_constraintBottom_toBottomOf="@id/sportySwitch"/>
 
     <Switch
         android:id="@+id/sportySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sporty"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/socialSwitch"
         app:layout_constraintTop_toBottomOf="@id/spiritualSwitch" />
+
+    <TextView
+        android:id="@+id/chillTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="145dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Chill 😎"
+        app:layout_constraintTop_toTopOf="@id/chillSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/chillSwitch"/>
 
     <Switch
         android:id="@+id/chillSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="125dp"
-        android:text="Chill"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/socialSwitch" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/socialSwitch"/>
+
+    <TextView
+        android:id="@+id/shoppableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shoppable 🛍"
+        app:layout_constraintStart_toStartOf="@id/chillTextView"
+        app:layout_constraintTop_toTopOf="@id/shoppableSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/shoppableSwitch" />
 
     <Switch
         android:id="@+id/shoppableSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shoppable"
         app:layout_constraintStart_toStartOf="@id/chillSwitch"
         app:layout_constraintTop_toBottomOf="@id/chillSwitch" />
+
+    <TextView
+        android:id="@+id/pamperedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pampered 💅"
+        app:layout_constraintStart_toStartOf="@id/chillTextView"
+        app:layout_constraintTop_toTopOf="@id/pamperedSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/pamperedSwitch" />
 
     <Switch
         android:id="@+id/pamperedSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pampered"
         app:layout_constraintStart_toStartOf="@id/chillSwitch"
         app:layout_constraintTop_toBottomOf="@id/shoppableSwitch" />
+
+    <TextView
+        android:id="@+id/courageousTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courageous 💪"
+        app:layout_constraintStart_toStartOf="@id/chillTextView"
+        app:layout_constraintTop_toTopOf="@id/courageousSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/courageousSwitch" />
 
     <Switch
         android:id="@+id/courageousSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Courageous"
         app:layout_constraintStart_toStartOf="@id/chillSwitch"
         app:layout_constraintTop_toBottomOf="@id/pamperedSwitch" />
+
+    <TextView
+        android:id="@+id/starvingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Starving 🍴"
+        app:layout_constraintStart_toStartOf="@id/chillTextView"
+        app:layout_constraintTop_toTopOf="@id/starvingSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/starvingSwitch" />
 
     <Switch
         android:id="@+id/starvingSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Starving"
         app:layout_constraintStart_toStartOf="@id/chillSwitch"
         app:layout_constraintTop_toBottomOf="@id/courageousSwitch" />
+
+    <TextView
+        android:id="@+id/snackTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snack 🍟"
+        app:layout_constraintStart_toStartOf="@id/chillTextView"
+        app:layout_constraintTop_toTopOf="@id/snackSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/snackSwitch" />
 
     <Switch
         android:id="@+id/snackSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Snack"
         app:layout_constraintStart_toStartOf="@id/chillSwitch"
         app:layout_constraintTop_toBottomOf="@id/starvingSwitch" />
 
-    <Switch
-        android:id="@+id/twentyOnePlusSwitch"
+    <TextView
+        android:id="@+id/twentyoneTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="21+"
+        android:text="21+ 🍻"
+        app:layout_constraintStart_toStartOf="@id/chillTextView"
+        app:layout_constraintTop_toTopOf="@id/twentyonePlusSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/twentyonePlusSwitch" />
+
+    <Switch
+        android:id="@+id/twentyonePlusSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/chillSwitch"
         app:layout_constraintTop_toBottomOf="@id/snackSwitch" />
 
