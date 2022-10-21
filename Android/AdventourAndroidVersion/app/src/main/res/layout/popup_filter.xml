@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/popup_rectangle"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="20dp">
+    android:paddingVertical="20dp"
+    android:id="@+id/popup_filter">
 
     <!--
     <TextView
@@ -73,12 +74,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dollar1TextView"
         android:stepSize="1"
         android:valueFrom="1"
         android:valueTo="4"
         />
-        -->
+    -->
     <TextView
         android:id="@+id/distanceTextView"
         android:layout_width="wrap_content"

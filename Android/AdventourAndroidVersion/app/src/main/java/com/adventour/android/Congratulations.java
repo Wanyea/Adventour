@@ -23,9 +23,7 @@ public class Congratulations extends AppCompatActivity {
 
         postBeaconButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-            }
+            public void onClick(View view) { switchToBeaconPost(); }
         });
 
         viewAdventourButton.setOnClickListener(new View.OnClickListener() {
@@ -45,13 +43,14 @@ public class Congratulations extends AppCompatActivity {
 
     public void switchToBeaconPost()
     {
-        // Put intent here once Bug has finished this page
-        // startActivity(intent);
-        // finish();
+        Intent intent = new Intent(this, BeaconPost.class);
+        startActivity(intent);
+        finish();
     }
 
     // Testing only, delete before prod
-    public void switchToAdventourSummary() {
+    public void switchToAdventourSummary()
+     {
         Intent intent = new Intent(this, AdventourSummary.class);
         startActivity(intent);
         finish();

@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".InProgress">
 
-
-
     <!--<androidx.fragment.app.FragmentContainerView
         android:id="@+id/mapsContainerView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -63,18 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/inProgressRV"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/paperImageView"
-        app:layout_constraintEnd_toEndOf="@id/paperImageView"
-        app:layout_constraintTop_toTopOf="@id/paperImageView"
-        app:layout_constraintBottom_toBottomOf="@id/paperImageView"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginVertical="20dp"
-        />
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLocationButton"
