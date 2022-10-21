@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.controls.actions.FloatAction;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -48,9 +46,9 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
-        InProgressRV.setNestedScrollingEnabled(false);
+        InProgressRV.setNestedScrollingEnabled(true);
 
-        finishAdventourButton = (FloatingActionButton) findViewById(R.id.finishAdventourButton);
+        finishAdventourButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
         ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
@@ -105,7 +103,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
     public void switchToLoggedOut()
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
         finish();
     }

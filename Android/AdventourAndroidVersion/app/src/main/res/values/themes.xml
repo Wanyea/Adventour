@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.AdventourAndroidVersion" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_main</item>
         <item name="colorPrimaryVariant">@color/red_variant</item>
@@ -16,9 +17,29 @@
         <item name="android:textColor">@color/navy_main</item>
         <item name="android:textColorHint">@color/blue_main</item>
     </style>
+
+    <!-- Splash screen theme. -->
     <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/cyan_main</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <!-- Base application theme with upper-right menu. -->
+    <style name="Theme.AdventourAndroidVersion.Menu" parent="Theme.MaterialComponents.Light">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="colorPrimaryVariant">@color/red_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_main</item>
+        <item name="colorSecondaryVariant">@color/blue_variant</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/cyan_main</item>
+        <item name="android:textColor">@color/navy_main</item>
+        <item name="android:textColorHint">@color/blue_main</item>
     </style>
 
     <!-- Slider theme. -->
@@ -48,4 +69,14 @@
         <item name="itemIconTint">@drawable/navbar_selector</item>
         <item name="itemTextColor">@drawable/navbar_selector</item>
     </style>
+
+    <!-- Action Bar theme. -->
+    <style name="ThemeActionBar"
+        parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@null</item>
+        <!-- Support library compatibility -->
+        <item name="background">@null</item>
+    </style>
+
+
 </resources>

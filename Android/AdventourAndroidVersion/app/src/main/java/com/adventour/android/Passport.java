@@ -1,11 +1,10 @@
 package com.adventour.android;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
@@ -30,10 +28,6 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.google.common.io.Resources;
-
-import org.w3c.dom.Text;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,6 +54,7 @@ public class Passport extends AppCompatActivity {
 
     Menu hamburgerMenu;
 
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +78,12 @@ public class Passport extends AppCompatActivity {
         populatePassportTextViews();
         populatePreviousAdventours();
 
-
+        // Action Bar
+        actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            //actionBar.setDisplayShowHomeEnabled(false);
+        }
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -137,12 +137,12 @@ public class Passport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        // Build AlertDialog that will alert users when they try to log out.
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setMessage("Are you sure you want to log out?");
-        alertBuilder.setCancelable(true);
+        // Build AlertDialog that will alert users when they try to log out account.
+        AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
+        logOutAlertBuilder.setMessage("Are you sure you want to log out?");
+        logOutAlertBuilder.setCancelable(true);
 
-        alertBuilder.setPositiveButton(
+        logOutAlertBuilder.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -152,7 +152,30 @@ public class Passport extends AppCompatActivity {
                     }
                 });
 
-        alertBuilder.setNegativeButton(
+        logOutAlertBuilder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // Build AlertDialog that will alert users when they try to delete their account.
+        AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
+        deleteAccountAlertBuilder.setMessage("Are you sure you want to log out?");
+        deleteAccountAlertBuilder.setCancelable(true);
+
+        deleteAccountAlertBuilder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        FirebaseAuth.getInstance().signOut();
+                        switchToLoggedOut();
+                    }
+                });
+
+        deleteAccountAlertBuilder.setNegativeButton(
                 "No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -162,15 +185,21 @@ public class Passport extends AppCompatActivity {
 
         switch(item.getItemId())
         {
-            case R.id.logOut:
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
+            case R.id.adventourTOS:
+                openAdventourTOS(); // Prompts user to navigate to Adventour TOS on our site.
                 return true;
 
-            case R.id.settings:
-                switchToSettings();
+            case R.id.logOut:
+                AlertDialog logOutAlert = logOutAlertBuilder.create();
+                logOutAlert.show();
+                return true;
+
+            case R.id.deleteAccount:
+                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
+                deleteAccountAlert.show();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -388,21 +417,14 @@ public class Passport extends AppCompatActivity {
 
     public void switchToPassportMoreInfo()
     {
-        Intent intent = new Intent(this, PassportMoreInfo.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void switchToSettings()
-    {
-        Intent intent = new Intent(this, Settings.class);
+        Intent intent = new Intent(this, EditPassport.class);
         startActivity(intent);
         finish();
     }
 
      public void switchToLoggedOut()
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
         finish();
     }
@@ -416,6 +438,11 @@ public class Passport extends AppCompatActivity {
         {
             switchToLoggedOut();
         }
+    }
+
+    public void openAdventourTOS()
+    {
+        // Prompt user to navigate to Adventour TOS on our site.
     }
 
 }

@@ -18,7 +18,7 @@
         android:layout_marginStart="32dp">
 
         <TextView
-            android:id="@+id/locationNameTextView"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="locationNameTextView"
@@ -26,11 +26,11 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/showMapTextView"
+            android:id="@+id/showOnMapTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/locationNameTextView"
-            android:layout_alignLeft="@id/locationNameTextView"
+            android:layout_below="@id/nameTextView"
+            android:layout_alignLeft="@id/nameTextView"
             android:clickable="true"
             android:text="Show on Map"
             android:textColor="@color/blue_main"
@@ -38,14 +38,16 @@
             android:textStyle="bold"
             android:focusable="true" />
 
+
 <!--        <TextView
             android:id="@+id/addPhotoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/showMapTextView"
-            android:layout_alignLeft="@id/locationNameTextView"
+            android:layout_below="@id/nameTextView"
+            android:layout_marginStart="20dp"
+            android:layout_toRightOf="@id/showOnMapTextButton"
             android:clickable="true"
-            android:text="Add Photo"
+            android:text="Get Directions"
             android:textColor="@color/blue_main"
             android:textSize="16sp"
             android:textStyle="bold" />-->
