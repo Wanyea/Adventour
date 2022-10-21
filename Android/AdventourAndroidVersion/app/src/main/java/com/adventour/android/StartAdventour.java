@@ -60,7 +60,7 @@ public class StartAdventour extends AppCompatActivity {
     CardView popupFilter;
 
     HashMap<String, String> isSwitchActive;
-
+    ArrayList<Object> prevLocation = new ArrayList<>();
 
     Integer distance = 0;
     String currentFSQId;
@@ -78,6 +78,13 @@ public class StartAdventour extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         handleAuth();
+
+//        if (prevLocation.size() > 0)
+//        {
+//
+//        } else {
+//            nameTextView.setText("TEST");
+//        }
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -544,6 +551,12 @@ public class StartAdventour extends AppCompatActivity {
 
                 Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
                 populateCard(name, rating, tel, website, description);
+                prevLocation.clear();
+                prevLocation.add(name);
+                prevLocation.add(rating);
+                prevLocation.add(tel);
+                prevLocation.add(website);
+                prevLocation.add(description);
 
                 GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, 28.602427, -81.200058)); // TODO: use real lat/long once Places API is working.
 
