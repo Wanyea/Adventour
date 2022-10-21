@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/startAdventourLayout"
     tools:context=".StartAdventour">
 
     <ImageView
@@ -36,7 +37,398 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_cloud_3" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/popupFilter"
+        android:layout_width="330dp"
+        android:layout_height="420dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/popupFilterLayout"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_rectangle"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="20dp">
+
+            <!--
+            <TextView
+                android:id="@+id/searchFilterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search Filter"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchFilterTextView" />
+
+            <TextView
+                android:id="@+id/dollar1TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="$"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+            <TextView
+                android:id="@+id/dollar2TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="$$"
+                app:layout_constraintEnd_toStartOf="@id/dollar3TextView"
+                app:layout_constraintStart_toEndOf="@+id/dollar1TextView"
+                app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+            <TextView
+                android:id="@+id/dollar3TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$$$"
+                app:layout_constraintEnd_toStartOf="@+id/dollar4TextView"
+                app:layout_constraintStart_toEndOf="@+id/dollar2TextView"
+                app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+            <TextView
+                android:id="@+id/dollar4TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$$$$"
+                app:layout_constraintBottom_toBottomOf="@id/dollar1TextView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/priceSlider"
+                style="@style/AdventourSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dollar1TextView"
+                android:stepSize="1"
+                android:valueFrom="1"
+                android:valueTo="4"
+                />
+                -->
+            <TextView
+                android:id="@+id/popupDistanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Distance (miles)"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/startDistanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popupDistanceTextView" />
+
+            <TextView
+                android:id="@+id/endDistanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="25"
+                app:layout_constraintBottom_toBottomOf="@id/startDistanceTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/distanceSlider"
+                style="@style/AdventourSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1"
+                android:valueFrom="1"
+                android:valueTo="25"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/startDistanceTextView" />
+
+
+            <TextView
+                android:id="@+id/categoriesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/distanceSlider"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-10dp"
+                android:text="Categories"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/distanceSlider" />
+
+            <TextView
+                android:id="@+id/socialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Social 👯‍"
+                app:layout_constraintBottom_toBottomOf="@id/socialSwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/socialSwitch" />
+
+            <Switch
+                android:id="@+id/socialSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toBottomOf="@id/categoriesTextView" />
+
+            <TextView
+                android:id="@+id/outdoorsyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Outdoorsy 🏞"
+                app:layout_constraintBottom_toBottomOf="@id/outdoorsySwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/outdoorsySwitch" />
+
+            <Switch
+                android:id="@+id/outdoorsySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/socialSwitch"
+                app:layout_constraintTop_toBottomOf="@id/socialSwitch" />
+
+            <TextView
+                android:id="@+id/culturedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cultured 📖"
+                app:layout_constraintBottom_toBottomOf="@id/culturedSwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/culturedSwitch" />
+
+            <Switch
+                android:id="@+id/culturedSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/socialSwitch"
+                app:layout_constraintTop_toBottomOf="@id/outdoorsySwitch" />
+
+            <TextView
+                android:id="@+id/romanticTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Romantic 💘"
+                app:layout_constraintBottom_toBottomOf="@id/romanticSwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/romanticSwitch" />
+
+            <Switch
+                android:id="@+id/romanticSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/socialSwitch"
+                app:layout_constraintTop_toBottomOf="@id/culturedSwitch" />
+
+            <TextView
+                android:id="@+id/geekyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Geeky 🤓"
+                app:layout_constraintBottom_toBottomOf="@id/geekySwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/geekySwitch" />
+
+            <Switch
+                android:id="@+id/geekySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/socialSwitch"
+                app:layout_constraintTop_toBottomOf="@id/romanticSwitch" />
+
+            <TextView
+                android:id="@+id/spiritualTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spiritual ✨"
+                app:layout_constraintBottom_toBottomOf="@id/spiritualSwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/spiritualSwitch" />
+
+            <Switch
+                android:id="@+id/spiritualSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/socialSwitch"
+                app:layout_constraintTop_toBottomOf="@id/geekySwitch" />
+
+            <TextView
+                android:id="@+id/sportyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sporty 🎾"
+                app:layout_constraintBottom_toBottomOf="@id/sportySwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/sportySwitch" />
+
+            <Switch
+                android:id="@+id/sportySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/socialSwitch"
+                app:layout_constraintTop_toBottomOf="@id/spiritualSwitch" />
+
+            <TextView
+                android:id="@+id/chillTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="145dp"
+                android:text="Chill 😎"
+                app:layout_constraintBottom_toBottomOf="@id/chillSwitch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/chillSwitch" />
+
+            <Switch
+                android:id="@+id/chillSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/socialSwitch" />
+
+            <TextView
+                android:id="@+id/shoppableTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shoppable 🛍"
+                app:layout_constraintBottom_toBottomOf="@id/shoppableSwitch"
+                app:layout_constraintStart_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toTopOf="@id/shoppableSwitch" />
+
+            <Switch
+                android:id="@+id/shoppableSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/chillSwitch"
+                app:layout_constraintTop_toBottomOf="@id/chillSwitch" />
+
+            <TextView
+                android:id="@+id/pamperedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pampered 💅"
+                app:layout_constraintBottom_toBottomOf="@id/pamperedSwitch"
+                app:layout_constraintStart_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toTopOf="@id/pamperedSwitch" />
+
+            <Switch
+                android:id="@+id/pamperedSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/chillSwitch"
+                app:layout_constraintTop_toBottomOf="@id/shoppableSwitch" />
+
+            <TextView
+                android:id="@+id/courageousTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Courageous 💪"
+                app:layout_constraintBottom_toBottomOf="@id/courageousSwitch"
+                app:layout_constraintStart_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toTopOf="@id/courageousSwitch" />
+
+            <Switch
+                android:id="@+id/courageousSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/chillSwitch"
+                app:layout_constraintTop_toBottomOf="@id/pamperedSwitch" />
+
+            <TextView
+                android:id="@+id/starvingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Starving 🍴"
+                app:layout_constraintBottom_toBottomOf="@id/starvingSwitch"
+                app:layout_constraintStart_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toTopOf="@id/starvingSwitch" />
+
+            <Switch
+                android:id="@+id/starvingSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/chillSwitch"
+                app:layout_constraintTop_toBottomOf="@id/courageousSwitch" />
+
+            <TextView
+                android:id="@+id/snackTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Snack 🍟"
+                app:layout_constraintBottom_toBottomOf="@id/snackSwitch"
+                app:layout_constraintStart_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toTopOf="@id/snackSwitch" />
+
+            <Switch
+                android:id="@+id/snackSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/chillSwitch"
+                app:layout_constraintTop_toBottomOf="@id/starvingSwitch" />
+
+            <TextView
+                android:id="@+id/twentyoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21+ 🍻"
+                app:layout_constraintBottom_toBottomOf="@id/twentyonePlusSwitch"
+                app:layout_constraintStart_toStartOf="@id/chillTextView"
+                app:layout_constraintTop_toTopOf="@id/twentyonePlusSwitch" />
+
+            <Switch
+                android:id="@+id/twentyonePlusSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/chillSwitch"
+                app:layout_constraintTop_toBottomOf="@id/snackSwitch" />
+
+            <Button
+                android:id="@+id/doneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/navy_main"
+                android:text="Done"
+                tools:layout_editor_absoluteX="110dp"
+                tools:layout_editor_absoluteY="334dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
     <ScrollView
+        android:id="@+id/scrollView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -64,13 +456,124 @@
                 app:layout_constraintTop_toBottomOf="@id/balloonRopeImageView"
                 app:srcCompat="@drawable/ic_ticket_card" />
 
+            <ImageView
+                android:id="@+id/previewImageView"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_margin="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_4by3"
+                app:layout_constraintBottom_toBottomOf="@id/ticketCardImageView"
+                app:layout_constraintStart_toStartOf="@id/ticketCardImageView"
+                app:layout_constraintTop_toTopOf="@id/ticketCardImageView" />
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="nameTextView"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/previewImageView"
+                app:layout_constraintTop_toTopOf="@id/previewImageView" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="20dp"
+                android:numStars="5"
+                android:rating="5"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
+                app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:maxLines="1"
+                android:text="Distance"
+                android:textSize="16dp"
+                android:textStyle="italic"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+                app:layout_constraintStart_toEndOf="@id/ratingBar" />
+
+            <ImageView
+                android:id="@+id/phoneImageView"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_phone_icon"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
+                app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                app:tint="@color/blue_main" />
+
+            <TextView
+                android:id="@+id/phoneNumberTextView"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="0000000000"
+                android:textColor="@color/blue_main"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/phoneImageView"
+                app:layout_constraintStart_toEndOf="@id/phoneImageView"
+                app:layout_constraintTop_toTopOf="@id/phoneImageView" />
+
+            <ImageView
+                android:id="@+id/globeImageView"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_globe_icon"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
+                app:layout_constraintTop_toBottomOf="@id/phoneImageView"
+                app:tint="@color/blue_main" />
+
+            <TextView
+                android:id="@+id/websiteTextView"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="3dp"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="websiteTextView"
+                android:textColor="@color/blue_main"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/globeImageView"
+                app:layout_constraintStart_toEndOf="@id/globeImageView"
+                app:layout_constraintTop_toTopOf="@id/globeImageView" />
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@string/lorem_ipsum"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@id/nameTextView"
+                app:layout_constraintTop_toBottomOf="@id/globeImageView" />
+
             <Button
                 android:id="@+id/notNowButton"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/blue_main"
+                android:backgroundTint="@color/red_main"
                 android:text="Not Now"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -173,12 +676,14 @@
                 app:layout_constraintTop_toTopOf="@id/sampleButton" />
 
             <Button
-                android:id="@+id/inProgressButton"
+                android:id="@+id/beginButton"
                 android:layout_width="142dp"
                 android:layout_height="47dp"
-                android:text="In progress"
-                app:layout_constraintStart_toStartOf="parent"
+                android:backgroundTint="@color/blue_main"
+                android:text="Go"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

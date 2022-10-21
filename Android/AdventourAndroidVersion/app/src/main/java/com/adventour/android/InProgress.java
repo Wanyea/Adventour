@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.controls.actions.FloatAction;
 import android.view.View;
+
 import android.view.Window;
 import android.widget.Button;
+
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -34,10 +35,14 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
     FirebaseAuth auth;
     FirebaseUser user;
+
     FloatingActionButton finishAdventourButton;
     Double lat = 0.0;
     Double lon = 0.0;
     String locationName = "Null Island";
+
+    FloatingActionButton addLocationButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -53,6 +58,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
+
         InProgressRV.setNestedScrollingEnabled(false);
         InProgressRV.addOnItemTouchListener(
                 new InProgressClickListener(this, InProgressRV, new InProgressClickListener.OnItemClickListener() {
@@ -69,17 +75,11 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                 })
         );
 
-        finishAdventourButton = (FloatingActionButton) findViewById(R.id.finishAdventourButton);
+        InProgressRV.setNestedScrollingEnabled(true);
 
-        // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
-        ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
-        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", 28.602427, -81.200058));
-        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", 28.538330, -81.378880));
-        inProgressModelArrayList.add(new InProgressModel("American Escape Rooms Orlando", 28.557010, -81.507600));
-        inProgressModelArrayList.add(new InProgressModel("Arcade Monsters", 28.584830, -81.188840));
-        inProgressModelArrayList.add(new InProgressModel("Congo River Golf", 26.697050, -81.679310));
+        addLocationButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
 
-        InProgressAdapter inProgressAdapter = new InProgressAdapter(this, inProgressModelArrayList);
+        InProgressAdapter inProgressAdapter = new InProgressAdapter(this, GlobalVars.inProgressModelArrayList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
@@ -113,25 +113,25 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
             return false;
         });
 
-        finishAdventourButton.setOnClickListener(new  View.OnClickListener() {
+        addLocationButton.setOnClickListener(new  View.OnClickListener() {
            @Override
            public void onClick(View view)
            {
-                switchToCongratulations();
+                switchToStartAdventour();
            }
         });
     }
 
     public void switchToLoggedOut()
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
         finish();
     }
 
-    public void switchToCongratulations()
+    public void switchToStartAdventour()
     {
-        Intent intent = new Intent(this, Congratulations.class);
+        Intent intent = new Intent(this, StartAdventour.class);
         startActivity(intent);
         finish();
     }
