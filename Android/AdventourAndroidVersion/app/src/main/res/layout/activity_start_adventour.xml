@@ -39,8 +39,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/popupFilter"
-        android:layout_width="330dp"
-        android:layout_height="420dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="invisible"
         app:cardCornerRadius="4dp"
@@ -420,8 +420,11 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/navy_main"
                 android:text="Done"
-                tools:layout_editor_absoluteX="110dp"
-                tools:layout_editor_absoluteY="334dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sportySwitch"
+                android:layout_marginTop="15dp"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -444,7 +447,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sampleButton"
+                app:layout_constraintTop_toBottomOf="@id/startAnAdventourEditText"
                 app:srcCompat="@drawable/ic_balloon_rope" />
 
             <ImageView
@@ -601,7 +604,7 @@
                 android:id="@+id/startAnAdventourEditText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
 
                 android:layout_marginEnd="10dp"
@@ -614,20 +617,19 @@
                 android:inputType="text"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/sampleButton"
-                app:layout_constraintEnd_toStartOf="@+id/filterButton"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/beginButton"
+                app:layout_constraintStart_toEndOf="@id/filterButton"
                 app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView" />
 
             <ImageButton
                 android:id="@+id/filterButton"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginStart="30dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="@id/startAnAdventourEditText"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/startAnAdventourEditText"
                 app:srcCompat="@drawable/ic_filter_icon"
                 app:tint="@color/blue_main" />
@@ -644,6 +646,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!--
             <Button
                 android:id="@+id/sampleButton"
                 android:layout_width="wrap_content"
@@ -674,15 +677,18 @@
                 app:cornerRadius="100dp"
                 app:layout_constraintStart_toEndOf="@id/sampleButton"
                 app:layout_constraintTop_toTopOf="@id/sampleButton" />
+            -->
 
             <Button
                 android:id="@+id/beginButton"
-                android:layout_width="142dp"
-                android:layout_height="47dp"
+                android:layout_width="54dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="30dp"
                 android:backgroundTint="@color/blue_main"
                 android:text="Go"
+                app:layout_constraintBottom_toBottomOf="@id/startAnAdventourEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/startAnAdventourEditText" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
