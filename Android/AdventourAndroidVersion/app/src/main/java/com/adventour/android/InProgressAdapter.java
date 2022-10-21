@@ -105,7 +105,10 @@ public class InProgressAdapter extends RecyclerView.Adapter<InProgressAdapter.Vi
 
     public void storeAdventour()
     {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         Map<String, Object> adventour = new HashMap<>();
         adventour.put("dateCreated", new Date());
         adventour.put("locations", GlobalVars.adventourFSQIds);

@@ -48,7 +48,7 @@ public class StartAdventour extends AppCompatActivity {
     ImageButton filterButton;
     Slider distanceSlider;
     TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
-    Button inProgressButton, beginButton, doneButton, notNowButton, yesButton;
+    Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
 
     FirebaseAuth auth;
@@ -150,6 +150,7 @@ public class StartAdventour extends AppCompatActivity {
            public void onClick(View view) {
                GlobalVars.exclude.add(currentFSQId);
                getLocation();
+               if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
                Log.d("EXCLUDE: ", String.join(",", GlobalVars.exclude));
            }
         });
@@ -543,6 +544,7 @@ public class StartAdventour extends AppCompatActivity {
 
                 Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
                 populateCard(name, rating, tel, website, description);
+
                 GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, 28.602427, -81.200058)); // TODO: use real lat/long once Places API is working.
 
             } catch (Exception e) {
