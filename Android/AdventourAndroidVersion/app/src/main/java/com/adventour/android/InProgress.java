@@ -42,22 +42,12 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-
         handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
         InProgressRV.setNestedScrollingEnabled(true);
 
         addLocationButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
-
-        // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
-
-//        ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
-//        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", 28.602427, -81.200058));
-//        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", 28.538330, -81.378880));
-//        inProgressModelArrayList.add(new InProgressModel("American Escape Rooms Orlando", 28.557010, -81.507600));
-//        inProgressModelArrayList.add(new InProgressModel("Arcade Monsters", 28.584830, -81.188840));
-//        inProgressModelArrayList.add(new InProgressModel("Congo River Golf", 26.697050, -81.679310));
 
         InProgressAdapter inProgressAdapter = new InProgressAdapter(this, GlobalVars.inProgressModelArrayList);
 

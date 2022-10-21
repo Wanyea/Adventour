@@ -86,7 +86,6 @@ public class StartAdventour extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.start_adventour);
 
         filterButton = (ImageButton) findViewById(R.id.filterButton);
-        inProgressButton = (Button) findViewById(R.id.inProgressButton);
         beginButton = (Button) findViewById(R.id.beginButton);
         doneButton = (Button) findViewById(R.id.doneButton);
         notNowButton = (Button) findViewById(R.id.notNowButton);
@@ -129,14 +128,6 @@ public class StartAdventour extends AppCompatActivity {
             {
                 onClickFilterButton(view);
             }
-        });
-
-        inProgressButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View view)
-           {
-              switchToInProgress();
-           }
         });
 
         beginButton.setOnClickListener(new View.OnClickListener() {
