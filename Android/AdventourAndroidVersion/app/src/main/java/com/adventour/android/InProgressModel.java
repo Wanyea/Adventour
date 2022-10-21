@@ -3,10 +3,10 @@ package com.adventour.android;
 public class InProgressModel
 {
     private String name;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
 
-    public InProgressModel(String name, String latitude, String longitude)
+    public InProgressModel(String name, Double latitude, Double longitude)
     {
         this.name = name;
         this.longitude = longitude;
@@ -17,11 +17,11 @@ public class InProgressModel
         return name;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -29,11 +29,11 @@ public class InProgressModel
         this.name = name;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
