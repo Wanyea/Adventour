@@ -72,6 +72,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? CongratsViewController {
             destinationVC.locations = self.ids
+            destinationVC.beaconLocation = self.beaconLocation
         }
         
     }

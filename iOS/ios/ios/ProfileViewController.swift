@@ -111,7 +111,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     func getPrevAdventourData() {
         
         var allData: [String: Any]!
-        
+        self.prevAdventours = []
         let sem = DispatchSemaphore(value: 0)
         
         let db = Firestore.firestore()
@@ -196,7 +196,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     
     func getBeaconsData() {
         var allData: [String: Any]!
-        
+        self.beacons = []
         let sem = DispatchSemaphore(value: 0)
         
         let db = Firestore.firestore()
