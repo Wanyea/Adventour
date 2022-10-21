@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.AdventourAndroidVersion" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.AdventourAndroidVersion" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:actionBarStyle">@style/ThemeActionBar</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_main</item>
