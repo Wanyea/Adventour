@@ -62,7 +62,7 @@ class CongratsViewController: UIViewController {
     @IBOutlet weak var home: UIButton!
     
     var locations: [String]!
-    
+    var beaconLocation: String!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,6 +87,15 @@ class CongratsViewController: UIViewController {
                 vc.locations = self.locations
             }
             dest.locations = self.locations
+        }
+        if let dest = segue.destination as? BeaconPostNavigationController {
+            print(self.locations)
+            if let vc = dest.topViewController as? BeaconPostViewController {
+                vc.ids = self.locations
+                vc.beaconLocation = self.beaconLocation
+                vc.isEditing = true
+            }
+            
         }
         
     }

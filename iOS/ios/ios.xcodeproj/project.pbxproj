@@ -43,6 +43,8 @@
 		F066BFBB28FB4875004DBCD1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFBA28FB4875004DBCD1 /* FirebaseStorage */; };
 		F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */; };
 		F0A9D67528ECD4920028A718 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */; };
+		F0AA17E12901C699008B87DC /* BeaconPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AA17E02901C699008B87DC /* BeaconPostTableViewCell.swift */; };
+		F0AA17E32901D052008B87DC /* BeaconPostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AA17E22901D051008B87DC /* BeaconPostNavigationController.swift */; };
 		F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D227BD28C02B65003E3100 /* Assets.xcassets */; };
 		F0D8780028FB84040054C445 /* PrevAdventoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */; };
 		F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */; };
@@ -114,6 +116,8 @@
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
+		F0AA17E02901C699008B87DC /* BeaconPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconPostTableViewCell.swift; sourceTree = "<group>"; };
+		F0AA17E22901D051008B87DC /* BeaconPostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconPostNavigationController.swift; sourceTree = "<group>"; };
 		F0D227BD28C02B65003E3100 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevAdventoursTableViewCell.swift; sourceTree = "<group>"; };
 		F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsTableViewCell.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */,
 				F0D8780328FB853F0054C445 /* PrevAdventoursDataSource.swift */,
 				2AAB4E2D28E72C0000868DB2 /* BeaconPostViewController.swift */,
+				F0AA17E02901C699008B87DC /* BeaconPostTableViewCell.swift */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
 				2AC1B40928C9267900F4D8B9 /* StartPage.storyboard */,
@@ -218,6 +223,7 @@
 				F00A526D2900988E00A20922 /* api_key.swift */,
 				F0FC39852900ECC8008389B7 /* SummaryTableViewCell.swift */,
 				2A9915652901BA56001C5955 /* BeaconBoardController.swift */,
+				F0AA17E22901D051008B87DC /* BeaconPostNavigationController.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -519,11 +525,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
+				F0AA17E12901C699008B87DC /* BeaconPostTableViewCell.swift in Sources */,
 				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
 				2A9915662901BA56001C5955 /* BeaconBoardController.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
 				F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */,
+				F0AA17E32901D052008B87DC /* BeaconPostNavigationController.swift in Sources */,
 				2A9EBF8D28B69114009ED151 /* LoginViewController.swift in Sources */,
 				2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */,
 				F0FC39862900ECC8008389B7 /* SummaryTableViewCell.swift in Sources */,

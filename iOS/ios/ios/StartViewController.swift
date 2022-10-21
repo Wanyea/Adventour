@@ -6,7 +6,7 @@ import GooglePlaces
 
 class StartViewController: UIViewController {
     
-    var temp = ""
+    var beaconLocation = ""
     var lon: Double!
     var lat: Double!
     
@@ -69,7 +69,7 @@ class StartViewController: UIViewController {
         notNow?.layer.cornerRadius = 15
         // Do any additional setup after loading the view.
         placesClient = GMSPlacesClient.shared()
-        searchBar?.text = self.temp
+        searchBar?.text = self.beaconLocation
     }
     
     @IBAction func getCurrentPlace(_ sender: Any){
@@ -90,7 +90,7 @@ class StartViewController: UIViewController {
     }
     @IBAction func updateSearch()
     {
-        searchBar?.text = self.temp
+        searchBar?.text = self.beaconLocation
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +114,7 @@ class StartViewController: UIViewController {
         if let destinationVC = segue.destination as? MapViewController {
             preparePlace()
             destinationVC.ids = self.ids
+            destinationVC.beaconLocation = self.beaconLocation
         }
         
         if let destinationVC = segue.destination as? SearchFilterViewController {
@@ -470,7 +471,7 @@ extension StartViewController: GMSAutocompleteViewControllerDelegate {
     self.lon = place.coordinate.longitude
     print("Place lat: \(self.lat)")
     print("Place lon: \(self.lon)")
-    self.temp = place.formattedAddress!
+    self.beaconLocation = place.formattedAddress!
     updateSearch()
     dismiss(animated: true, completion: nil)
     

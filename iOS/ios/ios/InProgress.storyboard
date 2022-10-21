@@ -94,6 +94,9 @@
                                                                         <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
                                                                         <color key="baseForegroundColor" name="adv-red"/>
                                                                     </buttonConfiguration>
+                                                                    <connections>
+                                                                        <action selector="getDirections:" destination="jyL-Pc-aGg" eventType="touchUpInside" id="54K-TM-byu"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -116,14 +119,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="118" width="320" height="68.5"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="69"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="68.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HG7-BH-C89">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="CXD-ZM-OMz"/>
                                                                         <constraint firstAttribute="width" constant="150" id="VTj-CK-J5e"/>
@@ -143,6 +146,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                     <connections>
+                                                                        <action selector="saveAdventour:" destination="rgq-nB-YmZ" eventType="touchUpInside" id="RSO-9E-45b"/>
                                                                         <segue destination="SA0-Kd-Lhx" kind="show" id="z16-mw-A96"/>
                                                                     </connections>
                                                                 </button>
@@ -414,10 +418,10 @@
             </objects>
             <point key="canvasLocation" x="662" y="1621"/>
         </scene>
-        <!--BeaconPost-->
+        <!--BeaconPostNav-->
         <scene sceneID="lfR-wL-u1h">
             <objects>
-                <viewControllerPlaceholder storyboardName="BeaconPost" referencedIdentifier="BeaconPost" id="sQP-le-ARw" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="BeaconPost" referencedIdentifier="BeaconPostNav" id="sQP-le-ARw" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="jRH-Jn-cbB"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BIu-J3-ZRr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

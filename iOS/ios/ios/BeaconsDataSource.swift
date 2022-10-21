@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class BeaconsDataSource: NSObject, UITableViewDataSource {
     
@@ -22,9 +23,18 @@ class BeaconsDataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BeaconCell", for: indexPath) as! BeaconsTableViewCell
-        if let dateCreated = data[indexPath.item]["dateCreated"] as? String {
-//            print("Date created: ", data)
-            cell.dateCreated.text = dateCreated
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/YYYY"
+        
+        if let firTimestamp = data[indexPath.item]["dateCreated"] as? Timestamp {
+            if let swiftDate = firTimestamp.dateValue() as? Date {
+    //            print("Date created: ", data)
+                if let stringDate = dateFormatter.string(from: swiftDate) as? String {
+                    cell.dateCreated.text = stringDate
+                }
+                
+            }
         }
 
         if let locations = data[indexPath.item]["locations"] as? [[String: Any]] {

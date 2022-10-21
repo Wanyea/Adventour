@@ -131,10 +131,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                     self.noAdventoursMessage?.isHidden = false
                 } else {
                     for doc in snap!.documents {
-
+                        let documentID = doc.documentID
                         if let data = doc.data() as? [String: Any] {
                             allData = data
-                            
+                            allData.updateValue(documentID, forKey: "documentID")
                             if let locations = data["locations"] as? [String] {
                                 let params: [String: Any] = [
                                     "uid": self.user!.uid,
@@ -216,9 +216,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                 } else {
                     for doc in snap!.documents {
 //                        print("The data", doc.data())
+                        let documentID = doc.documentID
                         if let data = doc.data() as? [String: Any] {
                             allData = data
-                            
+                            allData.updateValue(documentID, forKey: "documentID")
+                            print(allData)
                             if let locations = data["locations"] as? [String] {
                                 let params: [String: Any] = [
                                     "uid": self.user!.uid,
