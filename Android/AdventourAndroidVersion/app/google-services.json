@@ -20,43 +20,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCf6eg_uaVvIEZmprwuq5ORin8Vqt3Cee0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1049791183650-9avs6220tm8ojg4e0muufe06m12u24a9.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1049791183650-qg7msd96fsvg6iqq1huovn8hgfns031c.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.adventour.ios-app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1049791183650:android:58c0b5e2345b1ae80ec37b",
-        "android_client_info": {
-          "package_name": "com.example.adventourandroidversion"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1049791183650-9avs6220tm8ojg4e0muufe06m12u24a9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCf6eg_uaVvIEZmprwuq5ORin8Vqt3Cee0"
+          "current_key": "AIzaSyBJaH9Aeir_3vHNsmH6IRP8JTYgTfFDjDQ"
         }
       ],
       "services": {

@@ -30,6 +30,8 @@ public class AdventourSummaryAdapter extends RecyclerView.Adapter<AdventourSumma
     public void onBindViewHolder(@NonNull AdventourSummaryAdapter.Viewholder holder, int position) {
         AdventourSummaryModel model = adventourArrayList.get(position);
         holder.locationNameTextView.setText(model.getName());
+        holder.descriptionTextView.setText(model.getDescription());
+
     }
 
     @Override
@@ -39,10 +41,13 @@ public class AdventourSummaryAdapter extends RecyclerView.Adapter<AdventourSumma
 
     public static class Viewholder extends RecyclerView.ViewHolder {
         private final TextView locationNameTextView;
+        private final TextView descriptionTextView;
+
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             locationNameTextView = itemView.findViewById(R.id.nameTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
         }
     }
 }

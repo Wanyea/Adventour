@@ -28,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/locationTextView"
+            android:id="@+id/firstLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dateTextView"
@@ -38,20 +38,20 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/location2TextView"
+            android:id="@+id/secondLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/locationTextView"
+            android:layout_below="@id/firstLocation"
             android:layout_alignLeft="@id/dateTextView"
             android:text="Location"
             android:textColor="@color/red_variant"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/location3TextView"
+            android:id="@+id/thirdLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/location2TextView"
+            android:layout_below="@id/secondLocation"
             android:layout_alignLeft="@id/dateTextView"
             android:text="Location"
             android:textColor="@color/red_variant"

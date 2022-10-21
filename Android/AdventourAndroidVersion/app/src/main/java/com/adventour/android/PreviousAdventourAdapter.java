@@ -4,32 +4,34 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 
-public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHolder> {
-    private final Context context;
-    private final ArrayList<BeaconsModel> beaconsArrayList;
+public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdventourAdapter.ViewHolder> {
 
-    public BeaconsAdapter(Context context, ArrayList<BeaconsModel> beaconsArrayList) {
+    private final Context context;
+    private final ArrayList<PreviousAdventourModel> PassportArrayList;
+
+    public PreviousAdventourAdapter(Context context, ArrayList<PreviousAdventourModel> PassportArrayList) {
         this.context = context;
-        this.beaconsArrayList = beaconsArrayList;
+        this.PassportArrayList = PassportArrayList;
     }
 
     @NonNull
     @Override
-    public BeaconsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.beacon_card_layout, parent, false);
+    public PreviousAdventourAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.previous_adventour_card_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BeaconsAdapter.ViewHolder holder, int position) {
-        BeaconsModel model = beaconsArrayList.get(position);
+    public void onBindViewHolder(@NonNull PreviousAdventourAdapter.ViewHolder holder, int position)
+    {
+        PreviousAdventourModel model = PassportArrayList.get(position);
         holder.firstLocation.setText(model.getFirstLocation());
         holder.secondLocation.setText(model.getSecondLocation());
         holder.thirdLocation.setText(model.getThirdLocation());
@@ -37,10 +39,11 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return beaconsArrayList.size();
+        return PassportArrayList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder
+    {
         private final TextView firstLocation;
         private final TextView secondLocation;
         private final TextView thirdLocation;

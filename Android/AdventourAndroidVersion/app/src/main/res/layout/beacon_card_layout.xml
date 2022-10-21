@@ -25,17 +25,40 @@
 <!--            android:height="46dp"/>-->
 
         <TextView
-            android:id="@+id/placesTextView"
+            android:id="@+id/firstLocation"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_height="41dp"
+            android:width="139dp"
+            android:height="147dp"
             android:fontFamily="@font/roboto"
             android:text="Title"
-            android:layout_marginTop="60dp"
-            android:layout_marginStart="181dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/dateTextView" />
+
+        <TextView
+            android:id="@+id/secondLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
             android:width="139dp"
-            android:height="147dp"/>
+            android:height="147dp"
+            android:fontFamily="@font/roboto"
+            android:text="Title"
+            app:layout_constraintTop_toBottomOf="@id/firstLocation"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/thirdLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:width="139dp"
+            android:height="147dp"
+            android:fontFamily="@font/roboto"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/secondLocation" />
 
         <ImageView
             android:id="@+id/locationImageView"
@@ -53,12 +76,12 @@
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="date"
-            android:textSize="16sp"
-            android:fontFamily="@font/roboto_italic"
-            android:textColor="@color/navy_main"
+            android:layout_marginLeft="254dp"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="254dp" />
+            android:fontFamily="@font/roboto_italic"
+            android:text="date"
+            android:textColor="@color/navy_main"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

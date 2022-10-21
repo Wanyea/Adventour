@@ -15,27 +15,27 @@
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:layout_marginStart="171dp"
+            android:layout_marginTop="45dp"
+            android:width="132dp"
+            android:height="46dp"
             android:fontFamily="@font/roboto_bold"
             android:text="locationName"
-            android:layout_marginTop="45dp"
-            android:layout_marginStart="171dp"
-            android:width="132dp"
-            android:height="46dp"/>
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_marginStart="171dp"
+            android:layout_marginTop="122dp"
+            android:width="139dp"
+            android:height="76dp"
             android:fontFamily="@font/roboto"
             android:text="description"
-            android:layout_marginTop="122dp"
-            android:layout_marginStart="171dp"
-            android:width="139dp"
-            android:height="76dp"/>
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/locationImageView"

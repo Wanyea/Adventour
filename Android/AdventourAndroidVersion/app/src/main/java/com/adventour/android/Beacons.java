@@ -1,5 +1,6 @@
 package com.adventour.android;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,13 +8,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Beacons extends AppCompatActivity {
 
@@ -28,15 +38,7 @@ public class Beacons extends AppCompatActivity {
         setContentView(R.layout.activity_beacons);
 
         handleAuth();
-
-//        button = findViewById(R.id.button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                switchToBeaconPost();
-//            }
-//        });
-
+        getBeaconPosts();
 
         RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
@@ -58,7 +60,7 @@ public class Beacons extends AppCompatActivity {
 
 
         // Initialize and assign variable
-        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.beacons);
@@ -66,15 +68,14 @@ public class Beacons extends AppCompatActivity {
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
 
-            switch(item.getItemId())
-            {
+            switch (item.getItemId()) {
                 case R.id.passport:
                     startActivity(new Intent(getApplicationContext(), Passport.class));
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.start_adventour:
                     startActivity(new Intent(getApplicationContext(), StartAdventour.class));
-                    overridePendingTransition(0,0);
+                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.beacons:
                     return true;
@@ -83,29 +84,52 @@ public class Beacons extends AppCompatActivity {
         });
     }
 
-    public void switchToLoggedOut()
-    {
+    public void switchToLoggedOut() {
         Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
         finish();
     }
 
-    public void handleAuth()
-    {
+    public void handleAuth() {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        if (user == null)
-        {
+        if (user == null) {
             switchToLoggedOut();
         }
     }
 
-    public void switchToBeaconPost()
-    {
+    public void switchToBeaconPost() {
         Intent intent = new Intent(this, BeaconPost.class);
         startActivity(intent);
         finish();
+    }
+
+    public void getBeaconPosts() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        ArrayList<BeaconPostModel> previousAdventours = new ArrayList<>();
+
+        // Get all Beacons from Beacon Board.
+        db.collection("Beacons")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    private static final String TAG = "Beacon Board";
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot beacon : task.getResult()) {
+                                Log.d("ALL BEACONS", beacon.get("locations").toString());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 }
 

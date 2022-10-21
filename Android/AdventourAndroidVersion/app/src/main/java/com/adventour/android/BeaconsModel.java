@@ -1,38 +1,39 @@
 package com.adventour.android;
 
 public class BeaconsModel {
-    private String locations;
-    private String date;
-    private String imageURL;
 
-    public BeaconsModel (String locations, String date, String imageURL) {
-        this.locations = locations;
-        this.date = date;
-        this.imageURL = imageURL;
+    private String firstLocation;
+    private String secondLocation;
+    private String thirdLocation;
+
+
+    public BeaconsModel(String firstLocation, String secondLocation, String thirdLocation) {
+        this.firstLocation = firstLocation;
+        this.secondLocation = secondLocation;
+        this.thirdLocation = thirdLocation;
     }
 
-    public String getLocations() {
-        return locations;
+    public String getFirstLocation() {
+        return firstLocation;
     }
 
-    public String getDate() {
-        return date;
+    public void setFirstLocation(String firstLocation) {
+        this.firstLocation = firstLocation;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getSecondLocation() {
+        return secondLocation;
     }
 
-    public void setLocations(String locations) {
-        this.locations = locations;
+    public void setSecondLocation(String secondLocation) {
+        this.secondLocation = secondLocation;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getThirdLocation() {
+        return thirdLocation;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setThirdLocation(String thirdLocation) {
+        this.thirdLocation = thirdLocation;
     }
-
 }
