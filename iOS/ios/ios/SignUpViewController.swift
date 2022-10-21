@@ -119,11 +119,7 @@ class SignUpViewController: UIViewController {
                                 "isPrivate": true,
                                 "birthday": self.birthdateString!,
                             ]) { err in
-                                if let err = err {
-                                    print("Error writing document: \(err)")
-                                } else {
-                                    print("Document successfully written!")
-                                }
+                                
                             }
                         
                     } else {

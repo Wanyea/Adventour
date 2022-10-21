@@ -1,8 +1,9 @@
 import UIKit
 import MapKit
 import FirebaseAuth
+import FirebaseFirestore
 
-extension UIImageView{
+extension UIImageView {
     @IBInspectable var borderColor : UIColor? {
         get{
             if let color = layer.borderColor{
@@ -13,10 +14,10 @@ extension UIImageView{
             }
         }
         set {layer.borderColor = newValue?.cgColor}
-}
+    }
 }
 
-@IBDesignable class BigSwitch: UISwitch {
+@IBDesignable class ScaleSwitch: UISwitch {
 
     @IBInspectable var scale : CGFloat = 1{
         didSet{
@@ -50,18 +51,21 @@ extension UIImageView{
 // Beacon Title char limit: 16
 
 class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+        
     
     @IBOutlet weak var beaconTitle: UITextView!
     @IBOutlet weak var beaconDescription: UITextView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var dateCreated: UILabel!
     @IBOutlet weak var locationsTable: UITableView!
+    @IBOutlet weak var privateSwitch: ScaleSwitch!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var beaconInfo: [String: Any]!
     var user: User!
     var locations: [[String: Any]] = []
     var ids: [String]!
+    var beaconLocation: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,9 +84,9 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
-        
+        checkEditing()
         print("ids in beacon post: ", self.ids)
-        self.activityIndicator.isHidden = true
+        self.activityIndicator?.isHidden = true
         self.locationsTable.isHidden = true
         getLocationData()
     }
@@ -92,32 +96,14 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         self.beaconDescription.endEditing(true)
     }
     
-    
-    @IBAction func toggleEditing(_ sender: Any) {
-        self.isEditing = !self.isEditing
-        
-        if (self.isEditing) {
-            print("Editing...")
-            self.beaconTitle.isEditable = true
-            self.beaconDescription.isEditable = true
-            self.editButton.setTitle("💾", for: UIControl.State.normal)
-        } else {
-            self.beaconTitle.isEditable = false
-            self.beaconDescription.isEditable = false
-            self.editButton.setTitle("✏️", for: UIControl.State.normal)
-            saveBeaconData()
-        }
-        
-        
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.locationsTable.dequeueReusableCell(withIdentifier: "BeaconPostTableCell", for: indexPath) as! BeaconPostTableViewCell
-        print("CELL GENERATED")
+        
+        let cell = locationsTable.dequeueReusableCell(withIdentifier: "BeaconPostTableCell", for: indexPath) as! BeaconPostTableViewCell
+        
         if let description = locations[indexPath.item]["description"] as? String {
             print(description)
             cell.descriptionLabel.text = description
@@ -159,9 +145,45 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             cell.nameLabel.text = "No Name Available"
         }
-        
         return cell
     }
+    
+    func checkEditing() {
+        if (self.isEditing) {
+            print("Editing...")
+            self.beaconTitle.isEditable = true
+            self.beaconDescription.isEditable = true
+            self.privateSwitch.isEnabled = true
+            self.editButton.setTitle("💾", for: UIControl.State.normal)
+        } else {
+            self.beaconTitle.isEditable = false
+            self.beaconDescription.isEditable = false
+            self.privateSwitch.isEnabled = false
+            self.editButton.setTitle("✏️", for: UIControl.State.normal)
+        }
+    }
+    
+    @IBAction func toggleEditing(_ sender: Any) {
+        self.isEditing = !self.isEditing
+        
+        if (self.isEditing) {
+            print("Editing...")
+            self.beaconTitle.isEditable = true
+            self.beaconDescription.isEditable = true
+            self.privateSwitch.isEnabled = true
+            self.editButton.setTitle("💾", for: UIControl.State.normal)
+        } else {
+            self.beaconTitle.isEditable = false
+            self.beaconDescription.isEditable = false
+            self.privateSwitch.isEnabled = false
+            self.editButton.setTitle("✏️", for: UIControl.State.normal)
+            saveBeaconData()
+        }
+        
+        
+    }
+    
+    
     
     func saveBeaconData() {
         let dateFormatter = DateFormatter()
@@ -172,21 +194,46 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 "title": self.beaconTitle.text,
                 "intro": self.beaconDescription.text,
                 "locations": self.ids,
-                "dateUpdated": dateFormatter.string(from: Date()),
+                "dateUpdated": Date(),
                 "dateCreated": info["dateCreated"],
                 "numLocations": locations.count,
-                "isPrivate": info["isPrivate"]
+                "isPrivate": self.privateSwitch.isOn
             ]
         } else {
             let beacon: [String: Any] = [
                 "title": self.beaconTitle.text,
                 "intro": self.beaconDescription.text,
                 "locations": self.ids,
-                "dateUpdated": dateFormatter.string(from: Date()),
-                "dateCreated": dateFormatter.string(from: Date()),
+                "beaconLocation": self.beaconLocation,
+                "dateUpdated": Date(),
+                "dateCreated": Date(),
                 "numLocations": locations.count,
-                "isPrivate": true
+                "isPrivate": self.privateSwitch.isOn
             ]
+            
+            let db = Firestore.firestore()
+            
+            db.collection("Adventourists")
+                .document(self.user.uid)
+                .collection("beacons")
+                .addDocument(data: beacon) {
+                    err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
+            
+            db.collection("Beacons")
+                .addDocument(data: beacon) {
+                    err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
         }
         
         
@@ -194,7 +241,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func getLocationData() {
         
-        self.activityIndicator.isHidden = false
+        self.activityIndicator?.isHidden = false
         
         let params: [String: Any] = [
             "uid": self.user!.uid,
@@ -222,7 +269,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                             self.locations = array
                             DispatchQueue.main.async {
                                 self.locationsTable.reloadData()
-                                self.activityIndicator.stopAnimating()
+                                self.activityIndicator?.stopAnimating()
                                 self.locationsTable.isHidden = false
                                 print(self.locations.count)
                             }

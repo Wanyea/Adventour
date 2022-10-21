@@ -2,6 +2,7 @@ import UIKit
 import MapKit
 
 import FirebaseAuth
+import FirebaseFirestore
 
 extension MapViewController: MapTableViewCellDelegate {
     
@@ -37,7 +38,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var addButton: UIButton!
     
     var user: User!
-    var callback: (([String]) ->())?
+    var beaconLocation: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +121,33 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
+    
+    @IBAction func saveAdventour(_ sender: Any) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/YYYY"
+        
+        let adventour: [String: Any] = [
+            "locations": self.ids,
+            "beaconLocation": self.beaconLocation,
+            "dateCreated": Date(),
+            "numLocations": self.locations.count,
+        ]
+        
+        let db = Firestore.firestore()
+        
+        db.collection("Adventourists")
+            .document(self.user.uid)
+            .collection("adventours")
+            .addDocument(data: adventour) {
+                err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+    }
     
     func hideTable() {
         self.locationsTable.isHidden = true
