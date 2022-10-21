@@ -51,6 +51,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         addLocationButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
+
 //        ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
 //        inProgressModelArrayList.add(new InProgressModel("University of Central Florida", 28.602427, -81.200058));
 //        inProgressModelArrayList.add(new InProgressModel("The Cloak & Blaster", 28.538330, -81.378880));
