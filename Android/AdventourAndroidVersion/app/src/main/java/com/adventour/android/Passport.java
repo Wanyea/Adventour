@@ -277,9 +277,9 @@ public class Passport extends AppCompatActivity {
                         {
                             for (QueryDocumentSnapshot adventour : task.getResult())
                             {
-                                queryString.addAll((Collection<? extends String>) adventour.get("locations"));
-                                getLocationName(queryString.toString().replaceAll("\\s+","")); //maybe spaces are causing weird api response?
-                                queryString.clear();
+                                //queryString.addAll((Collection<? extends String>) adventour.get("locations"));
+                                //getLocationName(queryString.toString().replaceAll("\\s+","")); //maybe spaces are causing weird api response?
+                                //queryString.clear();
                                 Log.d(TAG, adventour.getId() + " => " + adventour.get("locations"));
                             }
                         } else {
@@ -297,7 +297,7 @@ public class Passport extends AppCompatActivity {
 
             jsonBody.put("uid", user.getUid());
             // Log.d("0", queryString);
-            jsonBody.put("ids", "4b05869af964a520966722e3");
+            jsonBody.put("ids", queryString);
 
         } catch (JSONException e) {
             Log.e("Passport", "exception", e);

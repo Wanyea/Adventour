@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,7 +31,7 @@ import java.util.Map;
 public class BeaconPost extends AppCompatActivity {
 
     TextView beaconPostDate;
-    Button postBeaconButton;
+    FloatingActionButton postBeaconButton;
     ImageButton editSaveButton;
     EditText beaconTitleEditText, beaconIntroEditText;
     boolean isEditMode = true;
@@ -42,7 +43,7 @@ public class BeaconPost extends AppCompatActivity {
         setContentView(R.layout.activity_beacon_post);
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
-        postBeaconButton = (Button) findViewById(R.id.postBeaconButton);
+        postBeaconButton = (FloatingActionButton) findViewById(R.id.postBeaconButton);
         editSaveButton = (ImageButton) findViewById(R.id.editSaveButton);
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
@@ -74,7 +75,6 @@ public class BeaconPost extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
-               isEditMode = !isEditMode;
                if(isEditMode)
                {
                    beaconTitleEditText.setFocusable(false);
@@ -88,6 +88,9 @@ public class BeaconPost extends AppCompatActivity {
                    editSaveButton.setBackgroundResource(R.drawable.ic_save_icon);
 
                }
+
+               isEditMode = !isEditMode;
+
            }
         });
     }
