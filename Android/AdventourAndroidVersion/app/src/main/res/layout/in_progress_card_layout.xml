@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:text="locationNameTextView"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:lineSpacingExtra="5dp"/>
 
         <TextView
             android:id="@+id/showOnMapTextButton"
@@ -32,11 +33,13 @@
             android:layout_below="@id/nameTextView"
             android:layout_alignLeft="@id/nameTextView"
             android:clickable="true"
+            android:focusable="true"
             android:text="Show on Map"
             android:textColor="@color/blue_main"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:focusable="true" />
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="12dp"/>
 
 
 <!--        <TextView

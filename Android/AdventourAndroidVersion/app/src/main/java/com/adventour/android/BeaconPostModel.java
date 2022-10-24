@@ -3,14 +3,12 @@ package com.adventour.android;
 public class BeaconPostModel {
 
     private String name;
-    private String price;
-    private String rating;
+    private float rating;
     private String address;
     private String description;
 
-    public BeaconPostModel(String name, String price, String rating, String address, String description) {
+    public BeaconPostModel(String name, float rating, String address, String description) {
         this.name = name;
-        this.price = price;
         this.rating = rating;
         this.address = address;
         this.description = description;
@@ -24,19 +22,11 @@ public class BeaconPostModel {
         this.name = name;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

@@ -35,7 +35,14 @@ public class Congratulations extends AppCompatActivity {
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                // Get Start Adventour Activity for next Adventour.
+                GlobalVars.adventourLocations.clear();
+                GlobalVars.adventourFSQIds.clear();
+                GlobalVars.exclude.clear();
+                GlobalVars.inProgressModelArrayList.clear();
+                GlobalVars.beaconModelArrayList.clear();
                 switchToStartAdventour();
             }
         });

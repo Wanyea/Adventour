@@ -9,5 +9,7 @@ public class GlobalVars
     // Clear these after each Adventour.
     public static ArrayList<String> exclude = new ArrayList<String>();
     public static ArrayList<String> adventourFSQIds = new ArrayList<String>();
-    public static ArrayList <InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
+    public static ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
+    public static ArrayList<AdventourSummaryModel> adventourLocations = new ArrayList<AdventourSummaryModel>();
+    public static ArrayList<BeaconPostModel> beaconModelArrayList = new ArrayList<BeaconPostModel>();
 }

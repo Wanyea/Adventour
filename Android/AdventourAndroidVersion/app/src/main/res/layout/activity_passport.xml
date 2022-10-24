@@ -130,6 +130,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView4" />
 
+            <ScrollView
+                android:id="@+id/inProgressScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/myLitBeaconsHeader"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/previousAdventoursHeader" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/previousAdventourRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </ScrollView>
+
             <TextView
                 android:id="@+id/myLitBeaconsHeader"
                 android:layout_width="wrap_content"

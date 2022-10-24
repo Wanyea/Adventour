@@ -1,31 +1,40 @@
 package com.adventour.android;
 
-import java.util.ArrayList;
-
 public class PreviousAdventourModel
 {
-    private ArrayList<String> locations;
-    private String date;
+    private String firstLocation;
+    private String secondLocation;
+    private String thirdLocation;
 
-    public PreviousAdventourModel(String date, ArrayList<String> locations)
-    {
-        this.date = date;
-        this.locations = locations;
+    public PreviousAdventourModel(String firstLocation, String secondLocation, String thirdLocation)
+        {
+            this.firstLocation = firstLocation;
+            this.secondLocation = secondLocation;
+            this.thirdLocation = thirdLocation;
+
+        }
+
+    public String getFirstLocation() {
+        return firstLocation;
     }
 
-    public ArrayList<String> getLocations() {
-        return locations;
+    public void setFirstLocation(String firstLocation) {
+        this.firstLocation = firstLocation;
     }
 
-    public String getDate() {
-        return date;
+    public String getSecondLocation() {
+        return secondLocation;
     }
 
-    public void setLocations(ArrayList<String> locations) {
-        this.locations = locations;
+    public void setSecondLocation(String secondLocation) {
+        this.secondLocation = secondLocation;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getThirdLocation() {
+        return thirdLocation;
+    }
+
+    public void setThirdLocation(String thirdLocation) {
+        this.thirdLocation = thirdLocation;
     }
 }

@@ -51,10 +51,11 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
         // Google map code
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+
+        mapFragment.getMapAsync(this);
         assert mapFragment != null;
         callback = this;
-        mapFragment.getMapAsync(callback);
-
+        
         handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
@@ -74,6 +75,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                     public void onLongItemClick(View view, int position) { }
                 })
         );
+
 
         InProgressRV.setNestedScrollingEnabled(true);
 

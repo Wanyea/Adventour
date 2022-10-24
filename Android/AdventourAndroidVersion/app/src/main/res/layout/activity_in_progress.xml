@@ -46,31 +46,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/inProgressScrollView"
+    <ImageView
+        android:id="@+id/notepadImageView"
         android:layout_width="350dp"
         android:layout_height="420dp"
-        android:background="@drawable/ic_notepad_paper"
+        android:src="@drawable/ic_notepad_paper"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mapFragment" >
+        app:layout_constraintTop_toBottomOf="@id/mapFragment" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/inProgressRV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/inProgressRV"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/notepadImageView"
+        android:layout_marginTop="38dp"
+        app:layout_constraintStart_toStartOf="@id/notepadImageView"/>
 
-    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLocationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:text="Finish Adventour"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_location_add_icon"
+        app:fabSize="mini"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.874"
         app:layout_constraintStart_toStartOf="parent"

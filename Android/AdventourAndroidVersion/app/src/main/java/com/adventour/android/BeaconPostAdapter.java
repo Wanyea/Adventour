@@ -39,53 +39,10 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
 
         // to set data to textview of each card layout
         BeaconPostModel model = BeaconPostModelArrayList.get(position);
+
         holder.locationNameTextView.setText(model.getName());
 
-        if(model.getPrice().equals("1"))
-        {
-            holder.priceTextView.setText("$");
-        }
-        else if(model.getPrice().equals("2"))
-        {
-            holder.priceTextView.setText("$$");
-        }
-        else if(model.getPrice().equals("3"))
-        {
-            holder.priceTextView.setText("$$$");
-        }
-        else if(model.getPrice().equals("4"))
-        {
-            holder.priceTextView.setText("$$$$");
-        }
-        else
-        {
-            holder.priceTextView.setText("N/A");
-        }
-
-        if(model.getPrice().equals("1"))
-        {
-            holder.ratingBar.setRating(1);
-        }
-        else if(model.getPrice().equals("2"))
-        {
-            holder.ratingBar.setRating(2);
-        }
-        else if(model.getPrice().equals("3"))
-        {
-            holder.ratingBar.setRating(3);
-        }
-        else if(model.getPrice().equals("4"))
-        {
-            holder.ratingBar.setRating(4);
-        }
-        else if(model.getPrice().equals("5"))
-        {
-            holder.ratingBar.setRating(5);
-        }
-        else
-        {
-            holder.ratingBar.setRating(0);
-        }
+        holder.ratingBar.setRating(model.getRating());
 
         holder.addressTextView.setText(model.getAddress());
         holder.locationDescriptionTextView.setText(model.getDescription());

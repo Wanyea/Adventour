@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,6 +39,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 public class Passport extends AppCompatActivity {
     
     private static final String TAG = "PassportActivity";
@@ -56,6 +71,9 @@ public class Passport extends AppCompatActivity {
 
     ActionBar actionBar;
 
+    ArrayList<String> queryString;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -74,15 +92,27 @@ public class Passport extends AppCompatActivity {
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
 
+        queryString = new ArrayList<>();
+
         handleAuth();
         populatePassportTextViews();
-        populatePreviousAdventours();
+        getPreviousAdventours();
+
+//        RecyclerView PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
+//        PreviousAdventourRV.setNestedScrollingEnabled(true);
+//
+//        PreviousAdventourAdapter previousAdventourAdapter = new PreviousAdventourAdapter(this, GlobalVars.prevArrayList);
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//
+//        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
+//        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
+
 
         // Action Bar
         actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
-            //actionBar.setDisplayShowHomeEnabled(false);
         }
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -91,15 +121,6 @@ public class Passport extends AppCompatActivity {
             }
         });
 
-
-
-        for (int i = 0; i < 3; i++) {
-            newPreviousAdventourCard();
-        }
-
-        for (int i = 0; i < 3; i++) {
-            newLitBeaconCard();
-        }
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -203,144 +224,9 @@ public class Passport extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void newPreviousAdventourCard() {
-        FrameLayout.LayoutParams layoutParams;
-        FrameLayout.LayoutParams dateParams;
-        FrameLayout.LayoutParams locationParams;
-        FrameLayout.LayoutParams moreInfoParams;
-        FrameLayout frameLayout;
-        ImageView background;
-        TextView dates;
-        TextView locations;
-        TextView moreInfo;
-
-        background = new ImageView(context);
-        dates = new TextView(context);
-        locations = new TextView(context);
-        frameLayout = new FrameLayout(context);
-        moreInfo = new TextView(context);
-
-        layoutParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        dateParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        locationParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        moreInfoParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-        background.setPadding(0, 0, 0, 40);
-        background.setImageResource(R.drawable.ic_stamp_card);
-
-        dateParams.setMargins(30, 25, 0, 0);
-
-        dates.setLayoutParams(dateParams);
-        dates.setText("3/18/2000 - 3/19/2000");
-        dates.setTextSize(18);
-        dates.setTextColor(getResources().getColor(R.color.red_variant));
-        dates.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
-        locationParams.setMargins(70, 150, 0, 0);
-
-        locations.setLayoutParams(locationParams);
-        locations.setText("\u25CF University of Central Florida\n\u25CF The Cloak and Blaster\n\u25CF American Escape Rooms Orlando");
-        locations.setTextSize(16);
-        locations.setTextColor(getResources().getColor(R.color.red_variant));
-        locations.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
-        moreInfoParams.setMargins(30, 420, 0, 0);
-
-        moreInfo.setLayoutParams(moreInfoParams);
-        moreInfo.setText("> More...");
-        moreInfo.setTextSize(16);
-        moreInfo.setTextColor(getResources().getColor(R.color.red_variant));
-        moreInfo.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD_ITALIC));
-        moreInfo.setClickable(true);
-        moreInfo.setFocusable(true);
-
-        frameLayout.setLayoutParams(layoutParams);
-        frameLayout.addView(background);
-        frameLayout.addView(dates);
-        frameLayout.addView(locations);
-        frameLayout.addView(moreInfo);
-
-        linearLayout.addView(frameLayout);
-    }
 
     public void newLitBeaconCard() {
-        FrameLayout.LayoutParams layoutParams;
-        FrameLayout.LayoutParams imageViewParams;
-        FrameLayout.LayoutParams dateParams;
-        FrameLayout.LayoutParams locationParams;
-        FrameLayout.LayoutParams backgroundParams;
-        FrameLayout.LayoutParams moreInfoParams;
 
-        layoutParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        dateParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        locationParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        imageViewParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        backgroundParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        moreInfoParams = new FrameLayout.LayoutParams (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-        FrameLayout frameLayout;
-        ImageView background;
-        ImageView imageView;
-        TextView date;
-        TextView locations;
-        TextView moreInfo;
-
-        frameLayout = new FrameLayout(context);
-        background = new ImageView(context);
-        imageView = new ImageView(context);
-        date = new TextView(context);
-        locations = new TextView(context);
-        moreInfo = new TextView(context);
-
-        backgroundParams.setMargins(0, 0, 0, 0);
-        backgroundParams.height = 750;
-
-        background.setPadding(0, 0, 0, 40);
-        background.setImageResource(R.drawable.ic_beacon_card);
-        background.setLayoutParams(backgroundParams);
-
-        imageViewParams.setMargins(110, 170, 0, 0);
-        imageViewParams.height = 350;
-        imageViewParams.width = 350;
-
-        imageView.setLayoutParams(imageViewParams);
-        imageView.setImageResource(R.drawable.ic_map_scroll);
-
-        dateParams.setMargins(750, 25, 0, 0);
-
-        date.setLayoutParams(dateParams);
-        date.setText("01/01/1000");
-        date.setTextColor(getResources().getColor(R.color.navy_main));
-        date.setTextSize(16);
-        date.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
-
-        locationParams.setMargins(550, 120, 0, 0);
-        locationParams.height = 500;
-        locationParams.width = 400;
-
-        locations.setLayoutParams(locationParams);
-        locations.setText("\u25CFUniversity of Central Florida\n\u25CFThe Cloak and Blaster\n\u25CF American Escape Rooms Orlando");
-        locations.setTextColor(getResources().getColor(R.color.navy_main));
-        locations.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-        locations.setTextSize(16);
-
-        moreInfoParams.setMargins(800, 630, 0, 0);
-
-        moreInfo.setLayoutParams(moreInfoParams);
-        moreInfo.setText("> More...");
-        moreInfo.setTextColor(getResources().getColor(R.color.blue_main));
-        moreInfo.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
-        moreInfo.setClickable(true);
-        moreInfo.setFocusable(true);
-
-        frameLayout.setLayoutParams(layoutParams);
-        frameLayout.addView(background);
-        frameLayout.addView(imageView);
-        frameLayout.addView(date);
-        frameLayout.addView(locations);
-        frameLayout.addView(moreInfo);
-
-        linearLayout2.addView(frameLayout);
     }
 
     public void populatePassportTextViews()
@@ -372,11 +258,13 @@ public class Passport extends AppCompatActivity {
         });
     }
 
-    public void populatePreviousAdventours()
+    public void getPreviousAdventours()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        ArrayList<PreviousAdventourModel> previousAdventours = new ArrayList<>();
 
         // Get a reference to the user
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
@@ -385,34 +273,106 @@ public class Passport extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot adventour : task.getResult()) {
-                                Log.d(TAG, adventour.getId() + " => " + adventour.getData());
-                                db.collection("Adventourists")
-                                        .document(user.getUid())
-                                        .collection("adventours")
-                                        .document(adventour.getId())
-                                        .collection("locations")
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful()) {
-                                                    for(QueryDocumentSnapshot location : task.getResult()) {
-
-                                                        Log.d(TAG, "locations: " + location.getData());
-                                                    }
-                                                } else {
-                                                    Log.d(TAG, "Error getting documents: ", task.getException());
-                                                }
-                                            }
-
-                                        });
+                        if (task.isSuccessful())
+                        {
+                            for (QueryDocumentSnapshot adventour : task.getResult())
+                            {
+                                //queryString.addAll((Collection<? extends String>) adventour.get("locations"));
+                                //getLocationName(queryString.toString().replaceAll("\\s+","")); //maybe spaces are causing weird api response?
+                                //queryString.clear();
+                                Log.d(TAG, adventour.getId() + " => " + adventour.get("locations"));
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+    }
+
+    public void getLocationName(String queryString)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+
+            jsonBody.put("uid", user.getUid());
+            // Log.d("0", queryString);
+            jsonBody.put("ids", queryString);
+
+        } catch (JSONException e) {
+            Log.e("Passport", "exception", e);
+        }
+
+        try {
+
+            // Call API with user defined location and sentiments
+            URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-adventour-place");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setDoOutput(true);
+            conn.setInstanceFollowRedirects(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setUseCaches(false);
+
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(jsonBody.toString());
+            wr.flush();
+            wr.close();
+            jsonBody = null;
+
+            System.out.println("\nSending 'POST' request to URL : " + url);
+
+            InputStream it = conn.getInputStream();
+            InputStreamReader inputs = new InputStreamReader(it);
+
+            BufferedReader in = new BufferedReader(inputs);
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            in.close();
+
+            JSONObject responseData = new JSONObject(response.toString());
+            Log.d("RESPONSE DATA", responseData.toString());
+//            try {
+//                JSONObject data = (JSONObject) responseData.get("data");
+//                currentFSQId = data.get("fsq_id").toString();
+//                name = data.get("name").toString();
+//                rating = Float.parseFloat(data.get("rating").toString()) / 2;
+//
+//                try {
+//                    tel = data.get("tel").toString();
+//                } catch (Exception e) {
+//                    tel = "N/A";
+//                    Log.e("No tel for location", "Exception", e);
+//                }
+//
+//                try {
+//                    website = data.get("website").toString();
+//                } catch (Exception e) {
+//                    website = "N/A";
+//                    Log.e("No web for location", "Exception", e);
+//                }
+//
+//                try {
+//                    description = data.get("description").toString();
+//                } catch (Exception e) {
+//                    description = "No description available for this location... ";
+//                    Log.e("No des for location", "Exception", e);
+//                }
+//
+//                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
+//            } catch (Exception e) {
+//                Log.e("Exception" , e.toString());
+//            }
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
     }
 
     public void switchToPassportMoreInfo()

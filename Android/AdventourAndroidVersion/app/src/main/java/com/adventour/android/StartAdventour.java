@@ -48,7 +48,7 @@ public class StartAdventour extends AppCompatActivity {
     ImageButton filterButton;
     Slider distanceSlider;
     TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
-    Button inProgressButton, beginButton, doneButton, notNowButton, yesButton;
+    Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
 
     FirebaseAuth auth;
@@ -60,7 +60,7 @@ public class StartAdventour extends AppCompatActivity {
     CardView popupFilter;
 
     HashMap<String, String> isSwitchActive;
-
+    ArrayList<String> prevLocation = new ArrayList<>();
 
     Integer distance = 0;
     String currentFSQId;
@@ -86,7 +86,6 @@ public class StartAdventour extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.start_adventour);
 
         filterButton = (ImageButton) findViewById(R.id.filterButton);
-        inProgressButton = (Button) findViewById(R.id.inProgressButton);
         beginButton = (Button) findViewById(R.id.beginButton);
         doneButton = (Button) findViewById(R.id.doneButton);
         notNowButton = (Button) findViewById(R.id.notNowButton);
@@ -123,20 +122,19 @@ public class StartAdventour extends AppCompatActivity {
         isSwitchActive = new HashMap<String, String>();
 
 
+        if (prevLocation.size() > 0)
+        {
+            nameTextView.setText(prevLocation.get(0));
+        } else {
+            nameTextView.setText("Click GO Button to begin!");
+        }
+
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 onClickFilterButton(view);
             }
-        });
-
-        inProgressButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View view)
-           {
-              switchToInProgress();
-           }
         });
 
         beginButton.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +157,9 @@ public class StartAdventour extends AppCompatActivity {
            public void onClick(View view) {
                GlobalVars.exclude.add(currentFSQId);
                getLocation();
+               if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
+               if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
+               if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
                Log.d("EXCLUDE: ", String.join(",", GlobalVars.exclude));
            }
         });
@@ -472,7 +473,7 @@ public class StartAdventour extends AppCompatActivity {
     public void getLocation()
     {
         JSONObject jsonBody = new JSONObject();
-        String fsqId, name, description, tel, website;
+        String name, description, tel, website, address;
         float rating;
 
         try {
@@ -550,8 +551,22 @@ public class StartAdventour extends AppCompatActivity {
                     Log.e("No des for location", "Exception", e);
                 }
 
-                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
+                try {
+                    address = data.get("address").toString();
+                } catch(Exception e) {
+                    address = "No description available for this location... ";
+                    Log.e("No addrs for location", "Exception", e);
+                }
+
+                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description + address);
                 populateCard(name, rating, tel, website, description);
+                Log.d("string val",  String.valueOf(rating));
+                GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description));
+                GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
+
+                prevLocation.clear();
+                prevLocation.add(name); // TESTING
+
                 GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, 28.602427, -81.200058)); // TODO: use real lat/long once Places API is working.
 
             } catch (Exception e) {
