@@ -35,7 +35,7 @@ router.post('/get-foursquare-places', async (req, res, next) => {
             
             Promise.all(ids.map(item => {
                 return foursquare.placeDetails({
-                    fields: 'fsq_id%2Cname%2Clocation%2Cdescription%2Ctel%2Cwebsite%2Crating%2Cpopularity%2Cprice%2Cphotos',
+                    fields: 'fsq_id%2Cname%2Clocation%2Cdescription%2Ctel%2Cwebsite%2Crating%2Cpopularity%2Cprice%2Cphotos%2Cgeocodes%2Cfeatures',
                     fsq_id: item
                 })
             }))

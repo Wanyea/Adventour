@@ -7,13 +7,18 @@ require("dotenv").config();
 
 module.exports = router
 const key = process.env.FOURSQUARE_API_KEY
-const fields = 'fsq_id%2Cname%2Cdescription%2Ctel%2Cwebsite%2Crating%2Cpopularity%2Cprice%2Cdistance%2Chours%2Ccategories%2Cgeocodes%2Cphotos%2Clocation'
+const fields = 'fsq_id%2Cname%2Cdescription%2Ctel%2Cwebsite%2Crating%2Cpopularity%2Cprice%2Cdistance%2Chours%2Ccategories%2Cgeocodes%2Cphotos%2Clocation%2Cfeatures'
 const limit = 50
 const sort = "distance"
 router.post('/get-adventour-place', async (req, res, next) => {
 
     const { uid, ll, radius, categories } = req.body
 
+
+    console.log("Body")
+    console.log("===============")
+    console.log(req.body)
+    console.log("===============")
 
     admin.auth()
         .getUser(uid)
@@ -49,7 +54,7 @@ router.post('/get-adventour-place', async (req, res, next) => {
                 })
                 let final = mostPopular.slice(0,10)
                 
-                let i = Math.floor(Math.random() * 10)
+                let i = Math.floor(Math.random() * final.length)
 
                 console.log("The final choice!.\n\n")
                 console.log(final[i])
