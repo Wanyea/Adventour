@@ -10,6 +10,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import android.view.Window;
+import android.widget.Button;
+
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -27,11 +31,18 @@ import java.util.ArrayList;
 public class InProgress extends AppCompatActivity implements OnMapReadyCallback {
 
     Context context;
+    OnMapReadyCallback callback;
 
     FirebaseAuth auth;
     FirebaseUser user;
 
+    FloatingActionButton finishAdventourButton;
+    Double lat = 0.0;
+    Double lon = 0.0;
+    String locationName = "Null Island";
+
     FloatingActionButton addLocationButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -40,11 +51,32 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
         // Google map code
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
-        mapFragment.getMapAsync(this);
 
+        mapFragment.getMapAsync(this);
+        assert mapFragment != null;
+        callback = this;
+        
         handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
+
+        InProgressRV.setNestedScrollingEnabled(false);
+        InProgressRV.addOnItemTouchListener(
+                new InProgressClickListener(this, InProgressRV, new InProgressClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        lat = 28.602427; // replace with lat from whatever api returns
+                        lon = -81.200058; // same but lon
+                        locationName = "UCF"; // same but name
+                        mapFragment.getMapAsync(callback);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) { }
+                })
+        );
+
+
         InProgressRV.setNestedScrollingEnabled(true);
 
         addLocationButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
@@ -119,6 +151,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        map.clear();
+        map.addMarker(new MarkerOptions().position(new LatLng( lat, lon)).title(locationName));
     }
 }
