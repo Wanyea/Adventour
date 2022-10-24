@@ -2,7 +2,8 @@
     "social": [{"Amusement Park": "10001"}, 
                 {"Arcade": "10003"}, 
                 {"Bowling Alley": "10006"}, 
-                {"Carnival": "10007"}, 
+                {"Carnival": "10007"},
+                {"Escape Room": "10015"},
                 {"Circus": "10009"}, 
                 {"Fair": "10017"}, 
                 {"Go Kart Track": "10019"}, 
@@ -144,7 +145,7 @@
                 {"Escape Room": "10015"}, 
                 {"Internet Cafe": "10020"}, 
                 {"Movie Theater": "10024"}, 
-                {"Drive-in Theater": "10024"}, 
+                {"Drive-in Theater": "10025"},
                 {"Pool Hall": "10045"}, 
                 {"Zoo": "10056"}, 
                 {"Art Studio": "11005"}, 
@@ -228,7 +229,7 @@
                 {"Cafes, Coffee, and Tea Houses": "13032"},
                 {"Dessert Shop": "13040"},
                 {"Juice Bar": "13059"},
-                {"Smoothie Shop": "13059"},
-                {"Snack Place": "13059"}]
+                {"Smoothie Shop": "13381"},
+                {"Snack Place": "13382"}]
 
 }

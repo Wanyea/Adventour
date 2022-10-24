@@ -45,11 +45,17 @@ class SignUpViewController: UIViewController {
     var birthdateString: String!
     
     
-    
+    var user: User!
     
     // Set up SignUpViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.user = user
+            }
+        }
         
         // Set icons into textfield
         nickname.leftViewMode = UITextField.ViewMode.always
@@ -85,6 +91,14 @@ class SignUpViewController: UIViewController {
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        nickname.endEditing(true)
+        email.endEditing(true)
+        birthday.endEditing(true)
+        password.endEditing(true)
+        passwordConfirm.endEditing(true)
+    }
+    
     @IBAction func signUpTapped(_ sender: Any) {
         
         Auth.auth().createUser(withEmail: email.text!, password: password.text!) { result, error in
@@ -103,13 +117,9 @@ class SignUpViewController: UIViewController {
                                 "nickname": self.nickname.text!,
                                 "email": self.email.text!,
                                 "isPrivate": true,
-                                "birthday:": self.birthdateString!,
+                                "birthday": self.birthdateString!,
                             ]) { err in
-                                if let err = err {
-                                    print("Error writing document: \(err)")
-                                } else {
-                                    print("Document successfully written!")
-                                }
+                                
                             }
                         
                     } else {

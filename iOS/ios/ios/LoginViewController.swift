@@ -36,12 +36,54 @@ extension UIView{
 }
 
 
-
 class forgotPassword: UIViewController
 {
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var text: UIView!
     
-    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
+
+    @IBOutlet weak var emailLabelText: UILabel!
+    @IBOutlet weak var forgotPassEmail: UITextField!
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func sendPass(_ sender: UIButton)
+    {
+        print(forgotPassEmail.text!)
+        let emailPattern = #"^\S+@\S+\.\S+$"#
+        
+        var result = forgotPassEmail.text!.range(
+            of: emailPattern,
+            options: .regularExpression
+        )
+        
+        let validEmail = (result != nil)
+        print(validEmail)
+        if(validEmail)
+        {
+            Auth.auth().sendPasswordReset(withEmail: forgotPassEmail.text!)
+            {
+                error in
+                if error != nil
+                {
+                    self.emailLabelText.text = "If there is an account associated with this email the password reset has been sent. Please check your spam folder as the reset email sometimes gets sent to spam"
+                    self.emailLabelText.isHidden = false
+                }
+                
+                else
+                {
+                    self.emailLabelText.text = "If there is an account associated with this email the password reset has been sent. Please check your spam folder as the reset email sometimes gets sent to spam"
+                    self.emailLabelText.isHidden = false
+                }
+                
+            }
+        }
+        
+        else{
+            self.emailLabelText.text = "Please enter a valid email."
+            self.emailLabelText.isHidden = false
+        }
         
     }
     
@@ -59,7 +101,9 @@ class LoginViewController: UIViewController {
    
     
     
-    
+    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
+        
+    }
     
     
     override func viewDidLoad() {
@@ -72,7 +116,10 @@ class LoginViewController: UIViewController {
         password.leftViewMode = UITextField.ViewMode.always
         password.leftView = passwordIcon
         // Do any additional setup after loading the view.
-        
+ 
+//        let endEmailEditing = UITapGestureRecognizer(target: self.email, action: #selector(UIView.endEditing(_:)))
+//        endEmailEditing.cancelsTouchesInView = false
+//        email.addGestureRecognizer(endEmailEditing)
         errorMessage.isHidden = true
     }
     
@@ -91,6 +138,10 @@ class LoginViewController: UIViewController {
     var passwordFlag: Bool!
     
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        email.endEditing(true)
+        password.endEditing(true)
+    }
 
     @IBAction func loginTapped(_ sender: Any) {
 
@@ -100,13 +151,13 @@ class LoginViewController: UIViewController {
                 self.errorMessage.isHidden = false
             } else {
                 self.errorMessage.isHidden = true
+                UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
                 self.switchToTabController()
             }
         }
 
         
     }
-    
     
     func switchToTabController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

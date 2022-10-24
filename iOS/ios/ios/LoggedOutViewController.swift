@@ -13,14 +13,14 @@ class LoggedOutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        Auth.auth().addStateDidChangeListener { auth, user in
-//            if let user = user {
-//                self.switchToTabController()
-//            } else {
-//                
-//                
-//            }
-//        }
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.switchToTabController()
+            } else {
+                
+                
+            }
+        }
         // Do any additional setup after loading the view.
     }
 
