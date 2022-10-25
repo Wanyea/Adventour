@@ -10,9 +10,11 @@ const key = process.env.FOURSQUARE_API_KEY
 const fields = 'fsq_id%2Cname%2Cdescription%2Ctel%2Cwebsite%2Crating%2Cpopularity%2Cprice%2Cdistance%2Chours%2Ccategories%2Cgeocodes%2Cphotos%2Clocation%2Cfeatures'
 const limit = 50
 const sort = "distance"
+const exclude_all_chains = true
+const open_now = true
 router.post('/get-adventour-place', async (req, res, next) => {
 
-    const { uid, ll, radius, categories } = req.body
+    const { uid, ll, radius, categories, excludes } = req.body
 
 
     console.log("Body")
@@ -33,14 +35,30 @@ router.post('/get-adventour-place', async (req, res, next) => {
                 fields: fields,
                 categories: categories,
                 sort: sort,
-                limit: limit
+                limit: limit,
+                exclude_all_chains: exclude_all_chains,
+                open_now: open_now
             })
-            .then(foursquareResult => {
+            .then(response => {
+                console.log(response.results.length)
+
+                if (excludes) {
+                    console.log(response.results)
+                    response.results = response.results.filter((item, index, array) => {
+                        return !excludes.includes(item.fsq_id)
+                    })
+                    if (response.results.length == 0) {
+                        let ret = {
+                            status: 200,
+                            error: "Unable to return search results. Please change the search metrics and try again.",
+                            data: []
+                        }
+
+                        res.status(200).json(ret)
+                    }
+                }
             
-                let openNow = foursquareResult.results.filter((item, index, array) => {
-                    return item.hours.open_now == true
-                })
-                let hasRating = openNow.filter((item, index, array) => {
+                let hasRating = response.results.filter((item, index, array) => {
                     return item.rating != null
                 })
                 let distanceSplit = hasRating.slice(0, 40)
@@ -56,12 +74,12 @@ router.post('/get-adventour-place', async (req, res, next) => {
                 
                 let i = Math.floor(Math.random() * final.length)
 
-                console.log("The final choice!.\n\n")
-                console.log(final[i])
+                // console.log("The final choice!.\n\n")
+                // console.log(final[i])
 
                 let ret = {
                     status: 200,
-                    error: "",
+                    error: null,
                     data: final[i]
                 }
 
@@ -71,7 +89,7 @@ router.post('/get-adventour-place', async (req, res, next) => {
                 let ret = {
                     status: 400,
                     error: error,
-                    data: null
+                    data: []
                 }
                 console.log("Bad request to Foursquare API: \n" + error)
                 res.status(400).json(ret)
@@ -82,7 +100,7 @@ router.post('/get-adventour-place', async (req, res, next) => {
             let ret = {
                 status: 401,
                 error: error,
-                data: null
+                data: []
             }
             console.log(error)
             res.status(401).json(ret)
