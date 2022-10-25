@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import Nav from './components/nav/Nav'
 import Home from './components/home/Home'
@@ -23,27 +28,31 @@ function App() {
     // <div className="App">
     //   <Nav />
     // </div>
-    <div className='App'> 
-      <Nav home={home} setHome={setHome} 
-            features={features} setFeatures={setFeatures} 
-            download={download} setDownload={setDownload} 
-            meet={meet} setMeet={setMeet}
-            privacy={privacy} setPrivacy={setPrivacy}
-            terms={terms} setTerms={setTerms} />
-
-      {home ? <Home /> : null}
-      {features ? <Features /> : null}
-      {download ? <Download /> : null}
-      {meet ? <Meet /> : null}
-      {privacy ? <Privacy /> : null}
-      {terms ? <Terms /> : null}
-
-      <Footer home={home} setHome={setHome} 
+    <div className='App'>
+      <Router>
+        <Nav home={home} setHome={setHome} 
               features={features} setFeatures={setFeatures} 
               download={download} setDownload={setDownload} 
               meet={meet} setMeet={setMeet}
               privacy={privacy} setPrivacy={setPrivacy}
               terms={terms} setTerms={setTerms} />
+              
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/download" element={<Download />} />
+          <Route path="/meet-the-team" element={<Meet />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="/terms-of-service" element={<Terms />} />
+        </Routes>
+
+        <Footer home={home} setHome={setHome} 
+                features={features} setFeatures={setFeatures} 
+                download={download} setDownload={setDownload} 
+                meet={meet} setMeet={setMeet}
+                privacy={privacy} setPrivacy={setPrivacy}
+                terms={terms} setTerms={setTerms} />
+      </Router>
     </div>
   )
 }

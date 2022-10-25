@@ -34,6 +34,8 @@
 
 .nav-list-item {
   cursor: pointer;
+  color: #baf3ff;
+  text-decoration: none;
 }
 
 .nav-list-item:hover {

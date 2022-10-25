@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import BigLogo from '../../../../../image_assets/Logo_Adventour_Transparent.png'
 import SmallLogo from '../../../../../image_assets/Logo_Balloon_Transparent.png'
 import "./Nav.css"
@@ -89,12 +90,12 @@ export default function Nav(props) {
         <div className="bottom"></div>
       </div>
       <div className='download'>Download</div>
-      {menuOpen ? <ul className='nav-list'>
-        <li className={props.home ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll(); props.setHome(true)}}>What is Adventour?</li>
-        <li className={props.features ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setFeatures(true)}}>Features</li>
-        <li className={props.download ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setDownload(true)}}>Download</li>
-        <li className={props.meet ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setMeet(true)}}>Meet the Team</li>
-      </ul> : null}
+      {menuOpen ? <div className='nav-list'>
+        <Link to='/' className={props.home ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll(); props.setHome(true)}}>What is Adventour</Link>
+        <Link to='features' className={props.features ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setFeatures(true)}}>Features</Link>
+        <Link to='download' className={props.download ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setDownload(true)}}>Download</Link>
+        <Link to='meet-the-team' className={props.meet ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setMeet(true)}}>Meet the Team</Link>
+      </div> : null}
     </div>
   )
 }
