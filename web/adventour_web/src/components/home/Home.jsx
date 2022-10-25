@@ -46,7 +46,7 @@ export default function Home() {
           <h1 className='right-pad'>Adventours take you where you want to go.</h1>
           <p className='right-pad'> 
             Our proprietary algorithm helps you find places that fit your interests. 
-            Using Google’s trusted business data, we make recommendations that suit your budget, mood, and even the time of day. Discover great local businesses and build an Adventour you will remember!   
+            Using Foursquare's trusted business data, we make recommendations that suit your mood. Discover great local businesses and build an Adventour you will remember!   
           </p>
         </div>
         <div className="col center">
