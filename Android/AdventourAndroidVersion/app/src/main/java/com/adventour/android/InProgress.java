@@ -65,9 +65,9 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                 new InProgressClickListener(this, InProgressRV, new InProgressClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        lat = 28.602427; // replace with lat from whatever api returns
-                        lon = -81.200058; // same but lon
-                        locationName = "UCF"; // same but name
+                        lat = GlobalVars.inProgressModelArrayList.get(position).getLatitude(); // replace with lat from whatever api returns
+                        lon = GlobalVars.inProgressModelArrayList.get(position).getLongitude(); // same but lon
+                        locationName = GlobalVars.inProgressModelArrayList.get(position).getName(); // same but name
                         mapFragment.getMapAsync(callback);
                     }
 
