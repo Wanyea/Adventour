@@ -40,22 +40,24 @@ router.post('/get-adventour-place', async (req, res, next) => {
                 open_now: open_now
             })
             .then(response => {
-                console.log(response.results.length)
 
+                // Remove excluded places
                 if (excludes) {
                     console.log(response.results)
                     response.results = response.results.filter((item, index, array) => {
                         return !excludes.includes(item.fsq_id)
                     })
-                    if (response.results.length == 0) {
-                        let ret = {
-                            status: 200,
-                            error: "Unable to return search results. Please change the search metrics and try again.",
-                            data: []
-                        }
-
-                        res.status(200).json(ret)
+                    
+                }
+                // If foursquare cannot return any places, or we have excluded all of the places
+                if (response.results.length == 0) {
+                    let ret = {
+                        status: 200,
+                        error: "Unable to return search results. Please change the search metrics and try again.",
+                        data: []
                     }
+
+                    res.status(200).json(ret)
                 }
             
                 let hasRating = response.results.filter((item, index, array) => {
@@ -67,6 +69,7 @@ router.post('/get-adventour-place', async (req, res, next) => {
                     return b.rating - a.rating
                 })
                 let ratingSplit = highRating.slice(0, 25)
+                
                 let mostPopular = ratingSplit.sort((a, b) => {
                     return b.popularity - a.popularity
                 })
@@ -109,7 +112,3 @@ router.post('/get-adventour-place', async (req, res, next) => {
 
     
 })
-
-// function filterOpen(array) {
-//     return array.filter((value, index, array))
-// }
