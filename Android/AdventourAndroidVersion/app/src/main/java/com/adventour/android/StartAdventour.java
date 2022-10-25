@@ -554,8 +554,8 @@ public class StartAdventour extends AppCompatActivity {
                 try {
                     address = data.get("address").toString();
                 } catch(Exception e) {
-                    address = "No description available for this location... ";
-                    Log.e("No addrs for location", "Exception", e);
+                    address = "No address available for this location... ";
+                    Log.e("No address for location", "Exception", e);
                 }
 
                 Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description + address);
@@ -566,6 +566,7 @@ public class StartAdventour extends AppCompatActivity {
 
                 prevLocation.clear();
                 prevLocation.add(name); // TESTING
+
 
                 GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, 28.602427, -81.200058)); // TODO: use real lat/long once Places API is working.
 
