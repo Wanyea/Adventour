@@ -43,7 +43,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         
         
         
-//        self.beaconsTable.delegate = self
+        self.beaconsTable.delegate = self
 //        beaconsSource = PrevAdventoursDataSource(withDataSource: self.beacons)
 //        self.beaconsTable.dataSource = beaconsSource
         // Do any additional setup after loading the view.
@@ -63,6 +63,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         
 
         getBeaconsData()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "BeaconPost", bundle: nil)
+        print(beacons[indexPath.item])
+        if let locations = beacons[indexPath.item]["locations"] as? [[String: Any]] {
+            print("SUCCESSFULLY RETRIEVED LOCATIONS")
+            if let vc = storyboard.instantiateViewController(identifier: "BeaconPost") as? BeaconPostViewController {
+                vc.locations = locations
+                vc.source = self
+                vc.beacons = self.beacons
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            
+        }
     }
     
     func getUserData() {
@@ -119,6 +134,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
             .document(self.user.uid)
             .collection("adventours")
             .order(by: "dateCreated", descending: true)
+            .limit(to: 5)
             .getDocuments { snap, error in
                 if let error = error {
                     print("Error getting documents \(error)")
@@ -152,7 +168,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                     // do stuff
                                     defer {sem.signal()}
                                     
-                                    print("doc data: ", allData["dateCreated"])
+//                                    print("doc data: ", allData["dateCreated"])
                                     if let data = data {
                                         let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                                         if let dataDict = dataJsonObject as? [String: Any] {
@@ -204,6 +220,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
             .document(self.user.uid)
             .collection("beacons")
             .order(by: "dateCreated", descending: true)
+            .limit(to: 5)
             .getDocuments { snap, error in
                 if let error = error {
                     print("Error getting documents \(error)")
@@ -220,7 +237,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                         if let data = doc.data() as? [String: Any] {
                             allData = data
                             allData.updateValue(documentID, forKey: "documentID")
-                            print(allData)
+//                            print(allData)
                             if let locations = data["locations"] as? [String] {
                                 let params: [String: Any] = [
                                     "uid": self.user!.uid,
@@ -238,13 +255,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                     // do stuff
                                     defer {sem.signal()}
                                     
-                                    print("doc data: ", allData["dateCreated"])
+//                                    print("doc data: ", allData["dateCreated"])
                                     if let data = data {
                                         let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                                         if let dataDict = dataJsonObject as? [String: Any] {
                                             if let array = dataDict["results"] as? [[String: Any]] {
                                                 allData["locations"] = array
-                                                print("date: ", allData["dateCreated"]!)
+//                                                print("date: ", allData["dateCreated"]!)
                                                 self.beacons.append(allData)
                                                 DispatchQueue.main.async {
 //                                                    print(allData["numLocations"])

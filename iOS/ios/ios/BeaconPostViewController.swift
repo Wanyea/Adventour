@@ -59,23 +59,25 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var dateCreated: UILabel!
     @IBOutlet weak var locationsTable: UITableView!
     @IBOutlet weak var privateSwitch: ScaleSwitch!
+    @IBOutlet weak var locationPhoto1: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    var source: UIViewController!
     var beaconInfo: [String: Any]!
     var user: User!
+    var beacons: [[String: Any]] = []
     var locations: [[String: Any]] = []
-    var ids: [String]!
+    var ids: [String] = []
     var beaconLocation: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = false
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {
@@ -104,6 +106,18 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let cell = locationsTable.dequeueReusableCell(withIdentifier: "BeaconPostTableCell", for: indexPath) as! BeaconPostTableViewCell
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/YYYY"
+        
+        if let firTimestamp = beacons[indexPath.item]["dateCreated"] as? Timestamp {
+            if let swiftDate = firTimestamp.dateValue() as? Date {
+    //            print("Date created: ", data)
+                if let stringDate = dateFormatter.string(from: swiftDate) as? String {
+                    self.dateCreated.text = stringDate
+                }
+                
+            }
+        }
         if let description = locations[indexPath.item]["description"] as? String {
             print(description)
             cell.descriptionLabel.text = description
@@ -113,20 +127,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         print(locations[indexPath.item]["rating"])
         if let rating = locations[indexPath.item]["rating"] as? Double {
             print("Editing rating...")
-            if rating / 2 >= 5 {
-                cell.ratingLabel.text = "★★★★★"
-            } else if rating / 2 >= 4 {
-                cell.ratingLabel.text = "★★★★☆"
-            } else if rating / 2 >= 3 {
-                cell.ratingLabel.text = "★★★☆☆"
-            } else if rating / 2 >= 2 {
-                cell.ratingLabel.text = "★★☆☆☆"
-            } else if rating / 2 >= 1 {
-                cell.ratingLabel.text = "★☆☆☆☆"
-            } else {
-                cell.ratingLabel.text = "Rating: N/A"
-            }
-            print(cell.ratingLabel)
+            cell.cosmosView.rating = rating / 2
         } else {
             print("can't make float")
         }
@@ -145,20 +146,41 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             cell.nameLabel.text = "No Name Available"
         }
+        if let photos = locations[indexPath.item]["photos"] as? [[String: Any]] {
+            if photos.count > 0 {
+                let photo = photos[0]
+                
+                if let prefix = photo["prefix"] as? String {
+                    if let suffix = photo["suffix"] as? String {
+                        let url = prefix + "original" + suffix
+                        cell.locationPhoto1.loadFrom(URLAddress: url)
+                    }
+                }
+                
+            }
+        }
         return cell
     }
     
     func checkEditing() {
-        if (self.isEditing) {
-            print("Editing...")
+        print("SOURCE IS: ", self.source)
+        if self.source is BeaconBoardViewController {
+            print("SOURCE IS BEACON BOARD")
+            self.beaconTitle.isEditable = false
+            self.beaconDescription.isEditable = false
+            self.privateSwitch.isEnabled = false
+            self.editButton.isHidden = true
+        } else if (self.isEditing) {
             self.beaconTitle.isEditable = true
             self.beaconDescription.isEditable = true
             self.privateSwitch.isEnabled = true
+            self.editButton.isHidden = false
             self.editButton.setTitle("💾", for: UIControl.State.normal)
         } else {
             self.beaconTitle.isEditable = false
             self.beaconDescription.isEditable = false
             self.privateSwitch.isEnabled = false
+            self.editButton.isHidden = false
             self.editButton.setTitle("✏️", for: UIControl.State.normal)
         }
     }
@@ -167,17 +189,26 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         self.isEditing = !self.isEditing
         
         if (self.isEditing) {
-            print("Editing...")
             self.beaconTitle.isEditable = true
             self.beaconDescription.isEditable = true
             self.privateSwitch.isEnabled = true
             self.editButton.setTitle("💾", for: UIControl.State.normal)
         } else {
+            var shouldSave = shouldSave()
+            
+            if !shouldSave {
+                return
+            }
+            
+            
             self.beaconTitle.isEditable = false
             self.beaconDescription.isEditable = false
             self.privateSwitch.isEnabled = false
             self.editButton.setTitle("✏️", for: UIControl.State.normal)
             saveBeaconData()
+            if let source = self.source as? CongratsViewController {
+                switchToStart()
+            }
         }
         
         
@@ -243,14 +274,22 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.activityIndicator?.isHidden = false
         
-        let params: [String: Any] = [
-            "uid": self.user!.uid,
-            "ids": self.ids!
-        ]
         
-        if (ids.isEmpty) {
+        
+        if (ids.isEmpty && locations.isEmpty) {
             self.navigationController?.popToRootViewController(animated: true)
+        } else if (!locations.isEmpty) {
+            self.locationsTable.reloadData()
+            self.activityIndicator?.stopAnimating()
+            self.locationsTable.isHidden = false
+            return
         } else {
+            
+            let params: [String: Any] = [
+                "uid": self.user!.uid,
+                "ids": self.ids
+            ]
+            
             let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-foursquare-places")
             var urlRequest = URLRequest(url: url!)
             urlRequest.httpMethod = "POST"
@@ -283,6 +322,44 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    func shouldSave() -> Bool {
+        
+        var shouldSave: Bool = false
+        
+        let alert = UIAlertController(
+            title: "Post Beacon",
+            message: "Are you sure you are ready to post your Beacon? You won't be able to make any changes!",
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(UIAlertAction(
+            title: "Post",
+            style: .default,
+            handler: { _ in
+            shouldSave = true
+        }))
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: { _ in
+            shouldSave = false
+        }))
+        present(alert,
+                animated: true,
+                completion: nil
+        )
+        return shouldSave
+    }
+    
+    func switchToStart() {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       
+        let mainTabBarController = storyboard.instantiateViewController(identifier: "TabBarViewController")
+        
+        // This is to get the SceneDelegate object from your view controller
+        // then call the change root view controller function to change to main tab bar
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
+    }
     
     func switchToLoggedOut() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -294,5 +371,3 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc)
     }
 }
-    
-

@@ -15,7 +15,8 @@ class BeaconsDataSource: NSObject, UITableViewDataSource {
     init(withDataSource data: [[String: Any]]) {
         self.data = data
     }
-
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count

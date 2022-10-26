@@ -293,7 +293,7 @@
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaconCell" rowHeight="149" id="Bty-oP-fbe" customClass="BeaconsTableViewCell" customModule="ios" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeaconCell" rowHeight="149" id="Bty-oP-fbe" customClass="BeaconsTableViewCell" customModule="ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="50" width="286" height="149"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bty-oP-fbe" id="Am2-1w-7Mh">
@@ -573,7 +573,6 @@
         <!--Passport-->
         <scene sceneID="HZ0-JJ-3K7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tho-GE-Wg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="Profile" title="Passport" automaticallyAdjustsScrollViewInsets="NO" id="MIQ-jX-DO8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="person.fill" catalog="system" selectedImage="person.fill" id="9Mv-vm-ANF"/>
                     <toolbarItems/>
@@ -609,6 +608,7 @@
                         <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="725-uF-wlH"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tho-GE-Wg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="962.39999999999998" y="80.50974512743629"/>
         </scene>

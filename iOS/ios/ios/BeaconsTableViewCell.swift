@@ -17,9 +17,9 @@ class BeaconsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.clear
-        self.selectedBackgroundView = bgColorView
+//        let bgColorView = UIView()
+//        bgColorView.backgroundColor = UIColor.clear
+//        self.selectedBackgroundView = bgColorView
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

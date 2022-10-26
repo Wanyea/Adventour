@@ -20,7 +20,7 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = false
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {

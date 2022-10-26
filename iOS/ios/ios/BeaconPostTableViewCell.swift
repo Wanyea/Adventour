@@ -15,8 +15,9 @@ class BeaconPostTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     @IBOutlet weak var imageScroll: UIScrollView!
-    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var addressLabel: UIButton!
+    @IBOutlet weak var locationPhoto1: UIImageView!
     
     @IBAction func openAddress(_ sender: Any) {
         if let myAddress = self.addressLabel.titleLabel?.text as? String {
@@ -38,7 +39,8 @@ class BeaconPostTableViewCell: UITableViewCell {
         // Initialization code
         self.nameLabel?.adjustsFontSizeToFitWidth = true
         self.nameLabel?.minimumScaleFactor = 0.75
-        self.imageScroll.contentSize.height = 1.0
+        self.imageScroll?.contentSize.height = 1.0
+        self.cosmosView.settings.fillMode = .precise
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

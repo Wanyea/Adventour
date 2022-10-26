@@ -18,8 +18,6 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
- 
-    
     // Card Outlets
     private var placesClient: GMSPlacesClient!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -70,6 +68,21 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return beacons.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "BeaconPost", bundle: nil)
+        print(beacons[indexPath.item])
+        if let locations = beacons[indexPath.item]["locations"] as? [[String: Any]] {
+            print("SUCCESSFULLY RETRIEVED LOCATIONS")
+            if let vc = storyboard.instantiateViewController(identifier: "BeaconPost") as? BeaconPostViewController {
+                vc.locations = locations
+                vc.source = self
+                vc.beacons = self.beacons
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

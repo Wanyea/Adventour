@@ -18,7 +18,6 @@ extension MapViewController: MapTableViewCellDelegate {
          self.mapView?.removeAnnotations(self.mapView.annotations)
          self.mapView?.addAnnotation(annotation)
 
-        // Do your stuff here
      }
     
     

@@ -35,8 +35,11 @@ class StartViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var websiteClickable: UILabel!
     @IBOutlet weak var phoneClickable: UILabel!
+    @IBOutlet weak var cosmosView: CosmosView!
+    
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
+    
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var websiteLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -51,22 +54,22 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                
-        self.websiteLabel?.adjustsFontSizeToFitWidth = true
-        self.websiteLabel?.minimumScaleFactor = 0.75
-        self.websiteLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
-        self.phoneLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
-        
         if let user = Auth.auth().currentUser {
             self.user = user
         } else {
             self.switchToLoggedOut()
         }
         
+        self.websiteLabel?.adjustsFontSizeToFitWidth = true
+        self.websiteLabel?.minimumScaleFactor = 0.75
+        self.websiteLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
+        self.phoneLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
+        self.cosmosView.settings.fillMode = .precise
+        
         
         
         //Adding the bordercolor and corner radius on the not now button. Actual border is in its runtime attributes.
-        notNow?.layer.borderColor = UIColor.red.cgColor
-        notNow?.layer.cornerRadius = 15
+        
         // Do any additional setup after loading the view.
         placesClient = GMSPlacesClient.shared()
         searchBar?.text = self.beaconLocation
@@ -99,7 +102,9 @@ class StartViewController: UIViewController {
         self.websiteClickable?.minimumScaleFactor = 0.75
         self.websiteClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
         self.phoneClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
-        
+        self.notNow?.isEnabled = false
+        self.notNow?.layer.borderColor = UIColor.gray.cgColor
+        self.notNow?.layer.cornerRadius = 15
         if let ids = self.ids {
             print("Start, These is the ids: ", ids)
         } else {
@@ -170,8 +175,17 @@ class StartViewController: UIViewController {
         
     }
     
+    @IBAction func goTapped(_ sender: Any) {
+        self.notNow.isEnabled = true
+        notNow?.layer.borderColor = UIColor(named: "adv-red")?.cgColor
+        getAdventourPlace()
+    }
     
-    @IBAction func getAdventourPlace(_ sender: Any) {
+    @IBAction func notNowTapped(_ sender: Any) {
+        getAdventourPlace()
+    }
+    
+    func getAdventourPlace() {
         self.hideCardInfo()
         self.activityIndicator?.isHidden = false
         self.activityIndicator?.startAnimating()
@@ -264,7 +278,7 @@ class StartViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             return
         }
-         
+        print("The value before:", self.distanceSlider?.value, " after: ", self.milesToMeters(distanceInMiles: self.distanceSlider?.value ?? 5))
         let params: [String: Any] = [
             "uid": self.user.uid,
             "ll": latlonString,
@@ -286,7 +300,10 @@ class StartViewController: UIViewController {
                 let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                 if let dataDict = dataJsonObject as? [String: Any] {
                     if let data = dataDict["data"] as? [String: Any] {
-                        
+                        print("+===============+")
+                        print("|Adventour Place|")
+                        print("+===============+")
+                        print(data)
                         DispatchQueue.main.async {
                             
                             if let fsq_id = data["fsq_id"] as? String {
@@ -318,6 +335,30 @@ class StartViewController: UIViewController {
                                 self.websiteClickable?.text = website
                             } else {
                                 self.websiteClickable?.text = "N/A"
+                            }
+                            if let rating = data["rating"] as? Double {
+                                self.cosmosView.rating = rating / 2
+                            } else {
+                                self.cosmosView.rating = 0
+                                self.cosmosView.text = "No rating available"
+                            }
+                            if let distance = data["distance"] as? Double {
+                                self.distanceLabel.text = String(self.metersToMilesRounded(distanceInMeters: distance)) + " miles"
+                            } else {
+                                self.distanceLabel.text = "Unable to determine distance"
+                            }
+                            if let photos = data["photos"] as? [[String: Any]] {
+                                if photos.count > 0 {
+                                    let photo = photos[0]
+                                    
+                                    if let prefix = photo["prefix"] as? String {
+                                        if let suffix = photo["suffix"] as? String {
+                                            let url = prefix + "original" + suffix
+                                            self.locationPhoto.loadFrom(URLAddress: url)
+                                        }
+                                    }
+                                    
+                                }
                             }
                             self.activityIndicator?.stopAnimating()
                             self.showCardInfo()
@@ -413,14 +454,18 @@ class StartViewController: UIViewController {
         return Int(distance * 1609.344)
     }
     
+    func metersToMilesRounded(distanceInMeters distance: Double) -> Double {
+        return round(Double(distance / 1609.344) * 1000) / 100.0
+    }
+    
     func hideCardInfo() {
         self.locationPhoto?.isHidden = true
         self.nameLabel?.isHidden = true
-
+        self.distanceLabel?.isHidden = true
         self.descriptionLabel?.isHidden = true
         self.websiteClickable?.isHidden = true
         self.phoneClickable?.isHidden = true
-
+        self.cosmosView.isHidden = true
         
         self.phoneLabel?.isHidden = true
         self.websiteLabel?.isHidden = true
@@ -430,11 +475,11 @@ class StartViewController: UIViewController {
     func showCardInfo() {
         self.locationPhoto?.isHidden = false
         self.nameLabel?.isHidden = false
-
+        self.distanceLabel?.isHidden = false
         self.descriptionLabel?.isHidden = false
         self.websiteClickable?.isHidden = false
         self.phoneClickable?.isHidden = false
-
+        self.cosmosView.isHidden = false
 
         
         self.phoneLabel?.isHidden = false
@@ -455,6 +500,26 @@ class StartViewController: UIViewController {
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc)
     }
     
+}
+
+extension UIImageView {
+    func loadFrom(URLAddress: String) {
+        guard let url = URL(string: URLAddress) else {
+            return
+        }
+        let urlRequest = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            DispatchQueue.main.async { [weak self] in
+                if let imageData = data {
+                    if let loadedImage = UIImage(data: imageData) {
+                            self?.image = loadedImage
+                    }
+                }
+            }
+        }
+        task.resume()
+        
+    }
 }
 
 extension StartViewController: GMSAutocompleteViewControllerDelegate {

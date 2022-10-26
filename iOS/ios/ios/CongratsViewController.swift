@@ -81,21 +81,14 @@ class CongratsViewController: UIViewController {
             self.tabBarController?.tabBar.isHidden = false
             self.tabBarController?.tabBar.isTranslucent = false
         }
-        if let dest = segue.destination as? AdventourSummaryNavigationController {
-            print(self.locations)
-            if let vc = dest.topViewController as? AdventourSummaryViewController {
-                vc.locations = self.locations
-            }
+        if let dest = segue.destination as? AdventourSummaryViewController {
             dest.locations = self.locations
         }
-        if let dest = segue.destination as? BeaconPostNavigationController {
-            print(self.locations)
-            if let vc = dest.topViewController as? BeaconPostViewController {
-                vc.ids = self.locations
-                vc.beaconLocation = self.beaconLocation
-                vc.isEditing = true
-            }
-            
+        if let dest = segue.destination as? BeaconPostViewController {
+            dest.ids = self.locations
+            dest.beaconLocation = self.beaconLocation
+            dest.isEditing = true
+            dest.source = self
         }
         
     }
