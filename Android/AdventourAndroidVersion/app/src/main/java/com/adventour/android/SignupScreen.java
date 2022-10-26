@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +47,7 @@ public class SignupScreen extends AppCompatActivity {
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
     EditText birthdateDatePicker, nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
+    ImageView profPicImageView;
 
     private FirebaseAuth mAuth;
 
@@ -88,6 +90,8 @@ public class SignupScreen extends AppCompatActivity {
         birthdateEditText = (EditText) findViewById(R.id.birthdateEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
+
+        profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -178,6 +182,13 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.isUserOver13(day, month, year) &&
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword))
                     signUp(nickname, email, password, birthdate, defaultMantra); // Attempt to create user document and add to firebase.
+            }
+        });
+
+        // Profile pic image and button // TAKE PHOTO FROM CAMERA OR GALLERY
+        profPicImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
     }

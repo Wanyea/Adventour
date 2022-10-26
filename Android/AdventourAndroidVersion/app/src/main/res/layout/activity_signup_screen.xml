@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/profPicImageButton"
+                android:id="@+id/profPicImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:padding="20dp"
@@ -72,7 +72,7 @@
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profPicImageButton"
+                app:layout_constraintTop_toBottomOf="@id/profPicImageView"
                 android:scrollHorizontally="true"
 
                 android:drawableLeft="@drawable/ic_user_icon_small"
