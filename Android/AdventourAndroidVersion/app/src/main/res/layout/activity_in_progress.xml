@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".InProgress">
 
-    <!--<androidx.fragment.app.FragmentContainerView
+<!--
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mapsContainerView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="350dp"
@@ -15,7 +16,8 @@
         app:layout_constraintBottom_toTopOf="@+id/inProgressScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent" />
+-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -62,8 +64,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/notepadImageView"
         android:layout_marginTop="38dp"
+        android:maxHeight="200dp"
         app:layout_constraintStart_toStartOf="@id/notepadImageView"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inProgressRV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLocationButton"
