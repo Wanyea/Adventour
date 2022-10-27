@@ -4,24 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
@@ -39,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,8 +45,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class Passport extends AppCompatActivity {
     
@@ -95,7 +93,7 @@ public class Passport extends AppCompatActivity {
         queryString = new ArrayList<>();
 
         handleAuth();
-        populatePassportTextViews();
+        populatePassport();
         getPreviousAdventours();
 
 //        RecyclerView PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
@@ -229,7 +227,7 @@ public class Passport extends AppCompatActivity {
 
     }
 
-    public void populatePassportTextViews()
+    public void populatePassport()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -264,8 +262,8 @@ public class Passport extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<PreviousAdventourModel> previousAdventours = new ArrayList<>();
-
+        ArrayList<Map> previousAdventours = new ArrayList<>();
+        Semaphore semaphore = new Semaphore(1);
         // Get a reference to the user
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
         documentRef.collection("adventours")
@@ -277,11 +275,23 @@ public class Passport extends AppCompatActivity {
                         {
                             for (QueryDocumentSnapshot adventour : task.getResult())
                             {
-                                //queryString.addAll((Collection<? extends String>) adventour.get("locations"));
-                                //getLocationName(queryString.toString().replaceAll("\\s+","")); //maybe spaces are causing weird api response?
-                                //queryString.clear();
-                                Log.d(TAG, adventour.getId() + " => " + adventour.get("locations"));
+                                try {
+                                    semaphore.acquire();
+                                } catch (InterruptedException e) {
+
+                                }
+                                Map<String, Object> allData = new HashMap<>();
+                                allData = adventour.getData();
+
+                                ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                Log.d("PASSPORT", locations.toString());
+
+                                GetLocationData data = new GetLocationData(user, locations, semaphore, previousAdventours, allData);
+                                Thread thread = new Thread(data);
+                                thread.start();
                             }
+
+                            Log.d("PASSPORT", previousAdventours.toString());
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -290,88 +300,81 @@ public class Passport extends AppCompatActivity {
 
     }
 
-    public void getLocationName(String queryString)
+    class GetLocationData implements Runnable
     {
-        JSONObject jsonBody = new JSONObject();
-        try {
+        FirebaseUser user;
+        ArrayList<String> locations;
+        ArrayList<Map> results;
+        ArrayList<Map> previousAdventours;
+        Semaphore semaphore;
+        Map<String, Object> allData;
 
-            jsonBody.put("uid", user.getUid());
-            // Log.d("0", queryString);
-            jsonBody.put("ids", queryString);
-
-        } catch (JSONException e) {
-            Log.e("Passport", "exception", e);
+        GetLocationData(FirebaseUser user, ArrayList<String> locations, Semaphore semaphore, ArrayList<Map> previousAdventours, Map<String, Object> allData)
+        {
+            this.user = user;
+            this.locations = locations;
+            this.semaphore = semaphore;
+            this.previousAdventours = previousAdventours;
+            this.allData = allData;
         }
 
-        try {
+        @Override
+        public void run()
+        {
+            JSONObject requestBody = new JSONObject();
 
-            // Call API with user defined location and sentiments
-            URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-adventour-place");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setDoOutput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setUseCaches(false);
-
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(jsonBody.toString());
-            wr.flush();
-            wr.close();
-            jsonBody = null;
-
-            System.out.println("\nSending 'POST' request to URL : " + url);
-
-            InputStream it = conn.getInputStream();
-            InputStreamReader inputs = new InputStreamReader(it);
-
-            BufferedReader in = new BufferedReader(inputs);
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            try
+            {
+                requestBody.put("ids", new JSONArray(locations));
+                requestBody.put("uid", user.getUid());
+            } catch (JSONException e) {
+                Log.e("PASSPORT", e.toString());
             }
 
-            in.close();
+            try {
+                URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            JSONObject responseData = new JSONObject(response.toString());
-            Log.d("RESPONSE DATA", responseData.toString());
-//            try {
-//                JSONObject data = (JSONObject) responseData.get("data");
-//                currentFSQId = data.get("fsq_id").toString();
-//                name = data.get("name").toString();
-//                rating = Float.parseFloat(data.get("rating").toString()) / 2;
-//
-//                try {
-//                    tel = data.get("tel").toString();
-//                } catch (Exception e) {
-//                    tel = "N/A";
-//                    Log.e("No tel for location", "Exception", e);
-//                }
-//
-//                try {
-//                    website = data.get("website").toString();
-//                } catch (Exception e) {
-//                    website = "N/A";
-//                    Log.e("No web for location", "Exception", e);
-//                }
-//
-//                try {
-//                    description = data.get("description").toString();
-//                } catch (Exception e) {
-//                    description = "No description available for this location... ";
-//                    Log.e("No des for location", "Exception", e);
-//                }
-//
-//                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
-//            } catch (Exception e) {
-//                Log.e("Exception" , e.toString());
-//            }
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
+                conn.setDoOutput(true);
+                conn.setInstanceFollowRedirects(false);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setUseCaches(false);
+
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes(requestBody.toString());
+                wr.flush();
+                wr.close();
+                requestBody = null;
+
+                System.out.println("\nSending 'POST' request to URL : " + url);
+
+                InputStream it = conn.getInputStream();
+                InputStreamReader inputs = new InputStreamReader(it);
+
+                BufferedReader in = new BufferedReader(inputs);
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                in.close();
+
+                JSONObject responseData = new JSONObject(response.toString());
+
+                results = new ArrayList<Map>((Collection<? extends Map>) responseData.get("results"));
+                allData.put("locations", results);
+                previousAdventours.add(allData);
+
+                System.out.println(results); // Printing for dev testing
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("PASSPORT", e.toString());
+            }
+            semaphore.release();
         }
     }
 
