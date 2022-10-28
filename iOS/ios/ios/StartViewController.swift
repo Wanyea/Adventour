@@ -13,7 +13,7 @@ class StartViewController: UIViewController {
     var user: User!
     
     // Filter Outlets
-    var exitIndicator: UIView!
+
     var socialSwitch: UISwitch!
     var outdoorsySwitch: UISwitch!
     var cultureSwitch: UISwitch!
@@ -59,7 +59,6 @@ class StartViewController: UIViewController {
         } else {
             self.switchToLoggedOut()
         }
-        
         self.websiteLabel?.adjustsFontSizeToFitWidth = true
         self.websiteLabel?.minimumScaleFactor = 0.75
         self.websiteLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
@@ -104,15 +103,15 @@ class StartViewController: UIViewController {
         self.phoneClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
         self.notNow?.isEnabled = false
         self.notNow?.layer.borderColor = UIColor.gray.cgColor
-        self.notNow?.layer.cornerRadius = 15
+        self.notNow?.layer.cornerRadius = 25
+        
+        self.fsq_id = nil
         if let ids = self.ids {
             print("Start, These is the ids: ", ids)
         } else {
             print("Start, These ids is nil")
         }
-        self.hideCardInfo()
-        
-        
+        hideCardInfo()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,63 +120,11 @@ class StartViewController: UIViewController {
             destinationVC.ids = self.ids
             destinationVC.beaconLocation = self.beaconLocation
         }
-        
-        if let destinationVC = segue.destination as? SearchFilterViewController {
-            if let social = self.socialSwitch {
-                destinationVC.socialSwitch = social
-                UserDefaults.standard.set(social.isOn, forKey: "socialSwitch")
-            }
-            if let outdoorsy = self.outdoorsySwitch {
-                destinationVC.outdoorsySwitch = outdoorsy
-                UserDefaults.standard.set(outdoorsy.isOn, forKey: "outdoorsySwitch")
-            }
-            if let culture = self.cultureSwitch {
-                destinationVC.cultureSwitch = culture
-                UserDefaults.standard.set(culture.isOn, forKey: "cultureSwitch")
-            }
-            if let hungry = self.hungrySwitch {
-                destinationVC.hungrySwitch = hungry
-                UserDefaults.standard.set(hungry.isOn, forKey: "hungrySwitch")
-            }
-            if let romantic = self.romanticSwitch {
-                destinationVC.romanticSwitch = romantic
-                UserDefaults.standard.set(romantic.isOn, forKey: "romanticSwitch")
-            }
-            if let geeky = self.geekySwitch {
-                destinationVC.geekySwitch = geeky
-                UserDefaults.standard.set(geeky.isOn, forKey: "geekySwitch")
-            }
-            if let spiritual = self.spirtualSwitch {
-                destinationVC.spirtualSwitch = spiritual
-                UserDefaults.standard.set(spiritual.isOn, forKey: "spirtualSwitch")
-            }
-            if let sporty = self.sportySwitch {
-                destinationVC.sportySwitch = sporty
-                UserDefaults.standard.set(sporty.isOn, forKey: "sportySwitch")
-            }
-            if let chill = self.chillSwitch {
-                destinationVC.chillSwitch = chill
-                UserDefaults.standard.set(chill.isOn, forKey: "chillSwitch")
-            }
-            if let shoppy = self.shoppySwitch {
-                destinationVC.shoppySwitch = shoppy
-                UserDefaults.standard.set(shoppy.isOn, forKey: "shoppySwitch")
-            }
-            if let pampered = self.pamperedSwitch {
-                destinationVC.pamperedSwitch = pampered
-                UserDefaults.standard.set(pampered.isOn, forKey: "pamperedSwitch")
-            }
-            if let distance = self.distanceSlider {
-                destinationVC.distanceSlider = distance
-                UserDefaults.standard.set(distance.value, forKey: "distanceSlider")
-            }
-        }
-        
     }
     
     @IBAction func goTapped(_ sender: Any) {
         self.notNow.isEnabled = true
-        notNow?.layer.borderColor = UIColor(named: "adv-red")?.cgColor
+        self.notNow?.layer.borderColor = UIColor(named: "adv-red")?.cgColor
         getAdventourPlace()
     }
     
@@ -192,51 +139,12 @@ class StartViewController: UIViewController {
         getAdventourLocation()
     }
     
-    
-    @IBAction func getOutlets(sender: UIStoryboardSegue) {
-        if let source = sender.source as? SearchFilterViewController {
-            print("WE MADE IT")
-            self.socialSwitch = source.socialSwitch
-            self.outdoorsySwitch = source.outdoorsySwitch
-            self.cultureSwitch = source.cultureSwitch
-            self.hungrySwitch = source.hungrySwitch
-            self.romanticSwitch = source.romanticSwitch
-            self.geekySwitch = source.geekySwitch
-            self.spirtualSwitch = source.spirtualSwitch
-            self.sportySwitch = source.sportySwitch
-            self.chillSwitch = source.chillSwitch
-            self.shoppySwitch = source.shoppySwitch
-            self.pamperedSwitch = source.pamperedSwitch
-            self.distanceSlider = source.distanceSlider
-        }
-    }
-    
-    
-    //makes the sliders "step".
-    
-    
-    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
-        
-    }
-    
     @IBAction func goHome(sender: UIStoryboardSegue){
         if let source = sender.source as? CongratsViewController {
             self.ids = []
             self.searchBar.text = ""
             self.lat = nil
             self.lon = nil
-            self.socialSwitch = UISwitch()
-            self.outdoorsySwitch = UISwitch()
-            self.cultureSwitch = UISwitch()
-            self.hungrySwitch = UISwitch()
-            self.romanticSwitch = UISwitch()
-            self.geekySwitch = UISwitch()
-            self.spirtualSwitch = UISwitch()
-            self.sportySwitch = UISwitch()
-            self.chillSwitch = UISwitch()
-            self.shoppySwitch = UISwitch()
-            self.pamperedSwitch = UISwitch()
-            self.distanceSlider = UISlider()
         }
     }
     
@@ -278,7 +186,7 @@ class StartViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             return
         }
-        print("The value before:", self.distanceSlider?.value, " after: ", self.milesToMeters(distanceInMiles: self.distanceSlider?.value ?? 5))
+
         let params: [String: Any] = [
             "uid": self.user.uid,
             "ll": latlonString,
@@ -300,9 +208,9 @@ class StartViewController: UIViewController {
                 let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                 if let dataDict = dataJsonObject as? [String: Any] {
                     if let data = dataDict["data"] as? [String: Any] {
-                        print("+===============+")
-                        print("|Adventour Place|")
-                        print("+===============+")
+                        print("+=================+")
+                        print("| Adventour Place |")
+                        print("+=================+")
                         print(data)
                         DispatchQueue.main.async {
                             
@@ -380,71 +288,49 @@ class StartViewController: UIViewController {
     
     func getCategoryString() -> String {
         var categories: String = ""
-        if let s = self.socialSwitch {
-            if s.isOn {
-                let socialString = "10001,10003,10006,10007,10009,10017,10019,10022,10023,10039,10048,10055,10056,12004,14003,14009,10015,"
-                categories.append(socialString)
-            }
+        if UserDefaults.standard.bool(forKey: "socialSwitch") {
+            let socialString = "10001,10003,10006,10007,10009,10017,10019,10022,10023,10039,10048,10055,10056,12004,14003,14009,10015,"
+            categories.append(socialString)
         }
-        if let s = self.outdoorsySwitch{
-            if s.isOn {
-                let outdoorsyString = "10014,10044,10055,10056,16002,16003,16004,16005,16006,16008,16009,16011,16012,16013,16016,16017,16018,16019,16021,16022,16023,16024,16027,16028,16032,16043,16044,16046,16048,16049,16051,16052,19002,19003,19008,19021,"
-                categories.append(outdoorsyString)
-            }
+        if UserDefaults.standard.bool(forKey: "outdoorsySwitch"){
+            let outdoorsyString = "10014,10044,10055,10056,16002,16003,16004,16005,16006,16008,16009,16011,16012,16013,16016,16017,16018,16019,16021,16022,16023,16024,16027,16028,16032,16043,16044,16046,16048,16049,16051,16052,19002,19003,19008,19021,"
+            categories.append(outdoorsyString)
         }
-        if let s = self.cultureSwitch {
-            if s.isOn {
-                let culturedString = "10002,10004,10016,10024,10028,10031,10030,10042,17002,17003,10043,17018,10047,10056,11005,17098,17113,11140,12005,12065,12066,12080,12081,16011,16024,16007,16020,16025,16026,16031,17103,16047,"
-                categories.append(culturedString)
-            }
+        if UserDefaults.standard.bool(forKey: "cultureSwitch") {
+            let culturedString = "10002,10004,10016,10024,10028,10031,10030,10042,17002,17003,10043,17018,10047,10056,11005,17098,17113,11140,12005,12065,12066,12080,12081,16011,16024,16007,16020,16025,16026,16031,17103,16047,"
+            categories.append(culturedString)
         }
-        if let s = self.hungrySwitch {
-            if s.isOn {
-                let hungryString = "13028,13053,13054,13065,13001,13002,13032,13040,13059,13381,13382,"
-                categories.append(hungryString)
-            }
+        if UserDefaults.standard.bool(forKey: "hungrySwitch") {
+            let hungryString = "13028,13053,13054,13065,13001,13002,13032,13040,13059,13381,13382,"
+            categories.append(hungryString)
         }
-        if let s = self.romanticSwitch {
-            if s.isOn {
-                let romanticString = "10004,10016,10024,10023,11140,16005,11073,"
-                categories.append(romanticString)
-            }
+        if UserDefaults.standard.bool(forKey: "romanticSwitch") {
+            let romanticString = "10004,10016,10024,10023,11140,16005,11073,"
+            categories.append(romanticString)
         }
-        if let s = self.geekySwitch {
-            if s.isOn {
-                let geekyString = "10003,10015,10018,17018,17022,17091,17027,17135,10044,10054,12080,12081,"
-                categories.append(geekyString)
-            }
+        if UserDefaults.standard.bool(forKey: "geekySwitch") {
+            let geekyString = "10003,10015,10018,17018,17022,17091,17027,17135,10044,10054,12080,12081,"
+            categories.append(geekyString)
         }
-        if let s = self.spirtualSwitch {
-            if s.isOn {
-                let spirtualString = "12098,"
-                categories.append(spirtualString)
-            }
+        if UserDefaults.standard.bool(forKey: "spirtualSwitch") {
+            let spirtualString = "12098,"
+            categories.append(spirtualString)
         }
-        if let s = self.sportySwitch {
-            if s.isOn {
-                let sportyString = "10006,10014,10019,10022,10023,10045,10048,18005,18008,18012,18019,18020,18021,18029,18034,17117,18035,18036,18037,18039,18040,18048,18054,18057,18058,18064,18067,19002,"
-                categories.append(sportyString)
-            }
+        if UserDefaults.standard.bool(forKey: "sportySwitch") {
+            let sportyString = "10006,10014,10019,10022,10023,10045,10048,18005,18008,18012,18019,18020,18021,18029,18034,17117,18035,18036,18037,18039,18040,18048,18054,18057,18058,18064,18067,19002,"
+            categories.append(sportyString)
         }
-        if let s = self.chillSwitch {
-            if s.isOn {
-                let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12080,12081,19021,16003,16005,16032,"
-                categories.append(chillString)
-            }
+        if UserDefaults.standard.bool(forKey: "chillSwitch") {
+            let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12080,12081,19021,16003,16005,16032,"
+            categories.append(chillString)
         }
-        if let s = self.shoppySwitch {
-            if s.isOn {
-                let shoppyString = "14009,17002,17002,17004,17018,17020,17022,17027,17024,17030,17031,17032,17039,17053,17054,17055,17056,17089,17091,17098,17107,17111,17113,17116,17117,17135,17138,17103,"
-                categories.append(shoppyString)
-            }
+        if UserDefaults.standard.bool(forKey: "shoppySwitch") {
+            let shoppyString = "14009,17002,17002,17004,17018,17020,17022,17027,17024,17030,17031,17032,17039,17053,17054,17055,17056,17089,17091,17098,17107,17111,17113,17116,17117,17135,17138,17103,"
+            categories.append(shoppyString)
         }
-        if let s = self.pamperedSwitch {
-            if s.isOn {
-                let pamperedString = "11062,11063,11064,11071,11072,11073,11074,11070,17030,11140,15001,17020,"
-                categories.append(pamperedString)
-            }
+        if UserDefaults.standard.bool(forKey: "pamperedSwitch") {
+            let pamperedString = "11062,11063,11064,11071,11072,11073,11074,11070,17030,11140,15001,17020,"
+            categories.append(pamperedString)
         }
         print(categories)
         return categories
@@ -455,7 +341,8 @@ class StartViewController: UIViewController {
     }
     
     func metersToMilesRounded(distanceInMeters distance: Double) -> Double {
-        return round(Double(distance / 1609.344) * 1000) / 100.0
+        print("Distance in meters: ", distance)
+        return round(Double(distance / 1609.344) * 10) / 10.0
     }
     
     func hideCardInfo() {
@@ -484,10 +371,6 @@ class StartViewController: UIViewController {
         
         self.phoneLabel?.isHidden = false
         self.websiteLabel?.isHidden = false
-    }
-    
-    func changeTitleColor() {
-        
     }
     
     func switchToLoggedOut() {
@@ -561,4 +444,23 @@ extension StartViewController: GMSAutocompleteViewControllerDelegate {
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
+}
+
+extension UIImageView {
+    @IBInspectable var shadowOffset : CGSize {
+        get {
+            return layer.shadowOffset
+        }
+        set {
+            layer.shadowOffset = newValue
+        }
+    }
+    @IBInspectable var shadowOpacity : Float {
+        get {
+            return layer.shadowOpacity
+        }
+        set {
+            layer.shadowOpacity = newValue
+        }
+    }
 }

@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,7 +23,7 @@
                                     <constraint firstAttribute="height" constant="200" id="WlW-M1-nMl"/>
                                 </constraints>
                             </mapView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vb-C1-ke6">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vb-C1-ke6">
                                 <rect key="frame" x="15" y="300" width="345" height="298"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlY-CV-gtq">
@@ -72,7 +71,7 @@
                                                                         <constraint firstAttribute="height" constant="28" id="Bjo-KD-ikw"/>
                                                                         <constraint firstAttribute="width" constant="291" id="PUl-N2-T0b"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -197,19 +196,28 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="qwf-AB-feb"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKB-vm-efy">
-                                <rect key="frame" x="305" y="558" width="50" height="50"/>
+                                <rect key="frame" x="280" y="533" width="75" height="75"/>
+                                <color key="backgroundColor" name="adv-royalblue"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="FeX-Il-g8F"/>
-                                    <constraint firstAttribute="height" constant="50" id="Ygk-gC-wLE"/>
+                                    <constraint firstAttribute="width" constant="75" id="FeX-Il-g8F"/>
+                                    <constraint firstAttribute="height" constant="75" id="Ygk-gC-wLE"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="3" height="3"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
-                                    <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
-                                    <color key="baseBackgroundColor" name="adv-royalblue"/>
-                                </buttonConfiguration>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" name="adv-white"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="38"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="2hB-4n-hwA" kind="unwind" unwindAction="unwindHome:" id="YfA-ng-mCV"/>
+                                    <segue destination="2hB-4n-hwA" kind="unwind" unwindAction="goHomeWithSender:" id="WxO-Wf-ab5"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VoM-sn-jMu">
@@ -438,7 +446,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" name="adv-royalblue"/>
+                            <color key="textColor" name="adv-navyblue"/>
                             <color key="textShadowColor" name="adv-white"/>
                             <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
                         </textAttributes>
@@ -447,7 +455,7 @@
                             <color key="shadowColor" name="adv-skyblue"/>
                             <textAttributes key="titleTextAttributes">
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textColor" name="adv-navyblue"/>
                                 <color key="textShadowColor" name="adv-white"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
                             </textAttributes>
@@ -457,13 +465,13 @@
                             <color key="shadowColor" name="adv-skyblue"/>
                             <textAttributes key="titleTextAttributes">
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textColor" name="adv-navyblue"/>
                                 <color key="textShadowColor" name="adv-white"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
                             </textAttributes>
                             <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="10"/>
                             <textAttributes key="largeTitleTextAttributes">
-                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textColor" name="adv-navyblue"/>
                                 <color key="textShadowColor" name="adv-white"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
                             </textAttributes>
@@ -483,10 +491,12 @@
         <image name="Map_Scroll" width="1652" height="913"/>
         <image name="Notepad_Paper" width="1920" height="2254"/>
         <image name="mappin" catalog="system" width="106" height="128"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="adv-navyblue">
+            <color red="0.054901960784313725" green="0.19215686274509805" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="adv-orange">
             <color red="1" green="0.64313725490196083" blue="0.30980392156862746" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

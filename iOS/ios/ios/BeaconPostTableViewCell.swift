@@ -12,7 +12,7 @@ import MapKit
 class BeaconPostTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionTextView: UITextView!
     
     @IBOutlet weak var imageScroll: UIScrollView!
     @IBOutlet weak var cosmosView: CosmosView!
@@ -34,6 +34,7 @@ class BeaconPostTableViewCell: UITableViewCell {
         }
         
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

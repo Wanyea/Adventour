@@ -14,10 +14,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     var user: User!
     @IBOutlet weak var exitIndicator: UIView!
     
-    @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var birthday: UILabel!
+    @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var birthdayLabel: UILabel!
     @IBOutlet weak var birthdayIcon: UILabel!
-    @IBOutlet weak var mantra: UILabel!
+    @IBOutlet weak var mantraLabel: UILabel!
     @IBOutlet weak var noAdventoursMessage: UILabel!
     @IBOutlet weak var noBeaconsMessage: UILabel!
     
@@ -39,14 +39,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
             self.user = user
         }
         self.prevAdventoursTable?.delegate = self
-//        self.prevAdventoursTable.register(PrevAdventoursTableViewCell.self, forCellReuseIdentifier: "PrevAdventourCell")
-        
-        
-        
-        self.beaconsTable.delegate = self
-//        beaconsSource = PrevAdventoursDataSource(withDataSource: self.beacons)
-//        self.beaconsTable.dataSource = beaconsSource
-        // Do any additional setup after loading the view.
+        self.beaconsTable?.delegate = self
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,17 +60,34 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "BeaconPost", bundle: nil)
-        print(beacons[indexPath.item])
-        if let locations = beacons[indexPath.item]["locations"] as? [[String: Any]] {
-            print("SUCCESSFULLY RETRIEVED LOCATIONS")
-            if let vc = storyboard.instantiateViewController(identifier: "BeaconPost") as? BeaconPostViewController {
-                vc.locations = locations
-                vc.source = self
-                vc.beacons = self.beacons
-                self.navigationController?.pushViewController(vc, animated: true)
+        if tableView is AdventourTableView {
+            let storyboard = UIStoryboard(name: "AdventourSummaryPage", bundle: nil)
+
+            if let locations = prevAdventours[indexPath.item]["locations"] as? [[String: Any]] {
+                print("SUCCESSFULLY RETRIEVED LOCATIONS")
+                if let vc = storyboard.instantiateViewController(identifier: "AdventourSummary") as? AdventourSummaryViewController {
+                    vc.source = self
+                    vc.locations = locations
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
             }
-            
+        } else if tableView is BeaconTableView {
+            let storyboard = UIStoryboard(name: "BeaconPost", bundle: nil)
+            print(beacons[indexPath.item])
+            if let locations = beacons[indexPath.item]["locations"] as? [[String: Any]] {
+                print("SUCCESSFULLY RETRIEVED LOCATIONS")
+                if let vc = storyboard.instantiateViewController(identifier: "BeaconPost") as? BeaconPostViewController {
+                    vc.locations = locations
+                    vc.source = self
+                    vc.beaconInfo = self.beacons[indexPath.item]
+                    print("nickname: ", self.nicknameLabel.text)
+                    vc.nickname = self.nicknameLabel.text!
+                    print("vc nickname: ", vc.nickname)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
+            }
         }
     }
     
@@ -86,17 +97,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
             if let document = document, document.exists {
                 document.data().map { user in
 //                    print(user)
-                    if let birthday = user["birthday:"] as? String {
-//                        print(birthday)
-                        self.birthday?.text = birthday
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM/dd/YYYY"
+                    if let firTimestamp = user["birthday"] as? Timestamp {
+                        let swiftDate = firTimestamp.dateValue()
+                        let stringDate = dateFormatter.string(from: swiftDate)
+                        self.birthdayLabel.text = stringDate
                     }
                     if let username = user["nickname"] as? String {
 //                        print(username)
-                        self.username?.text = username
+                        self.nicknameLabel?.text = username
                     }
                     if let mantra = user["mantra"] as? String {
 //                        print(mantra)
-                        self.mantra?.text = mantra
+                        self.mantraLabel?.text = mantra
                     }
                     DispatchQueue.main.async {
                         self.activityIndicatorInfo?.stopAnimating()
@@ -110,16 +124,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     }
     
     func hideUserInfo() {
-        self.username?.isHidden = true
-        self.birthday?.isHidden = true
-        self.mantra?.isHidden = true
+        self.nicknameLabel?.isHidden = true
+        self.birthdayLabel?.isHidden = true
+        self.mantraLabel?.isHidden = true
         self.birthdayIcon?.isHidden = true
     }
     
     func showUserInfo() {
-        self.username?.isHidden = false
-        self.birthday?.isHidden = false
-        self.mantra?.isHidden = false
+        self.nicknameLabel?.isHidden = false
+        self.birthdayLabel?.isHidden = false
+        self.mantraLabel?.isHidden = false
         self.birthdayIcon?.isHidden = false
     }
     
@@ -185,30 +199,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                                 }
                                                 
                                             }
-                                            
                                         }
                                     }
                                 }
                                 task.resume()
-                                
                             }
-                            
                         }
                         sem.wait()
 //                        print("This is all the data: ", allData ?? "None")
-                        
                     }
-                    
-                    
                 }
             }
-        
-    
-    
-    
     }
-    
-    
     
     func getBeaconsData() {
         var allData: [String: Any]!
@@ -282,22 +284,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                     }
                                 }
                                 task.resume()
-                                
                             }
-                            
                         }
                         sem.wait()
-//                        print("This is all the data: ", allData ?? "None")
-                        
                     }
-                    
-                    
                 }
             }
-        
-    
-    
-    
     }
-
+    
+    @IBAction func unwindToProfile(sender: UIStoryboardSegue) {
+        
+    }
 }

@@ -44,6 +44,12 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         searchBar?.text = self.beaconLocation
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if self.beaconLocation != "" {
+            getBeacons()
+        }
+    }
+    
     @IBAction func getCurrentPlace(_ sender: Any){
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
@@ -78,7 +84,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
             if let vc = storyboard.instantiateViewController(identifier: "BeaconPost") as? BeaconPostViewController {
                 vc.locations = locations
                 vc.source = self
-                vc.beacons = self.beacons
+                vc.beaconInfo = self.beacons[indexPath.item]
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             
@@ -145,6 +151,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         
         db.collection("Beacons")
             .whereField("beaconLocation", isEqualTo: self.beaconLocation)
+            .whereField("isPrivate", isEqualTo: false)
             .getDocuments() { (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")

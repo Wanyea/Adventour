@@ -50,25 +50,26 @@ extension UIImageView {
 
 // Beacon Title char limit: 16
 
-class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
         
-    
     @IBOutlet weak var beaconTitle: UITextView!
-    @IBOutlet weak var beaconDescription: UITextView!
+    @IBOutlet weak var beaconIntro: UITextView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var dateCreated: UILabel!
     @IBOutlet weak var locationsTable: UITableView!
     @IBOutlet weak var privateSwitch: ScaleSwitch!
     @IBOutlet weak var locationPhoto1: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var nicknameLabel: UILabel!
     
     var source: UIViewController!
-    var beaconInfo: [String: Any]!
+    var beaconInfo: [String: Any] = [:]
     var user: User!
-    var beacons: [[String: Any]] = []
     var locations: [[String: Any]] = []
     var ids: [String] = []
     var beaconLocation: String!
+    var nickname: String!
+    var shouldSave: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,52 +88,65 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
         checkEditing()
-        print("ids in beacon post: ", self.ids)
         self.activityIndicator?.isHidden = true
         self.locationsTable.isHidden = true
+        loadBeaconInfo()
         getLocationData()
+        print("nickname on load: ", self.nickname)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.beaconTitle.endEditing(true)
-        self.beaconDescription.endEditing(true)
+        self.beaconIntro.endEditing(true)
+        self.locationsTable.endEditing(true)
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print("The text view began editing")
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print("The text view stopped editing.")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
     
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if self.isEditing {
+            print("Make cell editable")
+            if let myCell = cell as? BeaconPostTableViewCell {
+                myCell.descriptionTextView.isEditable = true
+            }
+            
+        } else {
+            print("Make cell uneditable")
+            if let myCell = cell as? BeaconPostTableViewCell {
+                myCell.descriptionTextView.isEditable = false
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = locationsTable.dequeueReusableCell(withIdentifier: "BeaconPostTableCell", for: indexPath) as! BeaconPostTableViewCell
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/YYYY"
-        
-        if let firTimestamp = beacons[indexPath.item]["dateCreated"] as? Timestamp {
-            if let swiftDate = firTimestamp.dateValue() as? Date {
-    //            print("Date created: ", data)
-                if let stringDate = dateFormatter.string(from: swiftDate) as? String {
-                    self.dateCreated.text = stringDate
-                }
-                
-            }
-        }
+        // Load location description
+        cell.descriptionTextView.delegate = self
         if let description = locations[indexPath.item]["description"] as? String {
-            print(description)
-            cell.descriptionLabel.text = description
+            cell.descriptionTextView.text = description
+            
         } else {
-            cell.descriptionLabel.text = "There is no listed description for this place."
+            cell.descriptionTextView.text = "There is no listed description for this place."
         }
-        print(locations[indexPath.item]["rating"])
         if let rating = locations[indexPath.item]["rating"] as? Double {
-            print("Editing rating...")
             cell.cosmosView.rating = rating / 2
         } else {
-            print("can't make float")
+            cell.cosmosView.rating = 0
         }
+        // Load location address
         if let location = locations[indexPath.item]["location"] as? [String: Any] {
-            
             if let address = location["formatted_address"] as? String {
                 cell.addressLabel.setTitle(address, for: UIControl.State.normal)
             } else {
@@ -141,11 +155,14 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             cell.addressLabel.setTitle("No address information", for: UIControl.State.normal)
         }
+        // Load location name
         if let name = locations[indexPath.item]["name"] as? String {
             cell.nameLabel.text = name
         } else {
             cell.nameLabel.text = "No Name Available"
         }
+        // Load location photos
+        // TODO: Load two addition photos
         if let photos = locations[indexPath.item]["photos"] as? [[String: Any]] {
             if photos.count > 0 {
                 let photo = photos[0]
@@ -159,29 +176,17 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             }
         }
+        
         return cell
     }
     
     func checkEditing() {
-        print("SOURCE IS: ", self.source)
         if self.source is BeaconBoardViewController {
-            print("SOURCE IS BEACON BOARD")
-            self.beaconTitle.isEditable = false
-            self.beaconDescription.isEditable = false
-            self.privateSwitch.isEnabled = false
-            self.editButton.isHidden = true
+            disableEditingBeaconPost()
         } else if (self.isEditing) {
-            self.beaconTitle.isEditable = true
-            self.beaconDescription.isEditable = true
-            self.privateSwitch.isEnabled = true
-            self.editButton.isHidden = false
-            self.editButton.setTitle("💾", for: UIControl.State.normal)
+            startEditingBeaconPost()
         } else {
-            self.beaconTitle.isEditable = false
-            self.beaconDescription.isEditable = false
-            self.privateSwitch.isEnabled = false
-            self.editButton.isHidden = false
-            self.editButton.setTitle("✏️", for: UIControl.State.normal)
+            endEditingBeaconPost()
         }
     }
     
@@ -189,62 +194,95 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         self.isEditing = !self.isEditing
         
         if (self.isEditing) {
-            self.beaconTitle.isEditable = true
-            self.beaconDescription.isEditable = true
-            self.privateSwitch.isEnabled = true
-            self.editButton.setTitle("💾", for: UIControl.State.normal)
+            startEditingBeaconPost()
         } else {
-            var shouldSave = shouldSave()
             
-            if !shouldSave {
-                return
-            }
-            
-            
-            self.beaconTitle.isEditable = false
-            self.beaconDescription.isEditable = false
-            self.privateSwitch.isEnabled = false
-            self.editButton.setTitle("✏️", for: UIControl.State.normal)
-            saveBeaconData()
-            if let source = self.source as? CongratsViewController {
-                switchToStart()
-            }
+            let alert = UIAlertController(
+                title: getAlertTitle(),
+                message: getAlertMessage(),
+                preferredStyle: .actionSheet
+            )
+            alert.addAction(UIAlertAction(
+                title: getButtonTitle(),
+                style: .default,
+                handler: { _ in
+                    self.endEditingBeaconPost()
+                    self.saveBeaconData()
+                    if self.source is CongratsViewController {
+                        self.switchToStart()
+                    }
+                    
+            }))
+            alert.addAction(UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: { _ in
+
+            }))
+            present(alert,
+                    animated: true,
+                    completion: nil
+            )
         }
-        
-        
     }
-    
-    
     
     func saveBeaconData() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YYYY"
         
-        if let info = self.beaconInfo {
+        if self.source is ProfileViewController {
+            print("Attempting to update beacon info...")
+            print("profile beacon title: ", self.beaconTitle.text)
+            print("profile nickname: ", self.nickname)
             let beacon: [String: Any] = [
-                "title": self.beaconTitle.text,
-                "intro": self.beaconDescription.text,
-                "locations": self.ids,
+                "title": self.beaconTitle.text!,
+                "intro": self.beaconIntro.text!,
                 "dateUpdated": Date(),
-                "dateCreated": info["dateCreated"],
-                "numLocations": locations.count,
-                "isPrivate": self.privateSwitch.isOn
+                "isPrivate": self.privateSwitch.isOn,
             ]
+            
+            let db = Firestore.firestore()
+            print("doc id: ", self.beaconInfo["documentID"] as! String)
+            db.collection("Beacons")
+                .document(self.beaconInfo["documentID"] as! String)
+                .updateData(beacon) {
+                    err in
+                    if let err = err {
+                        print(err)
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
+            db.collection("Adventourists")
+                .document(self.user.uid)
+                .collection("beacons")
+                .document(self.beaconInfo["documentID"] as! String)
+                .updateData(beacon) {
+                    err in
+                    if let err = err {
+                        print(err)
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
         } else {
+            print("beacon title: ", self.beaconTitle.text)
+            print("profile nickname: ", self.nickname)
             let beacon: [String: Any] = [
                 "title": self.beaconTitle.text,
-                "intro": self.beaconDescription.text,
+                "intro": self.beaconIntro.text,
                 "locations": self.ids,
                 "beaconLocation": self.beaconLocation,
                 "dateUpdated": Date(),
-                "dateCreated": Date(),
+                "dateCreated": beaconInfo["dateCreated"],
                 "numLocations": locations.count,
-                "isPrivate": self.privateSwitch.isOn
+                "isPrivate": self.privateSwitch.isOn,
+                "author": ["uid": self.user.uid, "nickname": self.nickname]
             ]
             
             let db = Firestore.firestore()
             
-            db.collection("Adventourists")
+            let docRef = db.collection("Adventourists")
                 .document(self.user.uid)
                 .collection("beacons")
                 .addDocument(data: beacon) {
@@ -257,7 +295,8 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             
             db.collection("Beacons")
-                .addDocument(data: beacon) {
+                .document(docRef.documentID)
+                .setData(beacon) {
                     err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -274,14 +313,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.activityIndicator?.isHidden = false
         
-        
-        
         if (ids.isEmpty && locations.isEmpty) {
             self.navigationController?.popToRootViewController(animated: true)
         } else if (!locations.isEmpty) {
-            self.locationsTable.reloadData()
-            self.activityIndicator?.stopAnimating()
-            self.locationsTable.isHidden = false
+            prepareLocationsTable()
             return
         } else {
             
@@ -293,13 +328,11 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-foursquare-places")
             var urlRequest = URLRequest(url: url!)
             urlRequest.httpMethod = "POST"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
             urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
             
             let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                // do stuff
-    
                 if let data = data {
                     let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                     if let dataDict = dataJsonObject as? [String: Any] {
@@ -307,14 +340,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                             print(array)
                             self.locations = array
                             DispatchQueue.main.async {
-                                self.locationsTable.reloadData()
-                                self.activityIndicator?.stopAnimating()
-                                self.locationsTable.isHidden = false
+                                self.prepareLocationsTable()
                                 print(self.locations.count)
                             }
-
                         }
-                        
                     }
                 }
             }
@@ -322,33 +351,128 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func shouldSave() -> Bool {
-        
-        var shouldSave: Bool = false
-        
-        let alert = UIAlertController(
-            title: "Post Beacon",
-            message: "Are you sure you are ready to post your Beacon? You won't be able to make any changes!",
-            preferredStyle: .actionSheet
-        )
-        alert.addAction(UIAlertAction(
-            title: "Post",
-            style: .default,
-            handler: { _ in
-            shouldSave = true
-        }))
-        alert.addAction(UIAlertAction(
-            title: "Cancel",
-            style: .cancel,
-            handler: { _ in
-            shouldSave = false
-        }))
-        present(alert,
-                animated: true,
-                completion: nil
-        )
-        return shouldSave
+    func getButtonTitle() -> String {
+        if self.source is CongratsViewController {
+            return "Post"
+        } else {
+            return "Save"
+        }
     }
+    
+    func getAlertTitle() -> String {
+        if self.source is CongratsViewController {
+            return "Post Beacon"
+        } else {
+            return "Save Beacon"
+        }
+    }
+    
+    func getAlertMessage() -> String {
+        if self.source is CongratsViewController {
+            return "Are you sure you are ready to post your Beacon?"
+        } else {
+            return "Are you sure you are ready to save your Beacon?"
+        }
+    }
+    
+    func disableEditingBeaconPost() {
+        self.beaconTitle.isEditable = false
+        self.beaconIntro.isEditable = false
+        self.privateSwitch.isEnabled = false
+        self.editButton.isHidden = true
+    }
+    
+    func endEditingBeaconPost() {
+        self.beaconTitle.isEditable = false
+        self.beaconIntro.isEditable = false
+        self.privateSwitch.isEnabled = false
+        self.editButton.isHidden = false
+        self.editButton.setTitle("✏️", for: UIControl.State.normal)
+        locationsTable.reloadData()
+    }
+    
+    func startEditingBeaconPost() {
+        self.beaconTitle.isEditable = true
+        self.beaconIntro.isEditable = true
+        self.privateSwitch.isEnabled = true
+        self.editButton.isHidden = false
+        self.editButton.setTitle("💾", for: UIControl.State.normal)
+        locationsTable.reloadData()
+    }
+    
+    func prepareLocationsTable() {
+        self.locationsTable.reloadData()
+        self.activityIndicator?.stopAnimating()
+        self.locationsTable.isHidden = false
+    }
+    
+    func loadBeaconInfo() {
+        loadDateCreated()
+        if self.source is ProfileViewController {
+            if let beaconTitle = beaconInfo["title"] as? String {
+                self.beaconTitle.text = beaconTitle
+            }
+            if let beaconIntro = beaconInfo["intro"] as? String {
+                self.beaconIntro.text = beaconIntro
+            }
+            if let isPrivate = beaconInfo["isPrivate"] as? Bool {
+                self.privateSwitch.isOn = isPrivate
+            }
+            if let author = beaconInfo["author"] as? [String: Any] {
+                if let nickname = author["nickname"] as? String {
+                    self.nicknameLabel.text = nickname
+                }
+                // TODO: Add profile pic
+            }
+            // TODO: Load likes
+        } else if self.source is CongratsViewController {
+            loadUserData()
+        }
+    }
+    
+    func loadDateCreated() {
+        // Load Date Created info
+        
+        if self.source is ProfileViewController {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/YYYY"
+            if let firTimestamp = beaconInfo["dateCreated"] as? Timestamp {
+                let swiftDate = firTimestamp.dateValue()
+                let stringDate = dateFormatter.string(from: swiftDate)
+                self.dateCreated.text = stringDate
+            }
+        } else if self.source is CongratsViewController {
+            // Load Date Created info
+            beaconInfo["dateCreated"] = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/YYYY"
+            
+            let stringDate = dateFormatter.string(from: beaconInfo["dateCreated"] as! Date)
+            self.dateCreated.text = stringDate
+            
+        }
+        
+    }
+    
+    func loadUserData() {
+        let db = Firestore.firestore()
+        db.collection("Adventourists").document(self.user.uid).getDocument { document, error in
+            if let document = document, document.exists {
+                if let data = document.data() {
+                    if let nickname = data["nickname"] as? String {
+                        self.nicknameLabel.text = nickname
+                        self.nickname = nickname
+                    }
+                    // TODO: Add profile pic
+                    // TODO: Load likes
+                }
+                
+                
+            }
+        }
+        
+    }
+
     
     func switchToStart() {
         
@@ -368,6 +492,6 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         
         // This is to get the SceneDelegate object from your view controller
         // then call the change root view controller function to change to main tab bar
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc)
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc, animated: true)
     }
 }

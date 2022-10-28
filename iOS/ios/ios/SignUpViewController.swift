@@ -51,10 +51,11 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
-                self.user = user
-            }
+        if let user = Auth.auth().currentUser {
+            self.user = user
+            switchToTabController()
+        } else {
+            
         }
         
         // Set icons into textfield

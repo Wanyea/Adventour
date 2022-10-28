@@ -52,7 +52,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
         
-        
                 
         
     }

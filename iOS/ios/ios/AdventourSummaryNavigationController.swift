@@ -15,7 +15,7 @@ class AdventourSummaryNavigationController: UINavigationController {
         super.viewDidLoad()
         print(locations)
         if let vc = self.viewControllers as? AdventourSummaryViewController {
-            vc.locations = self.locations
+            vc.ids = self.locations
         }
         // Do any additional setup after loading the view.
     }
@@ -24,7 +24,7 @@ class AdventourSummaryNavigationController: UINavigationController {
         print("Preparing...")
         if let dest = segue.destination as? AdventourSummaryViewController {
             print("IN PREPARE")
-            dest.locations = self.locations
+            dest.ids = self.locations
         }
     }
     /*

@@ -47,11 +47,14 @@
 		F0AA17E32901D052008B87DC /* BeaconPostNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AA17E22901D051008B87DC /* BeaconPostNavigationController.swift */; };
 		F0AB648B2908A219008657DB /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AB648A2908A219008657DB /* CosmosDistrib.swift */; };
 		F0AF72F5290247D8004F7618 /* BeaconBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AF72F4290247D8004F7618 /* BeaconBoardTableViewCell.swift */; };
+		F0BABEED290B29D000F3471E /* PassportHamburgerMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BABEEC290B29D000F3471E /* PassportHamburgerMenuViewController.swift */; };
 		F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0D227BD28C02B65003E3100 /* Assets.xcassets */; };
 		F0D8780028FB84040054C445 /* PrevAdventoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */; };
 		F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */; };
 		F0D8780428FB853F0054C445 /* PrevAdventoursDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780328FB853F0054C445 /* PrevAdventoursDataSource.swift */; };
 		F0D8780628FB85790054C445 /* BeaconsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8780528FB85790054C445 /* BeaconsDataSource.swift */; };
+		F0E17DDF2909FBA000FB05CA /* BeaconTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E17DDE2909FBA000FB05CA /* BeaconTableView.swift */; };
+		F0E17DE12909FBB200FB05CA /* AdventourTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E17DE02909FBB200FB05CA /* AdventourTableView.swift */; };
 		F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */; };
 		F0FC39802900E44C008389B7 /* AdventourSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FC397F2900E44C008389B7 /* AdventourSummaryViewController.swift */; };
 		F0FC39842900EB32008389B7 /* AdventourSummaryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FC39832900EB32008389B7 /* AdventourSummaryNavigationController.swift */; };
@@ -122,11 +125,14 @@
 		F0AA17E22901D051008B87DC /* BeaconPostNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconPostNavigationController.swift; sourceTree = "<group>"; };
 		F0AB648A2908A219008657DB /* CosmosDistrib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		F0AF72F4290247D8004F7618 /* BeaconBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconBoardTableViewCell.swift; sourceTree = "<group>"; };
+		F0BABEEC290B29D000F3471E /* PassportHamburgerMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportHamburgerMenuViewController.swift; sourceTree = "<group>"; };
 		F0D227BD28C02B65003E3100 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0D877FF28FB84040054C445 /* PrevAdventoursTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevAdventoursTableViewCell.swift; sourceTree = "<group>"; };
 		F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsTableViewCell.swift; sourceTree = "<group>"; };
 		F0D8780328FB853F0054C445 /* PrevAdventoursDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevAdventoursDataSource.swift; sourceTree = "<group>"; };
 		F0D8780528FB85790054C445 /* BeaconsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsDataSource.swift; sourceTree = "<group>"; };
+		F0E17DDE2909FBA000FB05CA /* BeaconTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconTableView.swift; sourceTree = "<group>"; };
+		F0E17DE02909FBB200FB05CA /* AdventourTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventourTableView.swift; sourceTree = "<group>"; };
 		F0EE1DC128F785FF00FF96E8 /* FinishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCell.swift; sourceTree = "<group>"; };
 		F0FC397F2900E44C008389B7 /* AdventourSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventourSummaryViewController.swift; sourceTree = "<group>"; };
 		F0FC39832900EB32008389B7 /* AdventourSummaryNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdventourSummaryNavigationController.swift; sourceTree = "<group>"; };
@@ -206,6 +212,7 @@
 				F0FC39832900EB32008389B7 /* AdventourSummaryNavigationController.swift */,
 				F0FC39852900ECC8008389B7 /* SummaryTableViewCell.swift */,
 				4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */,
+				F0BABEEC290B29D000F3471E /* PassportHamburgerMenuViewController.swift */,
 				4ADE978428F8E3370013F935 /* EditProfileViewController.swift */,
 				F0D8780128FB84180054C445 /* BeaconsTableViewCell.swift */,
 				F0D8780528FB85790054C445 /* BeaconsDataSource.swift */,
@@ -230,6 +237,8 @@
 				F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */,
 				F00A526D2900988E00A20922 /* api_key.swift */,
 				F0AB648A2908A219008657DB /* CosmosDistrib.swift */,
+				F0E17DDE2909FBA000FB05CA /* BeaconTableView.swift */,
+				F0E17DE02909FBB200FB05CA /* AdventourTableView.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -530,10 +539,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0BABEED290B29D000F3471E /* PassportHamburgerMenuViewController.swift in Sources */,
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
 				F0AA17E12901C699008B87DC /* BeaconPostTableViewCell.swift in Sources */,
 				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
 				2A9915662901BA56001C5955 /* BeaconBoardController.swift in Sources */,
+				F0E17DDF2909FBA000FB05CA /* BeaconTableView.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				F0AF72F5290247D8004F7618 /* BeaconBoardTableViewCell.swift in Sources */,
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
@@ -547,6 +558,7 @@
 				2AA16D8528DCBC9000A7D16D /* CongratsViewController.swift in Sources */,
 				F0FC39802900E44C008389B7 /* AdventourSummaryViewController.swift in Sources */,
 				2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */,
+				F0E17DE12909FBB200FB05CA /* AdventourTableView.swift in Sources */,
 				F07AFEEE28CAB46300A1B4B2 /* TabBarViewController.swift in Sources */,
 				4ADE978528F8E3380013F935 /* EditProfileViewController.swift in Sources */,
 				F0D8780428FB853F0054C445 /* PrevAdventoursDataSource.swift in Sources */,
