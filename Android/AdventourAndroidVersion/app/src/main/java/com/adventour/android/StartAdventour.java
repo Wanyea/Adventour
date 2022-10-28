@@ -474,6 +474,7 @@ public class StartAdventour extends AppCompatActivity {
     {
         JSONObject jsonBody = new JSONObject();
         String name, description, tel, website, address;
+        Double lat, lon;
         float rating;
 
         try {
@@ -523,6 +524,7 @@ public class StartAdventour extends AppCompatActivity {
             in.close();
 
             JSONObject responseData = new JSONObject(response.toString());
+            System.out.println(responseData); // Printing for dev testing
 
             try {
                 JSONObject data = (JSONObject) responseData.get("data");
@@ -567,8 +569,17 @@ public class StartAdventour extends AppCompatActivity {
                 prevLocation.clear();
                 prevLocation.add(name); // TESTING
 
+                try {
+                    JSONObject geocodes = (JSONObject) data.get("geocodes");
+                    JSONObject main = (JSONObject) geocodes.get("main");
 
-                GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, 28.602427, -81.200058)); // TODO: use real lat/long once Places API is working.
+                    lat = (Double) main.get("latitude");
+                    lon = (Double) main.get("longitude");
+                    GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, lat, lon));
+                } catch (Exception e) {
+                    lat = 1000.0;
+                    lon = 1000.0;
+                }
 
             } catch (Exception e) {
                 Log.e("START ADVENTOUR", "Exception", e);
