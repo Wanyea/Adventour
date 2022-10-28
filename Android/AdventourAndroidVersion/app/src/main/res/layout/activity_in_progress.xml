@@ -48,31 +48,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
         android:id="@+id/notepadImageView"
         android:layout_width="350dp"
         android:layout_height="420dp"
         android:src="@drawable/ic_notepad_paper"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mapFragment" />
+        app:layout_constraintTop_toBottomOf="@id/mapFragment"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        android:scaleType="fitStart"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/inProgressRV"
+    <ScrollView
+        android:id="@+id/inProgressScrollView"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="410dp"
         app:layout_constraintTop_toTopOf="@id/notepadImageView"
-        android:layout_marginTop="38dp"
-        android:maxHeight="200dp"
-        app:layout_constraintStart_toStartOf="@id/notepadImageView"/>
+        app:layout_constraintStart_toStartOf="@id/notepadImageView">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/inProgressRV"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inProgressRV"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="34dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/finishAdventourButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finish "
+                android:backgroundTint="@color/blue_main"
+                app:cornerRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inProgressRV" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLocationButton"
