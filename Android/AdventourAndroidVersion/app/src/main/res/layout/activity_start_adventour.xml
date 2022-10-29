@@ -454,7 +454,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/startAnAdventourEditText"
+                app:layout_constraintTop_toBottomOf="@id/autocomplete_fragment"
                 app:srcCompat="@drawable/ic_balloon_rope" />
 
             <ImageView
@@ -607,7 +607,39 @@
                 app:layout_constraintStart_toEndOf="@+id/notNowButton"
                 app:layout_constraintTop_toBottomOf="@id/ticketCardImageView" />
 
-            <EditText
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_round"
+                app:layout_constraintEnd_toEndOf="@id/autocomplete_fragment"
+                app:layout_constraintStart_toStartOf="@id/autocomplete_fragment"
+                app:layout_constraintTop_toTopOf="@id/autocomplete_fragment"
+                app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"/>
+
+            <fragment android:id="@+id/autocomplete_fragment"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/edit_text_round"
+
+                android:drawableLeft="@drawable/ic_magnifying_glass_icon"
+                android:drawableRight="@drawable/ic_location_icon"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/navy_main"
+                android:inputType="text"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+
+                app:layout_constraintEnd_toStartOf="@id/beginButton"
+                app:layout_constraintStart_toEndOf="@id/filterButton"
+                app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView"
+
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                tools:ignore="MissingClass" />
+
+            <!--<EditText
                 android:id="@+id/startAnAdventourEditText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -624,9 +656,10 @@
                 android:inputType="text"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+
                 app:layout_constraintEnd_toStartOf="@id/beginButton"
                 app:layout_constraintStart_toEndOf="@id/filterButton"
-                app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView" />-->
 
             <ImageButton
                 android:id="@+id/filterButton"
@@ -635,9 +668,9 @@
                 android:layout_marginStart="30dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@id/startAnAdventourEditText"
+                app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/startAnAdventourEditText"
+                app:layout_constraintTop_toTopOf="@id/autocomplete_fragment"
                 app:srcCompat="@drawable/ic_filter_icon"
                 app:tint="@color/blue_main" />
 
@@ -693,9 +726,9 @@
                 android:layout_marginEnd="30dp"
                 android:backgroundTint="@color/blue_main"
                 android:text="Go"
-                app:layout_constraintBottom_toBottomOf="@id/startAnAdventourEditText"
+                app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/startAnAdventourEditText" />
+                app:layout_constraintTop_toTopOf="@id/autocomplete_fragment" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,8 @@ package com.adventour.android;
 
 import androidx.collection.ArraySet;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class GlobalVars
@@ -12,4 +14,7 @@ public class GlobalVars
     public static ArrayList<InProgressModel> inProgressModelArrayList = new ArrayList<InProgressModel>();
     public static ArrayList<AdventourSummaryModel> adventourLocations = new ArrayList<AdventourSummaryModel>();
     public static ArrayList<BeaconPostModel> beaconModelArrayList = new ArrayList<BeaconPostModel>();
+    public static String selectedLocation = "";
+    public static String selectedLocationID = "";
+    public static LatLng locationCoordinates = new LatLng(0.0, 0.0);
 }
