@@ -1,30 +1,33 @@
 package com.adventour.android;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +35,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -41,9 +43,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class StartAdventour extends AppCompatActivity {
+
+    PlacesClient placesClient;
 
     ImageButton filterButton;
     Slider distanceSlider;
@@ -178,6 +184,43 @@ public class StartAdventour extends AppCompatActivity {
                 distance = (int) value;
             }
         });
+
+        // Initialize places client
+        Places.initialize(this, MAPS_API_KEY);
+        placesClient = Places.createClient(this);
+
+        // Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteFragment.setCountry("US");
+        autocompleteFragment.setActivityMode(AutocompleteActivityMode.OVERLAY);
+        autocompleteFragment.setHint("Enter location");
+        autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
+
+        if (!Objects.equals(GlobalVars.selectedLocation, "")) {
+            autocompleteFragment.setText(GlobalVars.selectedLocation);
+        }
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                GlobalVars.selectedLocation = place.getName();
+                GlobalVars.selectedLocationID = place.getId();
+                GlobalVars.locationCoordinates = place.getLatLng();
+                Log.i("Start Adventour", "Place: " + GlobalVars.selectedLocation + ", " + GlobalVars.selectedLocationID + ", " + GlobalVars.locationCoordinates);
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+                // TODO: Handle the error.
+                Log.i("Start Adventour", "An error occurred: " + status);
+            }
+        });
+
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) item -> {
@@ -473,16 +516,22 @@ public class StartAdventour extends AppCompatActivity {
     public void getLocation()
     {
         JSONObject jsonBody = new JSONObject();
-        String name, description, tel, website, address;
+        String name, description, tel, website, address, userLocLat, userLocLng, userLoc;
         Double lat, lon;
         float rating;
+
+        userLocLat = Double.toString(GlobalVars.locationCoordinates.latitude);
+        userLocLng = Double.toString(GlobalVars.locationCoordinates.longitude);
+        userLoc = userLocLat + "," + userLocLng;
+        Log.i("Ryan Output", userLoc);
 
         try {
 
             jsonBody.put("uid", user.getUid());
-            jsonBody.put("ll", "28.592474256389895,-81.3500389284532");
+            jsonBody.put("ll", userLoc);
             jsonBody.put("radius", getDistance());
             jsonBody.put("categories", getCategoriesString());
+            Log.i("Ryan Output", jsonBody.toString());
             //jsonBody.put("exclude", getExclude());
 
         } catch (JSONException e) {

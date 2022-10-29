@@ -14,11 +14,13 @@ import android.view.Window;
 import android.widget.Button;
 
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,12 +39,11 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     FirebaseUser user;
 
     FloatingActionButton finishAdventourButton;
-    Double lat = 0.0;
-    Double lon = 0.0;
-    String locationName = "Null Island";
+    Double lat = GlobalVars.inProgressModelArrayList.get(0).getLatitude();
+    Double lon = GlobalVars.inProgressModelArrayList.get(0).getLongitude();
+    String locationName = GlobalVars.inProgressModelArrayList.get(0).getName();
 
     FloatingActionButton addLocationButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -51,7 +52,6 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
         // Google map code
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
-
         mapFragment.getMapAsync(this);
         assert mapFragment != null;
         callback = this;
@@ -152,6 +152,9 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         map.clear();
-        map.addMarker(new MarkerOptions().position(new LatLng( lat, lon)).title(locationName));
+        MarkerOptions marker = new MarkerOptions().position(new LatLng(lat, lon)).title(locationName);
+        Marker mapMarker = map.addMarker(marker);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
+        mapMarker.showInfoWindow();
     }
 }
