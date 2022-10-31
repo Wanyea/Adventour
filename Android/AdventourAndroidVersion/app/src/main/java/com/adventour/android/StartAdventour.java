@@ -3,7 +3,8 @@ package com.adventour.android;
 import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -24,7 +25,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -37,6 +37,7 @@ import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,7 +61,7 @@ public class StartAdventour extends AppCompatActivity {
     TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
-    ImageView phoneImageView, globeImageView;
+    ImageView phoneImageView, globeImageView, previewImageView;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -130,6 +131,7 @@ public class StartAdventour extends AppCompatActivity {
 
         phoneImageView = (ImageView) findViewById(R.id.phoneImageView);
         globeImageView = (ImageView) findViewById(R.id.globeImageView);
+        previewImageView = (ImageView) findViewById(R.id.previewImageView);
 
         distanceSlider = findViewById(R.id.distanceSlider);
 
@@ -169,12 +171,12 @@ public class StartAdventour extends AppCompatActivity {
         notNowButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               GlobalVars.exclude.add(currentFSQId);
+               GlobalVars.excludes.add(currentFSQId);
                getLocation();
                if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
                if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
                if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
-               Log.d("EXCLUDE: ", String.join(",", GlobalVars.exclude));
+               Log.d("EXCLUDE: ", String.join(",", GlobalVars.excludes));
            }
         });
 
@@ -540,7 +542,7 @@ public class StartAdventour extends AppCompatActivity {
             jsonBody.put("radius", getDistance());
             jsonBody.put("categories", getCategoriesString());
             Log.i("Ryan Output", jsonBody.toString());
-            jsonBody.put("exclude", getExclude());
+            jsonBody.put("excludes", getExclude());
 
         } catch (JSONException e) {
             Log.e("Start Adventour", "exception", e);
@@ -617,6 +619,26 @@ public class StartAdventour extends AppCompatActivity {
                     Log.e("No address for location", "Exception", e);
                 }
 
+                try {
+                    JSONArray photos = (JSONArray) data.get("photos");
+                    String prefix = photos.getJSONObject(0).get("prefix").toString();
+                    String suffix = photos.getJSONObject(0).get("suffix").toString();
+
+                    URL imageURL = new URL(prefix + "original" + suffix);
+                    HttpURLConnection connection = (HttpURLConnection) imageURL.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    Log.e("Bitmap","returned");
+                    Log.d("imageURL", imageURL.toString());
+                    previewImageView.setImageBitmap(myBitmap);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description + address);
                 populateCard(name, rating, tel, website, description);
                 Log.d("string val",  String.valueOf(rating));
@@ -655,6 +677,8 @@ public class StartAdventour extends AppCompatActivity {
         ratingBar.setVisibility(View.VISIBLE);
         phoneImageView.setVisibility(View.VISIBLE);
         globeImageView.setVisibility(View.VISIBLE);
+        previewImageView.setVisibility(View.VISIBLE);
+
         notNowButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_variant));
         yesButton.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_main));
         notNowButton.setEnabled(true);
@@ -778,9 +802,9 @@ public class StartAdventour extends AppCompatActivity {
         return (int)(distance * 1609.344);
     } // Miles --> Meters
 
-    public String getExclude()
+    public JSONArray getExclude()
     {
-        return String.join(",", GlobalVars.exclude);
+        return new JSONArray(GlobalVars.excludes);
     }
 
     public void switchToInProgress()

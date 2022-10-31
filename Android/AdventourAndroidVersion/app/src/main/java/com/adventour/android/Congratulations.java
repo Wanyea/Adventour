@@ -58,7 +58,7 @@ public class Congratulations extends AppCompatActivity {
                 // Get Start Adventour Activity for next Adventour.
                 GlobalVars.adventourLocations.clear();
                 GlobalVars.adventourFSQIds.clear();
-                GlobalVars.exclude.clear();
+                GlobalVars.excludes.clear();
                 GlobalVars.inProgressModelArrayList.clear();
                 GlobalVars.beaconModelArrayList.clear();
                 switchToStartAdventour();
