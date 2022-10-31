@@ -19,10 +19,6 @@ import java.util.ArrayList;
 
 public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyCallback*/ {
 
-    Context context;
-    LinearLayout linearLayout;
-    Button cardButton;
-
     FirebaseAuth auth;
     FirebaseUser user;
 

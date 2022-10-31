@@ -696,6 +696,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/noLocationsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No locations available the sentiments you chose! Please pick new ones and try again!"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                />
+
+
             <!--
             <Button
                 android:id="@+id/sampleButton"

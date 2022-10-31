@@ -40,6 +40,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -58,7 +59,7 @@ public class StartAdventour extends AppCompatActivity {
 
     ImageButton filterButton;
     Slider distanceSlider;
-    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
+    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView, noLocationTextView;
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
     ImageView phoneImageView, globeImageView, previewImageView;
@@ -108,6 +109,7 @@ public class StartAdventour extends AppCompatActivity {
         phoneTextView = (TextView) findViewById(R.id.phoneNumberTextView);
         websiteTextView = (TextView) findViewById(R.id.websiteTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        noLocationTextView = (TextView) findViewById(R.id.noLocationsTextView);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
@@ -638,7 +640,6 @@ public class StartAdventour extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description + address);
                 populateCard(name, rating, tel, website, description);
                 Log.d("string val",  String.valueOf(rating));
@@ -664,6 +665,7 @@ public class StartAdventour extends AppCompatActivity {
             }
 
         } catch(Exception e) {
+            noLocationTextView.setVisibility(View.VISIBLE);
             Log.e("START ADVENTOUR", "Exception", e);
         }
     }
@@ -678,6 +680,7 @@ public class StartAdventour extends AppCompatActivity {
         phoneImageView.setVisibility(View.VISIBLE);
         globeImageView.setVisibility(View.VISIBLE);
         previewImageView.setVisibility(View.VISIBLE);
+        noLocationTextView.setVisibility(View.INVISIBLE);
 
         notNowButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_variant));
         yesButton.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_main));
