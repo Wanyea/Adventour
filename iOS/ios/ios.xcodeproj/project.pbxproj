@@ -32,6 +32,8 @@
 		4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */; };
 		4A8D880328F3414700E722D4 /* AdventourSummaryPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */; };
 		4ADE978528F8E3380013F935 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE978428F8E3370013F935 /* EditProfileViewController.swift */; };
+		4AEBFF5E2910257000358A22 /* ProfilePicView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AEBFF5D2910257000358A22 /* ProfilePicView.storyboard */; };
+		4AEBFF622910265000358A22 /* ProfilePicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBFF612910265000358A22 /* ProfilePicViewController.swift */; };
 		6313BCCD291F926F18840E70 /* libPods-iosTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 488E918777FDFEF13F7417BA /* libPods-iosTests.a */; };
 		648F6CF18E04C10683B0D2C9 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D389420CBC8D0300144DB30C /* libPods-ios.a */; };
 		F00A526E2900988E00A20922 /* api_key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A526D2900988E00A20922 /* api_key.swift */; };
@@ -109,6 +111,8 @@
 		4A7FD20B28C958D3001C33DF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4A8D880228F3414700E722D4 /* AdventourSummaryPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdventourSummaryPage.storyboard; sourceTree = "<group>"; };
 		4ADE978428F8E3370013F935 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		4AEBFF5D2910257000358A22 /* ProfilePicView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfilePicView.storyboard; sourceTree = "<group>"; };
+		4AEBFF612910265000358A22 /* ProfilePicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicViewController.swift; sourceTree = "<group>"; };
 		6D1064C82C6C0306F230F90F /* Pods-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.release.xcconfig"; path = "Target Support Files/Pods-iosTests/Pods-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		78AFF25B18EF3DABD017C458 /* Pods-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-iosTests/Pods-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		94CA220B911EDFE61151AFD3 /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
@@ -239,6 +243,8 @@
 				F0AB648A2908A219008657DB /* CosmosDistrib.swift */,
 				F0E17DDE2909FBA000FB05CA /* BeaconTableView.swift */,
 				F0E17DE02909FBB200FB05CA /* AdventourTableView.swift */,
+				4AEBFF5D2910257000358A22 /* ProfilePicView.storyboard */,
+				4AEBFF612910265000358A22 /* ProfilePicViewController.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -401,6 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AEBFF5E2910257000358A22 /* ProfilePicView.storyboard in Resources */,
 				2A9EBF6928B5823B009ED151 /* LaunchScreen.storyboard in Resources */,
 				F0D227BE28C02B65003E3100 /* Assets.xcassets in Resources */,
 				2AAB4E2C28E72BC700868DB2 /* BeaconPost.storyboard in Resources */,
@@ -544,6 +551,7 @@
 				F0AA17E12901C699008B87DC /* BeaconPostTableViewCell.swift in Sources */,
 				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
 				2A9915662901BA56001C5955 /* BeaconBoardController.swift in Sources */,
+				4AEBFF622910265000358A22 /* ProfilePicViewController.swift in Sources */,
 				F0E17DDF2909FBA000FB05CA /* BeaconTableView.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				F0AF72F5290247D8004F7618 /* BeaconBoardTableViewCell.swift in Sources */,
