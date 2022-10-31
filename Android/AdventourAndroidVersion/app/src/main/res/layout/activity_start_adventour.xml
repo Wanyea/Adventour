@@ -475,7 +475,8 @@
                 android:src="@drawable/sample_4by3"
                 app:layout_constraintBottom_toBottomOf="@id/ticketCardImageView"
                 app:layout_constraintStart_toStartOf="@id/ticketCardImageView"
-                app:layout_constraintTop_toTopOf="@id/ticketCardImageView" />
+                app:layout_constraintTop_toTopOf="@id/ticketCardImageView"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/nameTextView"
@@ -489,7 +490,8 @@
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/previewImageView"
-                app:layout_constraintTop_toTopOf="@id/previewImageView" />
+                app:layout_constraintTop_toTopOf="@id/previewImageView"
+                android:visibility="invisible" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -500,7 +502,8 @@
                 android:numStars="5"
                 android:rating="5"
                 app:layout_constraintStart_toStartOf="@id/nameTextView"
-                app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+                app:layout_constraintTop_toBottomOf="@id/nameTextView"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/distanceTextView"
@@ -522,7 +525,8 @@
                 android:src="@drawable/ic_phone_icon"
                 app:layout_constraintStart_toStartOf="@id/nameTextView"
                 app:layout_constraintTop_toBottomOf="@id/ratingBar"
-                app:tint="@color/blue_main" />
+                app:tint="@color/blue_main"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/phoneNumberTextView"
@@ -537,7 +541,8 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/phoneImageView"
                 app:layout_constraintStart_toEndOf="@id/phoneImageView"
-                app:layout_constraintTop_toTopOf="@id/phoneImageView" />
+                app:layout_constraintTop_toTopOf="@id/phoneImageView"
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/globeImageView"
@@ -547,7 +552,8 @@
                 android:src="@drawable/ic_globe_icon"
                 app:layout_constraintStart_toStartOf="@id/nameTextView"
                 app:layout_constraintTop_toBottomOf="@id/phoneImageView"
-                app:tint="@color/blue_main" />
+                app:tint="@color/blue_main"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/websiteTextView"
@@ -563,7 +569,8 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/globeImageView"
                 app:layout_constraintStart_toEndOf="@id/globeImageView"
-                app:layout_constraintTop_toTopOf="@id/globeImageView" />
+                app:layout_constraintTop_toTopOf="@id/globeImageView"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/descriptionTextView"
@@ -575,7 +582,8 @@
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="@id/nameTextView"
-                app:layout_constraintTop_toBottomOf="@id/globeImageView" />
+                app:layout_constraintTop_toBottomOf="@id/globeImageView"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/notNowButton"
@@ -583,13 +591,14 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/red_main"
+                android:backgroundTint="@color/quantum_grey"
                 android:text="Not Now"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="120dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ticketCardImageView" />
+                app:layout_constraintTop_toBottomOf="@id/ticketCardImageView"
+                android:enabled="false" />
 
             <Button
                 android:id="@+id/yesButton"
@@ -598,14 +607,15 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
-                android:backgroundTint="@color/blue_main"
+                android:backgroundTint="@color/quantum_grey"
                 android:text="Yes"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="120dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/notNowButton"
-                app:layout_constraintTop_toBottomOf="@id/ticketCardImageView" />
+                app:layout_constraintTop_toBottomOf="@id/ticketCardImageView"
+                android:enabled="false" />
 
             <ImageView
                 android:layout_width="0dp"

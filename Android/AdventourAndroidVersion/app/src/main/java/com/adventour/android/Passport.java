@@ -156,52 +156,6 @@ public class Passport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        // Build AlertDialog that will alert users when they try to log out account.
-        AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
-        logOutAlertBuilder.setMessage("Are you sure you want to log out?");
-        logOutAlertBuilder.setCancelable(true);
-
-        logOutAlertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        FirebaseAuth.getInstance().signOut();
-                        switchToLoggedOut();
-                    }
-                });
-
-        logOutAlertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        // Build AlertDialog that will alert users when they try to delete their account.
-        AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
-        deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-        deleteAccountAlertBuilder.setCancelable(true);
-
-        deleteAccountAlertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        // DELETE USER DOCUMENT IN FIREBASE.
-                        // switchToLoggedOut();
-                    }
-                });
-
-        deleteAccountAlertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
         switch(item.getItemId())
         {
             case R.id.adventourTOS:
@@ -209,11 +163,56 @@ public class Passport extends AppCompatActivity {
                 return true;
 
             case R.id.logOut:
+                // Build AlertDialog that will alert users when they try to log out account.
+                AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
+                logOutAlertBuilder.setMessage("Are you sure you want to log out?");
+                logOutAlertBuilder.setCancelable(true);
+
+                logOutAlertBuilder.setPositiveButton(
+                        R.string.Yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                FirebaseAuth.getInstance().signOut();
+                                switchToLoggedOut();
+                            }
+                        });
+
+                logOutAlertBuilder.setNegativeButton(
+                        R.string.No,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
                 AlertDialog logOutAlert = logOutAlertBuilder.create();
                 logOutAlert.show();
                 return true;
 
             case R.id.deleteAccount:
+                // Build AlertDialog that will alert users when they try to delete their account.
+                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
+                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
+                deleteAccountAlertBuilder.setCancelable(true);
+
+                deleteAccountAlertBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                // DELETE USER DOCUMENT IN FIREBASE.
+                                // switchToLoggedOut();
+                            }
+                        });
+
+                deleteAccountAlertBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
                 AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
                 deleteAccountAlert.show();
                 return true;
@@ -223,7 +222,8 @@ public class Passport extends AppCompatActivity {
     }
 
 
-    public void newLitBeaconCard() {
+    public void newLitBeaconCard()
+    {
 
     }
 
@@ -369,7 +369,7 @@ public class Passport extends AppCompatActivity {
                 allData.put("locations", results);
                 previousAdventours.add(allData);
 
-                System.out.println(results); // Printing for dev testing
+                Log.d("PASSPORT ACTIVITY", results.toString()); // Printing for dev testing
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e("PASSPORT", e.toString());

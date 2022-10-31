@@ -3,6 +3,8 @@ package com.adventour.android;
 import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -56,6 +60,7 @@ public class StartAdventour extends AppCompatActivity {
     TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
+    ImageView phoneImageView, globeImageView;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -122,6 +127,9 @@ public class StartAdventour extends AppCompatActivity {
         starvingSwitch = findViewById(R.id.starvingSwitch);
         snackSwitch = findViewById(R.id.snackSwitch);
         twentyOnePlusSwitch = findViewById(R.id.twentyonePlusSwitch);
+
+        phoneImageView = (ImageView) findViewById(R.id.phoneImageView);
+        globeImageView = (ImageView) findViewById(R.id.globeImageView);
 
         distanceSlider = findViewById(R.id.distanceSlider);
 
@@ -532,7 +540,7 @@ public class StartAdventour extends AppCompatActivity {
             jsonBody.put("radius", getDistance());
             jsonBody.put("categories", getCategoriesString());
             Log.i("Ryan Output", jsonBody.toString());
-            //jsonBody.put("exclude", getExclude());
+            jsonBody.put("exclude", getExclude());
 
         } catch (JSONException e) {
             Log.e("Start Adventour", "exception", e);
@@ -615,7 +623,6 @@ public class StartAdventour extends AppCompatActivity {
                 GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description));
                 GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
 
-                prevLocation.clear();
                 prevLocation.add(name); // TESTING
 
                 try {
@@ -641,6 +648,18 @@ public class StartAdventour extends AppCompatActivity {
 
     public void populateCard(String name, float rating, String tel, String website, String description)
     {
+        nameTextView.setVisibility(View.VISIBLE);
+        phoneTextView.setVisibility(View.VISIBLE);
+        websiteTextView.setVisibility(View.VISIBLE);
+        descriptionTextView.setVisibility(View.VISIBLE);
+        ratingBar.setVisibility(View.VISIBLE);
+        phoneImageView.setVisibility(View.VISIBLE);
+        globeImageView.setVisibility(View.VISIBLE);
+        notNowButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_variant));
+        yesButton.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_main));
+        notNowButton.setEnabled(true);
+        yesButton.setEnabled(true);
+
         nameTextView.setText(name);
         phoneTextView.setText(tel);
         websiteTextView.setText(website);
@@ -756,8 +775,8 @@ public class StartAdventour extends AppCompatActivity {
 
     public Integer getDistance()
     {
-        return (int)(distance * 1609.344); // Miles --> Meters
-    }
+        return (int)(distance * 1609.344);
+    } // Miles --> Meters
 
     public String getExclude()
     {
@@ -775,6 +794,7 @@ public class StartAdventour extends AppCompatActivity {
     {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        Log.d("AUTH TEST", user.getUid());
 
         if (user == null)
         {

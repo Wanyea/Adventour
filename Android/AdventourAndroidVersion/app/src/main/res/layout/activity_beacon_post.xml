@@ -36,6 +36,13 @@
         app:layout_constraintEnd_toEndOf="@id/bgImageView"
         app:layout_constraintBottom_toTopOf="@id/bgImageView"/>
 
+    <Button
+        android:id="@+id/postBeaconButton"
+        android:text="Post!"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/privateSwitch" />
+
     <ImageView
         android:id="@+id/bgImageView"
         android:layout_width="380dp"

@@ -213,16 +213,16 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPasswordEditText"
-                android:inputType="textPassword"
                 style="@style/AdventourEditTextLoginSignup"
+                android:drawableLeft="@drawable/ic_lock_icon"
+
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-                android:scrollHorizontally="true"
-
-                android:drawableLeft="@drawable/ic_lock_icon"
-                android:hint="ConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
             <TextView
                 android:id="@+id/confirmPasswordSignupErrorTextView"

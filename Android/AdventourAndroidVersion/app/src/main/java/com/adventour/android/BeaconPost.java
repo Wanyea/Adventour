@@ -31,19 +31,18 @@ import java.util.Map;
 public class BeaconPost extends AppCompatActivity {
 
     TextView beaconPostDate;
-    FloatingActionButton postBeaconButton;
+    Button postBeaconButton;
     ImageButton editSaveButton;
     EditText beaconTitleEditText, beaconIntroEditText;
     boolean isEditMode = true;
     String titleString, introString;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacon_post);
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
-        postBeaconButton = (FloatingActionButton) findViewById(R.id.postBeaconButton);
+        postBeaconButton = (Button) findViewById(R.id.postBeaconButton);
         editSaveButton = (ImageButton) findViewById(R.id.editSaveButton);
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
@@ -66,7 +65,8 @@ public class BeaconPost extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
-               postBeacon();
+               postToBeaconBoard();
+               storeBeacon();
                switchToHome();
            }
         });
@@ -95,7 +95,7 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
-    public void postBeacon()
+    public void postToBeaconBoard()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -106,6 +106,10 @@ public class BeaconPost extends AppCompatActivity {
         newBeacon.put("dateCreated", AdventourUtils.formatBirthdateForDB(today));
         newBeacon.put("locations", GlobalVars.adventourFSQIds);
         newBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
+        newBeacon.put("uid", user.getUid());
+        newBeacon.put("title", beaconTitleEditText.getText().toString());
+        newBeacon.put("intro", beaconIntroEditText.getText().toString());
+
 
         //TODO: fields for beacon title and intro???
 
@@ -117,13 +121,50 @@ public class BeaconPost extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Beacon Post", "DocumentSnapshot written with ID: " + documentReference.getId());
+                        Log.d("Beacon Posted", "DocumentSnapshot written with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Beacon Post", "Error adding document", e);
+                        Log.w("Failed to post beacon", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void storeBeacon()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Calendar today = Calendar.getInstance();
+        Map<String, Object> addBeacon = new HashMap<>();
+        addBeacon.put("dateCreated", AdventourUtils.formatBirthdateForDB(today));
+        addBeacon.put("locations", GlobalVars.adventourFSQIds);
+        addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
+        addBeacon.put("uid", user.getUid());
+        addBeacon.put("title", beaconTitleEditText.getText().toString());
+        addBeacon.put("intro", beaconIntroEditText.getText().toString());
+
+
+        //TODO: fields for beacon title and intro???
+
+        db.collection("Adventourists")
+                .document(user.getUid())
+                .collection("beacons")
+                .add(addBeacon)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Beacon added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Failed to add beacon", "Error adding document", e);
                     }
                 });
     }

@@ -26,4 +26,8 @@
     <string name="never_recommend">Never Recommend</string>
     <string name="private_account">Private Account</string>
     <string name="settings_menu">settings menu</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+
+
 </resources>
