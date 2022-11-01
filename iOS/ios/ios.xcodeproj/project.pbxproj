@@ -10,7 +10,7 @@
 		00C661E04FC31A36BEEAA295 /* libPods-ios-iosUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C34FC48D8CC9E2107D752B9A /* libPods-ios-iosUITests.a */; };
 		2A7F520928CD190400F6D30E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7F520828CD190400F6D30E /* StartViewController.swift */; };
 		2A94FB8428F7C69D006B5291 /* InProgress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A94FB8328F7C69D006B5291 /* InProgress.storyboard */; };
-		2A9915662901BA56001C5955 /* BeaconBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9915652901BA56001C5955 /* BeaconBoardController.swift */; };
+		2A9915662901BA56001C5955 /* BeaconBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9915652901BA56001C5955 /* BeaconBoardViewController.swift */; };
 		2A9EBF5D28B58239009ED151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5C28B58239009ED151 /* AppDelegate.swift */; };
 		2A9EBF5F28B58239009ED151 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */; };
 		2A9EBF6128B58239009ED151 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EBF6028B58239009ED151 /* LoggedOutViewController.swift */; };
@@ -37,6 +37,7 @@
 		F00A526E2900988E00A20922 /* api_key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A526D2900988E00A20922 /* api_key.swift */; };
 		F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */; };
 		F038D4AF28C96FBD006D953A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */; };
+		F059108F2910735200F6E7AC /* BeaconPostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F059108E2910735200F6E7AC /* BeaconPostTextView.swift */; };
 		F066BFB528FB4875004DBCD1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB428FB4875004DBCD1 /* FirebaseAuth */; };
 		F066BFB728FB4875004DBCD1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB628FB4875004DBCD1 /* FirebaseFirestore */; };
 		F066BFB928FB4875004DBCD1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F066BFB828FB4875004DBCD1 /* FirebaseFirestoreSwift */; };
@@ -81,7 +82,7 @@
 /* Begin PBXFileReference section */
 		2A7F520828CD190400F6D30E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		2A94FB8328F7C69D006B5291 /* InProgress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InProgress.storyboard; sourceTree = "<group>"; };
-		2A9915652901BA56001C5955 /* BeaconBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconBoardController.swift; sourceTree = "<group>"; };
+		2A9915652901BA56001C5955 /* BeaconBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconBoardViewController.swift; sourceTree = "<group>"; };
 		2A9EBF5928B58238009ED151 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A9EBF5C28B58239009ED151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A9EBF5E28B58239009ED151 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		F00A526D2900988E00A20922 /* api_key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = api_key.swift; sourceTree = "<group>"; };
 		F015098B28FF8CC600E4FC32 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		F038D4AE28C96FBD006D953A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F059108E2910735200F6E7AC /* BeaconPostTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconPostTextView.swift; sourceTree = "<group>"; };
 		F07AFEED28CAB46300A1B4B2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F0A9D67428ECD4920028A718 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
 		F0AA17E02901C699008B87DC /* BeaconPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconPostTableViewCell.swift; sourceTree = "<group>"; };
@@ -221,7 +223,8 @@
 				F0AA17E22901D051008B87DC /* BeaconPostNavigationController.swift */,
 				2AAB4E2D28E72C0000868DB2 /* BeaconPostViewController.swift */,
 				F0AA17E02901C699008B87DC /* BeaconPostTableViewCell.swift */,
-				2A9915652901BA56001C5955 /* BeaconBoardController.swift */,
+				F059108E2910735200F6E7AC /* BeaconPostTextView.swift */,
+				2A9915652901BA56001C5955 /* BeaconBoardViewController.swift */,
 				F0AF72F4290247D8004F7618 /* BeaconBoardTableViewCell.swift */,
 				2A9EBF6728B5823B009ED151 /* LaunchScreen.storyboard */,
 				2A9EBF6228B58239009ED151 /* Main.storyboard */,
@@ -540,10 +543,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0BABEED290B29D000F3471E /* PassportHamburgerMenuViewController.swift in Sources */,
+				F059108F2910735200F6E7AC /* BeaconPostTextView.swift in Sources */,
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
 				F0AA17E12901C699008B87DC /* BeaconPostTableViewCell.swift in Sources */,
 				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
-				2A9915662901BA56001C5955 /* BeaconBoardController.swift in Sources */,
+				2A9915662901BA56001C5955 /* BeaconBoardViewController.swift in Sources */,
 				F0E17DDF2909FBA000FB05CA /* BeaconTableView.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				F0AF72F5290247D8004F7618 /* BeaconBoardTableViewCell.swift in Sources */,
@@ -746,6 +750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCS76ZYPZX;
@@ -765,6 +770,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adventour.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -778,6 +784,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCS76ZYPZX;
@@ -797,6 +804,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adventour.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

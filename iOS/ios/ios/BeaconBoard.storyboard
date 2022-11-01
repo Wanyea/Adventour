@@ -194,11 +194,11 @@
             </objects>
             <point key="canvasLocation" x="934.78260869565224" y="82.366071428571431"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Beacons-->
         <scene sceneID="BNY-Z4-K8K">
             <objects>
                 <navigationController storyboardIdentifier="BeaconBoardNav" automaticallyAdjustsScrollViewInsets="NO" id="O6r-xq-PMT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="beacon_icon" selectedImage="beacon_icon" id="Y2D-aD-rh9"/>
+                    <tabBarItem key="tabBarItem" title="Beacons" image="beacon_icon" selectedImage="beacon_icon" id="Y2D-aD-rh9"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KPV-GK-mvY">

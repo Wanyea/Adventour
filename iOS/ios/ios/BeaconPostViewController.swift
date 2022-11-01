@@ -4,6 +4,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 extension UIImageView {
+    
     @IBInspectable var borderColor : UIColor? {
         get{
             if let color = layer.borderColor{
@@ -14,6 +15,42 @@ extension UIImageView {
             }
         }
         set {layer.borderColor = newValue?.cgColor}
+    }
+}
+
+extension UITextView {
+    @IBInspectable var borderColor: UIColor? {
+        get {
+            if let color = layer.borderColor{
+                return UIColor(cgColor: color)
+            } else{
+                return nil
+            }
+        }
+        
+        set {
+            layer.borderColor = newValue?.cgColor
+        }
+    }
+    
+    @IBInspectable var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+    
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        
+        set {
+            layer.cornerRadius = newValue
+        }
     }
 }
 
@@ -52,11 +89,12 @@ extension UIImageView {
 
 class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
         
-    @IBOutlet weak var beaconTitle: UITextView!
-    @IBOutlet weak var beaconIntro: UITextView!
+    @IBOutlet weak var beaconTitle: BeaconPostTextView!
+    @IBOutlet weak var beaconIntro: BeaconPostTextView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var dateCreated: UILabel!
     @IBOutlet weak var locationsTable: UITableView!
+    @IBOutlet weak var privateLabel: UILabel!
     @IBOutlet weak var privateSwitch: ScaleSwitch!
     @IBOutlet weak var locationPhoto1: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -66,6 +104,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     var beaconInfo: [String: Any] = [:]
     var user: User!
     var locations: [[String: Any]] = []
+    var locationDescriptions: [String]!
     var ids: [String] = []
     var beaconLocation: String!
     var nickname: String!
@@ -103,10 +142,17 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         print("The text view began editing")
+        if textView is BeaconPostTextView {
+            
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         print("The text view stopped editing.")
+        if let description = textView as? BeaconPostTextView {
+            self.locationDescriptions[description.idx] = description.text
+            print(self.locationDescriptions)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -134,11 +180,48 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = locationsTable.dequeueReusableCell(withIdentifier: "BeaconPostTableCell", for: indexPath) as! BeaconPostTableViewCell
         // Load location description
         cell.descriptionTextView.delegate = self
-        if let description = locations[indexPath.item]["description"] as? String {
-            cell.descriptionTextView.text = description
-            
+        cell.descriptionTextView.idx = indexPath.item
+        if self.isEditing {
+            cell.descriptionTextView.layer.borderWidth = 1
+            cell.descriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
+            cell.descriptionTextView.layer.backgroundColor = UIColor.systemGray6.cgColor
+            cell.descriptionTextView.layer.cornerRadius = 7
         } else {
-            cell.descriptionTextView.text = "There is no listed description for this place."
+            cell.descriptionTextView.layer.borderWidth = 0
+            cell.descriptionTextView.layer.borderColor = UIColor.white.cgColor
+            cell.descriptionTextView.layer.backgroundColor = UIColor.white.cgColor
+            cell.descriptionTextView.layer.cornerRadius = 0
+        }
+        if let locationDescriptions = self.locationDescriptions {
+            if  locationDescriptions[indexPath.item] != "" {
+                cell.descriptionTextView.text = locationDescriptions[indexPath.item]
+            } else {
+                if let description = locations[indexPath.item]["description"] as? String {
+                    cell.descriptionTextView.text = description
+                    
+                } else {
+                    cell.descriptionTextView.text = "There is no listed description for this place."
+                }
+            }
+        } else if let locationDescriptions = beaconInfo["locationDescriptions"] as? [String] {
+            
+            if  locationDescriptions[indexPath.item] != "" {
+                cell.descriptionTextView.text = locationDescriptions[indexPath.item]
+            } else {
+                if let description = locations[indexPath.item]["description"] as? String {
+                    cell.descriptionTextView.text = description
+                    
+                } else {
+                    cell.descriptionTextView.text = "There is no listed description for this place."
+                }
+            }
+        } else {
+            if let description = locations[indexPath.item]["description"] as? String {
+                cell.descriptionTextView.text = description
+                
+            } else {
+                cell.descriptionTextView.text = "There is no listed description for this place."
+            }
         }
         if let rating = locations[indexPath.item]["rating"] as? Double {
             cell.cosmosView.rating = rating / 2
@@ -162,7 +245,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.nameLabel.text = "No Name Available"
         }
         // Load location photos
-        // TODO: Load two addition photos
+        let sem = DispatchSemaphore(value: 0)
         if let photos = locations[indexPath.item]["photos"] as? [[String: Any]] {
             if photos.count > 0 {
                 let photo = photos[0]
@@ -170,13 +253,36 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 if let prefix = photo["prefix"] as? String {
                     if let suffix = photo["suffix"] as? String {
                         let url = prefix + "original" + suffix
-                        cell.locationPhoto1.loadFrom(URLAddress: url)
+                        cell.locationPhoto1.loadFrom(URLAddress: url, semaphore: sem)
                     }
                 }
                 
             }
+            if photos.count > 1 {
+                let photo = photos[1]
+                
+                if let prefix = photo["prefix"] as? String {
+                    if let suffix = photo["suffix"] as? String {
+                        let url = prefix + "original" + suffix
+                        cell.locationPhoto2.loadFrom(URLAddress: url, semaphore: sem)
+                    }
+                }
+                
+            }
+            if photos.count > 2 {
+                let photo = photos[2]
+                
+                if let prefix = photo["prefix"] as? String {
+                    if let suffix = photo["suffix"] as? String {
+                        let url = prefix + "original" + suffix
+                        cell.locationPhoto3.loadFrom(URLAddress: url, semaphore: sem)
+                    }
+                }
+                
+            }
+            
         }
-        
+        sem.wait()
         return cell
     }
     
@@ -229,7 +335,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func saveBeaconData() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YYYY"
-        
+        print("DESCRIPTIONS: ", self.locationDescriptions)
         if self.source is ProfileViewController {
             print("Attempting to update beacon info...")
             print("profile beacon title: ", self.beaconTitle.text)
@@ -237,6 +343,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             let beacon: [String: Any] = [
                 "title": self.beaconTitle.text!,
                 "intro": self.beaconIntro.text!,
+                "locationDescriptions": self.locationDescriptions,
                 "dateUpdated": Date(),
                 "isPrivate": self.privateSwitch.isOn,
             ]
@@ -265,6 +372,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                         print("Document successfully written!")
                     }
                 }
+            self.locationsTable.reloadData()
         } else {
             print("beacon title: ", self.beaconTitle.text)
             print("profile nickname: ", self.nickname)
@@ -272,6 +380,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 "title": self.beaconTitle.text,
                 "intro": self.beaconIntro.text,
                 "locations": self.ids,
+                "locationDescriptions": self.locationDescriptions,
                 "beaconLocation": self.beaconLocation,
                 "dateUpdated": Date(),
                 "dateCreated": beaconInfo["dateCreated"],
@@ -304,6 +413,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                         print("Document successfully written!")
                     }
                 }
+            self.locationsTable.reloadData()
         }
         
         
@@ -384,7 +494,17 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func endEditingBeaconPost() {
         self.beaconTitle.isEditable = false
+        self.beaconTitle.layer.borderWidth = 0
+        self.beaconTitle.layer.borderColor = UIColor.white.cgColor
+        self.beaconTitle.layer.backgroundColor = UIColor.white.cgColor
+        self.beaconTitle.layer.cornerRadius = 0
+        
         self.beaconIntro.isEditable = false
+        self.beaconIntro.layer.borderWidth = 0
+        self.beaconIntro.layer.borderColor = UIColor.white.cgColor
+        self.beaconIntro.layer.backgroundColor = UIColor.white.cgColor
+        self.beaconIntro.layer.cornerRadius = 0
+        
         self.privateSwitch.isEnabled = false
         self.editButton.isHidden = false
         self.editButton.setTitle("✏️", for: UIControl.State.normal)
@@ -393,7 +513,18 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func startEditingBeaconPost() {
         self.beaconTitle.isEditable = true
+
+        self.beaconTitle.layer.borderWidth = 1
+        self.beaconTitle.layer.borderColor = UIColor.systemGray5.cgColor
+        self.beaconTitle.layer.backgroundColor = UIColor.systemGray6.cgColor
+        self.beaconTitle.layer.cornerRadius = 7
+        
         self.beaconIntro.isEditable = true
+        self.beaconIntro.layer.borderWidth = 1
+        self.beaconIntro.layer.borderColor = UIColor.systemGray5.cgColor
+        self.beaconIntro.layer.backgroundColor = UIColor.systemGray6.cgColor
+        self.beaconIntro.layer.cornerRadius = 7
+        
         self.privateSwitch.isEnabled = true
         self.editButton.isHidden = false
         self.editButton.setTitle("💾", for: UIControl.State.normal)
@@ -401,14 +532,39 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func prepareLocationsTable() {
+        if self.locationDescriptions != nil {
+            print("ALREADY GOT DEM DESCRIPTIONS")
+        }
+        else if let locationDescriptions = beaconInfo["locationDescriptions"] as? [String] {
+            self.locationDescriptions = locationDescriptions
+        } else {
+            self.locationDescriptions = Array(repeating: "", count: self.locations.count)
+        }
+        print(self.locationDescriptions)
         self.locationsTable.reloadData()
         self.activityIndicator?.stopAnimating()
         self.locationsTable.isHidden = false
     }
     
     func loadBeaconInfo() {
-        loadDateCreated()
-        if self.source is ProfileViewController {
+        // Set up date formatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/YYYY"
+        
+        if self.source is BeaconBoardViewController {
+            self.privateSwitch.isHidden = true
+            self.privateLabel.isHidden = true
+        } else {
+            self.privateSwitch.isHidden = false
+            self.privateLabel.isHidden = false
+        }
+        
+        if self.source is ProfileViewController || self.source is BeaconBoardViewController {
+            if let firTimestamp = beaconInfo["dateCreated"] as? Timestamp {
+                let swiftDate = firTimestamp.dateValue()
+                let stringDate = dateFormatter.string(from: swiftDate)
+                self.dateCreated.text = stringDate
+            }
             if let beaconTitle = beaconInfo["title"] as? String {
                 self.beaconTitle.text = beaconTitle
             }
@@ -427,31 +583,13 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             // TODO: Load likes
         } else if self.source is CongratsViewController {
             loadUserData()
-        }
-    }
-    
-    func loadDateCreated() {
-        // Load Date Created info
-        
-        if self.source is ProfileViewController {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YYYY"
-            if let firTimestamp = beaconInfo["dateCreated"] as? Timestamp {
-                let swiftDate = firTimestamp.dateValue()
-                let stringDate = dateFormatter.string(from: swiftDate)
-                self.dateCreated.text = stringDate
-            }
-        } else if self.source is CongratsViewController {
-            // Load Date Created info
             beaconInfo["dateCreated"] = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/YYYY"
             
             let stringDate = dateFormatter.string(from: beaconInfo["dateCreated"] as! Date)
             self.dateCreated.text = stringDate
-            
         }
-        
     }
     
     func loadUserData() {

@@ -152,6 +152,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         db.collection("Beacons")
             .whereField("beaconLocation", isEqualTo: self.beaconLocation)
             .whereField("isPrivate", isEqualTo: false)
+            .order(by: "dateCreated", descending: true)
             .getDocuments() { (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")

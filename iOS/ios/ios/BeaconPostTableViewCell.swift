@@ -12,12 +12,14 @@ import MapKit
 class BeaconPostTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: BeaconPostTextView!
     
     @IBOutlet weak var imageScroll: UIScrollView!
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var addressLabel: UIButton!
     @IBOutlet weak var locationPhoto1: UIImageView!
+    @IBOutlet weak var locationPhoto2: UIImageView!
+    @IBOutlet weak var locationPhoto3: UIImageView!
     
     @IBAction func openAddress(_ sender: Any) {
         if let myAddress = self.addressLabel.titleLabel?.text as? String {

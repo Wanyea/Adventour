@@ -201,6 +201,7 @@ class StartViewController: UIViewController {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
         
+        var sem = DispatchSemaphore(value: 0)
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             // do stuff
             
@@ -262,14 +263,17 @@ class StartViewController: UIViewController {
                                     if let prefix = photo["prefix"] as? String {
                                         if let suffix = photo["suffix"] as? String {
                                             let url = prefix + "original" + suffix
-                                            self.locationPhoto.loadFrom(URLAddress: url)
+                                            self.locationPhoto.loadFrom(URLAddress: url, semaphore: sem)
                                         }
                                     }
                                     
                                 }
                             }
-                            self.activityIndicator?.stopAnimating()
-                            self.showCardInfo()
+                            sem.wait()
+                            DispatchQueue.main.async {
+                                self.activityIndicator?.stopAnimating()
+                                self.showCardInfo()
+                            }
                         }
                         
                     } else {
@@ -386,12 +390,13 @@ class StartViewController: UIViewController {
 }
 
 extension UIImageView {
-    func loadFrom(URLAddress: String) {
+    func loadFrom(URLAddress: String, semaphore: DispatchSemaphore) {
         guard let url = URL(string: URLAddress) else {
             return
         }
         let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            defer {semaphore.signal()}
             DispatchQueue.main.async { [weak self] in
                 if let imageData = data {
                     if let loadedImage = UIImage(data: imageData) {
