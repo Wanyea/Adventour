@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -46,6 +47,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -64,8 +66,6 @@ public class Passport extends AppCompatActivity {
 
     Context context;
     LinearLayout linearLayout, linearLayout2;
-
-    Menu hamburgerMenu;
 
     ActionBar actionBar;
 
@@ -221,12 +221,6 @@ public class Passport extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void newLitBeaconCard()
-    {
-
-    }
-
     public void populatePassport()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -244,7 +238,7 @@ public class Passport extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
-                        birthdateTextView.setText(document.getString("birthdate"));
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate")).toDate()));
                         mantraTextView.setText(document.getString("mantra"));
                     } else {
                         Log.d(TAG, "No such document");
@@ -365,6 +359,7 @@ public class Passport extends AppCompatActivity {
 
                 JSONObject responseData = new JSONObject(response.toString());
 
+                Log.d("results", responseData.get("results").toString());
                 results = new ArrayList<Map>((Collection<? extends Map>) responseData.get("results"));
                 allData.put("locations", results);
                 previousAdventours.add(allData);

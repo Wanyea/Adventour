@@ -1,10 +1,12 @@
 package com.adventour.android;
 
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -16,6 +18,11 @@ public class AdventourUtils {
         return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" +
                 Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + "/" +
                 Integer.toString(calendar.get(Calendar.YEAR));
+    }
+
+    public static String formatBirthdateFromDatabase(Date date)
+    {
+        return DateFormat.format("MM/dd/yyyy", date).toString();
     }
 
 

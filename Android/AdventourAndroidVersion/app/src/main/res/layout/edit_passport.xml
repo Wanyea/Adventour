@@ -73,21 +73,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="72dp"
                 android:layout_marginBottom="5dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/lineView1"
+                app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/ic_email_icon_blue" />
 
             <EditText
                 android:id="@+id/emailEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/roboto"
+                android:layout_marginStart="8dp"
                 android:background="@null"
-                app:layout_constraintTop_toTopOf="@id/emailIconImageView"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintBottom_toTopOf="@+id/lineView1"
-                app:layout_constraintStart_toEndOf="@+id/emailIconImageView" />
+                app:layout_constraintEnd_toEndOf="@+id/lineView1"
+                app:layout_constraintStart_toEndOf="@+id/emailIconImageView"
+                app:layout_constraintTop_toTopOf="@id/emailIconImageView" />
 
             <View
                 android:id="@+id/lineView2"
@@ -113,15 +113,15 @@
 
             <EditText
                 android:id="@+id/nicknameEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="3dp"
-                android:fontFamily="@font/roboto"
+                android:layout_marginStart="8dp"
                 android:background="@null"
-                app:layout_constraintTop_toTopOf="@id/userIconImageView"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintBottom_toTopOf="@+id/lineView2"
-                app:layout_constraintStart_toEndOf="@+id/userIconImageView" />
+                app:layout_constraintEnd_toEndOf="@+id/lineView2"
+                app:layout_constraintStart_toEndOf="@+id/userIconImageView"
+                app:layout_constraintTop_toTopOf="@id/userIconImageView" />
 
 <!--            <View-->
 <!--                android:id="@+id/lineView3"-->
@@ -171,14 +171,13 @@
 
             <EditText
                 android:id="@+id/firstNameEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginBottom="0dp"
-                android:hint="@string/first_name"
                 android:background="@null"
+                android:hint="@string/first_name"
                 app:layout_constraintBottom_toTopOf="@+id/lineView4"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/lineView4"
+                app:layout_constraintStart_toStartOf="@+id/lineView4" />
 
             <View
                 android:id="@+id/lineView5"
@@ -194,14 +193,13 @@
 
             <EditText
                 android:id="@+id/lastNameEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginBottom="0dp"
-                android:hint="@string/last_name"
                 android:background="@null"
+                android:hint="@string/last_name"
                 app:layout_constraintBottom_toTopOf="@+id/lineView5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/lineView5"
+                app:layout_constraintStart_toStartOf="@+id/lineView5" />
 
             <View
                 android:id="@+id/lineView6"
@@ -217,14 +215,13 @@
 
             <EditText
                 android:id="@+id/mantraEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginBottom="0dp"
-                android:hint="@string/mantra"
                 android:background="@null"
+                android:hint="@string/mantra"
                 app:layout_constraintBottom_toTopOf="@+id/lineView6"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/lineView6"
+                app:layout_constraintStart_toStartOf="@+id/lineView6" />
 
             <View
                 android:id="@+id/lineView7"
@@ -248,17 +245,17 @@
                 app:layout_constraintTop_toTopOf="@id/lineView6"
                 app:srcCompat="@drawable/ic_cake_icon_blue" />
 
-            <EditText
-                android:id="@+id/birthdateEditText"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/birthdateTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="0dp"
-                android:fontFamily="@font/roboto"
+                android:layout_marginStart="8dp"
                 android:background="@null"
-                app:layout_constraintTop_toTopOf="@id/cakeIconImageView"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintBottom_toTopOf="@+id/lineView7"
-                app:layout_constraintStart_toEndOf="@+id/cakeIconImageView" />
+                app:layout_constraintEnd_toEndOf="@+id/lineView7"
+                app:layout_constraintStart_toEndOf="@+id/cakeIconImageView"
+                app:layout_constraintTop_toTopOf="@id/cakeIconImageView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

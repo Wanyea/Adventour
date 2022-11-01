@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -103,7 +104,7 @@ public class BeaconPost extends AppCompatActivity {
 
         final Calendar today = Calendar.getInstance();
         Map<String, Object> newBeacon = new HashMap<>();
-        newBeacon.put("dateCreated", AdventourUtils.formatBirthdateForDB(today));
+        newBeacon.put("dateCreated", new Timestamp(new Date()));
         newBeacon.put("locations", GlobalVars.adventourFSQIds);
         newBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
         newBeacon.put("uid", user.getUid());
@@ -140,7 +141,7 @@ public class BeaconPost extends AppCompatActivity {
 
         final Calendar today = Calendar.getInstance();
         Map<String, Object> addBeacon = new HashMap<>();
-        addBeacon.put("dateCreated", AdventourUtils.formatBirthdateForDB(today));
+        addBeacon.put("dateCreated", new Timestamp(new Date()));
         addBeacon.put("locations", GlobalVars.adventourFSQIds);
         addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
         addBeacon.put("uid", user.getUid());
