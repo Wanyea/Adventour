@@ -34,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -43,11 +44,12 @@ public class SignupScreen extends AppCompatActivity {
     static String defaultMantra = "I love to go on many Adventours!";
 
     final Calendar birthdateCalendar = Calendar.getInstance();
-    String nickname, email, birthdate, password, confirmPassword;
+    String nickname, email, password, confirmPassword;
+    Date birthdate;
     Button signupButton;
-    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView;
+    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView, birthdateDatePicker;
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
-    EditText birthdateDatePicker, nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
+    EditText nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
 
     ImageButton profPicImageButton;
@@ -77,7 +79,7 @@ public class SignupScreen extends AppCompatActivity {
 
         loginTextView = (TextView) findViewById(R.id.loginTextView);
         signupButton = (Button) findViewById(R.id.signupButton);
-        birthdateDatePicker = (EditText) findViewById(R.id.birthdateEditText);
+        birthdateDatePicker = (TextView) findViewById(R.id.birthdateTextView);
 
         nicknameErrorTextView = (TextView) findViewById(R.id.nicknameSignupErrorTextView);
         emailErrorTextView = (TextView) findViewById(R.id.emailSignupErrorTextView);
@@ -93,7 +95,6 @@ public class SignupScreen extends AppCompatActivity {
 
         nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
-        birthdateEditText = (EditText) findViewById(R.id.birthdateEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
@@ -140,7 +141,6 @@ public class SignupScreen extends AppCompatActivity {
             public void onClick(View v) {
                 nickname = ((EditText) findViewById(R.id.nicknameEditText)).getText().toString().trim();
                 email = ((EditText) findViewById(R.id.emailEditText)).getText().toString().trim();
-                birthdate = AdventourUtils.formatBirthdateForDB(birthdateCalendar);
                 password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString().trim();
                 confirmPassword = ((EditText) findViewById(R.id.confirmPasswordEditText)).getText().toString().trim();
 
@@ -151,7 +151,10 @@ public class SignupScreen extends AppCompatActivity {
                 day = Integer.parseInt(date.substring(0, 2));
                 month = Integer.parseInt(date.substring(3, 5));
                 year = Integer.parseInt(date.substring(6, 10));
-                
+
+                birthdate = birthdateCalendar.getTime();
+                Log.d("BIRTHDATE", birthdate.toString());
+
                 //Check if nickname is valid.
                 if (!AdventourUtils.isValidNickname(nickname))
                 {
@@ -331,7 +334,6 @@ public class SignupScreen extends AppCompatActivity {
     {
         // Update handled errors by removing error message and icon, update edit text to 'blue_main'
         int blue_main = getResources().getColor(R.color.blue_main);
-        birthdateEditText.getBackground().setColorFilter(blue_main, PorterDuff.Mode.SRC_ATOP);
         birthdateErrorTextView.setVisibility(View.INVISIBLE);
         birthdateErrorImageView.setVisibility(View.INVISIBLE);
     }
@@ -359,7 +361,7 @@ public class SignupScreen extends AppCompatActivity {
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, String birthdate, String defaultMantra) {
+    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
@@ -389,7 +391,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, String birthdate, String defaultMantra) {
+    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra) {
 
 
         mAuth.createUserWithEmailAndPassword(email, password)

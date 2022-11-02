@@ -38,7 +38,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     FirebaseAuth auth;
     FirebaseUser user;
 
-    FloatingActionButton finishAdventourButton;
+    Button finishAdventourButton;
     Double lat = GlobalVars.inProgressModelArrayList.get(0).getLatitude();
     Double lon = GlobalVars.inProgressModelArrayList.get(0).getLongitude();
     String locationName = GlobalVars.inProgressModelArrayList.get(0).getName();
@@ -80,6 +80,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         InProgressRV.setNestedScrollingEnabled(true);
 
         addLocationButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
+        finishAdventourButton = (Button) findViewById(R.id.finishAdventourButton);
 
         InProgressAdapter inProgressAdapter = new InProgressAdapter(this, GlobalVars.inProgressModelArrayList);
 
@@ -115,6 +116,14 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
             return false;
         });
 
+        finishAdventourButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view)
+           {
+                switchToCongratulations();
+           }
+        });
+
         addLocationButton.setOnClickListener(new  View.OnClickListener() {
            @Override
            public void onClick(View view)
@@ -134,6 +143,13 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     public void switchToStartAdventour()
     {
         Intent intent = new Intent(this, StartAdventour.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void switchToCongratulations()
+    {
+        Intent intent = new Intent(this, Congratulations.class);
         startActivity(intent);
         finish();
     }

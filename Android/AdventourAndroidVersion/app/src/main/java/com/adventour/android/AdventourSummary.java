@@ -19,10 +19,6 @@ import java.util.ArrayList;
 
 public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyCallback*/ {
 
-    Context context;
-    LinearLayout linearLayout;
-    Button cardButton;
-
     FirebaseAuth auth;
     FirebaseUser user;
 
@@ -35,14 +31,6 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
 
         RecyclerView adventourSummaryRV = findViewById(R.id.adventourSummaryRV);
         adventourSummaryRV.setNestedScrollingEnabled(false);
-
-//        // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
-//        ArrayList<AdventourSummaryModel> adventourArrayList = new ArrayList<AdventourSummaryModel>();
-//        adventourArrayList.add(new AdventourSummaryModel("UCF1", "University of Central Florida"));
-//        adventourArrayList.add(new AdventourSummaryModel("UCF2", "University of Central Florida"));
-//        adventourArrayList.add(new AdventourSummaryModel("UCF3", "University of Central Florida"));
-//        adventourArrayList.add(new AdventourSummaryModel("UCF4", "University of Central Florida"));
-//        adventourArrayList.add(new AdventourSummaryModel("UCF5", "University of Central Florida"));
 
         AdventourSummaryAdapter adventourSummaryAdapter = new AdventourSummaryAdapter(this, GlobalVars.adventourLocations);
 

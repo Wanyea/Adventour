@@ -11,17 +11,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
@@ -31,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,9 +48,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class Passport extends AppCompatActivity {
     
@@ -64,15 +68,17 @@ public class Passport extends AppCompatActivity {
     FirebaseUser user;
 
 
-    Context context;
+    Context context = this;
     LinearLayout linearLayout, linearLayout2;
-
-    Menu hamburgerMenu;
 
     ActionBar actionBar;
 
     ArrayList<String> queryString;
 
+    RecyclerView PreviousAdventourRV;
+    PreviousAdventourAdapter previousAdventourAdapter;
+
+    Semaphore previousAdventourSemaphore = new Semaphore(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,22 +97,26 @@ public class Passport extends AppCompatActivity {
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
+        PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
 
         queryString = new ArrayList<>();
 
         handleAuth();
-        populatePassportTextViews();
-        getPreviousAdventours();
+        populatePassport();
+        getPreviousAdventours(previousAdventourSemaphore);
 
-//        RecyclerView PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
-//        PreviousAdventourRV.setNestedScrollingEnabled(true);
-//
-//        PreviousAdventourAdapter previousAdventourAdapter = new PreviousAdventourAdapter(this, GlobalVars.prevArrayList);
-//
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//
-//        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
-//        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
+        try {
+            previousAdventourSemaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        PreviousAdventourRV.setNestedScrollingEnabled(true);
+        Log.d("List length", String.valueOf(GlobalVars.inProgressModelArrayList.size()));
+        previousAdventourAdapter = new PreviousAdventourAdapter(context, GlobalVars.previousAdventourArrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
+        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
 
 
         // Action Bar
@@ -158,52 +168,6 @@ public class Passport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        // Build AlertDialog that will alert users when they try to log out account.
-        AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
-        logOutAlertBuilder.setMessage("Are you sure you want to log out?");
-        logOutAlertBuilder.setCancelable(true);
-
-        logOutAlertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        FirebaseAuth.getInstance().signOut();
-                        switchToLoggedOut();
-                    }
-                });
-
-        logOutAlertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        // Build AlertDialog that will alert users when they try to delete their account.
-        AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
-        deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-        deleteAccountAlertBuilder.setCancelable(true);
-
-        deleteAccountAlertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        // DELETE USER DOCUMENT IN FIREBASE.
-                        // switchToLoggedOut();
-                    }
-                });
-
-        deleteAccountAlertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
         switch(item.getItemId())
         {
             case R.id.adventourTOS:
@@ -211,11 +175,56 @@ public class Passport extends AppCompatActivity {
                 return true;
 
             case R.id.logOut:
+                // Build AlertDialog that will alert users when they try to log out account.
+                AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
+                logOutAlertBuilder.setMessage("Are you sure you want to log out?");
+                logOutAlertBuilder.setCancelable(true);
+
+                logOutAlertBuilder.setPositiveButton(
+                        R.string.Yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                FirebaseAuth.getInstance().signOut();
+                                switchToLoggedOut();
+                            }
+                        });
+
+                logOutAlertBuilder.setNegativeButton(
+                        R.string.No,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
                 AlertDialog logOutAlert = logOutAlertBuilder.create();
                 logOutAlert.show();
                 return true;
 
             case R.id.deleteAccount:
+                // Build AlertDialog that will alert users when they try to delete their account.
+                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
+                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
+                deleteAccountAlertBuilder.setCancelable(true);
+
+                deleteAccountAlertBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                // DELETE USER DOCUMENT IN FIREBASE.
+                                // switchToLoggedOut();
+                            }
+                        });
+
+                deleteAccountAlertBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
                 AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
                 deleteAccountAlert.show();
                 return true;
@@ -224,12 +233,7 @@ public class Passport extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void newLitBeaconCard() {
-
-    }
-
-    public void populatePassportTextViews()
+    public void populatePassport()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -246,7 +250,7 @@ public class Passport extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
-                        birthdateTextView.setText(document.getString("birthdate"));
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
                     } else {
                         Log.d(TAG, "No such document");
@@ -258,14 +262,14 @@ public class Passport extends AppCompatActivity {
         });
     }
 
-    public void getPreviousAdventours()
+    public void getPreviousAdventours(Semaphore previousAdventourSemaphore)
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<PreviousAdventourModel> previousAdventours = new ArrayList<>();
-
+        ArrayList<Map> previousAdventours = new ArrayList<>();
+        Semaphore semaphore = new Semaphore(1);
         // Get a reference to the user
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
         documentRef.collection("adventours")
@@ -277,101 +281,123 @@ public class Passport extends AppCompatActivity {
                         {
                             for (QueryDocumentSnapshot adventour : task.getResult())
                             {
-                                //queryString.addAll((Collection<? extends String>) adventour.get("locations"));
-                                //getLocationName(queryString.toString().replaceAll("\\s+","")); //maybe spaces are causing weird api response?
-                                //queryString.clear();
-                                Log.d(TAG, adventour.getId() + " => " + adventour.get("locations"));
+                                try {
+                                    semaphore.acquire();
+                                    Log.d("PASSPORT", "Acquiring semaphore...");
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Map<String, Object> allData = new HashMap<>();
+                                allData = adventour.getData();
+                                allData.put("documentID", adventour.getId());
+
+                                Log.d("getData", allData.toString());
+                                ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                Log.d("PASSPORT", locations.toString());
+
+                                GetLocationData data = new GetLocationData(user, locations, semaphore, previousAdventours, allData);
+                                Thread thread = new Thread(data);
+                                thread.start();
+
+
+
                             }
+
+                            Log.d("List length", String.valueOf(GlobalVars.inProgressModelArrayList.size()));
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
+            previousAdventourSemaphore.release();
     }
 
-    public void getLocationName(String queryString)
+    class GetLocationData implements Runnable
     {
-        JSONObject jsonBody = new JSONObject();
-        try {
+        FirebaseUser user;
+        ArrayList<String> locations;
+        JSONArray results;
+        ArrayList<Map> previousAdventours;
+        Semaphore semaphore;
+        Map<String, Object> allData;
 
-            jsonBody.put("uid", user.getUid());
-            // Log.d("0", queryString);
-            jsonBody.put("ids", queryString);
-
-        } catch (JSONException e) {
-            Log.e("Passport", "exception", e);
+        GetLocationData(FirebaseUser user, ArrayList<String> locations, Semaphore semaphore, ArrayList<Map> previousAdventours, Map<String, Object> allData)
+        {
+            this.user = user;
+            this.locations = locations;
+            this.semaphore = semaphore;
+            this.previousAdventours = previousAdventours;
+            this.allData = allData;
         }
 
-        try {
-
-            // Call API with user defined location and sentiments
-            URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-adventour-place");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setDoOutput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setUseCaches(false);
-
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(jsonBody.toString());
-            wr.flush();
-            wr.close();
-            jsonBody = null;
-
-            System.out.println("\nSending 'POST' request to URL : " + url);
-
-            InputStream it = conn.getInputStream();
-            InputStreamReader inputs = new InputStreamReader(it);
-
-            BufferedReader in = new BufferedReader(inputs);
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+        @Override
+        public void run()
+        {
+            JSONObject requestBody = new JSONObject();
+            Log.d("PASSPORT", "Starting to run thread...");
+            try
+            {
+                requestBody.put("ids", new JSONArray(locations));
+                requestBody.put("uid", user.getUid());
+            } catch (JSONException e) {
+                Log.e("PASSPORT", e.toString());
             }
 
-            in.close();
+            try {
+                URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            JSONObject responseData = new JSONObject(response.toString());
-            Log.d("RESPONSE DATA", responseData.toString());
-//            try {
-//                JSONObject data = (JSONObject) responseData.get("data");
-//                currentFSQId = data.get("fsq_id").toString();
-//                name = data.get("name").toString();
-//                rating = Float.parseFloat(data.get("rating").toString()) / 2;
-//
-//                try {
-//                    tel = data.get("tel").toString();
-//                } catch (Exception e) {
-//                    tel = "N/A";
-//                    Log.e("No tel for location", "Exception", e);
-//                }
-//
-//                try {
-//                    website = data.get("website").toString();
-//                } catch (Exception e) {
-//                    website = "N/A";
-//                    Log.e("No web for location", "Exception", e);
-//                }
-//
-//                try {
-//                    description = data.get("description").toString();
-//                } catch (Exception e) {
-//                    description = "No description available for this location... ";
-//                    Log.e("No des for location", "Exception", e);
-//                }
-//
-//                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
-//            } catch (Exception e) {
-//                Log.e("Exception" , e.toString());
-//            }
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
+                conn.setDoOutput(true);
+                conn.setInstanceFollowRedirects(false);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setUseCaches(false);
+
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes(requestBody.toString());
+                wr.flush();
+                wr.close();
+                requestBody = null;
+
+                System.out.println("\nSending 'POST' request to URL : " + url);
+
+                InputStream it = conn.getInputStream();
+                InputStreamReader inputs = new InputStreamReader(it);
+
+                BufferedReader in = new BufferedReader(inputs);
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    Log.d("reading line", "go fuck yourself :)");
+                    response.append(inputLine);
+                }
+
+                in.close();
+                Log.d("reading line", "closed in");
+                JSONObject responseData = new JSONObject(response.toString());
+                Log.d("reading line", "got response");
+                results = (JSONArray) responseData.get("results");
+                Log.d("reading line", "got results");
+                allData.put("locations", results);
+                Log.d("reading line", "i putted it");
+                previousAdventours.add(allData);
+                Log.d("reading line", "i added it");
+                GlobalVars.previousAdventourArrayList.add(new PreviousAdventourModel(previousAdventours));
+                Log.d("reading line", "i added it again");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("PASSPORT", e.toString());
+            } finally {
+                Log.d("reading line", "about to release");
+                semaphore.release();
+
+                Log.d("PASSPORT", "Semaphore released: " + semaphore.availablePermits());
+            }
+
         }
     }
 

@@ -105,12 +105,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 style="@style/AdventourEditTextLoginSignup"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nicknameEditText"
                 android:scrollHorizontally="true"
-
                 android:drawableLeft="@drawable/ic_email_icon"
                 android:hint="Email" />
 
@@ -138,17 +136,26 @@
                 app:srcCompat="@drawable/ic_alert_triangle_icon"
                 app:tint="@color/red_variant" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/birthdateEditText"
+            <TextView
+                android:id="@+id/birthdateTextView"
                 style="@style/AdventourEditTextLoginSignup"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emailEditText"
-                android:scrollHorizontally="true"
-
                 android:drawableLeft="@drawable/ic_calendar_icon"
-                android:hint="Birthdate" />
+                android:hint="Birthdate"
+                android:scrollHorizontally="true"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emailEditText" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="48dp"
+                android:background="@color/blue_main"
+                app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdateTextView" />
 
             <TextView
                 android:id="@+id/birthdateSignupErrorTextView"
@@ -160,8 +167,8 @@
                 android:textColor="@color/red_variant"
                 android:textSize="14sp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/birthdateEditText"
-                app:layout_constraintTop_toBottomOf="@+id/birthdateEditText" />
+                app:layout_constraintStart_toStartOf="@+id/birthdateTextView"
+                app:layout_constraintTop_toBottomOf="@+id/birthdateTextView" />
 
             <ImageView
                 android:id="@+id/birthdateSignupErrorIcon"
@@ -169,23 +176,21 @@
                 android:layout_height="18dp"
                 android:layout_marginEnd="5dp"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@id/birthdateEditText"
+                app:layout_constraintEnd_toEndOf="@id/birthdateTextView"
                 app:layout_constraintTop_toTopOf="@id/birthdateSignupErrorTextView"
                 app:srcCompat="@drawable/ic_alert_triangle_icon"
                 app:tint="@color/red_variant" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
-                android:inputType="textPassword"
                 style="@style/AdventourEditTextLoginSignup"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/birthdateEditText"
-                android:scrollHorizontally="true"
-
                 android:drawableLeft="@drawable/ic_lock_icon"
-                android:hint="Password" />
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdateTextView" />
 
             <TextView
                 android:id="@+id/passwordSignupErrorTextView"
@@ -212,16 +217,16 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPasswordEditText"
-                android:inputType="textPassword"
                 style="@style/AdventourEditTextLoginSignup"
+                android:drawableLeft="@drawable/ic_lock_icon"
+
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-                android:scrollHorizontally="true"
-
-                android:drawableLeft="@drawable/ic_lock_icon"
-                android:hint="ConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
             <TextView
                 android:id="@+id/confirmPasswordSignupErrorTextView"
@@ -391,6 +396,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/monkeyImageButton" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

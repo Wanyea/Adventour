@@ -3,6 +3,9 @@ package com.adventour.android;
 import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -18,9 +22,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -33,8 +37,10 @@ import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -53,9 +59,10 @@ public class StartAdventour extends AppCompatActivity {
 
     ImageButton filterButton;
     Slider distanceSlider;
-    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView;
+    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView, noLocationTextView;
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
+    ImageView phoneImageView, globeImageView, previewImageView;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -102,6 +109,7 @@ public class StartAdventour extends AppCompatActivity {
         phoneTextView = (TextView) findViewById(R.id.phoneNumberTextView);
         websiteTextView = (TextView) findViewById(R.id.websiteTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        noLocationTextView = (TextView) findViewById(R.id.noLocationsTextView);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
@@ -122,6 +130,10 @@ public class StartAdventour extends AppCompatActivity {
         starvingSwitch = findViewById(R.id.starvingSwitch);
         snackSwitch = findViewById(R.id.snackSwitch);
         twentyOnePlusSwitch = findViewById(R.id.twentyonePlusSwitch);
+
+        phoneImageView = (ImageView) findViewById(R.id.phoneImageView);
+        globeImageView = (ImageView) findViewById(R.id.globeImageView);
+        previewImageView = (ImageView) findViewById(R.id.previewImageView);
 
         distanceSlider = findViewById(R.id.distanceSlider);
 
@@ -161,12 +173,12 @@ public class StartAdventour extends AppCompatActivity {
         notNowButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               GlobalVars.exclude.add(currentFSQId);
+               GlobalVars.excludes.add(currentFSQId);
                getLocation();
                if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
                if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
                if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
-               Log.d("EXCLUDE: ", String.join(",", GlobalVars.exclude));
+               Log.d("EXCLUDE: ", String.join(",", GlobalVars.excludes));
            }
         });
 
@@ -203,6 +215,16 @@ public class StartAdventour extends AppCompatActivity {
         if (!Objects.equals(GlobalVars.selectedLocation, "")) {
             autocompleteFragment.setText(GlobalVars.selectedLocation);
         }
+
+        autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //GlobalVars
+                        autocompleteFragment.setText("");
+                        view.setVisibility(View.GONE);
+                    }
+                });
 
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -532,7 +554,7 @@ public class StartAdventour extends AppCompatActivity {
             jsonBody.put("radius", getDistance());
             jsonBody.put("categories", getCategoriesString());
             Log.i("Ryan Output", jsonBody.toString());
-            //jsonBody.put("exclude", getExclude());
+            jsonBody.put("excludes", getExclude());
 
         } catch (JSONException e) {
             Log.e("Start Adventour", "exception", e);
@@ -609,13 +631,31 @@ public class StartAdventour extends AppCompatActivity {
                     Log.e("No address for location", "Exception", e);
                 }
 
+                try {
+                    JSONArray photos = (JSONArray) data.get("photos");
+                    String prefix = photos.getJSONObject(0).get("prefix").toString();
+                    String suffix = photos.getJSONObject(0).get("suffix").toString();
+
+                    URL imageURL = new URL(prefix + "original" + suffix);
+                    HttpURLConnection connection = (HttpURLConnection) imageURL.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    Log.e("Bitmap","returned");
+                    Log.d("imageURL", imageURL.toString());
+                    previewImageView.setImageBitmap(myBitmap);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description + address);
                 populateCard(name, rating, tel, website, description);
                 Log.d("string val",  String.valueOf(rating));
                 GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description));
                 GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
 
-                prevLocation.clear();
                 prevLocation.add(name); // TESTING
 
                 try {
@@ -635,12 +675,28 @@ public class StartAdventour extends AppCompatActivity {
             }
 
         } catch(Exception e) {
+            noLocationTextView.setVisibility(View.VISIBLE);
             Log.e("START ADVENTOUR", "Exception", e);
         }
     }
 
     public void populateCard(String name, float rating, String tel, String website, String description)
     {
+        nameTextView.setVisibility(View.VISIBLE);
+        phoneTextView.setVisibility(View.VISIBLE);
+        websiteTextView.setVisibility(View.VISIBLE);
+        descriptionTextView.setVisibility(View.VISIBLE);
+        ratingBar.setVisibility(View.VISIBLE);
+        phoneImageView.setVisibility(View.VISIBLE);
+        globeImageView.setVisibility(View.VISIBLE);
+        previewImageView.setVisibility(View.VISIBLE);
+        noLocationTextView.setVisibility(View.INVISIBLE);
+
+        notNowButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_variant));
+        yesButton.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_main));
+        notNowButton.setEnabled(true);
+        yesButton.setEnabled(true);
+
         nameTextView.setText(name);
         phoneTextView.setText(tel);
         websiteTextView.setText(website);
@@ -756,12 +812,12 @@ public class StartAdventour extends AppCompatActivity {
 
     public Integer getDistance()
     {
-        return (int)(distance * 1609.344); // Miles --> Meters
-    }
+        return (int)(distance * 1609.344);
+    } // Miles --> Meters
 
-    public String getExclude()
+    public JSONArray getExclude()
     {
-        return String.join(",", GlobalVars.exclude);
+        return new JSONArray(GlobalVars.excludes);
     }
 
     public void switchToInProgress()
@@ -775,6 +831,7 @@ public class StartAdventour extends AppCompatActivity {
     {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        Log.d("AUTH TEST", user.getUid());
 
         if (user == null)
         {

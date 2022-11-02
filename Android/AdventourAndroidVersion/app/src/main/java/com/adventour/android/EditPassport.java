@@ -13,18 +13,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +35,11 @@ public class EditPassport extends AppCompatActivity {
     
     private static final String TAG = "PassportMoreInfo";
 
-    EditText emailEditText, nicknameEditText, birthdateEditText, mantraEditText, firstNameEditText, lastNameEditText;
-    String email, nickname, birthdate, firstName, lastName, mantra;
-    String changedEmail, changedNickname, changedBirthdate, changedFirstName, changedLastName, changedMantra;
+    EditText emailEditText, nicknameEditText, mantraEditText, firstNameEditText, lastNameEditText;
+    String email, nickname, firstName, lastName, mantra;
     FloatingActionButton saveButton;
     ImageView backButton;
+    TextView birthdateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +48,12 @@ public class EditPassport extends AppCompatActivity {
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
-        birthdateEditText = (EditText) findViewById(R.id.birthdateEditText);
         mantraEditText = (EditText) findViewById(R.id.mantraEditText);
         firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
         lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
+
+        birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
+
 
         saveButton = (FloatingActionButton) findViewById(R.id.saveButton);
         backButton = (ImageView) findViewById(R.id.backButton);
@@ -90,7 +95,7 @@ public class EditPassport extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                changedEmail = emailEditText.getText().toString();
+                email = emailEditText.getText().toString();
             }
         });
 
@@ -105,22 +110,7 @@ public class EditPassport extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                changedNickname = nicknameEditText.getText().toString();
-            }
-        });
-
-        birthdateEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                changedBirthdate = birthdateEditText.getText().toString();
+                nickname = nicknameEditText.getText().toString();
             }
         });
 
@@ -135,7 +125,7 @@ public class EditPassport extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                changedMantra = mantraEditText.getText().toString();
+                mantra = mantraEditText.getText().toString();
             }
         });
 
@@ -150,7 +140,7 @@ public class EditPassport extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                changedFirstName = firstNameEditText.getText().toString();
+                firstName = firstNameEditText.getText().toString();
             }
         });
 
@@ -165,7 +155,7 @@ public class EditPassport extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                changedLastName = lastNameEditText.getText().toString();
+                lastName = lastNameEditText.getText().toString();
             }
         });
 
@@ -189,12 +179,11 @@ public class EditPassport extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                if (!email.equals(changedEmail)) { changes.put("email", changedEmail); }
-                                if (!nickname.equals(changedNickname)) { changes.put("nickname", changedNickname); }
-                                if (!birthdate.equals(changedBirthdate)) { changes.put("birthdate", changedBirthdate); }
-                                if (!mantra.equals(changedMantra)) { changes.put("mantra", changedMantra); }
-                                if (!firstName.equals(changedFirstName)) { changes.put("firstName", changedFirstName); }
-                                if (!lastName.equals(changedLastName)) { changes.put("lastName", changedLastName); }
+                                changes.put("email", email);
+                                changes.put("nickname", nickname);
+                                changes.put("mantra", mantra);
+                                changes.put("firstName", firstName);
+                                changes.put("lastName", lastName);
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
@@ -266,12 +255,11 @@ public class EditPassport extends AppCompatActivity {
                         nicknameEditText.setText(document.getString("nickname"));
                         firstNameEditText.setText(document.getString("firstName"));
                         lastNameEditText.setText(document.getString("lastName"));
-                        birthdateEditText.setText(document.getString("birthdate"));
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase((Timestamp) document.get("birthdate")));
                         mantraEditText.setText(document.getString("mantra"));
 
                         email = emailEditText.getText().toString();
                         nickname = nicknameEditText.getText().toString();
-                        birthdate = birthdateEditText.getText().toString();
                         mantra = mantraEditText.getText().toString();
                         firstName = firstNameEditText.getText().toString();
                         lastName = lastNameEditText.getText().toString();
