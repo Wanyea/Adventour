@@ -24,7 +24,7 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <!-- Base application theme with upper-right menu. -->
+    <!-- Base application theme with upper-right menu (for Passport). -->
     <style name="Theme.AdventourAndroidVersion.Menu" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/transparent</item>
