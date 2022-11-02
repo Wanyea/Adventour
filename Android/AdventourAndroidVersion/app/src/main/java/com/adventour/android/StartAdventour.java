@@ -216,6 +216,16 @@ public class StartAdventour extends AppCompatActivity {
             autocompleteFragment.setText(GlobalVars.selectedLocation);
         }
 
+        autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //GlobalVars
+                        autocompleteFragment.setText("");
+                        view.setVisibility(View.GONE);
+                    }
+                });
+
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override

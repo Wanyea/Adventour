@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,8 +49,7 @@ public class BeaconPost extends AppCompatActivity {
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
 
-        final Calendar today = Calendar.getInstance();
-        beaconPostDate.setText(AdventourUtils.formatBirthdateForDB(today));
+        beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
 
         RecyclerView beaconPostRV = findViewById(R.id.beaconPostRV);
         beaconPostRV.setNestedScrollingEnabled(true);

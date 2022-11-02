@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +48,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -64,13 +68,17 @@ public class Passport extends AppCompatActivity {
     FirebaseUser user;
 
 
-    Context context;
+    Context context = this;
     LinearLayout linearLayout, linearLayout2;
 
     ActionBar actionBar;
 
     ArrayList<String> queryString;
 
+    RecyclerView PreviousAdventourRV;
+    PreviousAdventourAdapter previousAdventourAdapter;
+
+    Semaphore previousAdventourSemaphore = new Semaphore(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,22 +97,26 @@ public class Passport extends AppCompatActivity {
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
+        PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
 
         queryString = new ArrayList<>();
 
         handleAuth();
         populatePassport();
-        getPreviousAdventours();
+        getPreviousAdventours(previousAdventourSemaphore);
 
-//        RecyclerView PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
-//        PreviousAdventourRV.setNestedScrollingEnabled(true);
-//
-//        PreviousAdventourAdapter previousAdventourAdapter = new PreviousAdventourAdapter(this, GlobalVars.prevArrayList);
-//
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//
-//        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
-//        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
+        try {
+            previousAdventourSemaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        PreviousAdventourRV.setNestedScrollingEnabled(true);
+        Log.d("List length", String.valueOf(GlobalVars.inProgressModelArrayList.size()));
+        previousAdventourAdapter = new PreviousAdventourAdapter(context, GlobalVars.previousAdventourArrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
+        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
 
 
         // Action Bar
@@ -238,7 +250,7 @@ public class Passport extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
-                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate")).toDate()));
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
                     } else {
                         Log.d(TAG, "No such document");
@@ -250,7 +262,7 @@ public class Passport extends AppCompatActivity {
         });
     }
 
-    public void getPreviousAdventours()
+    public void getPreviousAdventours(Semaphore previousAdventourSemaphore)
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -271,34 +283,42 @@ public class Passport extends AppCompatActivity {
                             {
                                 try {
                                     semaphore.acquire();
+                                    Log.d("PASSPORT", "Acquiring semaphore...");
                                 } catch (InterruptedException e) {
-
+                                    e.printStackTrace();
                                 }
+
                                 Map<String, Object> allData = new HashMap<>();
                                 allData = adventour.getData();
+                                allData.put("documentID", adventour.getId());
 
+                                Log.d("getData", allData.toString());
                                 ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
                                 Log.d("PASSPORT", locations.toString());
 
                                 GetLocationData data = new GetLocationData(user, locations, semaphore, previousAdventours, allData);
                                 Thread thread = new Thread(data);
                                 thread.start();
+
+
+
                             }
 
-                            Log.d("PASSPORT", previousAdventours.toString());
+                            Log.d("List length", String.valueOf(GlobalVars.inProgressModelArrayList.size()));
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
+            previousAdventourSemaphore.release();
     }
 
     class GetLocationData implements Runnable
     {
         FirebaseUser user;
         ArrayList<String> locations;
-        ArrayList<Map> results;
+        JSONArray results;
         ArrayList<Map> previousAdventours;
         Semaphore semaphore;
         Map<String, Object> allData;
@@ -316,7 +336,7 @@ public class Passport extends AppCompatActivity {
         public void run()
         {
             JSONObject requestBody = new JSONObject();
-
+            Log.d("PASSPORT", "Starting to run thread...");
             try
             {
                 requestBody.put("ids", new JSONArray(locations));
@@ -352,24 +372,32 @@ public class Passport extends AppCompatActivity {
                 StringBuffer response = new StringBuffer();
 
                 while ((inputLine = in.readLine()) != null) {
+                    Log.d("reading line", "go fuck yourself :)");
                     response.append(inputLine);
                 }
 
                 in.close();
-
+                Log.d("reading line", "closed in");
                 JSONObject responseData = new JSONObject(response.toString());
-
-                Log.d("results", responseData.get("results").toString());
-                results = new ArrayList<Map>((Collection<? extends Map>) responseData.get("results"));
+                Log.d("reading line", "got response");
+                results = (JSONArray) responseData.get("results");
+                Log.d("reading line", "got results");
                 allData.put("locations", results);
+                Log.d("reading line", "i putted it");
                 previousAdventours.add(allData);
-
-                Log.d("PASSPORT ACTIVITY", results.toString()); // Printing for dev testing
+                Log.d("reading line", "i added it");
+                GlobalVars.previousAdventourArrayList.add(new PreviousAdventourModel(previousAdventours));
+                Log.d("reading line", "i added it again");
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e("PASSPORT", e.toString());
+            } finally {
+                Log.d("reading line", "about to release");
+                semaphore.release();
+
+                Log.d("PASSPORT", "Semaphore released: " + semaphore.availablePermits());
             }
-            semaphore.release();
+
         }
     }
 

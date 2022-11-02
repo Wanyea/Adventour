@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdventourAdapter.ViewHolder> {
 
     private final Context context;
-    private final ArrayList<PreviousAdventourModel> PassportArrayList;
+    private final ArrayList<PreviousAdventourModel> PreviousAdventourArrayList;
 
-    public PreviousAdventourAdapter(Context context, ArrayList<PreviousAdventourModel> PassportArrayList) {
+    public PreviousAdventourAdapter(Context context, ArrayList<PreviousAdventourModel> PreviousAdventourArrayList) {
         this.context = context;
-        this.PassportArrayList = PassportArrayList;
+        this.PreviousAdventourArrayList = PreviousAdventourArrayList;
     }
 
     @NonNull
@@ -31,7 +31,7 @@ public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdven
     @Override
     public void onBindViewHolder(@NonNull PreviousAdventourAdapter.ViewHolder holder, int position)
     {
-        PreviousAdventourModel model = PassportArrayList.get(position);
+        PreviousAdventourModel model = PreviousAdventourArrayList.get(position);
         holder.firstLocation.setText(model.getFirstLocation());
         holder.secondLocation.setText(model.getSecondLocation());
         holder.thirdLocation.setText(model.getThirdLocation());
@@ -39,7 +39,7 @@ public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdven
 
     @Override
     public int getItemCount() {
-        return PassportArrayList.size();
+        return PreviousAdventourArrayList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder

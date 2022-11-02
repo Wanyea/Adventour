@@ -3,6 +3,8 @@ package com.adventour.android;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import com.google.firebase.Timestamp;
+
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -14,14 +16,15 @@ import java.util.regex.Pattern;
 
 
 public class AdventourUtils {
-    public static String formatBirthdateForDB(Calendar calendar) {
+    public static String formatCalendarToString(Calendar calendar) {
         return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" +
                 Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + "/" +
                 Integer.toString(calendar.get(Calendar.YEAR));
     }
 
-    public static String formatBirthdateFromDatabase(Date date)
+    public static String formatBirthdateFromDatabase(Timestamp timestamp)
     {
+        Date date = timestamp.toDate();
         return DateFormat.format("MM/dd/yyyy", date).toString();
     }
 

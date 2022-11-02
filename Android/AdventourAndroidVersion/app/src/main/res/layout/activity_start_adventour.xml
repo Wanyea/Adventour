@@ -626,7 +626,8 @@
                 app:layout_constraintTop_toTopOf="@id/autocomplete_fragment"
                 app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"/>
 
-            <fragment android:id="@+id/autocomplete_fragment"
+            <fragment
+                android:id="@+id/autocomplete_fragment"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
