@@ -17,6 +17,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     var lat: Double!
     
     
+    @IBOutlet weak var popUpMenu: UIButton!
     
     // Card Outlets
     private var placesClient: GMSPlacesClient!
@@ -41,7 +42,25 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         self.beaconsTable.dataSource = self
         // Do any additional setup after loading the view.
         placesClient = GMSPlacesClient.shared()
+        self.searchBar.updateHeight(height: 55)
+        self.searchBar.searchTextField.textColor = UIColor(named: "adv-royalblue")!
         searchBar?.text = self.beaconLocation
+        setUpPopUp()
+    }
+    
+    func setUpPopUp() {
+        
+        self.popUpMenu.menu = UIMenu(children: [
+            UIAction(title: "Most Recent", state: .on, handler: { action in
+                
+            }),
+            UIAction(title: "Most Liked", handler: { action in
+                
+            })
+        ])
+        
+        self.popUpMenu.showsMenuAsPrimaryAction = true
+        self.popUpMenu.changesSelectionAsPrimaryAction = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

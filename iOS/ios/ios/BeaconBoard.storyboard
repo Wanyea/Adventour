@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -124,14 +125,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O57-cu-Xev">
-                                <rect key="frame" x="20" y="51" width="335" height="51"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="O57-cu-Xev">
+                                <rect key="frame" x="30" y="51" width="335" height="51"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="dKb-2d-Pne">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="51"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="253" height="51"/>
                                         <color key="barTintColor" name="adv-skyblue"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ccz-Bk-EWw">
+                                        <rect key="frame" x="248" y="0.0" width="87" height="51"/>
+                                        <menu key="menu" id="7bR-3e-WHA">
+                                            <children>
+                                                <command title="Most Recent" discoverabilityTitle="Most Recent" menuElementState="on" id="DZn-pH-ieP"/>
+                                                <command title="Most Liked" discoverabilityTitle="Most Liked" id="ZXM-w6-Csb"/>
+                                            </children>
+                                        </menu>
+                                        <state key="normal" title="Button"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="dKb-2d-Pne" firstAttribute="leading" secondItem="O57-cu-Xev" secondAttribute="leading" id="4JB-kW-ebg"/>
@@ -139,7 +150,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlb-lW-sSH">
-                                <rect key="frame" x="20" y="51" width="335" height="51"/>
+                                <rect key="frame" x="30" y="51" width="253" height="51"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain"/>
                                 <connections>
@@ -162,13 +173,12 @@
                         <color key="tintColor" name="adv-royalblue"/>
                         <constraints>
                             <constraint firstItem="2LC-55-DF2" firstAttribute="centerX" secondItem="bBp-T1-6M5" secondAttribute="centerX" id="0Ag-OV-AdO"/>
-                            <constraint firstItem="vlb-lW-sSH" firstAttribute="centerX" secondItem="dKb-2d-Pne" secondAttribute="centerX" id="1gi-Rr-pXq"/>
                             <constraint firstItem="vlb-lW-sSH" firstAttribute="width" secondItem="dKb-2d-Pne" secondAttribute="width" id="9Nz-sT-rWQ"/>
                             <constraint firstItem="GCJ-Q2-fhL" firstAttribute="centerY" secondItem="bBp-T1-6M5" secondAttribute="centerY" id="CgT-NY-4ms"/>
                             <constraint firstItem="c1v-CM-3M2" firstAttribute="bottom" secondItem="dNJ-e9-WPf" secondAttribute="bottom" id="EEs-NX-f4m"/>
                             <constraint firstItem="vlb-lW-sSH" firstAttribute="centerY" secondItem="dKb-2d-Pne" secondAttribute="centerY" id="HKx-6H-sST"/>
                             <constraint firstItem="vlb-lW-sSH" firstAttribute="leading" secondItem="dKb-2d-Pne" secondAttribute="leading" id="Olh-ZV-268"/>
-                            <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="O57-cu-Xev" secondAttribute="trailing" constant="20" id="Qth-W5-P7h"/>
+                            <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="O57-cu-Xev" secondAttribute="trailing" constant="10" id="Qth-W5-P7h"/>
                             <constraint firstItem="2LC-55-DF2" firstAttribute="centerY" secondItem="bBp-T1-6M5" secondAttribute="centerY" id="RRw-eT-iZd"/>
                             <constraint firstItem="O57-cu-Xev" firstAttribute="top" secondItem="c1v-CM-3M2" secondAttribute="top" constant="7" id="b7o-HL-4dJ"/>
                             <constraint firstItem="2LC-55-DF2" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="50" id="g8x-WQ-fMV"/>
@@ -178,7 +188,7 @@
                             <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="dNJ-e9-WPf" secondAttribute="trailing" constant="42" id="mex-ic-dt3"/>
                             <constraint firstItem="dNJ-e9-WPf" firstAttribute="top" secondItem="c1v-CM-3M2" secondAttribute="top" constant="106" id="nxE-qE-Dz8"/>
                             <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="2LC-55-DF2" secondAttribute="trailing" constant="50" id="pqu-BG-yqh"/>
-                            <constraint firstItem="O57-cu-Xev" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="20" id="usO-Jc-zzD"/>
+                            <constraint firstItem="O57-cu-Xev" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="30" id="usO-Jc-zzD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Beacon Board" id="tF3-t9-kJ0"/>
@@ -187,6 +197,7 @@
                         <outlet property="activityIndicator" destination="GCJ-Q2-fhL" id="rv6-Yo-tgw"/>
                         <outlet property="beaconsTable" destination="dNJ-e9-WPf" id="RYQ-Gx-H30"/>
                         <outlet property="errorMessage" destination="2LC-55-DF2" id="sSS-7O-I36"/>
+                        <outlet property="popUpMenu" destination="Ccz-Bk-EWw" id="xTH-EJ-UFG"/>
                         <outlet property="searchBar" destination="dKb-2d-Pne" id="5ij-9E-MMM"/>
                     </connections>
                 </viewController>

@@ -4,12 +4,12 @@ import FirebaseAuth
 import GooglePlaces
 
 
-class StartViewController: UIViewController {
+class StartViewController: UIViewController, UISearchBarDelegate {
     
     var beaconLocation = ""
     var lon: Double!
     var lat: Double!
-    
+    var excludes: [String] = []
     var user: User!
     
     // Filter Outlets
@@ -65,13 +65,14 @@ class StartViewController: UIViewController {
         self.phoneLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
         self.cosmosView.settings.fillMode = .precise
         
-        
-        
+        self.searchBar.updateHeight(height: 55)
+        self.searchBar.searchTextField.textColor = UIColor(named: "adv-royalblue")!
         //Adding the bordercolor and corner radius on the not now button. Actual border is in its runtime attributes.
         
         // Do any additional setup after loading the view.
         placesClient = GMSPlacesClient.shared()
-        searchBar?.text = self.beaconLocation
+        self.searchBar?.text = self.beaconLocation
+        self.searchBar?.delegate = self
     }
     
     @IBAction func getCurrentPlace(_ sender: Any){
@@ -97,12 +98,14 @@ class StartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.errorMessageLabel?.isHidden = true
-        self.websiteClickable?.adjustsFontSizeToFitWidth = true
-        self.websiteClickable?.minimumScaleFactor = 0.75
+//        self.websiteClickable?.adjustsFontSizeToFitWidth = true
+//        self.websiteClickable?.minimumScaleFactor = 0.75
         self.websiteClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.websiteTapped)))
         self.phoneClickable?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StartViewController.phoneTapped)))
         self.notNow?.isEnabled = false
         self.notNow?.layer.borderColor = UIColor.gray.cgColor
+        self.notNow?.layer.shadowColor = UIColor.gray.cgColor
+        self.notNow?.layer.borderWidth = 5
         self.notNow?.layer.cornerRadius = 25
         
         self.fsq_id = nil
@@ -112,6 +115,16 @@ class StartViewController: UIViewController {
             print("Start, These ids is nil")
         }
         hideCardInfo()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.searchTextField.endEditing(true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.lat = nil
+        self.lon = nil
+        searchBar.endEditing(true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -125,11 +138,17 @@ class StartViewController: UIViewController {
     @IBAction func goTapped(_ sender: Any) {
         self.notNow.isEnabled = true
         self.notNow?.layer.borderColor = UIColor(named: "adv-red")?.cgColor
+        self.notNow?.layer.shadowColor = UIColor(named: "adv-redshade")?.cgColor
         getAdventourPlace()
     }
     
     @IBAction func notNowTapped(_ sender: Any) {
+        excludes.append(self.fsq_id)
         getAdventourPlace()
+    }
+    
+    @IBAction func yesTapped(_ sender: Any) {
+        excludes.append(self.fsq_id)
     }
     
     func getAdventourPlace() {
@@ -140,8 +159,9 @@ class StartViewController: UIViewController {
     }
     
     @IBAction func goHome(sender: UIStoryboardSegue){
-        if let source = sender.source as? CongratsViewController {
+        if sender.source is CongratsViewController {
             self.ids = []
+            self.excludes = []
             self.searchBar.text = ""
             self.lat = nil
             self.lon = nil
@@ -191,7 +211,8 @@ class StartViewController: UIViewController {
             "uid": self.user.uid,
             "ll": latlonString,
             "radius": self.milesToMeters(distanceInMiles: self.distanceSlider?.value ?? 5),
-            "categories": getCategoryString()
+            "categories": getCategoryString(),
+            "excludes": excludes
         ]
         print(params)
         let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-adventour-place")
@@ -252,7 +273,7 @@ class StartViewController: UIViewController {
                                 self.cosmosView.text = "No rating available"
                             }
                             if let distance = data["distance"] as? Double {
-                                self.distanceLabel.text = String(self.metersToMilesRounded(distanceInMeters: distance)) + " miles"
+                                self.distanceLabel.text = String(self.metersToMilesRounded(distanceInMeters: distance)) + " miles away"
                             } else {
                                 self.distanceLabel.text = "Unable to determine distance"
                             }
@@ -449,6 +470,65 @@ extension StartViewController: GMSAutocompleteViewControllerDelegate {
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 
+}
+
+extension UISearchBar {
+    func updateHeight(height: CGFloat, radius: CGFloat = 8.0) {
+        let image: UIImage? = UIImage.imageWithColor(color: UIColor(named: "adv-royalblue")!, size: CGSize(width: 1, height: height))
+        setSearchFieldBackgroundImage(image, for: .normal)
+        for subview in self.subviews {
+            for subSubViews in subview.subviews {
+                if #available(iOS 13.0, *) {
+                    for child in subSubViews.subviews {
+                        if let textField = child as? UISearchTextField {
+                            textField.layer.cornerRadius = radius
+                            textField.clipsToBounds = true
+                        }
+                    }
+                    continue
+                }
+                if let textField = subSubViews as? UITextField {
+                    textField.layer.cornerRadius = radius
+                    textField.clipsToBounds = true
+                }
+            }
+        }
+    }
+}
+
+private extension UIImage {
+    static func imageWithColor(color: UIColor, size: CGSize) -> UIImage? {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        let ctx = UIGraphicsGetCurrentContext()
+        ctx!.setAlpha(0.15)
+        color.setFill()
+        UIRectFill(rect)
+        guard let image: UIImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            return nil
+        }
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
+extension UISearchBar {
+    @IBInspectable var shadowOffset : CGSize {
+        get {
+            return layer.shadowOffset
+        }
+        set {
+            layer.shadowOffset = newValue
+        }
+    }
+    @IBInspectable var shadowOpacity : Float {
+        get {
+            return layer.shadowOpacity
+        }
+        set {
+            layer.shadowOpacity = newValue
+        }
+    }
 }
 
 extension UIImageView {
