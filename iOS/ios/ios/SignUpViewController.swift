@@ -17,12 +17,16 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var birthdayIcon: UIImageView!
     @IBOutlet weak var passwordIcon: UIImageView!
     @IBOutlet weak var passwordConfirmIcon: UIImageView!
+    @IBOutlet weak var firstNameIcon: UIImageView!
+    @IBOutlet weak var lastNameIcon: UIImageView!
     
     @IBOutlet weak var nickname: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var birthday: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var passwordConfirm: UITextField!
+    @IBOutlet weak var firstName: UITextField!
+    @IBOutlet weak var lastName: UITextField!
     
     @IBOutlet weak var nicknameError: UILabel!
     @IBOutlet weak var emailError: UILabel!
@@ -30,11 +34,15 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var errorAlert: UILabel!
     @IBOutlet weak var passwordError: UILabel!
     @IBOutlet weak var passwordConfirmError: UILabel!
+    @IBOutlet weak var firstNameError: UILabel!
+    @IBOutlet weak var lastNameError: UILabel!
+    
     @IBOutlet weak var errorMessage: UILabel!
     
     @IBOutlet weak var birthdate: UIDatePicker!
     
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var nicknameNext: UIButton!
     
     
     var nicknameFlag: Bool!
@@ -59,45 +67,51 @@ class SignUpViewController: UIViewController {
         }
         
         // Set icons into textfield
-        nickname.leftViewMode = UITextField.ViewMode.always
-        nickname.leftView = nicknameIcon
-        email.leftViewMode = UITextField.ViewMode.always
-        email.leftView = emailIcon
-        birthday.leftViewMode = UITextField.ViewMode.always
-        birthday.leftView = birthdayIcon
-        password.leftViewMode = UITextField.ViewMode.always
-        password.leftView = passwordIcon
-        passwordConfirm.leftViewMode = UITextField.ViewMode.always
-        passwordConfirm.leftView = passwordConfirmIcon
+        nickname?.leftViewMode = UITextField.ViewMode.always
+        nickname?.leftView = nicknameIcon
+        email?.leftViewMode = UITextField.ViewMode.always
+        email?.leftView = emailIcon
+        birthday?.leftViewMode = UITextField.ViewMode.always
+        birthday?.leftView = birthdayIcon
+        password?.leftViewMode = UITextField.ViewMode.always
+        password?.leftView = passwordIcon
+        passwordConfirm?.leftViewMode = UITextField.ViewMode.always
+        passwordConfirm?.leftView = passwordConfirmIcon
+        firstName?.leftViewMode = UITextField.ViewMode.always
+        firstName?.leftView = firstNameIcon
+        lastName?.leftViewMode = UITextField.ViewMode.always
+        lastName?.leftView = lastNameIcon
         
         // Init button state
-        signUpButton.isEnabled = false
+        self.signUpButton.isEnabled = false
         birthdayFlag = true
         passwordFlag = false
-        errorMessage.text = ""
+        self.errorMessage.text = ""
         
         // Targets for individual field errors
-        password.addTarget(self, action: #selector(comparePassword(_:)), for: .editingChanged)
-        passwordConfirm.addTarget(self, action: #selector(comparePassword(_:)), for: .editingChanged)
-        email.addTarget(self, action: #selector(verifyEmail(_:)), for: .editingChanged)
-        nickname.addTarget(self, action: #selector(verifyNickname(_:)), for: .editingChanged)
-        birthdate.addTarget(self, action: #selector(verifyBirthdate(_:)), for: .editingDidEnd)
+        password?.addTarget(self, action: #selector(comparePassword(_:)), for: .editingChanged)
+        passwordConfirm?.addTarget(self, action: #selector(comparePassword(_:)), for: .editingChanged)
+        email?.addTarget(self, action: #selector(verifyEmail(_:)), for: .editingChanged)
+        nickname?.addTarget(self, action: #selector(verifyNickname(_:)), for: .editingChanged)
+        birthdate?.addTarget(self, action: #selector(verifyBirthdate(_:)), for: .editingDidEnd)
+        firstName?.addTarget(self, action: #selector(verifyFirstName(_:)), for: .editingChanged)
+        lastName?.addTarget(self, action: #selector(verifyLastName(_:)), for: .editingChanged)
         
         // Targets for sign up button enable
-        password.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
-        passwordConfirm.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
-        email.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
-        nickname.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
-        birthdate.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingDidEnd)
+        //password?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
+        //passwordConfirm?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
+        //email?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
+        //nickname?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
+        //birthdate?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingDidEnd)
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        nickname.endEditing(true)
-        email.endEditing(true)
-        birthday.endEditing(true)
-        password.endEditing(true)
-        passwordConfirm.endEditing(true)
+        nickname?.endEditing(true)
+        email?.endEditing(true)
+        birthday?.endEditing(true)
+        password?.endEditing(true)
+        passwordConfirm?.endEditing(true)
     }
     
     @IBAction func signUpTapped(_ sender: Any) {
@@ -136,16 +150,82 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func verifyNickname(_ textField: UITextField) {
-        if nickname.text!.count > 20 {
+        if nickname.text!.count > 16 {
             nicknameError.isHidden = false
-            errorMessage.text = "Nickname must be 20 characters or less."
-            verifyAlert()
+            errorMessage.text = "Nickname must be 16 characters or less."
+            //verifyAlert()
             signUpButton.isEnabled = false
+            
+            
         } else {
             nicknameError.isHidden = true
-            verifyAlert()
+            
+            errorMessage.text = ""
+            if(firstNameError.isHidden && lastNameError.isHidden)
+            {
+                signUpButton.isEnabled = true
+            }
+            
+            //verifyAlert()
             
         }
+    }
+    
+    @objc func verifyFirstName(_ textField: UITextField) {
+        
+        let firstNamePattern = #"^[a-zA-Z]*$"#
+        
+        var result = firstName.text!.range(
+            of: firstNamePattern,
+            options: .regularExpression
+        )
+        
+        let validFirstName = (result != nil)
+        
+        if (!validFirstName) {
+            firstNameError.isHidden = false
+            errorMessage.text = "First names must consist of only letters."
+            //verifyAlert()
+            signUpButton.isEnabled = false
+        } else {
+            firstNameError.isHidden = true
+            errorMessage.text = ""
+            if(nicknameError.isHidden && lastNameError.isHidden)
+            {
+                signUpButton.isEnabled = true
+            }
+            //verifyAlert()
+            
+        }
+        
+    }
+    
+    @objc func verifyLastName(_ textField: UITextField) {
+        
+        let lastNamePattern = #"^[a-zA-Z]*$"#
+        
+        var result = lastName.text!.range(
+            of: lastNamePattern,
+            options: .regularExpression
+        )
+        
+        let validLastName = (result != nil)
+        
+        if (!validLastName) {
+            lastNameError.isHidden = false
+            errorMessage.text = "Last names must consist of only letters."
+            //verifyAlert()
+            signUpButton.isEnabled = false
+        } else {
+            lastNameError.isHidden = true
+            errorMessage.text = ""
+            if(firstNameError.isHidden && nicknameError.isHidden)
+            {
+                signUpButton.isEnabled = true
+            }
+            
+        }
+        
     }
     
     @objc func verifyEmail(_ textField: UITextField) {
@@ -169,11 +249,13 @@ class SignUpViewController: UIViewController {
         if (!validEmail) {
             emailError.isHidden = false
             errorMessage.text = "Please enter a valid email"
-            verifyAlert()
+            //verifyAlert()
             signUpButton.isEnabled = false
         } else {
             emailError.isHidden = true
-            verifyAlert()
+            errorMessage.text = ""
+            signUpButton.isEnabled = true
+            //verifyAlert()
             
         }
         
@@ -191,61 +273,68 @@ class SignUpViewController: UIViewController {
         if !isPasswordValid(password.text!) {
             print("password not valid")
             errorMessage.text = "Password must be 8 characters, contain one UPPER CASE letter, one LOWER CASE letter, one NUMBER, and one SPECIAL (!@#$&*) character"
+            passwordError.isHidden = false
             passwordFlag = true
+            signUpButton.isEnabled = false
             return
         } else {
             print("password valid!")
             errorMessage.text = ""
             passwordFlag = false
+            passwordError.isHidden = true
+            signUpButton.isEnabled = true
         }
         
         if (password.text == passwordConfirm.text) {
             passwordConfirmError.isHidden = true
+            errorMessage.text = ""
             passwordFlag = false
-            verifyAlert()
+            signUpButton.isEnabled = true
+            //verifyAlert()
         }
         else {
             passwordConfirmError.isHidden = false
             errorMessage.text = "Passwords must match!"
-            verifyAlert()
+            //verifyAlert()
             passwordFlag = true
-        }
-        
-        
-        
-        
-    }
-    
-    func verifyAlert() {
-        if (!nicknameError.isHidden ||
-            !emailError.isHidden ||
-            !birthdayError.isHidden ||
-            !passwordConfirmError.isHidden) {
-            
-            errorAlert.isHidden = false
-        } else {
-            errorMessage.text = ""
-            errorAlert.isHidden = true
-        }
-    }
-    
-    @objc func verifySignUp(_ button: UIButton) -> Bool {
-
-        if (errorAlert.isHidden &&
-            nickname.hasText &&
-            email.hasText &&
-            password.hasText &&
-            passwordConfirm.hasText &&
-            !birthdayFlag &&
-            !passwordFlag) {
-            errorMessage.text = ""
-            signUpButton.isEnabled = true
-            return true
-        } else {
             signUpButton.isEnabled = false
-            return false
         }
+        
+        
+        
+        
     }
+    
+//    func verifyAlert() {
+//        if (!nicknameError.isHidden ||
+//            !emailError.isHidden ||
+//            !birthdayError.isHidden ||
+//            !passwordConfirmError.isHidden) {
+//
+//            errorAlert.isHidden = false
+//        } else {
+//            errorMessage.text = ""
+//            errorAlert.isHidden = true
+//        }
+//    }
+    
+//    @objc func verifySignUp(_ button: UIButton) -> Bool {
+//
+//        if (errorAlert.isHidden &&
+//            nickname.hasText &&
+//            email.hasText &&
+//            password.hasText &&
+//            passwordConfirm.hasText &&
+//            !birthdayFlag &&
+//            !passwordFlag) {
+//            errorMessage.text = ""
+//            signUpButton.isEnabled = true
+//            return true
+//        } else {
+//            signUpButton.isEnabled = false
+//            return false
+//        }
+//    }
     
     @objc func verifyBirthdate(_ bithdate: UIDatePicker) {
         
@@ -275,14 +364,19 @@ class SignUpViewController: UIViewController {
                     birthdayError.isHidden = false
                     errorMessage.text = "You must at least 13 years old to sign up!"
                     birthdayFlag = true
+                    signUpButton.isEnabled = false
                 } else {
                     birthdayError.isHidden = true
-                    verifyAlert()
+                    errorMessage.text = ""
+                    signUpButton.isEnabled = true
+                    //verifyAlert()
                     birthdayFlag = false
                 }
             } else {
                 birthdayError.isHidden = true
-                verifyAlert()
+                errorMessage.text = ""
+                signUpButton.isEnabled = true
+                //verifyAlert()
                 birthdayFlag = false
             }
         }
