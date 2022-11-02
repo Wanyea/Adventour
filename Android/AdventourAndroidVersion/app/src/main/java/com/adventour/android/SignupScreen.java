@@ -59,8 +59,7 @@ public class SignupScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-
-
+    ProfilePictureRefs refs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -200,7 +199,7 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                    signUp(nickname, email, password, birthdate, defaultMantra); // Attempt to create user document and add to firebase.
+                    signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
             }
         });
 
@@ -220,7 +219,10 @@ public class SignupScreen extends AppCompatActivity {
         cheetahImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickCheetahImageButton(view); }
+            public void onClick(View view)
+            {
+                onClickCheetahImageButton(view);
+            }
         });
 
         elephantImageButton.setOnClickListener(new View.OnClickListener() {
@@ -361,7 +363,7 @@ public class SignupScreen extends AppCompatActivity {
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra) {
+    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, ProfilePictureRefs refs) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
@@ -369,6 +371,7 @@ public class SignupScreen extends AppCompatActivity {
         adventourist.put("birthdate", birthdate);
         adventourist.put("isPrivate", true);
         adventourist.put("mantra", defaultMantra);
+        adventourist.put("androidPfpRef", refs.androidProfilePicRef);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -391,7 +394,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra) {
+    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, ProfilePictureRefs refs) {
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -401,7 +404,7 @@ public class SignupScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            addUserToFirestore(nickname, email, birthdate, defaultMantra);
+                            addUserToFirestore(nickname, email, birthdate, defaultMantra, refs);
                             switchToHome();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -422,6 +425,19 @@ public class SignupScreen extends AppCompatActivity {
     public void onClickProfPicImageButton(View view) {
         popupProfPic.setVisibility(View.VISIBLE);
     }
+
+
+  class ProfilePictureRefs
+  {
+      private int androidProfilePicRef;
+      private String iOSProfilePicRef;
+
+      ProfilePictureRefs(int androidProfilePicRef, String iOSProfilePicRef)
+      {
+          this.androidProfilePicRef = androidProfilePicRef;
+          this.iOSProfilePicRef = iOSProfilePicRef;
+      }
+  }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickCheetahImageButton(View view) {
@@ -479,5 +495,7 @@ public class SignupScreen extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void changeProfPic(View view, int drawableID) {
         profPicImageButton.setForeground(getResources().getDrawable(drawableID));
+        refs.androidProfilePicRef = drawableID;
+        Log.d("ID", String.valueOf(drawableID));
     }
 }
