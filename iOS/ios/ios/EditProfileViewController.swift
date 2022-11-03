@@ -35,30 +35,30 @@ class EditProfileViewController: UIViewController {
                     print(user)
                     if let email = user["email"] as? String {
                         print(email)
-                        self.email.text = email
+                        self.email?.text = email
                     }
                     if let username = user["nickname"] as? String {
                         print(username)
-                        self.username.text = username
+                        self.username?.text = username
                     }
                     if let firstname = user["firstname"] as? String {
                         print(firstname)
-                        self.firstname.text = firstname
+                        self.firstname?.text = firstname
                     }
                     if let lastname = user["lastname"] as? String {
                         print(lastname)
-                        self.lastname.text = lastname
+                        self.lastname?.text = lastname
                     }
                     if let mantra = user["mantra"] as? String {
                         print(mantra)
-                        self.mantra.text = mantra
+                        self.mantra?.text = mantra
                     }
                     if let birthday = user["birthday:"] as? String {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "MM/dd/yyyy"
                         let formattedBirthday : NSDate = dateFormatter.date(from: birthday)! as NSDate
                         print(formattedBirthday)
-                        self.birthdaypicker.setDate(formattedBirthday as Date, animated: false)
+                        self.birthdaypicker?.setDate(formattedBirthday as Date, animated: false)
                     }
                     
                 }

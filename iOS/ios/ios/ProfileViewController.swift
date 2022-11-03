@@ -33,6 +33,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     var prevAdventoursSource: UITableViewDataSource!
     var beaconsSource: UITableViewDataSource!
     
+    var query: Query!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let user = Auth.auth().currentUser {
@@ -51,12 +53,125 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         self.activityIndicatorAdventours?.startAnimating()
         self.activityIndicatorBeacons?.startAnimating()
         self.exitIndicator?.layer.cornerRadius = 3
-        getUserData()
-        getPrevAdventourData()
         
         
+        Task {
+            await getUserData()
+            await getPrevAdventourData()
+            await getBeaconsData()
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView is AdventourTableView {
+            // UITableView only moves in one direction, y axis
+            let currentOffset = scrollView.contentOffset.y
+            let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        getBeaconsData()
+            // Change number to adjust the distance from bottom, more negative = further pull
+            if maximumOffset - currentOffset <= -40.0 {
+                self.query.addSnapshotListener { (snapshot, error) in
+                    guard let snapshot = snapshot else {
+                        print("Error retreving cities: \(error.debugDescription)")
+                        return
+                    }
+
+                    guard let lastSnapshot = snapshot.documents.last else {
+                        // The collection is empty.
+                        return
+                    }
+
+                    var allData: [String: Any]!
+                    let sem = DispatchSemaphore(value: 0)
+                    
+                    let db = Firestore.firestore()
+                    self.query = db.collection("Adventourists")
+                        .document(self.user.uid)
+                        .collection("adventours")
+                        .order(by: "dateCreated", descending: true)
+                        .limit(to: 5)
+                        .start(afterDocument: lastSnapshot)
+                    
+                    self.query.getDocuments { snap, error in
+                        if let error = error {
+                            print("Error getting documents \(error)")
+                            self.activityIndicatorAdventours?.stopAnimating()
+                            self.prevAdventoursTable?.isHidden = false
+                            self.noAdventoursMessage?.isHidden = false
+                        } else if snap!.isEmpty {
+                            self.activityIndicatorAdventours?.stopAnimating()
+                            self.prevAdventoursTable?.isHidden = false
+                            self.noAdventoursMessage?.isHidden = false
+                        } else {
+                            for doc in snap!.documents {
+                                
+                                let documentID = doc.documentID
+                                if let data = doc.data() as? [String: Any] {
+                                    allData = data
+                                    allData.updateValue(documentID, forKey: "documentID")
+                                    if let locations = data["locations"] as? [String] {
+                                        let params: [String: Any] = [
+                                            "uid": self.user!.uid,
+                                            "ids": locations
+                                        ]
+                                        
+                                        let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-foursquare-places")
+                                        var urlRequest = URLRequest(url: url!)
+                                        urlRequest.httpMethod = "POST"
+                                        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+                                        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+                                        urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+                                        
+                                        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                                            // do stuff
+                                            defer {sem.signal()}
+                                            
+        //                                    print("doc data: ", allData["dateCreated"])
+                                            if let data = data {
+                                                let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
+                                                if let dataDict = dataJsonObject as? [String: Any] {
+                                                    if let array = dataDict["results"] as? [[String: Any]] {
+                                                        allData["locations"] = array
+                                                        self.prevAdventours.append(allData)
+                                                        DispatchQueue.main.async {
+                                                            self.prevAdventoursSource = PrevAdventoursDataSource(withDataSource: self.prevAdventours)
+                                                            self.prevAdventoursTable?.dataSource = self.prevAdventoursSource
+                                                            self.prevAdventoursTable?.reloadData()
+                                                            self.activityIndicatorAdventours?.stopAnimating()
+                                                            self.prevAdventoursTable?.isHidden = false
+                                                            self.noAdventoursMessage?.isHidden = true
+                                                        }
+                                                        
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        task.resume()
+                                    }
+                                }
+                                sem.wait()
+        //                        print("This is all the data: ", allData ?? "None")
+                            }
+                        }
+                    }
+
+                    // Use the query for pagination.
+                    // ...
+                }
+                
+            }
+        } else if scrollView is BeaconTableView {
+            // UITableView only moves in one direction, y axis
+            let currentOffset = scrollView.contentOffset.y
+            let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+            // Change number to adjust the distance from bottom, more negative = further pull
+            if maximumOffset - currentOffset <= -40.0 {
+                
+                
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -91,7 +206,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-    func getUserData() {
+    func getUserData() async {
         let db = Firestore.firestore()
         db.collection("Adventourists").document(self.user.uid).getDocument { document, error in
             if let document = document, document.exists {
@@ -137,19 +252,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         self.birthdayIcon?.isHidden = false
     }
     
-    func getPrevAdventourData() {
+    func getPrevAdventourData() async {
         
         var allData: [String: Any]!
         self.prevAdventours = []
         let sem = DispatchSemaphore(value: 0)
         
         let db = Firestore.firestore()
-        db.collection("Adventourists")
+        self.query = db.collection("Adventourists")
             .document(self.user.uid)
             .collection("adventours")
             .order(by: "dateCreated", descending: true)
             .limit(to: 5)
-            .getDocuments { snap, error in
+        
+        self.query.getDocuments { snap, error in
                 if let error = error {
                     print("Error getting documents \(error)")
                     self.activityIndicatorAdventours?.stopAnimating()
@@ -161,6 +277,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                     self.noAdventoursMessage?.isHidden = false
                 } else {
                     for doc in snap!.documents {
+                        
                         let documentID = doc.documentID
                         if let data = doc.data() as? [String: Any] {
                             allData = data
@@ -212,7 +329,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
             }
     }
     
-    func getBeaconsData() {
+    func getBeaconsData() async {
         var allData: [String: Any]!
         self.beacons = []
         let sem = DispatchSemaphore(value: 0)
