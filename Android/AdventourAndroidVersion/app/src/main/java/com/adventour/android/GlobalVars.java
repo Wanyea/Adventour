@@ -13,6 +13,7 @@ public class GlobalVars
     public static ArrayList<AdventourSummaryModel> adventourLocations = new ArrayList<AdventourSummaryModel>();
     public static ArrayList<BeaconPostModel> beaconModelArrayList = new ArrayList<BeaconPostModel>();
     public static ArrayList<PreviousAdventourModel> previousAdventourArrayList = new ArrayList<>();
+    public static ArrayList<BeaconsModel> userBeaconsArrayList = new ArrayList<BeaconsModel>();
     public static String selectedLocation = "";
     public static String selectedLocationID = "";
     public static LatLng locationCoordinates = new LatLng(0.0, 0.0);

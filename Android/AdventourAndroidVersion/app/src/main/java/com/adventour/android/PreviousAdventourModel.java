@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.google.firebase.Timestamp;
 import org.json.JSONArray;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class PreviousAdventourModel
@@ -14,12 +13,9 @@ public class PreviousAdventourModel
     private String thirdLocation;
     private String dateCreated;
 
-    private ArrayList<Map> previousAdventours;
-
-    public PreviousAdventourModel(ArrayList<Map> previousAdventours)
+    public PreviousAdventourModel(Map allData)
         {
-            JSONArray array = (JSONArray) previousAdventours.get(0).get("locations");
-            Log.d("reading line", String.valueOf(array.length()));
+            JSONArray array = (JSONArray) allData.get("locations");
             if (array.length() == 1)
             {
                 try {
@@ -53,9 +49,11 @@ public class PreviousAdventourModel
                 }
             }
 
-            this.dateCreated =
-                    AdventourUtils.formatBirthdateFromDatabase((Timestamp) previousAdventours.get(0).get("dateCreated"));
 
+            this.dateCreated =
+                    AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
+
+            Log.d("Model", dateCreated);
         }
 
     public String getFirstLocation() {

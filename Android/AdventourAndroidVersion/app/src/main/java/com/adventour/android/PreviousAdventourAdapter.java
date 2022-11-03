@@ -35,6 +35,7 @@ public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdven
         holder.firstLocation.setText(model.getFirstLocation());
         holder.secondLocation.setText(model.getSecondLocation());
         holder.thirdLocation.setText(model.getThirdLocation());
+        holder.dateCreated.setText(model.getDateCreated());
     }
 
     @Override
@@ -47,12 +48,14 @@ public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdven
         private final TextView firstLocation;
         private final TextView secondLocation;
         private final TextView thirdLocation;
+        private  final TextView dateCreated;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             firstLocation = itemView.findViewById(R.id.firstLocation);
             secondLocation = itemView.findViewById(R.id.secondLocation);
             thirdLocation = itemView.findViewById(R.id.thirdLocation);
+            dateCreated = itemView.findViewById(R.id.dateTextView);
         }
 
     }
