@@ -19,6 +19,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordConfirmIcon: UIImageView!
     @IBOutlet weak var firstNameIcon: UIImageView!
     @IBOutlet weak var lastNameIcon: UIImageView!
+    @IBOutlet weak var mantraIcon: UIImageView!
     
     @IBOutlet weak var nickname: UITextField!
     @IBOutlet weak var email: UITextField!
@@ -27,6 +28,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordConfirm: UITextField!
     @IBOutlet weak var firstName: UITextField!
     @IBOutlet weak var lastName: UITextField!
+    @IBOutlet weak var mantra: UITextField!
     
     @IBOutlet weak var nicknameError: UILabel!
     @IBOutlet weak var emailError: UILabel!
@@ -36,6 +38,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordConfirmError: UILabel!
     @IBOutlet weak var firstNameError: UILabel!
     @IBOutlet weak var lastNameError: UILabel!
+    @IBOutlet weak var mantraError: UILabel!
     
     @IBOutlet weak var errorMessage: UILabel!
     
@@ -44,6 +47,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var nicknameNext: UIButton!
     
+    @IBOutlet weak var profile: UIButton!
     
     var nicknameFlag: Bool!
     var passwordFlag: Bool!
@@ -81,12 +85,16 @@ class SignUpViewController: UIViewController {
         firstName?.leftView = firstNameIcon
         lastName?.leftViewMode = UITextField.ViewMode.always
         lastName?.leftView = lastNameIcon
+        mantra?.leftViewMode = UITextField.ViewMode.always
+        mantra?.leftView = mantraIcon
+        
+        profile?.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
         
         // Init button state
         self.signUpButton.isEnabled = false
         birthdayFlag = true
         passwordFlag = false
-        self.errorMessage.text = ""
+        self.errorMessage?.text = ""
         
         // Targets for individual field errors
         password?.addTarget(self, action: #selector(comparePassword(_:)), for: .editingChanged)
@@ -96,6 +104,7 @@ class SignUpViewController: UIViewController {
         birthdate?.addTarget(self, action: #selector(verifyBirthdate(_:)), for: .editingDidEnd)
         firstName?.addTarget(self, action: #selector(verifyFirstName(_:)), for: .editingChanged)
         lastName?.addTarget(self, action: #selector(verifyLastName(_:)), for: .editingChanged)
+        mantra?.addTarget(self, action: #selector(verifyMantra(_:)), for: .editingChanged)
         
         // Targets for sign up button enable
         //password?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
@@ -112,6 +121,11 @@ class SignUpViewController: UIViewController {
         birthday?.endEditing(true)
         password?.endEditing(true)
         passwordConfirm?.endEditing(true)
+        firstName?.endEditing(true)
+        lastName?.endEditing(true)
+        mantra?.endEditing(true)
+
+
     }
     
     @IBAction func signUpTapped(_ sender: Any) {
@@ -150,7 +164,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func verifyNickname(_ textField: UITextField) {
-        if nickname.text!.count > 16 {
+        if nickname.text!.count > 16 || nickname.text! == ""{
             nicknameError.isHidden = false
             errorMessage.text = "Nickname must be 16 characters or less."
             //verifyAlert()
@@ -226,6 +240,26 @@ class SignUpViewController: UIViewController {
             
         }
         
+    }
+    
+    @objc func verifyMantra(_ textField: UITextField) {
+        if mantra.text!.count > 30 || mantra.text! == ""{
+            mantraError.isHidden = false
+            errorMessage.text = "Mantra must be 30 characters or less."
+            //verifyAlert()
+            signUpButton.isEnabled = false
+            
+            
+        } else {
+            mantraError.isHidden = true
+            
+            errorMessage.text = ""
+            signUpButton.isEnabled = true
+        
+            
+            //verifyAlert()
+            
+        }
     }
     
     @objc func verifyEmail(_ textField: UITextField) {
