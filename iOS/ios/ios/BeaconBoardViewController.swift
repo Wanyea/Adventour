@@ -10,7 +10,7 @@ import GooglePlaces
 import FirebaseAuth
 import FirebaseFirestore
 
-class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     var beaconLocation = ""
     var lon: Double!
@@ -25,9 +25,11 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var beaconsTable: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet weak var filter: UIMenu!
     
     var beacons: [[String: Any]] = []
     var user: User!
+    var query: Query!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +44,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         self.beaconsTable.dataSource = self
         // Do any additional setup after loading the view.
         placesClient = GMSPlacesClient.shared()
-        self.searchBar.updateHeight(height: 55)
+        self.searchBar.updateHeight(height: 40)
         self.searchBar.searchTextField.textColor = UIColor(named: "adv-royalblue")!
         searchBar?.text = self.beaconLocation
         setUpPopUp()
@@ -65,7 +67,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         if self.beaconLocation != "" {
-            getBeacons()
+            getMostRecentBeacons()
         }
     }
     
@@ -83,12 +85,23 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         
         autocompleteController.autocompleteFilter = filter
         present(autocompleteController,animated: true, completion: nil)
-        
-        
     }
+    
     @IBAction func updateSearch()
     {
         searchBar?.text = self.beaconLocation
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+        // Change number to adjust the distance from bottom, more negative = further pull
+        if maximumOffset - currentOffset <= -40.0 {
+            getNextPageBeacons()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,9 +110,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "BeaconPost", bundle: nil)
-        print(beacons[indexPath.item])
         if let locations = beacons[indexPath.item]["locations"] as? [[String: Any]] {
-            print("SUCCESSFULLY RETRIEVED LOCATIONS")
             if let vc = storyboard.instantiateViewController(identifier: "BeaconPost") as? BeaconPostViewController {
                 vc.locations = locations
                 vc.source = self
@@ -115,49 +126,192 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YYYY"
-        print(beacons[indexPath.item]["documentID"])
         if let firTimestamp = beacons[indexPath.item]["dateCreated"] as? Timestamp {
-            if let swiftDate = firTimestamp.dateValue() as? Date {
-    //            print("Date created: ", data)
-                if let stringDate = dateFormatter.string(from: swiftDate) as? String {
-                    cell.dateCreated.text = stringDate
-                }
-                
-            }
+            let swiftDate = firTimestamp.dateValue()
+//            print("Date created: ", data)
+            let stringDate = dateFormatter.string(from: swiftDate)
+            cell.dateCreated.text = stringDate
         }
-        if let locations = beacons[indexPath.item]["locations"] as? [[String: Any]] {
-            if let location1 = locations[0] as? [String: Any] {
-                if let name = location1["name"] as? String {
-                    cell.location1.text = "⦿ " + name
-                } else {
-                    cell.location1.text = "This location does not have a name..."
-                }
-            } else {
-                cell.location1.text = "This Adventour does not have any locations"
-            }
-            if let location2 = locations[1] as? [String: Any] {
-                if let name = location2["name"] as? String {
-                    cell.location2.text = "⦿ " + name
-                } else {
-                    cell.location2.text = "This location does not have a name..."
-                }
-            }
-            if let location3 = locations[2] as? [String: Any] {
-                if let name = location3["name"] as? String {
-                    cell.location3.text = "⦿ " + name
-                } else {
-                    cell.location3.text = "This location does not have a name..."
-                    
-                }
-            }
-        } else {
-            print("No locations")
+        if let title = beacons[indexPath.item]["title"] as? String {
+            cell.title.text = title
         }
-        
+        if let intro = beacons[indexPath.item]["intro"] as? String {
+            cell.intro.text = intro
+        }
+        getBeaconPicture(beaconInfo: beacons[indexPath.item], cell: cell)
+        setNumLikes(beaconInfo: beacons[indexPath.item], cell: cell)
+        checkLiked(beaconInfo: beacons[indexPath.item], cell: cell)
+        loadUserData(cell: cell)
         return cell
     }
     
-    func getBeacons() {
+    func loadUserData(cell: BeaconBoardTableViewCell) {
+        let db = Firestore.firestore()
+        db.collection("Adventourists").document(self.user.uid).getDocument { document, error in
+            if let document = document, document.exists {
+                if let data = document.data() {
+                    if let nickname = data["nickname"] as? String {
+                        cell.nickname.text = nickname
+                    }
+                    if let pfpRef = data["iosPfpRef"] as? String {
+                        cell.authorProfilePic.image = UIImage(named: pfpRef)
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func getBeaconPicture(beaconInfo: [String: Any], cell: BeaconBoardTableViewCell) {
+        let sem = DispatchSemaphore(value: 0)
+        print("BEACON INFO: \(beaconInfo)")
+        if let locations = beaconInfo["locations"] as? [[String: Any]] {
+            if locations.count > 0 {
+                let location = locations[0]
+                if let photos = location["photos"] as? [[String: Any]] {
+                    print("photos: \(photos)")
+                    for pic in photos {
+                        if let prefix = pic["prefix"] as? String {
+                            if let suffix = pic["suffix"] as? String {
+                                let url = prefix + "original" + suffix
+                                cell.beaconPicture.loadFrom(URLAddress: url, semaphore: sem)
+                                return
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkLiked(beaconInfo: [String: Any], cell: BeaconBoardTableViewCell) {
+        
+        let db = Firestore.firestore()
+        var query: Query = db.collection("Likes")
+            .whereField("uid", isEqualTo: self.user.uid)
+            .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
+            
+        query.addSnapshotListener { snap, error in
+            if snap!.isEmpty {
+                cell.likeIcon.image = UIImage(systemName: "heart")
+                
+            } else {
+                    cell.likeIcon.image = UIImage(systemName: "heart.fill")
+            }
+        }
+    }
+    
+    func setNumLikes(beaconInfo: [String: Any], cell: BeaconBoardTableViewCell)  {
+        let db = Firestore.firestore()
+        let beaconRef = db.collection("Beacons").document(beaconInfo["documentID"] as! String)
+        getNumLikes(ref: beaconRef, cell: cell)
+    }
+    
+    func getNumLikes(ref: DocumentReference, cell: BeaconBoardTableViewCell) {
+        print("Calling getNumLikes...")
+        var totalCount: Int = 0
+        ref.collection("likeShards").getDocuments() { (querySnapshot, err) in
+            
+            if err != nil {
+                // Error getting shards
+                // ...
+                return
+            } else {
+                for document in querySnapshot!.documents {
+                    let count = document.data()["likes"] as! Int
+                    totalCount += count
+                }
+            }
+
+            cell.numLikes.text = String(totalCount)
+        }
+        
+    }
+    
+    
+    func getNextPageBeacons() {
+        self.query.addSnapshotListener { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("\(error.debugDescription)")
+                return
+            }
+
+            guard let lastSnapshot = snapshot.documents.last else {
+                // The collection is empty.
+                return
+            }
+            print("LAST ", lastSnapshot.documentID)
+            var allData: [String: Any]!
+            let sem = DispatchSemaphore(value: 0)
+            
+            let db = Firestore.firestore()
+            self.query = db.collection("Beacons")
+                .whereField("beaconLocation", isEqualTo: self.beaconLocation)
+                .whereField("isPrivate", isEqualTo: false)
+                .order(by: "dateCreated", descending: true)
+                .limit(to: 10)
+                .start(afterDocument: lastSnapshot)
+            
+            self.query.getDocuments { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else if querySnapshot!.isEmpty {
+                    self.beaconsTable?.reloadData()
+                    self.activityIndicator.stopAnimating()
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                        let documentID = document.documentID
+                        allData = document.data()
+                        print(allData)
+                        allData.updateValue(documentID, forKey: "documentID")
+                        if let locations = allData["locations"] as? [String] {
+                            let params: [String: Any] = [
+                                "uid": self.user!.uid,
+                                "ids": locations
+                            ]
+                            
+                            let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-foursquare-places")
+                            var urlRequest = URLRequest(url: url!)
+                            urlRequest.httpMethod = "POST"
+                            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+                            urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+                            urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+                            
+                            let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                                // do stuff
+                                defer {sem.signal()}
+                                
+                                print("doc data: ", allData["dateCreated"])
+                                if let data = data {
+                                    let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
+                                    if let dataDict = dataJsonObject as? [String: Any] {
+                                        if let array = dataDict["results"] as? [[String: Any]] {
+                                            allData["locations"] = array
+                                            self.beacons.append(allData)
+                                            print("Count: ", self.beacons.count)
+                                            DispatchQueue.main.async {
+                                                self.beaconsTable?.reloadData()
+                                                self.activityIndicator.stopAnimating()
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            task.resume()
+                        }
+                        
+                        sem.wait()
+                    }
+                }
+            }
+        }
+    }
+    
+    func getMostRecentBeacons() {
         self.activityIndicator.isHidden = false
         self.errorMessage.isHidden = true
         self.activityIndicator.startAnimating()
@@ -168,11 +322,13 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         
         let db = Firestore.firestore()
         
-        db.collection("Beacons")
+        self.query = db.collection("Beacons")
             .whereField("beaconLocation", isEqualTo: self.beaconLocation)
             .whereField("isPrivate", isEqualTo: false)
             .order(by: "dateCreated", descending: true)
-            .getDocuments() { (querySnapshot, err) in
+            .limit(to: 10)
+        
+        self.query.getDocuments() { (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
@@ -236,6 +392,94 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
             }
     }
     
+    func getMostLikedBeacons() {
+        self.activityIndicator.isHidden = false
+        self.errorMessage.isHidden = true
+        self.activityIndicator.startAnimating()
+        print("GET BEACONS IS RUNNING")
+        var allData: [String: Any]!
+        self.beacons = []
+        let sem = DispatchSemaphore(value: 0)
+        
+        let db = Firestore.firestore()
+        
+        self.query = db.collection("Beacons")
+            .whereField("beaconLocation", isEqualTo: self.beaconLocation)
+            .whereField("isPrivate", isEqualTo: false)
+            .limit(to: 10)
+        
+        self.query.getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        if querySnapshot!.isEmpty {
+                            DispatchQueue.main.async {
+                                self.beaconsTable?.reloadData()
+                                self.activityIndicator.stopAnimating()
+                                self.errorMessage.text = "There are no Beacons for this location!"
+                                self.errorMessage.isHidden = false
+                                
+                            }
+                        } else {
+                            for document in querySnapshot!.documents {
+                                print("\(document.documentID) => \(document.data())")
+                                let documentID = document.documentID
+                                allData = document.data()
+                                allData.updateValue(documentID, forKey: "documentID")
+                                if let locations = allData["locations"] as? [String] {
+                                    let params: [String: Any] = [
+                                        "uid": self.user!.uid,
+                                        "ids": locations
+                                    ]
+                                    
+                                    let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/get-foursquare-places")
+                                    var urlRequest = URLRequest(url: url!)
+                                    urlRequest.httpMethod = "POST"
+                                    urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+                                    urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+                                    urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+                                    
+                                    let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                                        // do stuff
+                                        defer {sem.signal()}
+                                        
+                                        print("doc data: ", allData["dateCreated"])
+                                        if let data = data {
+                                            let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
+                                            if let dataDict = dataJsonObject as? [String: Any] {
+                                                if let array = dataDict["results"] as? [[String: Any]] {
+                                                    allData["locations"] = array
+                                                    self.beacons.append(allData)
+                                                    print("Count: ", self.beacons.count)
+                                                    DispatchQueue.main.async {
+                                                        self.beaconsTable?.reloadData()
+                                                        self.activityIndicator.stopAnimating()
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                    task.resume()
+                                }
+                                
+                                sem.wait()
+                            }
+                        }
+                        
+                    }
+            }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.searchTextField.endEditing(true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
     func switchToLoggedOut() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
        
@@ -255,18 +499,19 @@ extension BeaconBoardViewController: GMSAutocompleteViewControllerDelegate {
     
   // Handle the user's selection.
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-    print("Place name: \(place.name)")
-    print("Place ID: \(place.placeID)")
-    print("Place attributions: \(place.attributions)")
-    print("Place address: \(place.formattedAddress))")
-    self.lat = place.coordinate.latitude
-    self.lon = place.coordinate.longitude
-    print("Place lat: \(self.lat)")
-    print("Place lon: \(self.lon)")
-    self.beaconLocation = place.formattedAddress!
-    updateSearch()
-    getBeacons()
-    dismiss(animated: true, completion: nil)
+      
+      print("Place name: \(place.name)")
+      print("Place ID: \(place.placeID)")
+      print("Place attributions: \(place.attributions)")
+      print("Place address: \(place.formattedAddress))")
+      self.lat = place.coordinate.latitude
+      self.lon = place.coordinate.longitude
+      print("Place lat: \(self.lat)")
+      print("Place lon: \(self.lon)")
+      self.beaconLocation = place.formattedAddress!
+      updateSearch()
+      getMostRecentBeacons()
+      dismiss(animated: true, completion: nil)
     
   }
 

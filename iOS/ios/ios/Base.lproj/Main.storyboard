@@ -395,11 +395,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="adv-navyblue"/>
                         <color key="tintColor" name="adv-white"/>
+                        <color key="selectedImageTintColor" name="adv-white"/>
                         <tabBarAppearance key="standardAppearance">
                             <color key="backgroundColor" name="adv-navyblue"/>
+                            <color key="selectionIndicatorTintColor" name="adv-white"/>
                         </tabBarAppearance>
                         <tabBarAppearance key="scrollEdgeAppearance">
                             <color key="backgroundColor" name="adv-navyblue"/>
+                            <color key="selectionIndicatorTintColor" name="adv-white"/>
                         </tabBarAppearance>
                     </tabBar>
                     <userDefinedRuntimeAttributes>

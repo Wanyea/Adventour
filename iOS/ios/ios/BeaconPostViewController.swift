@@ -3,92 +3,10 @@ import MapKit
 import FirebaseAuth
 import FirebaseFirestore
 
-extension UIImageView {
-    
-    @IBInspectable var borderColor : UIColor? {
-        get{
-            if let color = layer.borderColor{
-                return UIColor(cgColor: color)
-            }
-            else{
-                return nil
-            }
-        }
-        set {layer.borderColor = newValue?.cgColor}
-    }
-}
-
-extension UITextView {
-    @IBInspectable var borderColor: UIColor? {
-        get {
-            if let color = layer.borderColor{
-                return UIColor(cgColor: color)
-            } else{
-                return nil
-            }
-        }
-        
-        set {
-            layer.borderColor = newValue?.cgColor
-        }
-    }
-    
-    @IBInspectable var borderWidth: CGFloat {
-        get {
-            return layer.borderWidth
-        }
-        
-        set {
-            layer.borderWidth = newValue
-        }
-    }
-    
-    @IBInspectable var cornerRadius: CGFloat {
-        get {
-            return layer.cornerRadius
-        }
-        
-        set {
-            layer.cornerRadius = newValue
-        }
-    }
-}
-
-@IBDesignable class ScaleSwitch: UISwitch {
-
-    @IBInspectable var scale : CGFloat = 1{
-        didSet{
-            setup()
-        }
-    }
-
-    //from storyboard
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    //from code
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-
-    private func setup(){
-        self.transform = CGAffineTransform(scaleX: scale, y: scale)
-    }
-
-    override func prepareForInterfaceBuilder() {
-        setup()
-        super.prepareForInterfaceBuilder()
-    }
-
-
-}
-
-// Beacon Title char limit: 16
-
 class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
-        
+    
+    let NUM_SHARDS = 10
+    
     @IBOutlet weak var beaconTitle: BeaconPostTextView!
     @IBOutlet weak var beaconIntro: BeaconPostTextView!
     @IBOutlet weak var editButton: UIButton!
@@ -96,9 +14,11 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var locationsTable: UITableView!
     @IBOutlet weak var privateLabel: UILabel!
     @IBOutlet weak var privateSwitch: ScaleSwitch!
-    @IBOutlet weak var locationPhoto1: UIImageView!
+    @IBOutlet weak var pfp: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var numLikes: UILabel!
     
     var source: UIViewController!
     var beaconInfo: [String: Any] = [:]
@@ -109,6 +29,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     var beaconLocation: String!
     var nickname: String!
     var shouldSave: Bool!
+    var isLiked: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +52,13 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         self.locationsTable.isHidden = true
         loadBeaconInfo()
         getLocationData()
+        if self.source is BeaconBoardViewController || self.source is ProfileViewController {
+            checkLiked()
+            Task {
+                await setNumLikes()
+            }
+        }
+        self.likeButton.imageView?.contentMode = .scaleAspectFit
         print("nickname on load: ", self.nickname)
     }
     
@@ -286,6 +214,157 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
+    @IBAction func reportTapped(_ sender: Any) {
+        let alert = UIAlertController(
+            title: "Report Beacon Post",
+            message: "\nIf you believe content in this Beacon breaks our Terms of Service please press \"Report\". A member of the Adventour team will review your report. If this content is found to break our Terms of Service it will be removed promptly.\n\nThank you for keeping Adventour a safe place for everyone!",
+            preferredStyle: .actionSheet
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Report",
+            style: .destructive,
+            handler: { _ in
+                
+        }))
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: { _ in
+
+        }))
+        present(alert,
+                animated: true,
+                completion: nil
+        )
+    }
+    
+    
+    @IBAction func likeTapped(_ sender: Any) {
+        self.isLiked = !self.isLiked
+        print("LIKE BUTTON TAPPED!")
+        if self.isLiked {
+            self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
+            saveLike()
+        } else {
+            self.likeButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
+            deleteLike()
+        }
+    }
+    
+    func saveLike() {
+        print("DOC ID: ", beaconInfo["documentID"])
+        let db = Firestore.firestore()
+        var query: Query = db.collection("Likes")
+            .whereField("uid", isEqualTo: self.user.uid)
+            .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
+        query.getDocuments { snap, error in
+            if let error = error {
+                        print("Error getting documents: \(error)")
+            } else if snap!.isEmpty {
+                db.collection("Likes")
+                    .addDocument(data: [
+                        "beaconID": self.beaconInfo["documentID"],
+                        "uid": self.user.uid
+                    ])
+                let beaconRef = db.collection("Beacons")
+                    .document(self.beaconInfo["documentID"] as! String)
+                print("PREPARING TO INCREMENT")
+                self.incrementLikesCounter(ref: beaconRef, numShards: self.NUM_SHARDS)
+                self.setNumLikes()
+            }
+        }
+        
+    }
+    
+    func deleteLike() {
+        let db = Firestore.firestore()
+        var query: Query = db.collection("Likes")
+            .whereField("uid", isEqualTo: self.user.uid)
+            .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
+        query.getDocuments { snap, error in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                for document in snap!.documents {
+                    db.collection("Likes")
+                        .document(document.documentID)
+                        .delete()
+                    let beaconRef = db.collection("Beacons")
+                        .document(self.beaconInfo["documentID"] as! String)
+                    print("PREPARING TO DECREMENT")
+                    self.decrementLikesCounter(ref: beaconRef, numShards: self.NUM_SHARDS)
+                    self.setNumLikes()
+                }
+            }
+        }
+    }
+    
+    func checkLiked() {
+        
+        let db = Firestore.firestore()
+        var query: Query = db.collection("Likes")
+            .whereField("uid", isEqualTo: self.user.uid)
+            .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
+            
+        query.addSnapshotListener { snap, error in
+            if snap!.isEmpty {
+                self.isLiked = false
+                self.likeButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
+            } else {
+                self.isLiked = true
+                self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
+            }
+        }
+    }
+    
+    func setNumLikes()  {
+        let db = Firestore.firestore()
+        let beaconRef = db.collection("Beacons").document(self.beaconInfo["documentID"] as! String)
+        getNumLikes(ref: beaconRef)
+    }
+    
+    func getNumLikes(ref: DocumentReference) {
+        print("Calling getNumLikes...")
+        var totalCount: Int = 0
+        ref.collection("likeShards").getDocuments() { (querySnapshot, err) in
+            
+            if err != nil {
+                // Error getting shards
+                // ...
+                return
+            } else {
+                for document in querySnapshot!.documents {
+                    let count = document.data()["likes"] as! Int
+                    totalCount += count
+                }
+            }
+
+            self.numLikes.text = String(totalCount)
+        }
+        
+    }
+    
+    func incrementLikesCounter(ref: DocumentReference, numShards: Int) {
+        // Select a shard of the counter at random
+        let shardId = Int(arc4random_uniform(UInt32(numShards)))
+        let shardRef = ref.collection("likeShards").document(String(shardId))
+
+        shardRef.setData([
+            "likes": FieldValue.increment(Int64(1))
+        ], merge: true)
+    }
+    
+    func decrementLikesCounter(ref: DocumentReference, numShards: Int) {
+        // Select a shard of the counter at random
+        let shardId = Int(arc4random_uniform(UInt32(numShards)))
+        let shardRef = ref.collection("likeShards").document(String(shardId))
+
+        shardRef.setData([
+            "likes": FieldValue.increment(Int64(-1))
+        ], merge: true)
+    }
+    
     func checkEditing() {
         if self.source is BeaconBoardViewController {
             disableEditingBeaconPost()
@@ -386,7 +465,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 "dateCreated": beaconInfo["dateCreated"],
                 "numLocations": locations.count,
                 "isPrivate": self.privateSwitch.isOn,
-                "author": ["uid": self.user.uid, "nickname": self.nickname]
+                "uid": self.user.uid
             ]
             
             let db = Firestore.firestore()
@@ -403,9 +482,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                 }
             
-            db.collection("Beacons")
+            let beaconRef = db.collection("Beacons")
                 .document(docRef.documentID)
-                .setData(beacon) {
+            
+                beaconRef.setData(beacon) {
                     err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -413,10 +493,19 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                         print("Document successfully written!")
                     }
                 }
+            createLikesCounter(ref: beaconRef, numShards: self.NUM_SHARDS)
             self.locationsTable.reloadData()
         }
         
         
+    }
+    
+    func createLikesCounter(ref: DocumentReference, numShards: Int) {
+        ref.setData(["numLikeShards": numShards], merge: true){ (err) in
+            for i in 0...numShards {
+                ref.collection("likeShards").document(String(i)).setData(["likes": 0])
+            }
+        }
     }
     
     func getLocationData() {
@@ -574,12 +663,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             if let isPrivate = beaconInfo["isPrivate"] as? Bool {
                 self.privateSwitch.isOn = isPrivate
             }
-            if let author = beaconInfo["author"] as? [String: Any] {
-                if let nickname = author["nickname"] as? String {
-                    self.nicknameLabel.text = nickname
-                }
-                // TODO: Add profile pic
-            }
+            loadUserData()
             // TODO: Load likes
         } else if self.source is CongratsViewController {
             loadUserData()
@@ -601,8 +685,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                         self.nicknameLabel.text = nickname
                         self.nickname = nickname
                     }
-                    // TODO: Add profile pic
-                    // TODO: Load likes
+                    if let pfpRef = data["iosPfpRef"] as? String {
+                        self.pfp.image = UIImage(named: pfpRef)
+                    }
+
                 }
                 
                 
@@ -632,4 +718,86 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         // then call the change root view controller function to change to main tab bar
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loggedOutVc, animated: true)
     }
+}
+
+extension UIImageView {
+    
+    @IBInspectable var borderColor : UIColor? {
+        get{
+            if let color = layer.borderColor{
+                return UIColor(cgColor: color)
+            }
+            else{
+                return nil
+            }
+        }
+        set {layer.borderColor = newValue?.cgColor}
+    }
+}
+
+extension UITextView {
+    @IBInspectable var borderColor: UIColor? {
+        get {
+            if let color = layer.borderColor{
+                return UIColor(cgColor: color)
+            } else{
+                return nil
+            }
+        }
+        
+        set {
+            layer.borderColor = newValue?.cgColor
+        }
+    }
+    
+    @IBInspectable var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+    
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+}
+
+@IBDesignable class ScaleSwitch: UISwitch {
+
+    @IBInspectable var scale : CGFloat = 1{
+        didSet{
+            setup()
+        }
+    }
+
+    //from storyboard
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    //from code
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    private func setup(){
+        self.transform = CGAffineTransform(scaleX: scale, y: scale)
+    }
+
+    override func prepareForInterfaceBuilder() {
+        setup()
+        super.prepareForInterfaceBuilder()
+    }
+
+
 }

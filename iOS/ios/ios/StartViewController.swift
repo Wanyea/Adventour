@@ -78,7 +78,7 @@ class StartViewController: UIViewController, UISearchBarDelegate {
     @IBAction func getCurrentPlace(_ sender: Any){
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue) |  UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue) | UInt(GMSPlaceField.placeID.rawValue))
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue) |  UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.addressComponents.rawValue))
         
         autocompleteController.placeFields = fields
         
@@ -437,17 +437,18 @@ extension StartViewController: GMSAutocompleteViewControllerDelegate {
     
   // Handle the user's selection.
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-    print("Place name: \(place.name)")
-    print("Place ID: \(place.placeID)")
-    print("Place attributions: \(place.attributions)")
-    print("Place address: \(place.formattedAddress))")
-    self.lat = place.coordinate.latitude
-    self.lon = place.coordinate.longitude
-    print("Place lat: \(self.lat)")
-    print("Place lon: \(self.lon)")
-    self.beaconLocation = place.formattedAddress!
-    updateSearch()
-    dismiss(animated: true, completion: nil)
+
+      print("Place name: \(place.name)")
+      print("Place ID: \(place.placeID)")
+      print("Place attributions: \(place.attributions)")
+      print("Place address: \(place.formattedAddress))")
+      self.lat = place.coordinate.latitude
+      self.lon = place.coordinate.longitude
+      print("Place lat: \(self.lat)")
+      print("Place lon: \(self.lon)")
+      self.beaconLocation = place.formattedAddress!
+      updateSearch()
+      dismiss(animated: true, completion: nil)
     
   }
 
