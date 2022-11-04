@@ -29,13 +29,11 @@ class BeaconsDataSource: NSObject, UITableViewDataSource {
         dateFormatter.dateFormat = "MM/dd/YYYY"
         
         if let firTimestamp = data[indexPath.item]["dateCreated"] as? Timestamp {
-            if let swiftDate = firTimestamp.dateValue() as? Date {
-    //            print("Date created: ", data)
-                if let stringDate = dateFormatter.string(from: swiftDate) as? String {
-                    cell.dateCreated.text = stringDate
-                }
-                
-            }
+            let swiftDate = firTimestamp.dateValue()
+//            print("Date created: ", data)
+            let stringDate = dateFormatter.string(from: swiftDate)
+            cell.dateCreated.text = stringDate
+            
         }
 
         if let locations = data[indexPath.item]["locations"] as? [[String: Any]] {

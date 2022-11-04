@@ -10,9 +10,14 @@ import UIKit
 class BeaconBoardTableViewCell: UITableViewCell {
 
     @IBOutlet weak var dateCreated: UILabel!
-    @IBOutlet weak var location1: UILabel!
-    @IBOutlet weak var location2: UILabel!
-    @IBOutlet weak var location3: UILabel!
+
+    @IBOutlet weak var authorProfilePic: UIImageView!
+    @IBOutlet weak var likeIcon: UIImageView!
+    @IBOutlet weak var nickname: UILabel!
+    @IBOutlet weak var numLikes: UILabel!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var intro: UILabel!
+    @IBOutlet weak var beaconPicture: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

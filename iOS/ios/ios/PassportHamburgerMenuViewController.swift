@@ -62,7 +62,7 @@ class PassportHamburgerMenuViewController: UIViewController {
     func switchToLoggedOut() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
        
-        let loggedOutVc = storyboard.instantiateViewController(identifier: "LoggedOutViewController")
+        let loggedOutVc = storyboard.instantiateViewController(identifier: "LoginNavigationController")
         
         // This is to get the SceneDelegate object from your view controller
         // then call the change root view controller function to change to main tab bar
