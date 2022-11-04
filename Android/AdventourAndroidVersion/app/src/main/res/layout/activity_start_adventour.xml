@@ -7,13 +7,6 @@
     android:id="@+id/startAdventourLayout"
     tools:context=".StartAdventour">
 
-<!--    <fragment android:id="@+id/autocomplete_fragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
-<!--        />-->
-
-
     <ImageView
         android:id="@+id/cloud_1_4"
         android:layout_width="150dp"
@@ -649,28 +642,6 @@
 
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 tools:ignore="MissingClass" />
-
-            <!--<EditText
-                android:id="@+id/startAnAdventourEditText"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/edit_text_round"
-
-                android:drawableLeft="@drawable/ic_magnifying_glass_icon"
-                android:drawableRight="@drawable/ic_location_icon"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/navy_main"
-                android:inputType="text"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-
-                app:layout_constraintEnd_toStartOf="@id/beginButton"
-                app:layout_constraintStart_toEndOf="@id/filterButton"
-                app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView" />-->
 
             <ImageButton
                 android:id="@+id/filterButton"

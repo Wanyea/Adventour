@@ -78,8 +78,9 @@ public class Passport extends AppCompatActivity {
     ArrayList<String> queryString;
 
     RecyclerView PreviousAdventourRV, BeaconPostRV;
+
     PreviousAdventourAdapter previousAdventourAdapter;
-    BeaconPostAdapter beaconPostAdapter;
+    BeaconsAdapter beaconsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class Passport extends AppCompatActivity {
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
+        BeaconPostRV = findViewById(R.id.beaconPostsRV);
 
         queryString = new ArrayList<>();
 
@@ -108,16 +110,16 @@ public class Passport extends AppCompatActivity {
         Log.d("OnCreate", "Data length: " + String.valueOf(GlobalVars.previousAdventourArrayList.size()));
         PreviousAdventourRV.setNestedScrollingEnabled(true);
         previousAdventourAdapter = new PreviousAdventourAdapter(context, GlobalVars.previousAdventourArrayList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager adventourLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        PreviousAdventourRV.setLayoutManager(adventourLinearLayoutManager);
         PreviousAdventourRV.setAdapter(previousAdventourAdapter);
         getPreviousAdventours();
 
         BeaconPostRV.setNestedScrollingEnabled(true);
-        beaconPostAdapter = new BeaconsModel(context, GlobalVars.userBeaconsArrayList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
-        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
+        beaconsAdapter = new BeaconsAdapter(context, GlobalVars.userBeaconsArrayList);
+        LinearLayoutManager beaconsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        BeaconPostRV.setLayoutManager(beaconsLinearLayoutManager);
+        BeaconPostRV.setAdapter(previousAdventourAdapter);
         getBeaconPosts();
 
 
