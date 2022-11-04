@@ -22,6 +22,8 @@ class PrevAdventoursDataSource: NSObject, UITableViewDataSource {
         return data.count
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PrevAdventourCell", for: indexPath) as! PrevAdventoursTableViewCell
 //        print(data[indexPath.item])
