@@ -21,7 +21,7 @@ public class LoggedOut extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setTheme(R.style.Theme_AdventourAndroidVersion);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logged_out);
+        setContentView(R.layout.activity_logged_out);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {

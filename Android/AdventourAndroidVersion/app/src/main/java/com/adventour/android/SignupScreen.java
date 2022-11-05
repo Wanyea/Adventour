@@ -153,7 +153,6 @@ public class SignupScreen extends AppCompatActivity {
                 year = Integer.parseInt(date.substring(6, 10));
 
                 birthdate = birthdateCalendar.getTime();
-                Log.d("BIRTHDATE", birthdate.toString());
 
                 //Check if nickname is valid.
                 if (!AdventourUtils.isValidNickname(nickname))
@@ -200,7 +199,9 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword))
+                {
                     signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
+                }
             }
         });
 
@@ -490,6 +491,5 @@ public class SignupScreen extends AppCompatActivity {
 
         refs.androidProfilePicRef = drawableID;
         profPicImageButton.setForeground(getResources().getDrawable(drawableID));
-        Log.d("ID", String.valueOf(refs.androidProfilePicRef));
     }
 }

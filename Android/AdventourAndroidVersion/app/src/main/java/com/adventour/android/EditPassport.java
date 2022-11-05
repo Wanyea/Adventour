@@ -27,8 +27,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +44,7 @@ public class EditPassport extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_passport);
+        setContentView(R.layout.activity_edit_passport);
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
@@ -186,8 +184,6 @@ public class EditPassport extends AppCompatActivity {
                                 changes.put("mantra", mantra);
                                 changes.put("firstName", firstName);
                                 changes.put("lastName", lastName);
-                                Log.d("birthdate", birthdate.toString());
-                                Log.d("birthdate", birthdate.getClass().toString());
                                 changes.put("birthdate", birthdate);
 
                                 db.collection("Adventourists").document(user.getUid())

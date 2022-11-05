@@ -232,8 +232,7 @@
                 app:layout_constraintTop_toTopOf="@+id/passportCardImageView"
                 android:layout_marginTop="60dp"
                 app:layout_constraintStart_toEndOf="@+id/profPicImageView"
-                android:layout_marginStart="15dp"
-                android:text="Nickname" />
+                android:layout_marginStart="15dp" />
 
             <TextView
                 android:id="@+id/birthdateTextView"
@@ -245,8 +244,7 @@
                 app:layout_constraintStart_toEndOf="@id/cakeIconImageView"
                 android:layout_marginStart="5dp"
                 app:layout_constraintTop_toTopOf="@id/cakeIconImageView"
-                app:layout_constraintBottom_toBottomOf="@id/cakeIconImageView"
-                android:text="00/00/0000"/>
+                app:layout_constraintBottom_toBottomOf="@id/cakeIconImageView" />
 
             <ImageView
                 android:id="@+id/cakeIconImageView"
@@ -265,7 +263,6 @@
                 app:layout_constraintStart_toStartOf="@id/nicknameTextView"
                 app:layout_constraintTop_toBottomOf="@id/cakeIconImageView"
                 android:layout_marginTop="5dp"
-                android:text="Mantra"
                 android:maxLines="4"/>
 
             <ImageButton
