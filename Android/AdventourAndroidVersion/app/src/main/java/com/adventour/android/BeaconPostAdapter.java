@@ -4,6 +4,7 @@ import android.content.Context;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,15 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
 
         holder.customEditTextListener.updatePosition(position);
+        Log.d("Position IN HOLDER: ", String.valueOf(position));
 
-        if (GlobalVars.locationDescriptions == null)
+        if (GlobalVars.locationDescriptions == null || GlobalVars.locationDescriptions.isEmpty())
         {
             holder.locationDescriptionEditText.setText(model.getDescription());
+            GlobalVars.locationDescriptions.add(position, model.getDescription());
         } else {
+            Log.d("BEACON_POST_AD", "locationDescriptions not null.");
+            Log.d("BEACON_POST_AD", GlobalVars.locationDescriptions.toString());
             holder.locationDescriptionEditText.setText(GlobalVars.locationDescriptions.get(position));
 
         }
@@ -113,11 +118,27 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            if(GlobalVars.locationDescriptions != null)
+            Log.d("BEACON_POST_AD", "Inside onTextChanged. Before if statement");
+
+            if(GlobalVars.locationDescriptions.isEmpty())
+            {
+                Log.d("BEACON_POST_AD", "Inside if statement");
+                Log.d("Position ", String.valueOf(position));
+                Log.d("LOC DES ", GlobalVars.locationDescriptions.toString());
+
                 GlobalVars.locationDescriptions.add(position, charSequence.toString());
+            } else {
+                Log.d("BEACON_POST_AD", "Inside else statement");
+                Log.d("Position in else", String.valueOf(position));
+                Log.d("LOC DES IN ELSE", GlobalVars.locationDescriptions.toString());
+                GlobalVars.locationDescriptions.set(position, charSequence.toString());
+            }
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {}
+        public void afterTextChanged(Editable editable)
+        {
+
+        }
     }
 }
