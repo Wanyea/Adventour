@@ -160,6 +160,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/scrollView3" />
 
+            <ScrollView
+                android:id="@+id/beaconPostScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/myLitBeaconsHeader" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/beaconPostsRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </ScrollView>
+
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
