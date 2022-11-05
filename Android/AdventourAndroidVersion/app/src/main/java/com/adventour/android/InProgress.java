@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,10 +40,11 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     FirebaseAuth auth;
     FirebaseUser user;
 
-    FloatingActionButton finishAdventourButton;
+    Button finishAdventourButton;
     Double lat = GlobalVars.inProgressModelArrayList.get(0).getLatitude();
     Double lon = GlobalVars.inProgressModelArrayList.get(0).getLongitude();
     String locationName = GlobalVars.inProgressModelArrayList.get(0).getName();
+    String locationAddress = GlobalVars.beaconModelArrayList.get(0).getAddress();
 
     FloatingActionButton addLocationButton;
 
@@ -49,14 +52,13 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_progress);
+        handleAuth();
 
         // Google map code
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
         assert mapFragment != null;
         callback = this;
-        
-        handleAuth();
 
         RecyclerView InProgressRV = findViewById(R.id.inProgressRV);
 
@@ -65,9 +67,10 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                 new InProgressClickListener(this, InProgressRV, new InProgressClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        lat = GlobalVars.inProgressModelArrayList.get(position).getLatitude(); // replace with lat from whatever api returns
-                        lon = GlobalVars.inProgressModelArrayList.get(position).getLongitude(); // same but lon
-                        locationName = GlobalVars.inProgressModelArrayList.get(position).getName(); // same but name
+                        lat = GlobalVars.inProgressModelArrayList.get(position).getLatitude();
+                        lon = GlobalVars.inProgressModelArrayList.get(position).getLongitude();
+                        locationName = GlobalVars.inProgressModelArrayList.get(position).getName();
+                        locationAddress = GlobalVars.beaconModelArrayList.get(position).getAddress();
                         mapFragment.getMapAsync(callback);
                     }
 
@@ -80,6 +83,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         InProgressRV.setNestedScrollingEnabled(true);
 
         addLocationButton = (FloatingActionButton) findViewById(R.id.addLocationButton);
+        finishAdventourButton = (Button) findViewById(R.id.finishAdventourButton);
 
         InProgressAdapter inProgressAdapter = new InProgressAdapter(this, GlobalVars.inProgressModelArrayList);
 
@@ -115,6 +119,14 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
             return false;
         });
 
+        finishAdventourButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view)
+           {
+                switchToCongratulations();
+           }
+        });
+
         addLocationButton.setOnClickListener(new  View.OnClickListener() {
            @Override
            public void onClick(View view)
@@ -138,6 +150,13 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         finish();
     }
 
+    public void switchToCongratulations()
+    {
+        Intent intent = new Intent(this, Congratulations.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void handleAuth()
     {
         auth = FirebaseAuth.getInstance();
@@ -152,9 +171,22 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         map.clear();
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(lat, lon)).title(locationName);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 13));
+        MarkerOptions marker = new MarkerOptions().position(new LatLng(lat, lon));
         Marker mapMarker = map.addMarker(marker);
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
+        mapMarker.setSnippet("Tap pin for directions");
+        mapMarker.setTitle(locationName);
         mapMarker.showInfoWindow();
+
+        // Open in maps code
+        map.setOnMarkerClickListener(marker1 -> {
+//            Uri gmmIntentUri = Uri.parse("geo:0,0?z=18&q=" + marker.getPosition().latitude + "," + marker.getPosition().longitude);
+            Uri gmmIntentUri = Uri.parse("geo:" + marker.getPosition().latitude + "," + marker.getPosition().longitude + "?z=17&q=" + Uri.encode(locationName + " " + locationAddress));
+//            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + marker.getPosition().latitude + "," + marker.getPosition().longitude);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+            return true;
+        });
     }
 }

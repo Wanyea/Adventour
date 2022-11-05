@@ -51,11 +51,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/profPicImageView"
+            <ImageButton
+                android:id="@+id/profPicImageButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:padding="20dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +71,7 @@
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profPicImageView"
+                app:layout_constraintTop_toBottomOf="@id/profPicImageButton"
                 android:scrollHorizontally="true"
 
                 android:drawableLeft="@drawable/ic_user_icon_small"
@@ -106,12 +105,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 style="@style/AdventourEditTextLoginSignup"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nicknameEditText"
                 android:scrollHorizontally="true"
-
                 android:drawableLeft="@drawable/ic_email_icon"
                 android:hint="Email" />
 
@@ -139,17 +136,26 @@
                 app:srcCompat="@drawable/ic_alert_triangle_icon"
                 app:tint="@color/red_variant" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/birthdateEditText"
+            <TextView
+                android:id="@+id/birthdateTextView"
                 style="@style/AdventourEditTextLoginSignup"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emailEditText"
-                android:scrollHorizontally="true"
-
                 android:drawableLeft="@drawable/ic_calendar_icon"
-                android:hint="Birthdate" />
+                android:hint="Birthdate"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emailEditText" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="48dp"
+                android:background="@color/blue_main"
+                app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdateTextView" />
 
             <TextView
                 android:id="@+id/birthdateSignupErrorTextView"
@@ -161,8 +167,8 @@
                 android:textColor="@color/red_variant"
                 android:textSize="14sp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@+id/birthdateEditText"
-                app:layout_constraintTop_toBottomOf="@+id/birthdateEditText" />
+                app:layout_constraintStart_toStartOf="@+id/birthdateTextView"
+                app:layout_constraintTop_toBottomOf="@+id/birthdateTextView" />
 
             <ImageView
                 android:id="@+id/birthdateSignupErrorIcon"
@@ -170,23 +176,21 @@
                 android:layout_height="18dp"
                 android:layout_marginEnd="5dp"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@id/birthdateEditText"
+                app:layout_constraintEnd_toEndOf="@id/birthdateTextView"
                 app:layout_constraintTop_toTopOf="@id/birthdateSignupErrorTextView"
                 app:srcCompat="@drawable/ic_alert_triangle_icon"
                 app:tint="@color/red_variant" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
-                android:inputType="textPassword"
                 style="@style/AdventourEditTextLoginSignup"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/birthdateEditText"
-                android:scrollHorizontally="true"
-
                 android:drawableLeft="@drawable/ic_lock_icon"
-                android:hint="Password" />
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdateTextView" />
 
             <TextView
                 android:id="@+id/passwordSignupErrorTextView"
@@ -213,16 +217,16 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPasswordEditText"
-                android:inputType="textPassword"
                 style="@style/AdventourEditTextLoginSignup"
+                android:drawableLeft="@drawable/ic_lock_icon"
+
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-                android:scrollHorizontally="true"
-
-                android:drawableLeft="@drawable/ic_lock_icon"
-                android:hint="ConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
             <TextView
                 android:id="@+id/confirmPasswordSignupErrorTextView"
@@ -287,6 +291,115 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/popupProfPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/popup_rectangle"
+                    android:padding="20dp" >
+
+                    <TextView
+                        android:id="@+id/profPicTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose a profile picture!"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/cheetahImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/ic_profpic_cheetah"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/profPicTextView"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/elephantImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/ic_profpic_elephant"
+                        app:layout_constraintEnd_toStartOf="@id/ladybugImageButton"
+                        app:layout_constraintStart_toEndOf="@id/cheetahImageButton"
+                        app:layout_constraintTop_toTopOf="@id/cheetahImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/ladybugImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/ic_profpic_ladybug"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/cheetahImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/monkeyImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/ic_profpic_monkey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cheetahImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/penguinImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/ic_profpic_penguin"
+                        app:layout_constraintEnd_toStartOf="@id/foxImageButton"
+                        app:layout_constraintStart_toEndOf="@id/monkeyImageButton"
+                        app:layout_constraintTop_toTopOf="@id/monkeyImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/foxImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:clickable="true"
+                        android:background="@drawable/ic_profpic_fox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/monkeyImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <Button
+                        android:id="@+id/doneButton"
+                        android:layout_width="0dp"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/blue_main"
+                        android:text="Done"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="100dp"
+                        app:iconGravity="textStart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/monkeyImageButton" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

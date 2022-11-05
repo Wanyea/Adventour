@@ -24,12 +24,21 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <!-- Base application theme with upper-right menu (for Passport). -->
+
+    <!-- Alert theme. -->
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/red_variant</item>
+    </style>
+
     <!-- Base application theme with upper-right menu. -->
+
     <style name="Theme.AdventourAndroidVersion.Menu" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/transparent</item>
+        <item name="colorPrimary">@color/red_variant</item>
         <item name="colorPrimaryVariant">@color/red_variant</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">@color/red_variant</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_main</item>
         <item name="colorSecondaryVariant">@color/blue_variant</item>

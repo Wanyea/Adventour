@@ -1,17 +1,20 @@
 package com.adventour.android;
 
-public class BeaconPostModel {
+import android.graphics.Bitmap;
 
+public class BeaconPostModel {
     private String name;
     private float rating;
     private String address;
     private String description;
+    private StartAdventour.LocationImages locationImages;
 
-    public BeaconPostModel(String name, float rating, String address, String description) {
+    public BeaconPostModel(String name, float rating, String address, String description, StartAdventour.LocationImages locationImages) {
         this.name = name;
         this.rating = rating;
         this.address = address;
         this.description = description;
+        this.locationImages = locationImages;
     }
 
     public String getName() {
@@ -46,4 +49,11 @@ public class BeaconPostModel {
         this.description = description;
     }
 
+    public StartAdventour.LocationImages getLocationImages() {
+        return locationImages;
+    }
+
+    public void setLocationImages(StartAdventour.LocationImages locationImages) {
+        this.locationImages = locationImages;
+    }
 }

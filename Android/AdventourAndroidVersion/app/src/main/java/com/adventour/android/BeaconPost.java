@@ -17,11 +17,13 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,25 +33,23 @@ import java.util.Map;
 public class BeaconPost extends AppCompatActivity {
 
     TextView beaconPostDate;
-    FloatingActionButton postBeaconButton;
+    Button postBeaconButton;
     ImageButton editSaveButton;
     EditText beaconTitleEditText, beaconIntroEditText;
     boolean isEditMode = true;
     String titleString, introString;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacon_post);
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
-        postBeaconButton = (FloatingActionButton) findViewById(R.id.postBeaconButton);
+        postBeaconButton = (Button) findViewById(R.id.postBeaconButton);
         editSaveButton = (ImageButton) findViewById(R.id.editSaveButton);
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
 
-        final Calendar today = Calendar.getInstance();
-        beaconPostDate.setText(AdventourUtils.formatBirthdateForDB(today));
+        beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
 
         RecyclerView beaconPostRV = findViewById(R.id.beaconPostRV);
         beaconPostRV.setNestedScrollingEnabled(true);
@@ -66,7 +66,8 @@ public class BeaconPost extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
-               postBeacon();
+               postToBeaconBoard();
+               storeBeacon();
                switchToHome();
            }
         });
@@ -95,7 +96,12 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
-    public void postBeacon()
+    public void populateBeaconPost()
+    {
+
+    }
+
+    public void postToBeaconBoard()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -103,11 +109,12 @@ public class BeaconPost extends AppCompatActivity {
 
         final Calendar today = Calendar.getInstance();
         Map<String, Object> newBeacon = new HashMap<>();
-        newBeacon.put("dateCreated", AdventourUtils.formatBirthdateForDB(today));
+        newBeacon.put("dateCreated", new Timestamp(new Date()));
         newBeacon.put("locations", GlobalVars.adventourFSQIds);
         newBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
-
-        //TODO: fields for beacon title and intro???
+        newBeacon.put("uid", user.getUid());
+        newBeacon.put("title", beaconTitleEditText.getText().toString());
+        newBeacon.put("intro", beaconIntroEditText.getText().toString());
 
         db.collection("Adventourists")
                 .document(user.getUid())
@@ -117,13 +124,50 @@ public class BeaconPost extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Beacon Post", "DocumentSnapshot written with ID: " + documentReference.getId());
+                        Log.d("Beacon Posted", "DocumentSnapshot written with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Beacon Post", "Error adding document", e);
+                        Log.w("Failed to post beacon", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void storeBeacon()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Calendar today = Calendar.getInstance();
+        Map<String, Object> addBeacon = new HashMap<>();
+        addBeacon.put("dateCreated", new Timestamp(new Date()));
+        addBeacon.put("locations", GlobalVars.adventourFSQIds);
+        addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
+        addBeacon.put("uid", user.getUid());
+        addBeacon.put("title", beaconTitleEditText.getText().toString());
+        addBeacon.put("intro", beaconIntroEditText.getText().toString());
+
+
+        //TODO: fields for beacon title and intro???
+
+        db.collection("Adventourists")
+                .document(user.getUid())
+                .collection("beacons")
+                .add(addBeacon)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Beacon added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Failed to add beacon", "Error adding document", e);
                     }
                 });
     }

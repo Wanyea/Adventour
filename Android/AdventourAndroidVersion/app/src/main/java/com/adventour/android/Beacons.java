@@ -40,7 +40,7 @@ public class Beacons extends AppCompatActivity {
         handleAuth();
         getBeaconPosts();
 
-        RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
+ /*       RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
 
         // TEST DATA - WILL BE REPLACED BY DATA RETURN FROM API.
@@ -56,7 +56,7 @@ public class Beacons extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         beaconsRV.setLayoutManager(linearLayoutManager);
-        beaconsRV.setAdapter(beaconsAdapter);
+        beaconsRV.setAdapter(beaconsAdapter);*/
 
 
         // Initialize and assign variable

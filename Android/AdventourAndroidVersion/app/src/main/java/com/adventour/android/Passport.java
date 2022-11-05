@@ -11,26 +11,27 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,9 +50,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class Passport extends AppCompatActivity {
     
@@ -64,15 +70,17 @@ public class Passport extends AppCompatActivity {
     FirebaseUser user;
 
 
-    Context context;
+    Context context = this;
     LinearLayout linearLayout, linearLayout2;
-
-    Menu hamburgerMenu;
 
     ActionBar actionBar;
 
     ArrayList<String> queryString;
 
+    RecyclerView PreviousAdventourRV, BeaconPostRV;
+
+    PreviousAdventourAdapter previousAdventourAdapter;
+    BeaconsAdapter beaconsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,22 +99,28 @@ public class Passport extends AppCompatActivity {
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
+        PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
+        BeaconPostRV = findViewById(R.id.beaconPostsRV);
 
         queryString = new ArrayList<>();
 
         handleAuth();
-        populatePassportTextViews();
+        populatePassport();
+
+        Log.d("OnCreate", "Data length: " + String.valueOf(GlobalVars.previousAdventourArrayList.size()));
+        PreviousAdventourRV.setNestedScrollingEnabled(true);
+        previousAdventourAdapter = new PreviousAdventourAdapter(context, GlobalVars.previousAdventourArrayList);
+        LinearLayoutManager adventourLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        PreviousAdventourRV.setLayoutManager(adventourLinearLayoutManager);
+        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
         getPreviousAdventours();
 
-//        RecyclerView PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
-//        PreviousAdventourRV.setNestedScrollingEnabled(true);
-//
-//        PreviousAdventourAdapter previousAdventourAdapter = new PreviousAdventourAdapter(this, GlobalVars.prevArrayList);
-//
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//
-//        PreviousAdventourRV.setLayoutManager(linearLayoutManager);
-//        PreviousAdventourRV.setAdapter(previousAdventourAdapter);
+        BeaconPostRV.setNestedScrollingEnabled(true);
+        beaconsAdapter = new BeaconsAdapter(context, GlobalVars.userBeaconsArrayList);
+        LinearLayoutManager beaconsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        BeaconPostRV.setLayoutManager(beaconsLinearLayoutManager);
+        BeaconPostRV.setAdapter(previousAdventourAdapter);
+        getBeaconPosts();
 
 
         // Action Bar
@@ -158,52 +172,6 @@ public class Passport extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        // Build AlertDialog that will alert users when they try to log out account.
-        AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
-        logOutAlertBuilder.setMessage("Are you sure you want to log out?");
-        logOutAlertBuilder.setCancelable(true);
-
-        logOutAlertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        FirebaseAuth.getInstance().signOut();
-                        switchToLoggedOut();
-                    }
-                });
-
-        logOutAlertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        // Build AlertDialog that will alert users when they try to delete their account.
-        AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
-        deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-        deleteAccountAlertBuilder.setCancelable(true);
-
-        deleteAccountAlertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        // DELETE USER DOCUMENT IN FIREBASE.
-                        // switchToLoggedOut();
-                    }
-                });
-
-        deleteAccountAlertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
         switch(item.getItemId())
         {
             case R.id.adventourTOS:
@@ -211,11 +179,56 @@ public class Passport extends AppCompatActivity {
                 return true;
 
             case R.id.logOut:
+                // Build AlertDialog that will alert users when they try to log out account.
+                AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
+                logOutAlertBuilder.setMessage("Are you sure you want to log out?");
+                logOutAlertBuilder.setCancelable(true);
+
+                logOutAlertBuilder.setPositiveButton(
+                        R.string.Yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                FirebaseAuth.getInstance().signOut();
+                                switchToLoggedOut();
+                            }
+                        });
+
+                logOutAlertBuilder.setNegativeButton(
+                        R.string.No,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
                 AlertDialog logOutAlert = logOutAlertBuilder.create();
                 logOutAlert.show();
                 return true;
 
             case R.id.deleteAccount:
+                // Build AlertDialog that will alert users when they try to delete their account.
+                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
+                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
+                deleteAccountAlertBuilder.setCancelable(true);
+
+                deleteAccountAlertBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                // DELETE USER DOCUMENT IN FIREBASE.
+                                // switchToLoggedOut();
+                            }
+                        });
+
+                deleteAccountAlertBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
                 AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
                 deleteAccountAlert.show();
                 return true;
@@ -224,12 +237,7 @@ public class Passport extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void newLitBeaconCard() {
-
-    }
-
-    public void populatePassportTextViews()
+    public void populatePassport()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -246,7 +254,8 @@ public class Passport extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
-                        birthdateTextView.setText(document.getString("birthdate"));
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
                     } else {
                         Log.d(TAG, "No such document");
@@ -264,116 +273,190 @@ public class Passport extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<PreviousAdventourModel> previousAdventours = new ArrayList<>();
-
         // Get a reference to the user
+        Log.d("getPrevAdventours", "Calling database...");
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
         documentRef.collection("adventours")
                 .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("getPrevAdventours", "Failed calling database...");
+                    }
+                })
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("getPrevAdventours", "Completed calling database...");
                         if (task.isSuccessful())
                         {
+                            Log.d("getPrevAdventours", "Documents retrieved!");
                             for (QueryDocumentSnapshot adventour : task.getResult())
                             {
-                                //queryString.addAll((Collection<? extends String>) adventour.get("locations"));
-                                //getLocationName(queryString.toString().replaceAll("\\s+","")); //maybe spaces are causing weird api response?
-                                //queryString.clear();
-                                Log.d(TAG, adventour.getId() + " => " + adventour.get("locations"));
+
+                                Map<String, Object> allData = new HashMap<>();
+                                allData = adventour.getData();
+                                allData.put("documentID", adventour.getId());
+
+                                Log.d("getPrevAdventours", allData.toString());
+                                ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                Log.d("getPrevAdventours", locations.toString());
+
+                                JSONObject requestBody = new JSONObject();
+
+                                try
+                                {
+                                    requestBody.put("ids", new JSONArray(locations));
+                                    requestBody.put("uid", user.getUid());
+                                } catch (JSONException e) {
+                                    Log.e("getPrevAdventours Error", e.toString());
+                                }
+
+                                try {
+                                    URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                                    conn.setDoOutput(true);
+                                    conn.setInstanceFollowRedirects(false);
+                                    conn.setRequestMethod("POST");
+                                    conn.setRequestProperty("Content-Type", "application/json");
+                                    conn.setRequestProperty("Accept", "application/json");
+                                    conn.setUseCaches(false);
+
+                                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                    wr.writeBytes(requestBody.toString());
+                                    wr.flush();
+                                    wr.close();
+                                    requestBody = null;
+
+                                    System.out.println("\nSending 'POST' request to URL : " + url);
+
+                                    InputStream it = conn.getInputStream();
+                                    InputStreamReader inputs = new InputStreamReader(it);
+
+                                    BufferedReader in = new BufferedReader(inputs);
+                                    String inputLine;
+                                    StringBuffer response = new StringBuffer();
+
+                                    while ((inputLine = in.readLine()) != null) {
+                                        response.append(inputLine);
+                                    }
+
+                                    in.close();
+                                    JSONObject responseData = new JSONObject(response.toString());
+                                    JSONArray results = (JSONArray) responseData.get("results");
+                                    allData.put("locations", results);
+                                    GlobalVars.previousAdventourArrayList.add(new PreviousAdventourModel(allData));
+                                    Log.d("getPrevAdventours: ", GlobalVars.previousAdventourArrayList.get(GlobalVars.previousAdventourArrayList.size()-1).getFirstLocation());
+
+                                    previousAdventourAdapter.notifyDataSetChanged();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e("getPrevAdventours", e.toString());
+                                }
+
                             }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+
                         }
                     }
                 });
-
     }
 
-    public void getLocationName(String queryString)
+    public void getBeaconPosts()
     {
-        JSONObject jsonBody = new JSONObject();
-        try {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            jsonBody.put("uid", user.getUid());
-            // Log.d("0", queryString);
-            jsonBody.put("ids", queryString);
+        // Get a reference to the user
+        Log.d("getPrevAdventours", "Calling database...");
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+        documentRef.collection("beacons")
+                .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("getPrevAdventours", "Failed calling database...");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("getPrevAdventours", "Completed calling database...");
+                        if (task.isSuccessful())
+                        {
+                            Log.d("getPrevAdventours", "Documents retrieved!");
+                            for (QueryDocumentSnapshot beacons : task.getResult())
+                            {
 
-        } catch (JSONException e) {
-            Log.e("Passport", "exception", e);
-        }
+                                Map<String, Object> allData = new HashMap<>();
+                                allData = beacons.getData();
+                                allData.put("documentID", beacons.getId());
 
-        try {
+                                Log.d("BEACON DATA", "all beacon data: " + allData);
+                                ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                Log.d("getPrevAdventours", locations.toString());
 
-            // Call API with user defined location and sentiments
-            URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-adventour-place");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                JSONObject requestBody = new JSONObject();
 
-            conn.setDoOutput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setUseCaches(false);
+                                try
+                                {
+                                    requestBody.put("ids", new JSONArray(locations));
+                                    requestBody.put("uid", user.getUid());
+                                } catch (JSONException e) {
+                                    Log.e("getPrevAdventours Error", e.toString());
+                                }
 
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(jsonBody.toString());
-            wr.flush();
-            wr.close();
-            jsonBody = null;
+                                try {
+                                    URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            System.out.println("\nSending 'POST' request to URL : " + url);
+                                    conn.setDoOutput(true);
+                                    conn.setInstanceFollowRedirects(false);
+                                    conn.setRequestMethod("POST");
+                                    conn.setRequestProperty("Content-Type", "application/json");
+                                    conn.setRequestProperty("Accept", "application/json");
+                                    conn.setUseCaches(false);
 
-            InputStream it = conn.getInputStream();
-            InputStreamReader inputs = new InputStreamReader(it);
+                                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                    wr.writeBytes(requestBody.toString());
+                                    wr.flush();
+                                    wr.close();
+                                    requestBody = null;
 
-            BufferedReader in = new BufferedReader(inputs);
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+                                    System.out.println("\nSending 'POST' request to URL : " + url);
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+                                    InputStream it = conn.getInputStream();
+                                    InputStreamReader inputs = new InputStreamReader(it);
 
-            in.close();
+                                    BufferedReader in = new BufferedReader(inputs);
+                                    String inputLine;
+                                    StringBuffer response = new StringBuffer();
 
-            JSONObject responseData = new JSONObject(response.toString());
-            Log.d("RESPONSE DATA", responseData.toString());
-//            try {
-//                JSONObject data = (JSONObject) responseData.get("data");
-//                currentFSQId = data.get("fsq_id").toString();
-//                name = data.get("name").toString();
-//                rating = Float.parseFloat(data.get("rating").toString()) / 2;
-//
-//                try {
-//                    tel = data.get("tel").toString();
-//                } catch (Exception e) {
-//                    tel = "N/A";
-//                    Log.e("No tel for location", "Exception", e);
-//                }
-//
-//                try {
-//                    website = data.get("website").toString();
-//                } catch (Exception e) {
-//                    website = "N/A";
-//                    Log.e("No web for location", "Exception", e);
-//                }
-//
-//                try {
-//                    description = data.get("description").toString();
-//                } catch (Exception e) {
-//                    description = "No description available for this location... ";
-//                    Log.e("No des for location", "Exception", e);
-//                }
-//
-//                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description);
-//            } catch (Exception e) {
-//                Log.e("Exception" , e.toString());
-//            }
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
-        }
+                                    while ((inputLine = in.readLine()) != null) {
+                                        response.append(inputLine);
+                                    }
+
+                                    in.close();
+                                    JSONObject responseData = new JSONObject(response.toString());
+                                    JSONArray results = (JSONArray) responseData.get("results");
+                                    allData.put("locations", results);
+                                    GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData));
+                                    Log.d("getPrevAdventours: ", GlobalVars.previousAdventourArrayList.get(GlobalVars.previousAdventourArrayList.size()-1).getFirstLocation());
+
+                                    previousAdventourAdapter.notifyDataSetChanged();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e("getPrevAdventours", e.toString());
+                                }
+
+                            }
+
+                        }
+                    }
+                });
     }
+
 
     public void switchToPassportMoreInfo()
     {
