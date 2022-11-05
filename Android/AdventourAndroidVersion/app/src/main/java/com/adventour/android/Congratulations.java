@@ -20,6 +20,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONArray;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class Congratulations extends AppCompatActivity {
                 // Get Start Adventour Activity for next Adventour.
                 GlobalVars.adventourLocations.clear();
                 GlobalVars.adventourFSQIds.clear();
-                GlobalVars.excludes.clear();
+                GlobalVars.excludes = new JSONArray();
                 GlobalVars.inProgressModelArrayList.clear();
                 GlobalVars.beaconModelArrayList.clear();
                 switchToStartAdventour();
