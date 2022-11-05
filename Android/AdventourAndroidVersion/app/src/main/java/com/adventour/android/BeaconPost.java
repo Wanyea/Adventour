@@ -96,6 +96,11 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
+    public void populateBeaconPost()
+    {
+
+    }
+
     public void postToBeaconBoard()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -110,9 +115,6 @@ public class BeaconPost extends AppCompatActivity {
         newBeacon.put("uid", user.getUid());
         newBeacon.put("title", beaconTitleEditText.getText().toString());
         newBeacon.put("intro", beaconIntroEditText.getText().toString());
-
-
-        //TODO: fields for beacon title and intro???
 
         db.collection("Adventourists")
                 .document(user.getUid())

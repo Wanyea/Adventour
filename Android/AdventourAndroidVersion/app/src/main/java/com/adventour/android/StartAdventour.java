@@ -5,13 +5,16 @@ import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -185,6 +188,7 @@ public class StartAdventour extends AppCompatActivity {
         yesButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               GlobalVars.excludes.add(currentFSQId);
                GlobalVars.adventourFSQIds.add(currentFSQId);
                switchToInProgress();
            }
@@ -206,7 +210,7 @@ public class StartAdventour extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
         autocompleteFragment.setCountry("US");
         autocompleteFragment.setActivityMode(AutocompleteActivityMode.OVERLAY);
         autocompleteFragment.setHint("Enter location");
@@ -216,11 +220,13 @@ public class StartAdventour extends AppCompatActivity {
             autocompleteFragment.setText(GlobalVars.selectedLocation);
         }
 
+        ((EditText) autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)).setTextSize(15.0f);
+        ((EditText) autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)).setHintTextColor(Color.BLACK);
+
         autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_clear_button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //GlobalVars
                         autocompleteFragment.setText("");
                         view.setVisibility(View.GONE);
                     }
@@ -230,11 +236,14 @@ public class StartAdventour extends AppCompatActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                GlobalVars.selectedLocation = place.getName();
+                GlobalVars.selectedLocation = String.valueOf(place.getAddress());
                 GlobalVars.selectedLocationID = place.getId();
                 GlobalVars.locationCoordinates = place.getLatLng();
+
                 Log.i("Start Adventour", "Place: " + GlobalVars.selectedLocation + ", " + GlobalVars.selectedLocationID + ", " + GlobalVars.locationCoordinates);
             }
+
+
 
             @Override
             public void onError(@NonNull Status status) {
@@ -517,26 +526,25 @@ public class StartAdventour extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    public class LocationImages
+    {
+        Bitmap locationOne;
+        Bitmap locationTwo;
+        Bitmap locationThree;
 
-//        // Filter Price slider
-//        priceSlider = (Slider) findViewById(R.id.priceSlider);
-//        priceSlider.setLabelFormatter(new LabelFormatter() {
-//            @NonNull
-//            @Override
-//            public String getFormattedValue(float value) {
-//                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-//                currencyFormat.setCurrency(Currency.getInstance("USD"));
-//                return currencyFormat.format(value);
-//            }
-//        });
-
-        // Filter Price Text View
-
+        public void locationImages(Bitmap locationOne, Bitmap locationTwo, Bitmap locationThree)
+        {
+            this.locationOne = locationOne;
+            this.locationTwo = locationTwo;
+            this.locationThree = locationThree;
+        }
     }
 
     public void getLocation()
     {
+
         JSONObject jsonBody = new JSONObject();
         String name, description, tel, website, address, userLocLat, userLocLng, userLoc;
         Double lat, lon;
@@ -625,7 +633,8 @@ public class StartAdventour extends AppCompatActivity {
                 }
 
                 try {
-                    address = data.get("address").toString();
+                    JSONObject location = (JSONObject) data.get("location");
+                    address = location.get("formatted_address").toString();
                 } catch(Exception e) {
                     address = "No address available for this location... ";
                     Log.e("No address for location", "Exception", e);
@@ -650,10 +659,95 @@ public class StartAdventour extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Log.d("START ADVENTOUR", currentFSQId + " " + name + " " + rating + " " + tel + " " + website + " " + description + address);
+                // Try to get the first image from the API response and pass it into the
+                // LocationImages object.
+
+                try {
+                    LocationImages locationImages = new LocationImages();
+                    JSONArray photos = (JSONArray) data.get("photos");
+                    URL imageOneURL, imageTwoURL, imageThreeURL;
+                    HttpURLConnection connectionOne, connectionTwo, connectionThree;
+                    InputStream inputOne, inputTwo, inputThree;
+                    Bitmap bitmap;
+
+                    // Try to get first location image.
+                    if (photos.length() > 2)
+                    {
+                        String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                        String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+
+                        String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
+                        String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
+
+                        String thirdPrefix = photos.getJSONObject(2).get("prefix").toString();
+                        String thirdSuffix = photos.getJSONObject(2).get("suffix").toString();
+
+                        imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                        connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                        connectionOne.setDoInput(true);
+                        connectionOne.connect();
+                        inputOne = connectionOne.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputOne);
+                        locationImages.locationOne = bitmap;
+
+                        imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
+                        connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
+                        connectionTwo.setDoInput(true);
+                        connectionTwo.connect();
+                        inputTwo = connectionTwo.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputTwo);
+                        locationImages.locationTwo = bitmap;
+
+                        imageThreeURL = new URL(thirdPrefix + "original" + thirdSuffix);
+                        connectionThree = (HttpURLConnection) imageThreeURL.openConnection();
+                        connectionThree.setDoInput(true);
+                        connectionThree.connect();
+                        inputThree = connectionThree.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputThree);
+                        locationImages.locationThree = bitmap;
+
+                    } else if (photos.length() > 1) {
+                        String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                        String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+
+                        String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
+                        String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
+
+                        imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                        connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                        connectionOne.setDoInput(true);
+                        connectionOne.connect();
+                        inputOne = connectionOne.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputOne);
+                        locationImages.locationOne = bitmap;
+
+                        imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
+                        connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
+                        connectionTwo.setDoInput(true);
+                        connectionTwo.connect();
+                        inputTwo = connectionTwo.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputTwo);
+                        locationImages.locationTwo = bitmap;
+                    } else if (photos.length() > 0) {
+                        String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                        String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+
+                        imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                        connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                        connectionOne.setDoInput(true);
+                        connectionOne.connect();
+                        inputOne = connectionOne.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputOne);
+                        locationImages.locationOne = bitmap;
+                    }
+
+                    GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description, locationImages));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 populateCard(name, rating, tel, website, description);
-                Log.d("string val",  String.valueOf(rating));
-                GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description));
+
                 GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
 
                 prevLocation.add(name); // TESTING

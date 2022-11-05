@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -41,11 +42,14 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         BeaconPostModel model = BeaconPostModelArrayList.get(position);
 
         holder.locationNameTextView.setText(model.getName());
-
         holder.ratingBar.setRating(model.getRating());
-
         holder.addressTextView.setText(model.getAddress());
         holder.locationDescriptionTextView.setText(model.getDescription());
+        holder.locationOneImageView.setImageBitmap(model.getLocationImages().locationOne);
+        holder.locationTwoImageView.setImageBitmap(model.getLocationImages().locationTwo);
+        holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
+
+
     }
 
     @Override
@@ -59,19 +63,26 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
     public static class Viewholder extends RecyclerView.ViewHolder
     {
         private final TextView locationNameTextView;
-        private final TextView priceTextView;
         private final RatingBar ratingBar;
         private final TextView addressTextView;
         private final TextView locationDescriptionTextView;
+        private final ImageView locationOneImageView;
+        private final ImageView locationTwoImageView;
+        private final ImageView locationThreeImageView;
+
+
 
         public Viewholder(@NonNull View itemView)
         {
             super(itemView);
             locationNameTextView = itemView.findViewById(R.id.nameTextView);
-            priceTextView = itemView.findViewById(R.id.priceTextView);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             addressTextView = itemView.findViewById(R.id.addressTextView);
             locationDescriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            locationOneImageView = itemView.findViewById(R.id.locationOneImageView);
+            locationTwoImageView = itemView.findViewById(R.id.locationTwoImageView);
+            locationThreeImageView = itemView.findViewById(R.id.locationThreeImageView);
+
         }
     }
 }
