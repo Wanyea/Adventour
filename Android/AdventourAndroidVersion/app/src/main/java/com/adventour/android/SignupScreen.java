@@ -108,6 +108,7 @@ public class SignupScreen extends AppCompatActivity {
         penguinImageButton = (ImageButton) findViewById(R.id.penguinImageButton);
         foxImageButton = (ImageButton) findViewById(R.id.foxImageButton);
         doneButton = (Button) findViewById(R.id.doneButton);
+        refs = new ProfilePictureRefs(0, "");
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -152,7 +153,6 @@ public class SignupScreen extends AppCompatActivity {
                 year = Integer.parseInt(date.substring(6, 10));
 
                 birthdate = birthdateCalendar.getTime();
-                Log.d("BIRTHDATE", birthdate.toString());
 
                 //Check if nickname is valid.
                 if (!AdventourUtils.isValidNickname(nickname))
@@ -199,7 +199,9 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword))
+                {
                     signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
+                }
             }
         });
 
@@ -441,45 +443,34 @@ public class SignupScreen extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickCheetahImageButton(View view) {
-        clearProfPicSelection(view);
-        cheetahImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_cheetah);
-
+        changeProfPic(view, R.drawable.ic_profpic_cheetah, cheetahImageButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickElephantImageButton(View view) {
-        clearProfPicSelection(view);
-        elephantImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_elephant);
+        changeProfPic(view, R.drawable.ic_profpic_elephant, elephantImageButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickLadybugImageButton(View view) {
-        clearProfPicSelection(view);
-        ladybugImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_ladybug);
+        changeProfPic(view, R.drawable.ic_profpic_ladybug, ladybugImageButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickMonkeyImageButton(View view) {
-        clearProfPicSelection(view);
-        monkeyImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_monkey);
+        changeProfPic(view, R.drawable.ic_profpic_monkey, monkeyImageButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickPenguinImageButton(View view) {
         clearProfPicSelection(view);
         penguinImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_penguin);
+        changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickFoxImageButton(View view) {
-        clearProfPicSelection(view);
-        foxImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_fox);
+        changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -493,9 +484,12 @@ public class SignupScreen extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void changeProfPic(View view, int drawableID) {
-        profPicImageButton.setForeground(getResources().getDrawable(drawableID));
+    public void changeProfPic(View view, int drawableID, ImageButton imageButton) {
+
+        clearProfPicSelection(view);
+        imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
+
         refs.androidProfilePicRef = drawableID;
-        Log.d("ID", String.valueOf(drawableID));
+        profPicImageButton.setForeground(getResources().getDrawable(drawableID));
     }
 }

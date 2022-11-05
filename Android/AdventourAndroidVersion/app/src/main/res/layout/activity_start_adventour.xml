@@ -670,10 +670,15 @@
 
             <TextView
                 android:id="@+id/noLocationsTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:text="No locations available the sentiments you chose! Please pick new ones and try again!"
-                android:textSize="18dp"
+                android:gravity="center"
+                android:text="No locations available with the sentiments you chose!\n\nPlease pick new ones and try again!"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@id/ticketCardImageView"
+                app:layout_constraintEnd_toEndOf="@id/ticketCardImageView"
+                app:layout_constraintTop_toTopOf="@id/ticketCardImageView"
+                app:layout_constraintBottom_toBottomOf="@id/ticketCardImageView"
                 android:textStyle="bold"
                 android:visibility="invisible"
                 />
@@ -721,7 +726,8 @@
                 android:text="Go"
                 app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/autocomplete_fragment" />
+                app:layout_constraintTop_toTopOf="@id/autocomplete_fragment"
+                android:enabled="true" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

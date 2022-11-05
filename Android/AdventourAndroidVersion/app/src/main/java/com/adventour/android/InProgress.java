@@ -174,19 +174,23 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 13));
         MarkerOptions marker = new MarkerOptions().position(new LatLng(lat, lon));
         Marker mapMarker = map.addMarker(marker);
-        mapMarker.setSnippet("Tap pin for directions");
+        mapMarker.setSnippet("Tap for directions");
         mapMarker.setTitle(locationName);
         mapMarker.showInfoWindow();
 
         // Open in maps code
         map.setOnMarkerClickListener(marker1 -> {
-//            Uri gmmIntentUri = Uri.parse("geo:0,0?z=18&q=" + marker.getPosition().latitude + "," + marker.getPosition().longitude);
             Uri gmmIntentUri = Uri.parse("geo:" + marker.getPosition().latitude + "," + marker.getPosition().longitude + "?z=17&q=" + Uri.encode(locationName + " " + locationAddress));
-//            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + marker.getPosition().latitude + "," + marker.getPosition().longitude);
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
             return true;
+        });
+        map.setOnInfoWindowClickListener(marker1 -> {
+            Uri gmmIntentUri = Uri.parse("geo:" + marker.getPosition().latitude + "," + marker.getPosition().longitude + "?z=17&q=" + Uri.encode(locationName + " " + locationAddress));
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
         });
     }
 }

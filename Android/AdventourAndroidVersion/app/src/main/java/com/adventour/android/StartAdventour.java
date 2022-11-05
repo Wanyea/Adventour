@@ -78,6 +78,13 @@ public class StartAdventour extends AppCompatActivity {
     Integer distance = 0;
     String currentFSQId;
 
+    JSONObject jsonBody = new JSONObject();
+    String name, description, tel, website, address, userLocLat, userLocLng, userLoc;
+    Double lat, lon;
+    float rating;
+    LocationImages locationImages = new LocationImages();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -159,6 +166,7 @@ public class StartAdventour extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
+               jsonBody = new JSONObject();
                getLocation();
            }
         });
@@ -174,10 +182,11 @@ public class StartAdventour extends AppCompatActivity {
            @Override
            public void onClick(View view) {
                GlobalVars.excludes.add(currentFSQId);
+               jsonBody = new JSONObject();
                getLocation();
-               if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
-               if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
-               if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
+//               if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
+//               if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
+//               if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
                Log.d("EXCLUDE: ", String.join(",", GlobalVars.excludes));
            }
         });
@@ -187,6 +196,9 @@ public class StartAdventour extends AppCompatActivity {
            public void onClick(View view) {
                GlobalVars.excludes.add(currentFSQId);
                GlobalVars.adventourFSQIds.add(currentFSQId);
+               GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
+               GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, lat, lon));
+               GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description, locationImages));
                switchToInProgress();
            }
         });
@@ -541,12 +553,6 @@ public class StartAdventour extends AppCompatActivity {
 
     public void getLocation()
     {
-
-        JSONObject jsonBody = new JSONObject();
-        String name, description, tel, website, address, userLocLat, userLocLng, userLoc;
-        Double lat, lon;
-        float rating;
-
         userLocLat = Double.toString(GlobalVars.locationCoordinates.latitude);
         userLocLng = Double.toString(GlobalVars.locationCoordinates.longitude);
         userLoc = userLocLat + "," + userLocLng;
@@ -660,7 +666,6 @@ public class StartAdventour extends AppCompatActivity {
                 // LocationImages object.
 
                 try {
-                    LocationImages locationImages = new LocationImages();
                     JSONArray photos = (JSONArray) data.get("photos");
                     URL imageOneURL, imageTwoURL, imageThreeURL;
                     HttpURLConnection connectionOne, connectionTwo, connectionThree;
@@ -738,16 +743,12 @@ public class StartAdventour extends AppCompatActivity {
                         locationImages.locationOne = bitmap;
                     }
 
-                    GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description, locationImages));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 populateCard(name, rating, tel, website, description);
 
-                GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
-
-                prevLocation.add(name); // TESTING
 
                 try {
                     JSONObject geocodes = (JSONObject) data.get("geocodes");
@@ -755,7 +756,6 @@ public class StartAdventour extends AppCompatActivity {
 
                     lat = (Double) main.get("latitude");
                     lon = (Double) main.get("longitude");
-                    GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, lat, lon));
                 } catch (Exception e) {
                     lat = 1000.0;
                     lon = 1000.0;

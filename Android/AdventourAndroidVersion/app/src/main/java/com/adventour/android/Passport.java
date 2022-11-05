@@ -254,7 +254,7 @@ public class Passport extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
-                        Log.d("birthdate DT precast: ", ((Timestamp)document.get("birthdate")).getClass().toString());
+                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
                     } else {
