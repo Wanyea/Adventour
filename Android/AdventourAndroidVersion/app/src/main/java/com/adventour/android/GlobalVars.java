@@ -17,4 +17,5 @@ public class GlobalVars
     public static String selectedLocation = "";
     public static String selectedLocationID = "";
     public static LatLng locationCoordinates;
+    public static ArrayList<String> locationDescriptions;
 }

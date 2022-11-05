@@ -56,7 +56,7 @@
         android:textSize="16dp" />
 
     <TextView
-        android:id="@+id/descriptionTextView"
+        android:id="@+id/descriptionEditText"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

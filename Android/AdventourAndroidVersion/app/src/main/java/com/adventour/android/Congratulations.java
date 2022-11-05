@@ -34,7 +34,7 @@ public class Congratulations extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_congratulations);
 
-        postBeaconButton = (Button) findViewById(R.id.postBeaconButton);
+        postBeaconButton = (Button) findViewById(R.id.goToBeaconPostButton);
         viewAdventourButton = (Button) findViewById(R.id.viewAdventourButton);
         homeButton = (Button) findViewById(R.id.homeButton);
 
@@ -63,6 +63,7 @@ public class Congratulations extends AppCompatActivity {
                 GlobalVars.excludes.clear();
                 GlobalVars.inProgressModelArrayList.clear();
                 GlobalVars.beaconModelArrayList.clear();
+                GlobalVars.locationDescriptions.clear();
                 switchToStartAdventour();
             }
         });

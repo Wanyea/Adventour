@@ -9,23 +9,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,21 +29,23 @@ import java.util.Map;
 public class BeaconPost extends AppCompatActivity {
 
     TextView beaconPostDate;
-    Button postBeaconButton;
-    ImageButton editSaveButton;
+    ImageButton postBeaconButton;
     EditText beaconTitleEditText, beaconIntroEditText;
     boolean isEditMode = true;
     String titleString, introString;
+    Switch isPrivate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacon_post);
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
-        postBeaconButton = (Button) findViewById(R.id.postBeaconButton);
-        editSaveButton = (ImageButton) findViewById(R.id.editSaveButton);
+        postBeaconButton = (ImageButton) findViewById(R.id.postBeaconButton);
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
+
+        isPrivate = (Switch) findViewById(R.id.privateSwitch);
 
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
 
@@ -61,8 +59,8 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostRV.setLayoutManager(linearLayoutManager);
         beaconPostRV.setAdapter(BeaconPostAdapter);
 
-        postBeaconButton.setOnClickListener(new View.OnClickListener()
-        {
+
+        postBeaconButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view)
            {
@@ -71,34 +69,6 @@ public class BeaconPost extends AppCompatActivity {
                switchToHome();
            }
         });
-
-        editSaveButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view)
-           {
-               if(isEditMode)
-               {
-                   beaconTitleEditText.setFocusable(false);
-                   beaconIntroEditText.setFocusable(false);
-                   editSaveButton.setBackgroundResource(R.drawable.ic_edit_icon);
-                   titleString = beaconTitleEditText.getText().toString();
-                   introString = beaconIntroEditText.getText().toString();
-               } else {
-                   beaconTitleEditText.setFocusableInTouchMode(true);
-                   beaconIntroEditText.setFocusableInTouchMode(true);
-                   editSaveButton.setBackgroundResource(R.drawable.ic_save_icon);
-
-               }
-
-               isEditMode = !isEditMode;
-
-           }
-        });
-    }
-
-    public void populateBeaconPost()
-    {
-
     }
 
     public void postToBeaconBoard()
@@ -107,14 +77,16 @@ public class BeaconPost extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Calendar today = Calendar.getInstance();
         Map<String, Object> newBeacon = new HashMap<>();
         newBeacon.put("dateCreated", new Timestamp(new Date()));
+        newBeacon.put("dateUpdated", new Timestamp(new Date()));
         newBeacon.put("locations", GlobalVars.adventourFSQIds);
         newBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
         newBeacon.put("uid", user.getUid());
         newBeacon.put("title", beaconTitleEditText.getText().toString());
         newBeacon.put("intro", beaconIntroEditText.getText().toString());
+        newBeacon.put("isPrivate", isPrivate.isChecked());
+        newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
 
         db.collection("Adventourists")
                 .document(user.getUid())
@@ -141,17 +113,16 @@ public class BeaconPost extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Calendar today = Calendar.getInstance();
         Map<String, Object> addBeacon = new HashMap<>();
         addBeacon.put("dateCreated", new Timestamp(new Date()));
+        addBeacon.put("dateUpdated", new Timestamp(new Date()));
         addBeacon.put("locations", GlobalVars.adventourFSQIds);
         addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
         addBeacon.put("uid", user.getUid());
         addBeacon.put("title", beaconTitleEditText.getText().toString());
         addBeacon.put("intro", beaconIntroEditText.getText().toString());
-
-
-        //TODO: fields for beacon title and intro???
+        addBeacon.put("isPrivate", isPrivate.isChecked());
+        addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
 
         db.collection("Adventourists")
                 .document(user.getUid())

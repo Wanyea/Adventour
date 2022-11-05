@@ -1,9 +1,13 @@
 package com.adventour.android;
 
 import android.content.Context;
+import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -31,7 +35,8 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
     {
         // to inflate the layout for each item of recycler view.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.beacon_post_card_layout, parent, false);
-        return new BeaconPostAdapter.Viewholder(view);
+        BeaconPostAdapter.Viewholder viewHolder = new BeaconPostAdapter.Viewholder(view, new CustomEditTextListener());
+            return viewHolder;
     }
 
     @Override
@@ -44,12 +49,19 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.locationNameTextView.setText(model.getName());
         holder.ratingBar.setRating(model.getRating());
         holder.addressTextView.setText(model.getAddress());
-        holder.locationDescriptionTextView.setText(model.getDescription());
         holder.locationOneImageView.setImageBitmap(model.getLocationImages().locationOne);
         holder.locationTwoImageView.setImageBitmap(model.getLocationImages().locationTwo);
         holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
 
+        holder.customEditTextListener.updatePosition(position);
 
+        if (GlobalVars.locationDescriptions == null)
+        {
+            holder.locationDescriptionEditText.setText(model.getDescription());
+        } else {
+            holder.locationDescriptionEditText.setText(GlobalVars.locationDescriptions.get(position));
+
+        }
     }
 
     @Override
@@ -65,24 +77,47 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         private final TextView locationNameTextView;
         private final RatingBar ratingBar;
         private final TextView addressTextView;
-        private final TextView locationDescriptionTextView;
         private final ImageView locationOneImageView;
         private final ImageView locationTwoImageView;
         private final ImageView locationThreeImageView;
 
+        public EditText locationDescriptionEditText;
+        public CustomEditTextListener customEditTextListener;
 
-
-        public Viewholder(@NonNull View itemView)
+        public Viewholder(@NonNull View itemView, CustomEditTextListener customEditTextListener)
         {
             super(itemView);
             locationNameTextView = itemView.findViewById(R.id.nameTextView);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             addressTextView = itemView.findViewById(R.id.addressTextView);
-            locationDescriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             locationOneImageView = itemView.findViewById(R.id.locationOneImageView);
             locationTwoImageView = itemView.findViewById(R.id.locationTwoImageView);
             locationThreeImageView = itemView.findViewById(R.id.locationThreeImageView);
 
+            this.locationDescriptionEditText = (EditText) itemView.findViewById(R.id.descriptionEditText);
+            this.customEditTextListener = customEditTextListener;
+            this.locationDescriptionEditText.addTextChangedListener(customEditTextListener);
+
         }
+    }
+
+    private class CustomEditTextListener implements TextWatcher {
+        private int position;
+
+        public void updatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            if(GlobalVars.locationDescriptions != null)
+                GlobalVars.locationDescriptions.add(position, charSequence.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
     }
 }
