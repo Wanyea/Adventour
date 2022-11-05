@@ -27,7 +27,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,11 +39,12 @@ public class EditPassport extends AppCompatActivity {
     FloatingActionButton saveButton;
     ImageView backButton;
     TextView birthdateTextView;
+    Timestamp birthdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_passport);
+        setContentView(R.layout.activity_edit_passport);
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
@@ -184,6 +184,7 @@ public class EditPassport extends AppCompatActivity {
                                 changes.put("mantra", mantra);
                                 changes.put("firstName", firstName);
                                 changes.put("lastName", lastName);
+                                changes.put("birthdate", birthdate);
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
@@ -263,6 +264,7 @@ public class EditPassport extends AppCompatActivity {
                         mantra = mantraEditText.getText().toString();
                         firstName = firstNameEditText.getText().toString();
                         lastName = lastNameEditText.getText().toString();
+                        birthdate = ((Timestamp) document.get("birthdate"));
 
 
                     } else {

@@ -1,20 +1,24 @@
 package com.adventour.android;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +31,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,12 +51,15 @@ public class SignupScreen extends AppCompatActivity {
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
     EditText nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
-    ImageView profPicImageView;
+
+    ImageButton profPicImageButton;
+    CardView popupProfPic;
+    Button doneButton;
+    ImageButton cheetahImageButton, elephantImageButton, ladybugImageButton, monkeyImageButton, penguinImageButton, foxImageButton;
 
     private FirebaseAuth mAuth;
 
-
-
+    ProfilePictureRefs refs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -92,7 +97,18 @@ public class SignupScreen extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
-        profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
+        // Profile picture functionality
+        profPicImageButton = (ImageButton) findViewById(R.id.profPicImageButton);
+        popupProfPic = (CardView) findViewById(R.id.popupProfPic);
+        popupProfPic.setVisibility(View.INVISIBLE);
+        cheetahImageButton = (ImageButton) findViewById(R.id.cheetahImageButton);
+        elephantImageButton = (ImageButton) findViewById(R.id.elephantImageButton);
+        ladybugImageButton = (ImageButton) findViewById(R.id.ladybugImageButton);
+        monkeyImageButton = (ImageButton) findViewById(R.id.monkeyImageButton);
+        penguinImageButton = (ImageButton) findViewById(R.id.penguinImageButton);
+        foxImageButton = (ImageButton) findViewById(R.id.foxImageButton);
+        doneButton = (Button) findViewById(R.id.doneButton);
+        refs = new ProfilePictureRefs(0, "");
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -137,7 +153,6 @@ public class SignupScreen extends AppCompatActivity {
                 year = Integer.parseInt(date.substring(6, 10));
 
                 birthdate = birthdateCalendar.getTime();
-                Log.d("BIRTHDATE", birthdate.toString());
 
                 //Check if nickname is valid.
                 if (!AdventourUtils.isValidNickname(nickname))
@@ -184,15 +199,62 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                    signUp(nickname, email, password, birthdate, defaultMantra); // Attempt to create user document and add to firebase.
+                {
+                    signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
+                }
             }
         });
 
-        // Profile pic image and button // TAKE PHOTO FROM CAMERA OR GALLERY
-        profPicImageView.setOnClickListener(new View.OnClickListener() {
+        // Profile pic
+        profPicImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { onClickProfPicImageButton(view); }
+        });
+
+        doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                popupProfPic.setVisibility(View.INVISIBLE);
             }
+        });
+
+        cheetahImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view)
+            {
+                onClickCheetahImageButton(view);
+            }
+        });
+
+        elephantImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickElephantImageButton(view); }
+        });
+
+        ladybugImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickLadybugImageButton(view); }
+        });
+
+        monkeyImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickMonkeyImageButton(view); }
+        });
+
+        penguinImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickPenguinImageButton(view); }
+        });
+
+        foxImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickFoxImageButton(view); }
         });
     }
 
@@ -303,7 +365,7 @@ public class SignupScreen extends AppCompatActivity {
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra) {
+    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, ProfilePictureRefs refs) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
@@ -311,6 +373,7 @@ public class SignupScreen extends AppCompatActivity {
         adventourist.put("birthdate", birthdate);
         adventourist.put("isPrivate", true);
         adventourist.put("mantra", defaultMantra);
+        adventourist.put("androidPfpRef", refs.androidProfilePicRef);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -333,7 +396,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra) {
+    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, ProfilePictureRefs refs) {
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -343,7 +406,7 @@ public class SignupScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            addUserToFirestore(nickname, email, birthdate, defaultMantra);
+                            addUserToFirestore(nickname, email, birthdate, defaultMantra, refs);
                             switchToHome();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -359,5 +422,74 @@ public class SignupScreen extends AppCompatActivity {
         Intent intent = new Intent(this, StartAdventour.class);
         startActivity(intent);
         finish();
+    }
+
+    public void onClickProfPicImageButton(View view) {
+        popupProfPic.setVisibility(View.VISIBLE);
+    }
+
+
+  class ProfilePictureRefs
+  {
+      private int androidProfilePicRef;
+      private String iOSProfilePicRef;
+
+      ProfilePictureRefs(int androidProfilePicRef, String iOSProfilePicRef)
+      {
+          this.androidProfilePicRef = androidProfilePicRef;
+          this.iOSProfilePicRef = iOSProfilePicRef;
+      }
+  }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickCheetahImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_cheetah, cheetahImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickElephantImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_elephant, elephantImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickLadybugImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_ladybug, ladybugImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickMonkeyImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_monkey, monkeyImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickPenguinImageButton(View view) {
+        clearProfPicSelection(view);
+        penguinImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
+        changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickFoxImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void clearProfPicSelection(View view) {
+        cheetahImageButton.setForeground(null);
+        elephantImageButton.setForeground(null);
+        ladybugImageButton.setForeground(null);
+        monkeyImageButton.setForeground(null);
+        penguinImageButton.setForeground(null);
+        foxImageButton.setForeground(null);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void changeProfPic(View view, int drawableID, ImageButton imageButton) {
+
+        clearProfPicSelection(view);
+        imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
+
+        refs.androidProfilePicRef = drawableID;
+        profPicImageButton.setForeground(getResources().getDrawable(drawableID));
     }
 }
