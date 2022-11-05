@@ -603,7 +603,8 @@ public class StartAdventour extends AppCompatActivity {
                 }
 
                 try {
-                    address = data.get("address").toString();
+                    JSONObject location = (JSONObject) data.get("location");
+                    address = location.get("formatted_address").toString();
                 } catch(Exception e) {
                     address = "No address available for this location... ";
                     Log.e("No address for location", "Exception", e);
