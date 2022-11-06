@@ -58,8 +58,8 @@
             android:textColor="@color/blue_main"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/descriptionTextView"
+        <EditText
+            android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/addressTextView"
@@ -74,7 +74,7 @@
             android:id="@+id/horizontalScrollView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@id/descriptionTextView"
+            android:layout_below="@id/descriptionEditText"
             android:layout_marginTop="10dp">
 
             <LinearLayout

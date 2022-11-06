@@ -566,7 +566,7 @@
                 android:visibility="invisible" />
 
             <TextView
-                android:id="@+id/descriptionTextView"
+                android:id="@+id/descriptionEditText"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -645,8 +645,8 @@
 
             <ImageButton
                 android:id="@+id/filterButton"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="23dp"
                 android:layout_marginStart="30dp"
                 android:background="@null"
                 android:scaleType="fitCenter"

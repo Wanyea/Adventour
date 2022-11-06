@@ -25,7 +25,7 @@
             android:ellipsize="end"/>
 
         <TextView
-            android:id="@+id/descriptionTextView"
+            android:id="@+id/descriptionEditText"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="171dp"

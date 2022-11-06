@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -44,7 +42,6 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -119,7 +116,7 @@ public class StartAdventour extends AppCompatActivity {
         distanceTextView = (TextView) findViewById(R.id.distanceTextView);
         phoneTextView = (TextView) findViewById(R.id.phoneNumberTextView);
         websiteTextView = (TextView) findViewById(R.id.websiteTextView);
-        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionEditText);
         noLocationTextView = (TextView) findViewById(R.id.noLocationsTextView);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -253,6 +250,11 @@ public class StartAdventour extends AppCompatActivity {
                 GlobalVars.selectedLocationID = place.getId();
                 GlobalVars.locationCoordinates = place.getLatLng();
 
+                if (isTagSelected())
+                {
+                   beginButton.setEnabled(true);
+                }
+
                 Log.i("Start Adventour", "Place: " + GlobalVars.selectedLocation + ", " + GlobalVars.selectedLocationID + ", " + GlobalVars.locationCoordinates);
             }
 
@@ -285,6 +287,11 @@ public class StartAdventour extends AppCompatActivity {
             return false;
         });
 
+    }
+
+    private boolean isTagSelected()
+    {
+        return !isSwitchActive.isEmpty();
     }
 
     public void onClickFilterButton(View view) {
