@@ -60,15 +60,9 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
 
         if(position >= GlobalVars.locationDescriptions.size())
         {
-            Log.d("position", String.valueOf(position));
-            Log.d("getLayoutPos", String.valueOf(holder.getLayoutPosition()));
-            GlobalVars.locationDescriptions.add(position, model.getDescription());
-            Log.d("locationDes if empty ", GlobalVars.locationDescriptions.toString());
+            GlobalVars.locationDescriptions.add(position, "");
         } else {
-            Log.d("position in else", String.valueOf(position));
-            Log.d("getLayoutPos in else", String.valueOf(holder.getLayoutPosition()));
-            GlobalVars.locationDescriptions.set(position, model.getDescription());
-            Log.d("locationDes in else ", GlobalVars.locationDescriptions.toString());
+            GlobalVars.locationDescriptions.set(position, "");
         }
 
         holder.locationDescriptionEditText.addTextChangedListener(new TextWatcher() {
@@ -76,24 +70,11 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("onTextChanged. LP", String.valueOf(holder.getLayoutPosition()));
-                Log.d("locationDes onChange ", GlobalVars.locationDescriptions.toString());
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
                 GlobalVars.locationDescriptions.set(position, s.toString());
             }
         });
-
-
-        /*if (GlobalVars.locationDescriptions.isEmpty())
-        {
-            holder.locationDescriptionEditText.setText(model.getDescription());
-            GlobalVars.locationDescriptions.add(position, model.getDescription());
-        } else if (position < GlobalVars.locationDescriptions.size()) {
-            Log.d("BEACON_POST_AD", "locationDescriptions not null.");
-            Log.d("BEACON_POST_AD", GlobalVars.locationDescriptions.toString());
-            holder.locationDescriptionEditText.setText(GlobalVars.locationDescriptions.get(position));
-
-        }*/
     }
 
     @Override
@@ -124,7 +105,6 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         private final ImageView locationThreeImageView;
 
         public EditText locationDescriptionEditText;
-        //public CustomEditTextListener customEditTextListener;
 
         public Viewholder(@NonNull View itemView/*, CustomEditTextListener customEditTextListener*/)
         {
@@ -136,48 +116,6 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
             locationTwoImageView = itemView.findViewById(R.id.locationTwoImageView);
             locationThreeImageView = itemView.findViewById(R.id.locationThreeImageView);
             locationDescriptionEditText = (EditText) itemView.findViewById(R.id.descriptionEditText);
-
-
-         /*   this.customEditTextListener = customEditTextListener;
-            this.locationDescriptionEditText.addTextChangedListener(customEditTextListener);*/
-
         }
     }
-
-    /*private class CustomEditTextListener implements TextWatcher {
-        private int position;
-
-        public void updatePosition(int position)
-        {
-            this.position = position;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            Log.d("BEACON_POST_AD", "Inside onTextChanged. Before if statement");
-
-            if(GlobalVars.locationDescriptions.isEmpty())
-            {
-                Log.d("BEACON_POST_AD", "Inside if statement");
-                Log.d("Position ", String.valueOf(position));
-                Log.d("LOC DES ", GlobalVars.locationDescriptions.toString());
-
-                GlobalVars.locationDescriptions.add(position, charSequence.toString());
-            } else {
-                Log.d("BEACON_POST_AD", "Inside else statement");
-                Log.d("Position in else", String.valueOf(position));
-                Log.d("LOC DES IN ELSE", GlobalVars.locationDescriptions.toString());
-                GlobalVars.locationDescriptions.set(position, charSequence.toString());
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable)
-        {
-
-        }
-        */
 }
