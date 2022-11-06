@@ -2,6 +2,7 @@ package com.adventour.android;
 
 import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -181,20 +182,20 @@ public class StartAdventour extends AppCompatActivity {
         notNowButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               GlobalVars.excludes.add(currentFSQId);
+               GlobalVars.excludes.put(currentFSQId);
                jsonBody = new JSONObject();
                getLocation();
 //               if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
 //               if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
 //               if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
-               Log.d("EXCLUDE: ", String.join(",", GlobalVars.excludes));
+//               Log.d("EXCLUDE: ", String.join(",", GlobalVars.excludes));
            }
         });
 
         yesButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               GlobalVars.excludes.add(currentFSQId);
+               GlobalVars.excludes.put(currentFSQId);
                GlobalVars.adventourFSQIds.add(currentFSQId);
                GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
                GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, lat, lon));
@@ -624,138 +625,162 @@ public class StartAdventour extends AppCompatActivity {
                 name = data.get("name").toString();
                 rating = Float.parseFloat(data.get("rating").toString()) / 2;
 
-                try {
-                    tel = data.get("tel").toString();
-                } catch(Exception e) {
-                    tel = "N/A";
-                    Log.e("No tel for location", "Exception", e);
-                }
+                new Thread() {
+                    public void run() {
+                        try {
+                            tel = data.get("tel").toString();
+                        } catch(Exception e) {
+                            tel = "N/A";
+                            Log.e("No tel for location", "Exception", e);
+                        }
+                    }
+                }.start();
 
-                try {
-                    website = data.get("website").toString();
-                } catch(Exception e) {
-                    website = "N/A";
-                    Log.e("No web for location", "Exception", e);
-                }
+                new Thread() {
+                    public void run() {
+                        try {
+                            website = data.get("website").toString();
+                        } catch(Exception e) {
+                            website = "N/A";
+                            Log.e("No web for location", "Exception", e);
+                        }
+                    }
+                }.start();
 
-                try {
-                    description = data.get("description").toString();
-                } catch(Exception e) {
-                    description = "No description available for this location... ";
-                    Log.e("No des for location", "Exception", e);
-                }
+                new Thread() {
+                    public void run() {
+                        try {
+                            description = data.get("description").toString();
+                        } catch(Exception e) {
+                            description = "No description available for this location... ";
+                            Log.e("No des for location", "Exception", e);
+                        }
+                    }
+                }.start();
 
-                try {
-                    JSONObject location = (JSONObject) data.get("location");
-                    address = location.get("formatted_address").toString();
-                } catch(Exception e) {
-                    address = "No address available for this location... ";
-                    Log.e("No address for location", "Exception", e);
-                }
+                new Thread() {
+                    public void run() {
+                        try {
+                            JSONObject location = (JSONObject) data.get("location");
+                            address = location.get("formatted_address").toString();
+                        } catch(Exception e) {
+                            address = "No address available for this location... ";
+                            Log.e("No address for location", "Exception", e);
+                        }
+                    }
+                }.start();
 
-                try {
-                    JSONArray photos = (JSONArray) data.get("photos");
-                    String prefix = photos.getJSONObject(0).get("prefix").toString();
-                    String suffix = photos.getJSONObject(0).get("suffix").toString();
+                new Thread() {
+                    public void run() {
+                        try {
+                            JSONArray photos = (JSONArray) data.get("photos");
+                            String prefix = photos.getJSONObject(0).get("prefix").toString();
+                            String suffix = photos.getJSONObject(0).get("suffix").toString();
 
-                    URL imageURL = new URL(prefix + "original" + suffix);
-                    HttpURLConnection connection = (HttpURLConnection) imageURL.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    Log.e("Bitmap","returned");
-                    Log.d("imageURL", imageURL.toString());
-                    previewImageView.setImageBitmap(myBitmap);
+                            URL imageURL = new URL(prefix + "original" + suffix);
+                            HttpURLConnection connection = (HttpURLConnection) imageURL.openConnection();
+                            connection.setDoInput(true);
+                            connection.connect();
+                            InputStream input = connection.getInputStream();
+                            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                            Log.e("Bitmap","returned");
+                            Log.d("imageURL", imageURL.toString());
+                            previewImageView.setImageBitmap(myBitmap);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
 
                 // Try to get the first image from the API response and pass it into the
                 // LocationImages object.
+                new Thread() {
+                    public void run() {
+                        try {
+                            JSONArray photos = (JSONArray) data.get("photos");
+                            URL imageOneURL, imageTwoURL, imageThreeURL;
+                            HttpURLConnection connectionOne, connectionTwo, connectionThree;
+                            InputStream inputOne, inputTwo, inputThree;
+                            Bitmap bitmap;
 
-                try {
-                    JSONArray photos = (JSONArray) data.get("photos");
-                    URL imageOneURL, imageTwoURL, imageThreeURL;
-                    HttpURLConnection connectionOne, connectionTwo, connectionThree;
-                    InputStream inputOne, inputTwo, inputThree;
-                    Bitmap bitmap;
+                            // Try to get first location image.
+                            if (photos.length() > 2)
+                            {
+                                String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                                String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
 
-                    // Try to get first location image.
-                    if (photos.length() > 2)
-                    {
-                        String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
-                        String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+                                String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
+                                String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
 
-                        String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
-                        String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
+                                String thirdPrefix = photos.getJSONObject(2).get("prefix").toString();
+                                String thirdSuffix = photos.getJSONObject(2).get("suffix").toString();
 
-                        String thirdPrefix = photos.getJSONObject(2).get("prefix").toString();
-                        String thirdSuffix = photos.getJSONObject(2).get("suffix").toString();
+                                imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                                connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                                connectionOne.setDoInput(true);
+                                connectionOne.connect();
+                                inputOne = connectionOne.getInputStream();
+                                bitmap = BitmapFactory.decodeStream(inputOne);
+                                locationImages.locationOne = bitmap;
 
-                        imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
-                        connectionOne = (HttpURLConnection) imageOneURL.openConnection();
-                        connectionOne.setDoInput(true);
-                        connectionOne.connect();
-                        inputOne = connectionOne.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(inputOne);
-                        locationImages.locationOne = bitmap;
+                                imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
+                                connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
+                                connectionTwo.setDoInput(true);
+                                connectionTwo.connect();
+                                inputTwo = connectionTwo.getInputStream();
+                                bitmap = BitmapFactory.decodeStream(inputTwo);
+                                locationImages.locationTwo = bitmap;
 
-                        imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
-                        connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
-                        connectionTwo.setDoInput(true);
-                        connectionTwo.connect();
-                        inputTwo = connectionTwo.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(inputTwo);
-                        locationImages.locationTwo = bitmap;
+                                imageThreeURL = new URL(thirdPrefix + "original" + thirdSuffix);
+                                connectionThree = (HttpURLConnection) imageThreeURL.openConnection();
+                                connectionThree.setDoInput(true);
+                                connectionThree.connect();
+                                inputThree = connectionThree.getInputStream();
+                                bitmap = BitmapFactory.decodeStream(inputThree);
+                                locationImages.locationThree = bitmap;
 
-                        imageThreeURL = new URL(thirdPrefix + "original" + thirdSuffix);
-                        connectionThree = (HttpURLConnection) imageThreeURL.openConnection();
-                        connectionThree.setDoInput(true);
-                        connectionThree.connect();
-                        inputThree = connectionThree.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(inputThree);
-                        locationImages.locationThree = bitmap;
+                            } else if (photos.length() > 1) {
+                                String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                                String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
 
-                    } else if (photos.length() > 1) {
-                        String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
-                        String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+                                String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
+                                String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
 
-                        String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
-                        String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
+                                imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                                connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                                connectionOne.setDoInput(true);
+                                connectionOne.connect();
+                                inputOne = connectionOne.getInputStream();
+                                bitmap = BitmapFactory.decodeStream(inputOne);
+                                locationImages.locationOne = bitmap;
 
-                        imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
-                        connectionOne = (HttpURLConnection) imageOneURL.openConnection();
-                        connectionOne.setDoInput(true);
-                        connectionOne.connect();
-                        inputOne = connectionOne.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(inputOne);
-                        locationImages.locationOne = bitmap;
+                                imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
+                                connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
+                                connectionTwo.setDoInput(true);
+                                connectionTwo.connect();
+                                inputTwo = connectionTwo.getInputStream();
+                                bitmap = BitmapFactory.decodeStream(inputTwo);
+                                locationImages.locationTwo = bitmap;
+                            } else if (photos.length() > 0) {
+                                String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                                String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
 
-                        imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
-                        connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
-                        connectionTwo.setDoInput(true);
-                        connectionTwo.connect();
-                        inputTwo = connectionTwo.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(inputTwo);
-                        locationImages.locationTwo = bitmap;
-                    } else if (photos.length() > 0) {
-                        String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
-                        String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+                                imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                                connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                                connectionOne.setDoInput(true);
+                                connectionOne.connect();
+                                inputOne = connectionOne.getInputStream();
+                                bitmap = BitmapFactory.decodeStream(inputOne);
+                                locationImages.locationOne = bitmap;
+                            }
 
-                        imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
-                        connectionOne = (HttpURLConnection) imageOneURL.openConnection();
-                        connectionOne.setDoInput(true);
-                        connectionOne.connect();
-                        inputOne = connectionOne.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(inputOne);
-                        locationImages.locationOne = bitmap;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                }.start();
 
                 populateCard(name, rating, tel, website, description);
 
@@ -783,26 +808,36 @@ public class StartAdventour extends AppCompatActivity {
 
     public void populateCard(String name, float rating, String tel, String website, String description)
     {
-        nameTextView.setVisibility(View.VISIBLE);
-        phoneTextView.setVisibility(View.VISIBLE);
-        websiteTextView.setVisibility(View.VISIBLE);
-        descriptionTextView.setVisibility(View.VISIBLE);
-        ratingBar.setVisibility(View.VISIBLE);
-        phoneImageView.setVisibility(View.VISIBLE);
-        globeImageView.setVisibility(View.VISIBLE);
-        previewImageView.setVisibility(View.VISIBLE);
-        noLocationTextView.setVisibility(View.INVISIBLE);
+        Context c = this;
+        new Thread() {
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        nameTextView.setVisibility(View.VISIBLE);
+                        phoneTextView.setVisibility(View.VISIBLE);
+                        websiteTextView.setVisibility(View.VISIBLE);
+                        descriptionTextView.setVisibility(View.VISIBLE);
+                        ratingBar.setVisibility(View.VISIBLE);
+                        phoneImageView.setVisibility(View.VISIBLE);
+                        globeImageView.setVisibility(View.VISIBLE);
+                        previewImageView.setVisibility(View.VISIBLE);
+                        noLocationTextView.setVisibility(View.INVISIBLE);
 
-        notNowButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_variant));
-        yesButton.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_main));
-        notNowButton.setEnabled(true);
-        yesButton.setEnabled(true);
+                        notNowButton.setBackgroundColor(ContextCompat.getColor(c, R.color.red_variant));
+                        yesButton.setBackgroundColor(ContextCompat.getColor(c, R.color.blue_main));
+                        notNowButton.setEnabled(true);
+                        yesButton.setEnabled(true);
 
-        nameTextView.setText(name);
-        phoneTextView.setText(tel);
-        websiteTextView.setText(website);
-        descriptionTextView.setText(description);
-        ratingBar.setRating(rating);
+                        nameTextView.setText(name);
+                        phoneTextView.setText(tel);
+                        websiteTextView.setText(website);
+                        descriptionTextView.setText(description);
+                        ratingBar.setRating(rating);
+                    }
+                });
+            }
+        }.start();
     }
 
     String getCategoriesString()
@@ -918,7 +953,7 @@ public class StartAdventour extends AppCompatActivity {
 
     public JSONArray getExclude()
     {
-        return new JSONArray(GlobalVars.excludes);
+        return GlobalVars.excludes;
     }
 
     public void switchToInProgress()
