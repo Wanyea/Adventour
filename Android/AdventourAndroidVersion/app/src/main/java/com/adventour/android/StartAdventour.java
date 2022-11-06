@@ -249,6 +249,11 @@ public class StartAdventour extends AppCompatActivity {
                 GlobalVars.selectedLocationID = place.getId();
                 GlobalVars.locationCoordinates = place.getLatLng();
 
+                if (isTagSelected())
+                {
+                   beginButton.setEnabled(true);
+                }
+
                 Log.i("Start Adventour", "Place: " + GlobalVars.selectedLocation + ", " + GlobalVars.selectedLocationID + ", " + GlobalVars.locationCoordinates);
             }
 
@@ -281,6 +286,11 @@ public class StartAdventour extends AppCompatActivity {
             return false;
         });
 
+    }
+
+    private boolean isTagSelected()
+    {
+        return !isSwitchActive.isEmpty();
     }
 
     public void onClickFilterButton(View view) {

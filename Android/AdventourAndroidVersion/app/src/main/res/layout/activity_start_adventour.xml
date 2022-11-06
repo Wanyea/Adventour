@@ -645,8 +645,8 @@
 
             <ImageButton
                 android:id="@+id/filterButton"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="23dp"
                 android:layout_marginStart="30dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
@@ -727,7 +727,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/autocomplete_fragment"
-                android:enabled="true" />
+                android:enabled="false" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

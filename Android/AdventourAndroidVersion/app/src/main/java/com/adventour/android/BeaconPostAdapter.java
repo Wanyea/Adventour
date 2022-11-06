@@ -57,11 +57,11 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.customEditTextListener.updatePosition(position);
         Log.d("Position IN HOLDER: ", String.valueOf(position));
 
-        if (GlobalVars.locationDescriptions == null || GlobalVars.locationDescriptions.isEmpty())
+        if (GlobalVars.locationDescriptions.isEmpty())
         {
             holder.locationDescriptionEditText.setText(model.getDescription());
             GlobalVars.locationDescriptions.add(position, model.getDescription());
-        } else {
+        } else if (position < GlobalVars.locationDescriptions.size()) {
             Log.d("BEACON_POST_AD", "locationDescriptions not null.");
             Log.d("BEACON_POST_AD", GlobalVars.locationDescriptions.toString());
             holder.locationDescriptionEditText.setText(GlobalVars.locationDescriptions.get(position));
