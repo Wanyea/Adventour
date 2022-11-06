@@ -24,15 +24,12 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <!-- Base application theme with upper-right menu (for Passport). -->
-
     <!-- Alert theme. -->
     <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/red_variant</item>
     </style>
 
     <!-- Base application theme with upper-right menu. -->
-
     <style name="Theme.AdventourAndroidVersion.Menu" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_variant</item>
@@ -84,6 +81,12 @@
         <item name="drawableTint">@color/blue_main</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:textColor">@color/navy_main</item>
+    </style>
+
+    <!-- Small button theme. -->
+    <style name="AdventourSmallButton">
+        <item name="android:backgroundTint">@drawable/button_small_selector</item>
+        <item name="android:layout_height">48dp</item>
     </style>
 
     <!-- Navbar / Navigation Bar theme. -->
