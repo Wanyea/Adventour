@@ -88,6 +88,7 @@ public class BeaconPost extends AppCompatActivity {
         newBeacon.put("isPrivate", isPrivate.isChecked());
         newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
         //newBeacon.put("beaconLocation", );
+
         db.collection("Adventourists")
                 .document(user.getUid())
                 .collection("Beacons")
