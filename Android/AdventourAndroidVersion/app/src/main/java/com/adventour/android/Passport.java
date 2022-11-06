@@ -162,6 +162,11 @@ public class Passport extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu)
     {
         MenuInflater inflater = getMenuInflater();

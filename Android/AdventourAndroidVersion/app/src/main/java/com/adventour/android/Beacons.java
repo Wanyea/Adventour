@@ -84,6 +84,11 @@ public class Beacons extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     public void switchToLoggedOut() {
         Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
