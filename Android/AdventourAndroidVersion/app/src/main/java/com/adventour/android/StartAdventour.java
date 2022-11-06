@@ -289,6 +289,11 @@ public class StartAdventour extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private boolean isTagSelected()
     {
         return !isSwitchActive.isEmpty();
@@ -811,30 +816,27 @@ public class StartAdventour extends AppCompatActivity {
         Context c = this;
         new Thread() {
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        nameTextView.setVisibility(View.VISIBLE);
-                        phoneTextView.setVisibility(View.VISIBLE);
-                        websiteTextView.setVisibility(View.VISIBLE);
-                        descriptionTextView.setVisibility(View.VISIBLE);
-                        ratingBar.setVisibility(View.VISIBLE);
-                        phoneImageView.setVisibility(View.VISIBLE);
-                        globeImageView.setVisibility(View.VISIBLE);
-                        previewImageView.setVisibility(View.VISIBLE);
-                        noLocationTextView.setVisibility(View.INVISIBLE);
+                runOnUiThread(() -> {
+                    nameTextView.setVisibility(View.VISIBLE);
+                    phoneTextView.setVisibility(View.VISIBLE);
+                    websiteTextView.setVisibility(View.VISIBLE);
+                    descriptionTextView.setVisibility(View.VISIBLE);
+                    ratingBar.setVisibility(View.VISIBLE);
+                    phoneImageView.setVisibility(View.VISIBLE);
+                    globeImageView.setVisibility(View.VISIBLE);
+                    previewImageView.setVisibility(View.VISIBLE);
+                    noLocationTextView.setVisibility(View.INVISIBLE);
 
-                        notNowButton.setBackgroundColor(ContextCompat.getColor(c, R.color.red_variant));
-                        yesButton.setBackgroundColor(ContextCompat.getColor(c, R.color.blue_main));
-                        notNowButton.setEnabled(true);
-                        yesButton.setEnabled(true);
+                    notNowButton.setBackgroundColor(ContextCompat.getColor(c, R.color.red_variant));
+                    yesButton.setBackgroundColor(ContextCompat.getColor(c, R.color.blue_main));
+                    notNowButton.setEnabled(true);
+                    yesButton.setEnabled(true);
 
-                        nameTextView.setText(name);
-                        phoneTextView.setText(tel);
-                        websiteTextView.setText(website);
-                        descriptionTextView.setText(description);
-                        ratingBar.setRating(rating);
-                    }
+                    nameTextView.setText(name);
+                    phoneTextView.setText(tel);
+                    websiteTextView.setText(website);
+                    descriptionTextView.setText(description);
+                    ratingBar.setRating(rating);
                 });
             }
         }.start();

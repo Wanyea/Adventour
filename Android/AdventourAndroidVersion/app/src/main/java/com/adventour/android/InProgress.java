@@ -1,5 +1,6 @@
 package com.adventour.android;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 
 public class InProgress extends AppCompatActivity implements OnMapReadyCallback {
 
-    Context context;
+    Context context = this;
     OnMapReadyCallback callback;
 
     FirebaseAuth auth;
@@ -110,10 +111,10 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.start_adventour:
-                    startActivity(new Intent(getApplicationContext(), StartAdventour.class));
-                    overridePendingTransition(0,0);
                     return true;
                 case R.id.beacons:
+                    startActivity(new Intent(getApplicationContext(), Beacons.class));
+                    overridePendingTransition(0,0);
                     return true;
             }
             return false;
@@ -134,6 +135,13 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                 switchToStartAdventour();
            }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StartAdventour.class);
+        startActivity(intent);
+        finish();
     }
 
     public void switchToLoggedOut()
