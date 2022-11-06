@@ -727,7 +727,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/autocomplete_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/autocomplete_fragment"
-                android:enabled="false" />
+                android:enabled="true" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

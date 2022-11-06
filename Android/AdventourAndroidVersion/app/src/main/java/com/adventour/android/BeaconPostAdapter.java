@@ -1,7 +1,6 @@
 package com.adventour.android;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -28,6 +27,7 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
     {
         this.context = context;
         this.BeaconPostModelArrayList = BeaconPostModelArrayList;
+   
     }
 
     @NonNull
@@ -36,12 +36,12 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
     {
         // to inflate the layout for each item of recycler view.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.beacon_post_card_layout, parent, false);
-        BeaconPostAdapter.Viewholder viewHolder = new BeaconPostAdapter.Viewholder(view, new CustomEditTextListener());
+        BeaconPostAdapter.Viewholder viewHolder = new BeaconPostAdapter.Viewholder(view/*, new CustomEditTextListener()*/);
             return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BeaconPostAdapter.Viewholder holder, int position)
+    public void onBindViewHolder(@NonNull Viewholder holder, int position)
     {
 
         // to set data to textview of each card layout
@@ -54,10 +54,37 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.locationTwoImageView.setImageBitmap(model.getLocationImages().locationTwo);
         holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
 
-        holder.customEditTextListener.updatePosition(position);
-        Log.d("Position IN HOLDER: ", String.valueOf(position));
+        //holder.customEditTextListener.updatePosition(position);
 
-        if (GlobalVars.locationDescriptions.isEmpty())
+        holder.locationDescriptionEditText.setText(model.getDescription());
+
+        if(position >= GlobalVars.locationDescriptions.size())
+        {
+            Log.d("position", String.valueOf(position));
+            Log.d("getLayoutPos", String.valueOf(holder.getLayoutPosition()));
+            GlobalVars.locationDescriptions.add(position, model.getDescription());
+            Log.d("locationDes if empty ", GlobalVars.locationDescriptions.toString());
+        } else {
+            Log.d("position in else", String.valueOf(position));
+            Log.d("getLayoutPos in else", String.valueOf(holder.getLayoutPosition()));
+            GlobalVars.locationDescriptions.set(position, model.getDescription());
+            Log.d("locationDes in else ", GlobalVars.locationDescriptions.toString());
+        }
+
+        holder.locationDescriptionEditText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("onTextChanged. LP", String.valueOf(holder.getLayoutPosition()));
+                Log.d("locationDes onChange ", GlobalVars.locationDescriptions.toString());
+                GlobalVars.locationDescriptions.set(position, s.toString());
+            }
+        });
+
+
+        /*if (GlobalVars.locationDescriptions.isEmpty())
         {
             holder.locationDescriptionEditText.setText(model.getDescription());
             GlobalVars.locationDescriptions.add(position, model.getDescription());
@@ -66,7 +93,7 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
             Log.d("BEACON_POST_AD", GlobalVars.locationDescriptions.toString());
             holder.locationDescriptionEditText.setText(GlobalVars.locationDescriptions.get(position));
 
-        }
+        }*/
     }
 
     @Override
@@ -74,6 +101,16 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
     {
         // this method is used for showing number of card items in recycler view
         return BeaconPostModelArrayList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     // View holder class for initializing of your views such as TextView and Imageview
@@ -87,9 +124,9 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         private final ImageView locationThreeImageView;
 
         public EditText locationDescriptionEditText;
-        public CustomEditTextListener customEditTextListener;
+        //public CustomEditTextListener customEditTextListener;
 
-        public Viewholder(@NonNull View itemView, CustomEditTextListener customEditTextListener)
+        public Viewholder(@NonNull View itemView/*, CustomEditTextListener customEditTextListener*/)
         {
             super(itemView);
             locationNameTextView = itemView.findViewById(R.id.nameTextView);
@@ -98,18 +135,20 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
             locationOneImageView = itemView.findViewById(R.id.locationOneImageView);
             locationTwoImageView = itemView.findViewById(R.id.locationTwoImageView);
             locationThreeImageView = itemView.findViewById(R.id.locationThreeImageView);
+            locationDescriptionEditText = (EditText) itemView.findViewById(R.id.descriptionEditText);
 
-            this.locationDescriptionEditText = (EditText) itemView.findViewById(R.id.descriptionEditText);
-            this.customEditTextListener = customEditTextListener;
-            this.locationDescriptionEditText.addTextChangedListener(customEditTextListener);
+
+         /*   this.customEditTextListener = customEditTextListener;
+            this.locationDescriptionEditText.addTextChangedListener(customEditTextListener);*/
 
         }
     }
 
-    private class CustomEditTextListener implements TextWatcher {
+    /*private class CustomEditTextListener implements TextWatcher {
         private int position;
 
-        public void updatePosition(int position) {
+        public void updatePosition(int position)
+        {
             this.position = position;
         }
 
@@ -140,5 +179,5 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         {
 
         }
-    }
+        */
 }
