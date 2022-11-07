@@ -1,5 +1,7 @@
 package com.adventour.android;
 
+import static java.lang.Math.toIntExact;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -45,6 +48,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -66,7 +70,7 @@ public class Passport extends AppCompatActivity {
 
     ImageButton imageButton;
 
-    TextView nicknameTextView, birthdateTextView, mantraTextView;
+    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -104,6 +108,9 @@ public class Passport extends AppCompatActivity {
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
+        noPrevAdventours = (TextView) findViewById(R.id.takeAnAdventourTextView);
+        noPrevBeacons = (TextView) findViewById(R.id.postABeaconTextView);
+
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
 
@@ -115,11 +122,7 @@ public class Passport extends AppCompatActivity {
 
         handleAuth();
 
-        new Thread() {
-            public void run() {
-                runOnUiThread(() -> populatePassport());
-            }
-        }.start();
+        populatePassport();
 
         Log.d("OnCreate", "Data length: " + String.valueOf(GlobalVars.previousAdventourArrayList.size()));
         PreviousAdventourRV.setNestedScrollingEnabled(true);
@@ -274,6 +277,7 @@ public class Passport extends AppCompatActivity {
                         nicknameTextView.setText(document.getString("nickname"));
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
+                        profPicImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
 
                         // Set visibility
                         progressBar.setVisibility(View.INVISIBLE);
@@ -318,70 +322,74 @@ public class Passport extends AppCompatActivity {
                             Log.d("getPrevAdventours", "Documents retrieved!");
                             for (QueryDocumentSnapshot adventour : task.getResult())
                             {
-                                new Thread() {
-                                    public void run() {
-                                            Map<String, Object> allData = new HashMap<>();
-                                            allData = adventour.getData();
-                                            allData.put("documentID", adventour.getId());
+                                    Map<String, Object> allData = new HashMap<>();
+                                    allData = adventour.getData();
+                                    allData.put("documentID", adventour.getId());
 
-                                            Log.d("getPrevAdventours", allData.toString());
-                                            ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
-                                            Log.d("getPrevAdventours", locations.toString());
+                                    Log.d("getPrevAdventours", allData.toString());
+                                    ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                    Log.d("getPrevAdventours", locations.toString());
 
-                                            JSONObject requestBody = new JSONObject();
+                                    JSONObject requestBody = new JSONObject();
 
-                                            try
-                                            {
-                                                requestBody.put("ids", new JSONArray(locations));
-                                                requestBody.put("uid", user.getUid());
-                                            } catch (JSONException e) {
-                                                Log.e("getPrevAdventours Error", e.toString());
-                                            }
-
-                                            try {
-                                                URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
-                                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                                                conn.setDoOutput(true);
-                                                conn.setInstanceFollowRedirects(false);
-                                                conn.setRequestMethod("POST");
-                                                conn.setRequestProperty("Content-Type", "application/json");
-                                                conn.setRequestProperty("Accept", "application/json");
-                                                conn.setUseCaches(false);
-
-                                                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                                                wr.writeBytes(requestBody.toString());
-                                                wr.flush();
-                                                wr.close();
-                                                requestBody = null;
-
-                                                System.out.println("\nSending 'POST' request to URL : " + url);
-
-                                                InputStream it = conn.getInputStream();
-                                                InputStreamReader inputs = new InputStreamReader(it);
-
-                                                BufferedReader in = new BufferedReader(inputs);
-                                                String inputLine;
-                                                StringBuffer response = new StringBuffer();
-
-                                                while ((inputLine = in.readLine()) != null) {
-                                                    response.append(inputLine);
-                                                }
-
-                                                in.close();
-                                                JSONObject responseData = new JSONObject(response.toString());
-                                                JSONArray results = (JSONArray) responseData.get("results");
-                                                allData.put("locations", results);
-                                                GlobalVars.previousAdventourArrayList.add(new PreviousAdventourModel(allData));
-                                                Log.d("getPrevAdventours: ", GlobalVars.previousAdventourArrayList.get(GlobalVars.previousAdventourArrayList.size()-1).getFirstLocation());
-
-                                                previousAdventourAdapter.notifyDataSetChanged();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                Log.e("getPrevAdventours", e.toString());
-                                            }
+                                    try
+                                    {
+                                        requestBody.put("ids", new JSONArray(locations));
+                                        requestBody.put("uid", user.getUid());
+                                    } catch (JSONException e) {
+                                        Log.e("getPrevAdventours Error", e.toString());
                                     }
-                                }.start();
+
+                                    try {
+                                        URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                                        conn.setDoOutput(true);
+                                        conn.setInstanceFollowRedirects(false);
+                                        conn.setRequestMethod("POST");
+                                        conn.setRequestProperty("Content-Type", "application/json");
+                                        conn.setRequestProperty("Accept", "application/json");
+                                        conn.setUseCaches(false);
+
+                                        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                        wr.writeBytes(requestBody.toString());
+                                        wr.flush();
+                                        wr.close();
+                                        requestBody = null;
+
+                                        System.out.println("\nSending 'POST' request to URL : " + url);
+
+                                        InputStream it = conn.getInputStream();
+                                        InputStreamReader inputs = new InputStreamReader(it);
+
+                                        BufferedReader in = new BufferedReader(inputs);
+                                        String inputLine;
+                                        StringBuffer response = new StringBuffer();
+
+                                        while ((inputLine = in.readLine()) != null) {
+                                            response.append(inputLine);
+                                        }
+
+                                        in.close();
+                                        JSONObject responseData = new JSONObject(response.toString());
+                                        JSONArray results = (JSONArray) responseData.get("results");
+                                        allData.put("locations", results);
+                                        GlobalVars.previousAdventourArrayList.add(new PreviousAdventourModel(allData));
+                                        Log.d("size: ", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
+
+                                        previousAdventourAdapter.notifyDataSetChanged();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Log.e("getPrevAdventours", e.toString());
+                                    }
+                            }
+
+                            Log.d("numOfAdventours", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
+                            // Set placeholder if user hasn't taken any Adventours.
+                            if(GlobalVars.previousAdventourArrayList.size() == 0) {
+                                noPrevAdventours.setVisibility(View.VISIBLE);
+                            } else {
+                                noPrevAdventours.setVisibility(View.INVISIBLE);
                             }
                         }
                     }
@@ -414,70 +422,73 @@ public class Passport extends AppCompatActivity {
                             Log.d("getPrevAdventours", "Documents retrieved!");
                             for (QueryDocumentSnapshot beacons : task.getResult())
                             {
-                                new Thread() {
-                                    public void run() {
-                                            Map<String, Object> allData = new HashMap<>();
-                                            allData = beacons.getData();
-                                            allData.put("documentID", beacons.getId());
+                                    Map<String, Object> allData = new HashMap<>();
+                                    allData = beacons.getData();
+                                    allData.put("documentID", beacons.getId());
 
-                                            Log.d("BEACON DATA", "all beacon data: " + allData);
-                                            ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
-                                            Log.d("getPrevAdventours", locations.toString());
+                                    Log.d("BEACON DATA", "all beacon data: " + allData);
+                                    ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                    Log.d("getPrevAdventours", locations.toString());
 
-                                            JSONObject requestBody = new JSONObject();
+                                    JSONObject requestBody = new JSONObject();
 
-                                            try
-                                            {
-                                                requestBody.put("ids", new JSONArray(locations));
-                                                requestBody.put("uid", user.getUid());
-                                            } catch (JSONException e) {
-                                                Log.e("getPrevAdventours Error", e.toString());
-                                            }
-
-                                            try {
-                                                URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
-                                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                                                conn.setDoOutput(true);
-                                                conn.setInstanceFollowRedirects(false);
-                                                conn.setRequestMethod("POST");
-                                                conn.setRequestProperty("Content-Type", "application/json");
-                                                conn.setRequestProperty("Accept", "application/json");
-                                                conn.setUseCaches(false);
-
-                                                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                                                wr.writeBytes(requestBody.toString());
-                                                wr.flush();
-                                                wr.close();
-                                                requestBody = null;
-
-                                                System.out.println("\nSending 'POST' request to URL : " + url);
-
-                                                InputStream it = conn.getInputStream();
-                                                InputStreamReader inputs = new InputStreamReader(it);
-
-                                                BufferedReader in = new BufferedReader(inputs);
-                                                String inputLine;
-                                                StringBuffer response = new StringBuffer();
-
-                                                while ((inputLine = in.readLine()) != null) {
-                                                    response.append(inputLine);
-                                                }
-
-                                                in.close();
-                                                JSONObject responseData = new JSONObject(response.toString());
-                                                JSONArray results = (JSONArray) responseData.get("results");
-                                                allData.put("locations", results);
-                                                GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData));
-                                                Log.d("getPrevAdventours: ", GlobalVars.previousAdventourArrayList.get(GlobalVars.previousAdventourArrayList.size()-1).getFirstLocation());
-
-                                                previousAdventourAdapter.notifyDataSetChanged();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                Log.e("getPrevAdventours", e.toString());
-                                            }
+                                    try
+                                    {
+                                        requestBody.put("ids", new JSONArray(locations));
+                                        requestBody.put("uid", user.getUid());
+                                    } catch (JSONException e) {
+                                        Log.e("getPrevAdventours Error", e.toString());
                                     }
-                                }.start();
+
+                                    try {
+                                        URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                                        conn.setDoOutput(true);
+                                        conn.setInstanceFollowRedirects(false);
+                                        conn.setRequestMethod("POST");
+                                        conn.setRequestProperty("Content-Type", "application/json");
+                                        conn.setRequestProperty("Accept", "application/json");
+                                        conn.setUseCaches(false);
+
+                                        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                        wr.writeBytes(requestBody.toString());
+                                        wr.flush();
+                                        wr.close();
+                                        requestBody = null;
+
+                                        System.out.println("\nSending 'POST' request to URL : " + url);
+
+                                        InputStream it = conn.getInputStream();
+                                        InputStreamReader inputs = new InputStreamReader(it);
+
+                                        BufferedReader in = new BufferedReader(inputs);
+                                        String inputLine;
+                                        StringBuffer response = new StringBuffer();
+
+                                        while ((inputLine = in.readLine()) != null) {
+                                            response.append(inputLine);
+                                        }
+
+                                        in.close();
+                                        JSONObject responseData = new JSONObject(response.toString());
+                                        JSONArray results = (JSONArray) responseData.get("results");
+                                        allData.put("locations", results);
+                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData));
+
+                                        previousAdventourAdapter.notifyDataSetChanged();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Log.e("getPrevAdventours", e.toString());
+                                    }
+                            }
+
+                            Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
+                            // Set placeholder if user hasn't posted any Beacons.
+                            if(GlobalVars.userBeaconsArrayList.size() == 0) {
+                                noPrevBeacons.setVisibility(View.VISIBLE);
+                            } else {
+                                noPrevBeacons.setVisibility(View.INVISIBLE);
                             }
                         }
                     }
@@ -504,6 +515,7 @@ public class Passport extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        Log.d("PASSPORT USER", user.toString());
         if (user == null)
         {
             switchToLoggedOut();

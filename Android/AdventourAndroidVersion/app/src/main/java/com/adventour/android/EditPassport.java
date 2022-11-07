@@ -1,5 +1,7 @@
 package com.adventour.android;
 
+import static java.lang.Math.toIntExact;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +42,7 @@ public class EditPassport extends AppCompatActivity {
     ImageView backButton;
     TextView birthdateTextView;
     Timestamp birthdate;
+    int androidPfpRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +188,8 @@ public class EditPassport extends AppCompatActivity {
                                 changes.put("firstName", firstName);
                                 changes.put("lastName", lastName);
                                 changes.put("birthdate", birthdate);
+                                changes.put("androidPfpRef", androidPfpRef);
+                                //TODO: WE NEED TO PUT THE IOS ONE HERE OR IT'LL BE CLEARED ON THEIR END.
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
@@ -265,6 +270,7 @@ public class EditPassport extends AppCompatActivity {
                         firstName = firstNameEditText.getText().toString();
                         lastName = lastNameEditText.getText().toString();
                         birthdate = ((Timestamp) document.get("birthdate"));
+                        androidPfpRef = (toIntExact((long)document.get("androidPfpRef")));
 
 
                     } else {

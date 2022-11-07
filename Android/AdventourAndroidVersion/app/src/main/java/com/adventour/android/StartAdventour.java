@@ -9,6 +9,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +87,7 @@ public class StartAdventour extends AppCompatActivity {
     Double lat, lon;
     float rating;
     LocationImages locationImages = new LocationImages();
+    AutocompleteSupportFragment autocompleteFragment;
 
 
     @Override
@@ -174,7 +178,11 @@ public class StartAdventour extends AppCompatActivity {
 
         doneButton.setOnClickListener(new View.OnClickListener() {
            @Override
-           public void onClick(View view) {
+           public void onClick(View view)
+           {
+               if (isLocationSelected() && isTagSelected())
+                   beginButton.setEnabled(true);
+
                popupFilter.setVisibility(View.INVISIBLE);
            }
         });
@@ -216,8 +224,7 @@ public class StartAdventour extends AppCompatActivity {
         placesClient = Places.createClient(this);
 
         // Initialize the AutocompleteSupportFragment.
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+        autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
@@ -250,15 +257,11 @@ public class StartAdventour extends AppCompatActivity {
                 GlobalVars.selectedLocationID = place.getId();
                 GlobalVars.locationCoordinates = place.getLatLng();
 
-                if (isTagSelected())
-                {
-                   beginButton.setEnabled(true);
-                }
+                if(isTagSelected())
+                    beginButton.setEnabled(true);
 
                 Log.i("Start Adventour", "Place: " + GlobalVars.selectedLocation + ", " + GlobalVars.selectedLocationID + ", " + GlobalVars.locationCoordinates);
             }
-
-
 
             @Override
             public void onError(@NonNull Status status) {
@@ -296,7 +299,13 @@ public class StartAdventour extends AppCompatActivity {
 
     private boolean isTagSelected()
     {
-        return !isSwitchActive.isEmpty();
+        return isSwitchActive.size() != 0;
+    }
+
+    private boolean isLocationSelected()
+    {
+        Log.d("testing val", ((TextView) autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)).getText().toString());
+        return !((TextView) autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)).getText().toString().isEmpty();
     }
 
     public void onClickFilterButton(View view) {
@@ -802,12 +811,21 @@ public class StartAdventour extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                Log.e("START ADVENTOUR", "Exception", e);
+                Log.e("NO LOC W CURR TAGS/LOC", "Exception", e);
+                noLocationTextView.setVisibility(View.VISIBLE);
+                nameTextView.setVisibility(View.INVISIBLE);
+                phoneTextView.setVisibility(View.INVISIBLE);
+                websiteTextView.setVisibility(View.INVISIBLE);
+                descriptionTextView.setVisibility(View.INVISIBLE);
+                ratingBar.setVisibility(View.INVISIBLE);
+                phoneImageView.setVisibility(View.INVISIBLE);
+                globeImageView.setVisibility(View.INVISIBLE);
+                previewImageView.setVisibility(View.INVISIBLE);
             }
 
         } catch(Exception e) {
-            noLocationTextView.setVisibility(View.VISIBLE);
             Log.e("START ADVENTOUR", "Exception", e);
+
         }
     }
 
@@ -827,14 +845,23 @@ public class StartAdventour extends AppCompatActivity {
                     previewImageView.setVisibility(View.VISIBLE);
                     noLocationTextView.setVisibility(View.INVISIBLE);
 
-                    notNowButton.setBackgroundColor(ContextCompat.getColor(c, R.color.red_variant));
-                    yesButton.setBackgroundColor(ContextCompat.getColor(c, R.color.blue_main));
                     notNowButton.setEnabled(true);
                     yesButton.setEnabled(true);
 
                     nameTextView.setText(name);
-                    phoneTextView.setText(tel);
-                    websiteTextView.setText(website);
+
+                    if (tel != null)
+                    {
+                        phoneTextView.setText(tel);
+                        Linkify.addLinks(phoneTextView, Linkify.PHONE_NUMBERS);
+                    }
+
+                    if (website != null)
+                    {
+                        websiteTextView.setText(website);
+                        Linkify.addLinks(websiteTextView, Linkify.WEB_URLS);
+                    }
+
                     descriptionTextView.setText(description);
                     ratingBar.setRating(rating);
                 });

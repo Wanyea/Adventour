@@ -50,8 +50,7 @@ public class PreviousAdventourModel
             }
 
 
-            this.dateCreated =
-                    AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
+            this.dateCreated = AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
 
             Log.d("Model", dateCreated);
         }
