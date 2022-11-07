@@ -278,19 +278,14 @@
 
             <Button
                 android:id="@+id/signupButton"
-                android:layout_width="0dp"
-                android:layout_height="58dp"
+                style="@style/AdventourMainButton"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/blue_main"
                 android:text="SIGN UP"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:cornerRadius="100dp"
                 app:layout_constraintTop_toBottomOf="@+id/loginTextView"
                 android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/popupProfPic"
