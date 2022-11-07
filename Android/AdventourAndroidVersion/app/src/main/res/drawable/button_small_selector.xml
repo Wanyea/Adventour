@@ -4,6 +4,6 @@
         android:state_enabled="true"
         android:color="@color/blue_main" />
     <item
-        android:state_disabled="false"
+        android:state_enabled="false"
         android:color="@color/quantum_grey" />
 </selector>

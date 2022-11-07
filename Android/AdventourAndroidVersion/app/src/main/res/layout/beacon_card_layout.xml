@@ -6,85 +6,91 @@
     android:layout_height="262.5dp"
     android:layout_marginBottom="10dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_beacon_card">
+        android:background="@drawable/ic_beacon_card"
+        android:padding="20dp">
 
-<!--        <TextView-->
-<!--            android:id="@+id/locationNameTextView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="20sp"-->
-<!--            android:fontFamily="@font/roboto_bold"-->
-<!--            android:text="locationName"-->
-<!--            android:layout_marginTop="45dp"-->
-<!--            android:layout_marginStart="171dp"-->
-<!--            android:width="132dp"-->
-<!--            android:height="46dp"/>-->
+        <ImageView
+            android:id="@+id/authorImageView"
+            android:clickable="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@color/transparent" />
 
         <TextView
-            android:id="@+id/firstLocation"
+            android:id="@+id/authorTextView"
             android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:layout_below="@id/dateTextView"
-            android:layout_marginStart="170dp"
-            android:width="139dp"
-            android:height="147dp"
-            android:fontFamily="@font/roboto"
-            android:text="Title"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/authorImageView"
+            app:layout_constraintBottom_toBottomOf="@id/authorImageView"
+            app:layout_constraintStart_toEndOf="@id/authorImageView"
+            android:layout_marginStart="5dp"/>
 
         <TextView
-            android:id="@+id/secondLocation"
+            android:id="@+id/beaconPostDate"
             android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:width="139dp"
-            android:height="147dp"
-            android:fontFamily="@font/roboto"
-            android:text="Title"
-            android:layout_below="@id/firstLocation"
-            android:layout_alignStart="@id/firstLocation"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/likeTextView" />
+
+        <ImageView
+            android:id="@+id/likeImageButton"
+            android:clickable="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_heart_line_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:tint="@color/red_main" />
 
         <TextView
-            android:id="@+id/thirdLocation"
+            android:id="@+id/likeTextView"
             android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:width="139dp"
-            android:height="147dp"
-            android:fontFamily="@font/roboto"
-            android:text="Title"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_below="@id/secondLocation"
-            android:layout_alignStart="@id/secondLocation" />
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/likeImageButton"
+            app:layout_constraintStart_toStartOf="@id/likeImageButton"
+            app:layout_constraintEnd_toEndOf="@id/likeImageButton"
+            android:textSize="14sp"
+            android:textColor="@color/red_variant"/>
 
         <ImageView
             android:id="@+id/locationImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/image_border_tan"
-            android:layout_marginTop="47dp"
-            android:layout_marginStart="32dp"
-            android:adjustViewBounds="true"
-            android:maxWidth="124dp"
-            android:maxHeight="164dp"
-            app:srcCompat="@drawable/ic_map_scroll"/>
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            app:layout_constraintTop_toBottomOf="@id/authorImageView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@color/transparent" />
 
         <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
+            android:id="@+id/beaconTitleTextView"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="254dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/roboto_italic"
-            android:text="date"
-            android:textColor="@color/navy_main"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            app:layout_constraintStart_toEndOf="@id/locationImageView"
+            android:layout_marginStart="15dp"
+            app:layout_constraintTop_toTopOf="@id/locationImageView"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/beaconDescriptionTextView"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/beaconTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/beaconTitleTextView"
+            android:textSize="16dp"
+            android:maxLines="6"
+            android:ellipsize="end"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
