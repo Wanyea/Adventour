@@ -3,6 +3,7 @@ package com.adventour.android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -24,11 +25,12 @@ public class LoginScreen extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    EditText emailEditText, passwordEditText;
-    TextView signupTextView, emailLoginErrorTextView, passwordLoginErrorTextView;
-    Button loginButton;
+    EditText emailEditText, passwordEditText, forgotPasswordEmailEditText;
+    TextView signupTextView, emailLoginErrorTextView, passwordLoginErrorTextView, resetPasswordTextView, exitButton;
+    Button loginButton, sendButton;
     FirebaseAuth mAuth;
     ImageView emailLoginErrorIcon, passwordLoginErrorIcon;
+    CardView resetPasswordPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,12 @@ public class LoginScreen extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
         signupTextView = (TextView) findViewById(R.id.signupTextButton);
+        resetPasswordTextView = (TextView) findViewById(R.id.resetPasswordTextButton);
+        resetPasswordPopup = (CardView) findViewById(R.id.popupFilter);
+        resetPasswordPopup.setVisibility(View.INVISIBLE);
+        exitButton = (TextView) findViewById(R.id.exitButton);
+        sendButton = (Button) findViewById(R.id.sendButton);
+        forgotPasswordEmailEditText = (EditText) findViewById(R.id.forgotPasswordEmailEditText);
 
         emailLoginErrorTextView = (TextView) findViewById(R.id.emailLoginErrorTextView);
         passwordLoginErrorTextView = (TextView) findViewById(R.id.passwordLoginErrorTextView);
@@ -87,6 +95,33 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
+        resetPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onResetPasswordClick(v);
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPasswordPopup.setVisibility(View.INVISIBLE);
+                emailEditText.setVisibility(View.VISIBLE);
+                passwordEditText.setVisibility(View.VISIBLE);
+                signupTextView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = forgotPasswordEmailEditText.getText().toString().trim();
+
+                if (AdventourUtils.isEmailEmpty(email))
+                    displayNullEmailError();
+                else
+                    sendResetEmail(email);
+            }
+        });
     }
 
     private void switchToSignUp() {
@@ -176,5 +211,23 @@ public class LoginScreen extends AppCompatActivity {
         passwordLoginErrorIcon.setVisibility(View.INVISIBLE);
     }
 
+    private void onResetPasswordClick(View v) {
+        resetPasswordPopup.setVisibility(View.VISIBLE);
+        emailEditText.setVisibility(View.INVISIBLE);
+        passwordEditText.setVisibility(View.INVISIBLE);
+        signupTextView.setVisibility(View.INVISIBLE);
+    }
 
+    private void sendResetEmail(String email) {
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Password reset sent");
+                } else {
+                    Log.d(TAG, "Password reset failed to send");
+                }
+            }
+        });
+    }
 }
