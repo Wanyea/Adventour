@@ -181,7 +181,7 @@ public class Passport extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu)
     {
@@ -257,7 +257,7 @@ public class Passport extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public void populatePassport()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
