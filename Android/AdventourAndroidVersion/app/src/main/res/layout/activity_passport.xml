@@ -63,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <ImageView
                 android:id="@+id/passportCardImageView"
                 android:layout_width="wrap_content"
@@ -73,6 +72,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passportTitleTextView"
                 app:srcCompat="@drawable/ic_passport_card" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
+                app:layout_constraintEnd_toEndOf="@id/passportCardImageView"
+                app:layout_constraintTop_toTopOf="@id/passportCardImageView"
+                app:layout_constraintBottom_toBottomOf="@id/passportCardImageView"
+                android:indeterminate="true" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/previousAdventourScrollView"
@@ -90,7 +99,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:focusableInTouchMode="true">
-
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -216,10 +224,11 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="30dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sample_4by3"
+                android:src="@color/quantum_grey"
                 app:layout_constraintBottom_toBottomOf="@id/passportCardImageView"
                 app:layout_constraintStart_toStartOf="@id/passportCardImageView"
-                app:layout_constraintTop_toTopOf="@id/passportCardImageView" />
+                app:layout_constraintTop_toTopOf="@id/passportCardImageView"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/nicknameTextView"
@@ -232,7 +241,8 @@
                 app:layout_constraintTop_toTopOf="@+id/passportCardImageView"
                 android:layout_marginTop="60dp"
                 app:layout_constraintStart_toEndOf="@+id/profPicImageView"
-                android:layout_marginStart="15dp" />
+                android:layout_marginStart="15dp"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/birthdateTextView"
@@ -253,7 +263,8 @@
                 app:layout_constraintStart_toStartOf="@+id/nicknameTextView"
                 app:layout_constraintTop_toBottomOf="@+id/nicknameTextView"
                 android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/ic_cake_icon" />
+                app:srcCompat="@drawable/ic_cake_icon"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/mantraTextView"
@@ -263,7 +274,8 @@
                 app:layout_constraintStart_toStartOf="@id/nicknameTextView"
                 app:layout_constraintTop_toBottomOf="@id/cakeIconImageView"
                 android:layout_marginTop="5dp"
-                android:maxLines="4"/>
+                android:maxLines="4"
+                android:visibility="invisible" />
 
             <ImageButton
                 android:id="@+id/imageButton"

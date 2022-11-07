@@ -20,9 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCanceledListener;
@@ -82,6 +84,9 @@ public class Passport extends AppCompatActivity {
     PreviousAdventourAdapter previousAdventourAdapter;
     BeaconsAdapter beaconsAdapter;
 
+    ProgressBar progressBar;
+    ImageView cakeIconImageView, profPicImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -101,6 +106,10 @@ public class Passport extends AppCompatActivity {
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        cakeIconImageView = (ImageView) findViewById(R.id.cakeIconImageView);
+        profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
 
         queryString = new ArrayList<>();
 
@@ -264,8 +273,15 @@ public class Passport extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
-                        birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
+
+                        // Set visibility
+                        progressBar.setVisibility(View.INVISIBLE);
+                        profPicImageView.setVisibility(View.VISIBLE);
+                        nicknameTextView.setVisibility(View.VISIBLE);
+                        cakeIconImageView.setVisibility(View.VISIBLE);
+                        birthdateTextView.setVisibility(View.VISIBLE);
+                        mantraTextView.setVisibility(View.VISIBLE);
                     } else {
                         Log.d(TAG, "No such document");
                     }
