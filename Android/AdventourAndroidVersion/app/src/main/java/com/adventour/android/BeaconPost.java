@@ -1,10 +1,14 @@
 package com.adventour.android;
 
+import static java.lang.Math.toIntExact;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +18,15 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -28,19 +35,24 @@ import java.util.Map;
 
 public class BeaconPost extends AppCompatActivity {
 
-    TextView beaconPostDate;
+    TextView beaconPostDate, authorTextView;
     ImageButton postBeaconButton;
     EditText beaconTitleEditText, beaconIntroEditText;
-    boolean isEditMode = true;
-    String titleString, introString;
     Switch isPrivate;
+
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacon_post);
 
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
+        authorTextView = (TextView) findViewById(R.id.authorTextView);
         postBeaconButton = (ImageButton) findViewById(R.id.postBeaconButton);
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
@@ -48,6 +60,28 @@ public class BeaconPost extends AppCompatActivity {
         isPrivate = (Switch) findViewById(R.id.privateSwitch);
 
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
+        getUserNickname();
+        
+        AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);
+        postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
+        postBeaconAlert.setCancelable(true);
+
+        postBeaconAlert.setPositiveButton(
+                R.string.Yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        postToBeaconBoard();
+                        storeBeacon();
+                        switchToHome();
+                    }
+                });
+        postBeaconAlert.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
 
         RecyclerView beaconPostRV = findViewById(R.id.beaconPostRV);
         beaconPostRV.setNestedScrollingEnabled(true);
@@ -64,9 +98,8 @@ public class BeaconPost extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
-               postToBeaconBoard();
-               storeBeacon();
-               switchToHome();
+               AlertDialog alert = postBeaconAlert.create();
+               alert.show();
            }
         });
     }
@@ -87,7 +120,7 @@ public class BeaconPost extends AppCompatActivity {
         newBeacon.put("intro", beaconIntroEditText.getText().toString());
         newBeacon.put("isPrivate", isPrivate.isChecked());
         newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
-        //newBeacon.put("beaconLocation", );
+        newBeacon.put("beaconLocation", GlobalVars.selectedLocation);
 
         db.collection("Adventourists")
                 .document(user.getUid())
@@ -124,6 +157,8 @@ public class BeaconPost extends AppCompatActivity {
         addBeacon.put("intro", beaconIntroEditText.getText().toString());
         addBeacon.put("isPrivate", isPrivate.isChecked());
         addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
+        addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+
 
         db.collection("Adventourists")
                 .document(user.getUid())
@@ -142,6 +177,32 @@ public class BeaconPost extends AppCompatActivity {
                         Log.w("Failed to add beacon", "Error adding document", e);
                     }
                 });
+    }
+
+    public void getUserNickname() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get a reference to the user
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+        // Check if user document exists. If they do in this instance, populate passport wth user data.
+        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("BEACON POST", "DocumentSnapshot data: " + document.getData());
+                        authorTextView.setText(document.getString("nickname"));
+                    } else {
+                        Log.d("BEACON POST", "No such document");
+                    }
+                } else {
+                    Log.d("BEACON POST", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     public void switchToHome()

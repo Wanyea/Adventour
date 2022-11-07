@@ -1,5 +1,7 @@
 package com.adventour.android;
 
+import static java.lang.Math.toIntExact;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -45,6 +48,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -66,7 +70,7 @@ public class Passport extends AppCompatActivity {
 
     ImageButton imageButton;
 
-    TextView nicknameTextView, birthdateTextView, mantraTextView;
+    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -104,6 +108,9 @@ public class Passport extends AppCompatActivity {
         nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
+        noPrevAdventours = (TextView) findViewById(R.id.takeAnAdventourTextView);
+        noPrevBeacons = (TextView) findViewById(R.id.postABeaconTextView);
+
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
 
@@ -274,6 +281,7 @@ public class Passport extends AppCompatActivity {
                         nicknameTextView.setText(document.getString("nickname"));
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
+                        profPicImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
 
                         // Set visibility
                         progressBar.setVisibility(View.INVISIBLE);
@@ -373,7 +381,7 @@ public class Passport extends AppCompatActivity {
                                                 JSONArray results = (JSONArray) responseData.get("results");
                                                 allData.put("locations", results);
                                                 GlobalVars.previousAdventourArrayList.add(new PreviousAdventourModel(allData));
-                                                Log.d("getPrevAdventours: ", GlobalVars.previousAdventourArrayList.get(GlobalVars.previousAdventourArrayList.size()-1).getFirstLocation());
+                                                Log.d("size: ", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
 
                                                 previousAdventourAdapter.notifyDataSetChanged();
                                             } catch (Exception e) {
@@ -382,6 +390,14 @@ public class Passport extends AppCompatActivity {
                                             }
                                     }
                                 }.start();
+                            }
+
+                            Log.d("numOfAdventours", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
+                            // Set placeholder if user hasn't taken any Adventours.
+                            if(GlobalVars.previousAdventourArrayList.size() == 0) {
+                                noPrevAdventours.setVisibility(View.VISIBLE);
+                            } else {
+                                noPrevAdventours.setVisibility(View.INVISIBLE);
                             }
                         }
                     }
@@ -469,7 +485,6 @@ public class Passport extends AppCompatActivity {
                                                 JSONArray results = (JSONArray) responseData.get("results");
                                                 allData.put("locations", results);
                                                 GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData));
-                                                Log.d("getPrevAdventours: ", GlobalVars.previousAdventourArrayList.get(GlobalVars.previousAdventourArrayList.size()-1).getFirstLocation());
 
                                                 previousAdventourAdapter.notifyDataSetChanged();
                                             } catch (Exception e) {
@@ -478,6 +493,14 @@ public class Passport extends AppCompatActivity {
                                             }
                                     }
                                 }.start();
+                            }
+
+                            Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
+                            // Set placeholder if user hasn't posted any Beacons.
+                            if(GlobalVars.userBeaconsArrayList.size() == 0) {
+                                noPrevBeacons.setVisibility(View.VISIBLE);
+                            } else {
+                                noPrevBeacons.setVisibility(View.INVISIBLE);
                             }
                         }
                     }
@@ -504,6 +527,7 @@ public class Passport extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        Log.d("PASSPORT USER", user.toString());
         if (user == null)
         {
             switchToLoggedOut();
