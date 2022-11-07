@@ -70,6 +70,7 @@
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3995" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/background_splash.xml" value="0.398" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/beacons_selector.xml" value="0.32" />
+        <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/button_small_selector.xml" value="0.26" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/chevron_left.xml" value="0.3995" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/edit_text_round.xml" value="0.32" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/frame_brown_variant.xml" value="0.32" />
@@ -98,6 +99,7 @@
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacons.xml" value="0.4" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_home.xml" value="0.4" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_in_progress.xml" value="0.1" />
+        <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_logged_out.xml" value="0.3368421052631579" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_login_screen.xml" value="0.4" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_passport.xml" value="0.3368421052631579" />
@@ -115,7 +117,9 @@
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/fragment_start_adventour.xml" value="0.3859375" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/in_progress_card_layout.xml" value="0.26902173913043476" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/popup_filter.xml" value="0.3368421052631579" />
+        <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/popup_forgot_password.xml" value="0.3368421052631579" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/previous_adventour_card_layout.xml" value="0.3368421052631579" />
+        <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/start_adventour_card_layout.xml" value="0.3368421052631579" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/menu/bottom_nav_menu.xml" value="0.4" />
         <entry key="..\:/repos/Adventour/Android/AdventourAndroidVersion/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.246" />
       </map>
