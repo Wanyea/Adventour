@@ -845,8 +845,6 @@ public class StartAdventour extends AppCompatActivity {
                     previewImageView.setVisibility(View.VISIBLE);
                     noLocationTextView.setVisibility(View.INVISIBLE);
 
-                    notNowButton.setBackgroundColor(ContextCompat.getColor(c, R.color.red_variant));
-                    yesButton.setBackgroundColor(ContextCompat.getColor(c, R.color.blue_main));
                     notNowButton.setEnabled(true);
                     yesButton.setEnabled(true);
 

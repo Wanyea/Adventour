@@ -83,9 +83,31 @@
         <item name="android:textColor">@color/navy_main</item>
     </style>
 
+    <!-- Big button themes. -->
+    <style name="AdventourMainButton">
+        <item name="android:backgroundTint">@drawable/button_blue_selector</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">120dp</item>
+    </style>
+
+    <style name="AdventourSecondaryButton">
+        <item name="strokeWidth">6dp</item>
+        <item name="strokeColor">@drawable/button_red_variant_selector</item>
+        <item name="android:textColor">@drawable/button_red_variant_selector</item>
+        <item name="backgroundTint">@color/cyan_main</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">120dp</item>
+    </style>
+
     <!-- Small button theme. -->
     <style name="AdventourSmallButton">
-        <item name="android:backgroundTint">@drawable/button_small_selector</item>
+        <item name="android:backgroundTint">@drawable/button_blue_selector</item>
         <item name="android:layout_height">48dp</item>
     </style>
 
