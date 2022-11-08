@@ -37,7 +37,7 @@ import java.util.Map;
 public class BeaconPost extends AppCompatActivity {
 
     TextView beaconPostDate, authorTextView;
-    ImageButton postBeaconButton;
+    ImageButton postBeaconButton, authorImageView;
     EditText beaconTitleEditText, beaconIntroEditText;
     Switch isPrivate;
 

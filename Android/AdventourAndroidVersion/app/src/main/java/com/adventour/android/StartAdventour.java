@@ -151,6 +151,9 @@ public class StartAdventour extends AppCompatActivity {
 
         isSwitchActive = new HashMap<String, String>();
 
+        // Reset before going back to passport.
+        GlobalVars.userBeaconsArrayList.clear();
+        GlobalVars.previousAdventourArrayList.clear();
 
         if (prevLocation.size() > 0)
         {
