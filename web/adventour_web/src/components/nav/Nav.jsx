@@ -83,7 +83,7 @@ export default function Nav(props) {
 
   return (
     <div id='nav' className='nav-bar'>
-      <img className='logo' src={logo} onClick={() => {resetAll(); props.setHome(true)}}></img>
+      <Link to="/" onClick={() => {resetAll(); props.setHome(true)}}><img className='logo' src={logo}></img></Link>
       <div className={menuOpen ? 'button-close' : 'button'} onClick={changeMenu}>
         <div className="top"></div>
         <div className="middle"></div>
@@ -91,7 +91,7 @@ export default function Nav(props) {
       </div>
       <div className='download'>Download</div>
       {menuOpen ? <div className='nav-list'>
-        <Link to='/' className={props.home ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll(); props.setHome(true)}}>What is Adventour</Link>
+        <Link to='/' className={props.home ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll(); props.setHome(true)}}>What is Adventour?</Link>
         <Link to='features' className={props.features ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setFeatures(true)}}>Features</Link>
         <Link to='download' className={props.download ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setDownload(true)}}>Download</Link>
         <Link to='meet-the-team' className={props.meet ? 'nav-list-item current' : 'nav-list-item'} onClick={() => {resetAll();props.setMeet(true)}}>Meet the Team</Link>
