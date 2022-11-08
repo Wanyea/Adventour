@@ -1,3 +1,3 @@
 # Adventour
 
-I should not be able to edit this file directly ;) - Eric
+A UCF Senior Design Project that will blow your socks off.
