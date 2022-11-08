@@ -195,13 +195,14 @@ public class SignupScreen extends AppCompatActivity {
 
                 // If all fields are valid: create new document in Firebase with the user information.
 
-                if(AdventourUtils.isValidNickname(nickname) &&
+                if (AdventourUtils.isValidNickname(nickname) &&
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
-                   AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                {
-                    signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
-                }
+                   AdventourUtils.checkPasswordsMatch(password, confirmPassword) &&
+                   AdventourUtils.isProfilePictureSelected(refs.androidProfilePicRef))
+                    {
+                        signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
+                    }
             }
         });
 

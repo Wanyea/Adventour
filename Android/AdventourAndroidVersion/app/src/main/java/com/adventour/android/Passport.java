@@ -67,6 +67,7 @@ import java.util.concurrent.Semaphore;
 public class Passport extends AppCompatActivity {
     
     private static final String TAG = "PassportActivity";
+    public String userNickname;
 
     ImageButton imageButton;
 
@@ -90,6 +91,8 @@ public class Passport extends AppCompatActivity {
 
     ProgressBar progressBar;
     ImageView cakeIconImageView, profPicImageView;
+
+    int profilePicReferece;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +139,7 @@ public class Passport extends AppCompatActivity {
         beaconsAdapter = new BeaconsAdapter(context, GlobalVars.userBeaconsArrayList);
         LinearLayoutManager beaconsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         BeaconPostRV.setLayoutManager(beaconsLinearLayoutManager);
-        BeaconPostRV.setAdapter(previousAdventourAdapter);
+        BeaconPostRV.setAdapter(beaconsAdapter);
         getBeaconPosts();
 
         // Action Bar
@@ -275,9 +278,11 @@ public class Passport extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         nicknameTextView.setText(document.getString("nickname"));
+                        userNickname = document.getString("nickname");
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
                         profPicImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
+                        profilePicReferece = toIntExact((long)document.get("androidPfpRef"));
 
                         // Set visibility
                         progressBar.setVisibility(View.INVISIBLE);
@@ -298,6 +303,12 @@ public class Passport extends AppCompatActivity {
 
     public void getPreviousAdventours()
     {
+        /*if (GlobalVars.previousAdventourArrayList.isEmpty())
+        {
+            previousAdventourAdapter.notifyDataSetChanged();
+            return;
+        }*/
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -398,28 +409,34 @@ public class Passport extends AppCompatActivity {
 
     public void getBeaconPosts()
     {
+        /*if (GlobalVars.userBeaconsArrayList.isEmpty())
+        {
+            beaconsAdapter.notifyDataSetChanged();
+            return;
+        }*/
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Get a reference to the user
-        Log.d("getPrevAdventours", "Calling database...");
+        Log.d("getBeaconPosts", "Calling database...");
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
         documentRef.collection("beacons")
                 .get()
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("getPrevAdventours", "Failed calling database...");
+                        Log.d("getBeaconPosts", "Failed calling database...");
                     }
                 })
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.d("getPrevAdventours", "Completed calling database...");
+                        Log.d("getBeaconPosts", "Completed calling database...");
                         if (task.isSuccessful())
                         {
-                            Log.d("getPrevAdventours", "Documents retrieved!");
+                            Log.d("getBeaconPosts", "Documents retrieved!");
                             for (QueryDocumentSnapshot beacons : task.getResult())
                             {
                                     Map<String, Object> allData = new HashMap<>();
@@ -428,7 +445,7 @@ public class Passport extends AppCompatActivity {
 
                                     Log.d("BEACON DATA", "all beacon data: " + allData);
                                     ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
-                                    Log.d("getPrevAdventours", locations.toString());
+                                    Log.d("getBeaconPosts", locations.toString());
 
                                     JSONObject requestBody = new JSONObject();
 
@@ -437,7 +454,7 @@ public class Passport extends AppCompatActivity {
                                         requestBody.put("ids", new JSONArray(locations));
                                         requestBody.put("uid", user.getUid());
                                     } catch (JSONException e) {
-                                        Log.e("getPrevAdventours Error", e.toString());
+                                        Log.e("getBeaconPosts Error", e.toString());
                                     }
 
                                     try {
@@ -474,12 +491,13 @@ public class Passport extends AppCompatActivity {
                                         JSONObject responseData = new JSONObject(response.toString());
                                         JSONArray results = (JSONArray) responseData.get("results");
                                         allData.put("locations", results);
-                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData));
+                                        Log.d("allData", allData.toString());
+                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData, userNickname, profilePicReferece));
 
-                                        previousAdventourAdapter.notifyDataSetChanged();
+                                        beaconsAdapter.notifyDataSetChanged();
                                     } catch (Exception e) {
                                         e.printStackTrace();
-                                        Log.e("getPrevAdventours", e.toString());
+                                        Log.e("getBeaconPosts", e.toString());
                                     }
                             }
 

@@ -106,7 +106,6 @@ public class Congratulations extends AppCompatActivity {
         DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
 
         // Check if user document exists. If they do in this instance, attach users nickname and profile pic.
-
         documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             private static final String TAG = "CONGRATULATIONS";
 

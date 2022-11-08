@@ -38,7 +38,7 @@ public class Beacons extends AppCompatActivity {
         setContentView(R.layout.activity_beacons);
 
         handleAuth();
-        getBeaconPosts();
+        getBeacons();
 
  /*       RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
@@ -110,7 +110,7 @@ public class Beacons extends AppCompatActivity {
         finish();
     }
 
-    public void getBeaconPosts() {
+    public void getBeacons() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();

@@ -29,6 +29,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +73,7 @@ public class BeaconPost extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         postToBeaconBoard();
                         storeBeacon();
+                        storeAdventour();
                         switchToHome();
                     }
                 });
@@ -175,6 +177,64 @@ public class BeaconPost extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w("Failed to add beacon", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void storeAdventour()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> newAdventour= new HashMap<>();
+
+        // Get a reference to the user
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+
+        // Check if user document exists. If they do in this instance, attach users nickname and profile pic.
+        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            private static final String TAG = "BEACON POST";
+
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        newAdventour.put("nickname", document.getString("nickname"));
+                        // TODO: get reference to users profile pic.
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        newAdventour.put("dateCreated", new Timestamp(new Date()));
+        newAdventour.put("locations", GlobalVars.adventourFSQIds);
+        newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
+
+        //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
+        // and users could potentially filter by categories.
+
+        db.collection("Adventourists")
+                .document(user.getUid())
+                .collection("adventours")
+                .add(newAdventour)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Failed to add Adventour", "Error adding document", e);
                     }
                 });
     }

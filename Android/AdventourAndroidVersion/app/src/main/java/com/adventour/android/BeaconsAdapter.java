@@ -1,6 +1,7 @@
 package com.adventour.android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,13 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull BeaconsAdapter.ViewHolder holder, int position) {
         BeaconsModel model = beaconsArrayList.get(position);
-        holder.firstLocation.setText(model.getFirstLocation());
-        holder.secondLocation.setText(model.getSecondLocation());
-        holder.thirdLocation.setText(model.getThirdLocation());
+
+        holder.beaconTitle.setText(model.getBeaconTitle());
+        holder.beaconIntro.setText(model.getBeaconIntro());
+        holder.beaconAuthor.setText(model.getBeaconAuthor());
+        holder.beaconImage.setImageBitmap(model.getBeaconBitmap());
+        holder.beaconCreatedDate.setText(model.getDateCreated());
+        holder.authorImageView.setImageResource(model.getProfilePicReferece());
     }
 
     @Override
@@ -41,15 +46,21 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView firstLocation;
-        private final TextView secondLocation;
-        private final TextView thirdLocation;
+        private final TextView beaconTitle;
+        private final TextView beaconIntro;
+        private final TextView beaconAuthor;
+        private final ImageView beaconImage;
+        private final ImageView authorImageView;
+        private final TextView beaconCreatedDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            firstLocation = itemView.findViewById(R.id.firstLocation);
-            secondLocation = itemView.findViewById(R.id.secondLocation);
-            thirdLocation = itemView.findViewById(R.id.thirdLocation);
+            beaconTitle = itemView.findViewById(R.id.beaconTitleTextView);
+            beaconIntro = itemView.findViewById(R.id.beaconDescriptionTextView);
+            beaconAuthor = itemView.findViewById(R.id.authorTextView);
+            beaconImage = itemView.findViewById(R.id.locationImageView);
+            beaconCreatedDate = itemView.findViewById(R.id.beaconDate);
+            authorImageView = itemView.findViewById(R.id.authorImageView);
         }
 
     }
