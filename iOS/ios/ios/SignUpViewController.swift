@@ -8,9 +8,29 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+var passwordFirebase = ""
+var picFlag = 0
+var picture: UIImage? = nil
+var signupData : [String: Any] = [
+    "nickname": "",
+    "firstName": "",
+    "lastName": "",
+    "mantra": "",
+    "email": "",
+    "isPrivate": true,
+    "birthdate": "",
+    "iosPfpRef": "",
+]
 
 
-class SignUpViewController: UIViewController {
+
+
+class SignUpViewController: UIViewController, ModalViewControllerDelegate{
+    
+    
+    @IBAction func test(_ sender: Any) {
+        print(signupData)
+    }
     
     @IBOutlet weak var nicknameIcon: UIImageView!
     @IBOutlet weak var emailIcon: UIImageView!
@@ -48,6 +68,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var nicknameNext: UIButton!
     
     @IBOutlet weak var profile: UIButton!
+    @IBOutlet weak var profilePic: UIImageView!
     
     var nicknameFlag: Bool!
     var passwordFlag: Bool!
@@ -88,10 +109,16 @@ class SignUpViewController: UIViewController {
         mantra?.leftViewMode = UITextField.ViewMode.always
         mantra?.leftView = mantraIcon
         
-        profile?.imageView?.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8)
+        if(picFlag == 0)
+        {
+            profilePic?.image = UIImage(systemName: "questionmark")
+        }
+        else{
+            profilePic?.image = picture
+        }
         
         // Init button state
-        self.signUpButton.isEnabled = false
+        self.signUpButton?.isEnabled = false
         birthdayFlag = true
         passwordFlag = false
         self.errorMessage?.text = ""
@@ -105,7 +132,9 @@ class SignUpViewController: UIViewController {
         firstName?.addTarget(self, action: #selector(verifyFirstName(_:)), for: .editingChanged)
         lastName?.addTarget(self, action: #selector(verifyLastName(_:)), for: .editingChanged)
         mantra?.addTarget(self, action: #selector(verifyMantra(_:)), for: .editingChanged)
+        //profile picture selection
         
+       
         // Targets for sign up button enable
         //password?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
         //passwordConfirm?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
@@ -113,6 +142,25 @@ class SignUpViewController: UIViewController {
         //nickname?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingChanged)
         //birthdate?.addTarget(self, action: #selector(verifySignUp(_:)), for: .editingDidEnd)
         
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? ProfilePicViewController{
+                print(destinationVC)
+            destinationVC.delegate = self
+        }
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if(picFlag == 0)
+        {
+            profilePic?.image = UIImage(systemName: "questionmark")
+        }
+        else{
+            profilePic?.image = picture
+            signUpButton?.isEnabled = true
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -128,9 +176,21 @@ class SignUpViewController: UIViewController {
 
     }
     
+    @objc func tapDetected(sender: UITapGestureRecognizer){
+        
+        //picture = self.image
+        let view = sender.view as! UIImageView
+        print(view)
+        
+        picture = view.image
+        picFlag = 1
+        self.dismiss(animated: true, completion: nil)
+
+    }
+    
     @IBAction func signUpTapped(_ sender: Any) {
         
-        Auth.auth().createUser(withEmail: email.text!, password: password.text!) { result, error in
+        Auth.auth().createUser(withEmail: signupData["email"] as! String, password: passwordFirebase) { result, error in
             if error != nil {
                 print("Error creating user: " + error.debugDescription)
                 self.errorMessage.text = error?.localizedDescription
@@ -142,12 +202,7 @@ class SignUpViewController: UIViewController {
                         
                         db.collection("Adventourists")
                             .document(user.uid)
-                            .setData([
-                                "nickname": self.nickname.text!,
-                                "email": self.email.text!,
-                                "isPrivate": true,
-                                "birthday": self.birthdateString!,
-                            ]) { err in
+                            .setData(signupData) { err in
                                 
                             }
                         
@@ -163,6 +218,9 @@ class SignUpViewController: UIViewController {
         switchToTabController()
     }
     
+   
+    
+    
     @objc func verifyNickname(_ textField: UITextField) {
         if nickname.text!.count > 16 || nickname.text! == ""{
             nicknameError.isHidden = false
@@ -177,6 +235,8 @@ class SignUpViewController: UIViewController {
             errorMessage.text = ""
             if(firstNameError.isHidden && lastNameError.isHidden)
             {
+                signupData["nickname"] = nickname.text!
+                
                 signUpButton.isEnabled = true
             }
             
@@ -206,6 +266,8 @@ class SignUpViewController: UIViewController {
             errorMessage.text = ""
             if(nicknameError.isHidden && lastNameError.isHidden)
             {
+                signupData["firstName"] = firstName.text!
+                
                 signUpButton.isEnabled = true
             }
             //verifyAlert()
@@ -235,6 +297,8 @@ class SignUpViewController: UIViewController {
             errorMessage.text = ""
             if(firstNameError.isHidden && nicknameError.isHidden)
             {
+                signupData["lastName"] = lastName.text!
+
                 signUpButton.isEnabled = true
             }
             
@@ -252,6 +316,8 @@ class SignUpViewController: UIViewController {
             
         } else {
             mantraError.isHidden = true
+            signupData["mantra"] = mantra.text!
+            
             
             errorMessage.text = ""
             signUpButton.isEnabled = true
@@ -289,6 +355,8 @@ class SignUpViewController: UIViewController {
             emailError.isHidden = true
             errorMessage.text = ""
             signUpButton.isEnabled = true
+            signupData["email"] = email.text!
+            
             //verifyAlert()
             
         }
@@ -324,6 +392,7 @@ class SignUpViewController: UIViewController {
             errorMessage.text = ""
             passwordFlag = false
             signUpButton.isEnabled = true
+            passwordFirebase = password.text!
             //verifyAlert()
         }
         else {
@@ -370,6 +439,18 @@ class SignUpViewController: UIViewController {
 //        }
 //    }
     
+    @IBAction func privacyTapped(_ sender: Any) {
+        if let url = URL(string: "https://adventour.app/privacy-policy") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    @IBAction func termsTapped(_ sender: Any) {
+        if let url =  URL(string:  "https://adventour.app/terms-of-service") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    
     @objc func verifyBirthdate(_ bithdate: UIDatePicker) {
         
         let dateFormatter = DateFormatter()
@@ -405,6 +486,8 @@ class SignUpViewController: UIViewController {
                     signUpButton.isEnabled = true
                     //verifyAlert()
                     birthdayFlag = false
+                    signupData["birthdate"] = birthdate.date
+                    print(signupData["birthday"]!)
                 }
             } else {
                 birthdayError.isHidden = true
@@ -412,10 +495,20 @@ class SignUpViewController: UIViewController {
                 signUpButton.isEnabled = true
                 //verifyAlert()
                 birthdayFlag = false
+                signupData["birthdate"] = birthdate.date
+                
             }
         }
         
         
+    }
+    func modalControllerWillDisappear(){
+        
+        self.profilePic?.image = picture
+        if(picFlag == 1){
+            self.signUpButton.isEnabled = true
+        }
+        //signupData["iosPfpRef"] = String(profileChoice)
     }
     
     func switchToTabController() {
@@ -441,5 +534,4 @@ class SignUpViewController: UIViewController {
 //        Auth.auth().removeStateDidChangeListener(handle!)
 //    }
 }
-
 

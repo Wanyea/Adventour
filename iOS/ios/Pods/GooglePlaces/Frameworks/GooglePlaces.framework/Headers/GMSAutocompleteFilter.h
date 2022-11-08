@@ -77,8 +77,7 @@ typedef NS_ENUM(NSInteger, GMSPlacesAutocompleteTypeFilter) {
  * NOTE: Ignored if the "types" property is set.
  */
 @property(nonatomic, assign)
-    GMSPlacesAutocompleteTypeFilter type __GMS_AVAILABLE_BUT_DEPRECATED_MSG(
-        "<code>type</code> property is deprecated in favor of <code>types</code>.");
+    GMSPlacesAutocompleteTypeFilter type __GMS_AVAILABLE_BUT_DEPRECATED_MSG("<code>type</code> property is deprecated in favor of <code>types</code>.");
 
 /**
  * The filter applied to an autocomplete request to restrict results using up to 5 different place
@@ -92,6 +91,7 @@ typedef NS_ENUM(NSInteger, GMSPlacesAutocompleteTypeFilter) {
  * href="https://developers.google.com/maps/documentation/places/ios-sdk/supported_types#table3">table_3</a>.
  * Default value is null, which means no filters specified. Overrides the deprecated "type" property
  * if this is set.
+
  */
 @property(nonatomic, nullable) NSArray<NSString *> *types;
 
@@ -101,8 +101,7 @@ typedef NS_ENUM(NSInteger, GMSPlacesAutocompleteTypeFilter) {
  *
  * NOTE: Ignored if the "countries" property is set.
  */
-@property(nonatomic, copy, nullable) NSString *country __GMS_AVAILABLE_BUT_DEPRECATED_MSG(
-    "<code>country</code> property is deprecated in favor of <code>countries</code>.");
+@property(nonatomic, copy, nullable) NSString *country __GMS_AVAILABLE_BUT_DEPRECATED_MSG("<code>country</code> property is deprecated in favor of <code>countries</code>.");
 
 /**
  * The countries to restrict results to. This should be a ISO 3166-1 Alpha-2 country code (case
