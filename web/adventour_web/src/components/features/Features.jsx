@@ -39,7 +39,7 @@ const Features = () => {
         </div>
         <div className="col center">
           <img src={camera} alt="" className="camera" />
-          <p>Add photos from each location</p>
+          <p>See photos from each location</p>
         </div>
       </div>
       <div className="row">
