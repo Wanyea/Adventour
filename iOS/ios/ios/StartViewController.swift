@@ -168,6 +168,9 @@ class StartViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
+    @IBAction func unwindHome(_ segue: UIStoryboardSegue){
+        self.ids?.popFirst()
+    }
     
     func preparePlace() {
         if self.fsq_id == nil {

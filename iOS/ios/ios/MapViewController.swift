@@ -57,7 +57,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationItem.setHidesBackButton(true, animated: true)
         if let ids = self.ids {
             print("Map, These is the ids: ", ids)
         } else {
@@ -127,7 +126,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         dateFormatter.dateFormat = "MM/dd/YYYY"
         
         let adventour: [String: Any] = [
-            "locations": self.ids,
+            "locations": self.ids.reversed(),
             "beaconLocation": self.beaconLocation,
             "dateCreated": Date(),
             "numLocations": self.locations.count,

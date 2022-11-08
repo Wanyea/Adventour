@@ -82,10 +82,10 @@ class CongratsViewController: UIViewController {
             self.tabBarController?.tabBar.isTranslucent = false
         }
         if let dest = segue.destination as? AdventourSummaryViewController {
-            dest.ids = self.locations
+            dest.ids = self.locations.reversed()
         }
         if let dest = segue.destination as? BeaconPostViewController {
-            dest.ids = self.locations
+            dest.ids = self.locations.reversed()
             dest.beaconLocation = self.beaconLocation
             dest.isEditing = true
             dest.source = self
