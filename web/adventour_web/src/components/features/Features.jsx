@@ -8,7 +8,7 @@ import flare from '../../../../../image_assets/eric_assets/flare.png'
 import heart from '../../../../../image_assets/eric_assets/heart.png'
 import { smallScreen } from '../../Constants'
 
-const Features = () => {
+const Features = (props) => {
   
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -24,6 +24,16 @@ const Features = () => {
     }
   }, [windowSize])
 
+  const resetAll = () => {
+    props.setHome(false);
+    props.setFeatures(false);
+    props.setDownload(false);
+    props.setMeet(false);
+    props.setTerms(false);
+    props.setPrivacy(false);
+  }
+  resetAll();
+  props.setFeatures(true);
 
   return (
     <div className='features'>
@@ -35,7 +45,7 @@ const Features = () => {
         </div>
         <div className="col center">
           <img className='compass' src={compass} alt="" />
-          <p>Open each destination in your default maps app</p>
+          <p>Open each destination in your maps app</p>
         </div>
         <div className="col center">
           <img src={camera} alt="" className="camera" />
@@ -53,7 +63,8 @@ const Features = () => {
         </div>
         <div className="col center">
           <img src={heart} alt="" className="heart" />
-          <p>Use your powers of good to like others' posts so they can rise to the top of Most Liked</p>
+          <p>Use your powers of good to like others' posts </p>
+          {/* so they can rise to the top of Most Liked */}
         </div>
       </div>
     </div>

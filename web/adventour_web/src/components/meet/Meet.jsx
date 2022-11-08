@@ -12,7 +12,7 @@ import { smallScreen } from '../../Constants'
 
 
 
-export default function Meet() {
+export default function Meet(props) {
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -27,6 +27,17 @@ export default function Meet() {
       });
     }
   }, [windowSize])
+
+  const resetAll = () => {
+    props.setHome(false);
+    props.setFeatures(false);
+    props.setDownload(false);
+    props.setMeet(false);
+    props.setTerms(false);
+    props.setPrivacy(false);
+  }
+  resetAll();
+  props.setMeet(true);
 
   return (
     <div className="meet">

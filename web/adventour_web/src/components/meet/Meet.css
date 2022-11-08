@@ -29,12 +29,17 @@
 
 @media (max-width: 1024px) {
 
+    .padding {
+        padding: 5rem 6rem 5rem 4rem;
+    }
+
     .spaced {
         margin-top: 7rem;
         margin-bottom: 10rem;
     }
 
     .margins {
-        margin: 5rem 4rem 5rem 4rem;
+        margin: 5rem 4rem 5rem 0rem;
     }
+
 }

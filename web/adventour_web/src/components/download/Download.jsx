@@ -7,7 +7,7 @@ import iosbadge from '../../../../../image_assets/eric_assets/Download-on-the-Ap
 
 import './Download.css'
 
-export default function Download() {
+export default function Download(props) {
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -36,6 +36,17 @@ export default function Download() {
     }
   }, [windowSize]) 
 
+  const resetAll = () => {
+    props.setHome(false);
+    props.setFeatures(false);
+    props.setDownload(false);
+    props.setMeet(false);
+    props.setTerms(false);
+    props.setPrivacy(false);
+  }
+  resetAll();
+  props.setDownload(true);
+
   const getColSize = () => {
     if (windowSize <= 1440)
     {
@@ -53,7 +64,7 @@ export default function Download() {
       <div className="row">
         <div className="col left">
           <h1>Download the Adventour app on Android and iOS</h1>
-          <p>Available on the Apple App Store and Google Play Store</p>
+          <p>Will be available on the Apple App Store and Google Play Store in November 2022</p>
         </div>
         <div className="col">
           <div className="row ">

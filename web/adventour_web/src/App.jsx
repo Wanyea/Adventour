@@ -38,12 +38,42 @@ function App() {
               terms={terms} setTerms={setTerms} />
               
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/download" element={<Download />} />
-          <Route path="/meet-the-team" element={<Meet />} />
-          <Route path="/privacy-policy" element={<Privacy />} />
-          <Route path="/terms-of-service" element={<Terms />} />
+          <Route path="/" element={<Home home={home} setHome={setHome} 
+              features={features} setFeatures={setFeatures} 
+              download={download} setDownload={setDownload} 
+              meet={meet} setMeet={setMeet}
+              privacy={privacy} setPrivacy={setPrivacy}
+              terms={terms} setTerms={setTerms} />} />
+          <Route path="/features" element={<Features home={home} setHome={setHome} 
+              features={features} setFeatures={setFeatures} 
+              download={download} setDownload={setDownload} 
+              meet={meet} setMeet={setMeet}
+              privacy={privacy} setPrivacy={setPrivacy}
+              terms={terms} setTerms={setTerms} />} />
+          <Route path="/download" element={<Download home={home} setHome={setHome} 
+              features={features} setFeatures={setFeatures} 
+              download={download} setDownload={setDownload} 
+              meet={meet} setMeet={setMeet}
+              privacy={privacy} setPrivacy={setPrivacy}
+              terms={terms} setTerms={setTerms} />} />
+          <Route path="/meet-the-team" element={<Meet home={home} setHome={setHome} 
+              features={features} setFeatures={setFeatures} 
+              download={download} setDownload={setDownload} 
+              meet={meet} setMeet={setMeet}
+              privacy={privacy} setPrivacy={setPrivacy}
+              terms={terms} setTerms={setTerms} />} />
+          <Route path="/privacy-policy" element={<Privacy home={home} setHome={setHome} 
+              features={features} setFeatures={setFeatures} 
+              download={download} setDownload={setDownload} 
+              meet={meet} setMeet={setMeet}
+              privacy={privacy} setPrivacy={setPrivacy}
+              terms={terms} setTerms={setTerms} />} />
+          <Route path="/terms-of-service" element={<Terms home={home} setHome={setHome} 
+              features={features} setFeatures={setFeatures} 
+              download={download} setDownload={setDownload} 
+              meet={meet} setMeet={setMeet}
+              privacy={privacy} setPrivacy={setPrivacy}
+              terms={terms} setTerms={setTerms} />} />
         </Routes>
 
         <Footer home={home} setHome={setHome} 

@@ -6,7 +6,7 @@ import iPhoneLanding from '../../../../../image_assets/eric_assets/iphone-landin
 import iPhoneStart from '../../../../../image_assets/eric_assets/iphone-start.png'
 import { smallScreen } from '../../Constants'
 
-export default function Home() {
+export default function Home(props) {
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -22,6 +22,16 @@ export default function Home() {
     }
   }, [windowSize])
 
+  const resetAll = () => {
+    props.setHome(false);
+    props.setFeatures(false);
+    props.setDownload(false);
+    props.setMeet(false);
+    props.setTerms(false);
+    props.setPrivacy(false);
+  }
+  resetAll();
+  props.setHome(true);
 
   return (
     <div className="container home">
@@ -58,9 +68,10 @@ export default function Home() {
         <div className="col left">
           <h1 className='left-pad'>Send out your Beacon for all to see!</h1>
           <p className='left-pad'> 
-            Once your Adventour is complete you can post a Beacon for other Adventourists to see! Beacons are attached to locations all over the United States and give you the opportunity to experience others’ Adventours for yourself. 
-            Attach photos to your Adventour and share them with people across the country!  
+            Once your Adventour is complete you can post a Beacon for other Adventourists to see! 
+            Beacons are attached to locations all over the United States and give you the opportunity to experience others’ Adventours for yourself.   
           </p>
+          {/* Attach photos to your Adventour and share them with people across the country! */}
         </div>
         <div className="col center">
           <img src={iPhoneBeacon} alt="" className="phone"/>
