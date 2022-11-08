@@ -7,8 +7,6 @@ import android.util.Log;
 import com.google.firebase.Timestamp;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -22,7 +20,7 @@ public class BeaconsModel {
     private String beaconAuthor;
     private Bitmap beaconBitmap;
     private String dateCreated;
-    private int profilePicReferece;
+    private int profilePicReference;
 
 
     public BeaconsModel(Map allData, String userNickname, int profilePicReferece) {
@@ -49,7 +47,7 @@ public class BeaconsModel {
         }
 
         this.dateCreated = AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
-        this.profilePicReferece = profilePicReferece;
+        this.profilePicReference = profilePicReferece;
 
         Log.d("Model", dateCreated);
     }
@@ -94,11 +92,11 @@ public class BeaconsModel {
         this.beaconBitmap = beaconBitmap;
     }
 
-    public int getProfilePicReferece() {
-        return profilePicReferece;
+    public int getProfilePicReference() {
+        return profilePicReference;
     }
 
-    public void setProfilePicReferece(int profilePicReferece) {
-        this.profilePicReferece = profilePicReferece;
+    public void setProfilePicReference(int profilePicReference) {
+        this.profilePicReference = profilePicReference;
     }
 }

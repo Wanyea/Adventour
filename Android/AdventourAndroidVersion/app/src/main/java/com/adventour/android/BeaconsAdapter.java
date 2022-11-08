@@ -1,7 +1,6 @@
 package com.adventour.android;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         holder.beaconAuthor.setText(model.getBeaconAuthor());
         holder.beaconImage.setImageBitmap(model.getBeaconBitmap());
         holder.beaconCreatedDate.setText(model.getDateCreated());
-        holder.authorImageView.setImageResource(model.getProfilePicReferece());
+        holder.authorImageView.setImageResource(model.getProfilePicReference());
     }
 
     @Override

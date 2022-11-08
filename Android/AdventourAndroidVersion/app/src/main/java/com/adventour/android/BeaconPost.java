@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -37,7 +38,8 @@ import java.util.Map;
 public class BeaconPost extends AppCompatActivity {
 
     TextView beaconPostDate, authorTextView;
-    ImageButton postBeaconButton, authorImageView;
+    ImageButton postBeaconButton;
+    ImageView authorImageView;
     EditText beaconTitleEditText, beaconIntroEditText;
     Switch isPrivate;
 
@@ -59,6 +61,8 @@ public class BeaconPost extends AppCompatActivity {
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
 
         isPrivate = (Switch) findViewById(R.id.privateSwitch);
+
+        authorImageView = (ImageView) findViewById(R.id.authorImageView);
 
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
         getUserNickname();
@@ -255,6 +259,7 @@ public class BeaconPost extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d("BEACON POST", "DocumentSnapshot data: " + document.getData());
                         authorTextView.setText(document.getString("nickname"));
+                        authorImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
                     } else {
                         Log.d("BEACON POST", "No such document");
                     }

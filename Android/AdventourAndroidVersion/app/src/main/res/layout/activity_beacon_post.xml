@@ -63,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Author"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/authorImageView"
         app:layout_constraintBottom_toBottomOf="@id/authorImageView"
         app:layout_constraintStart_toEndOf="@id/authorImageView"
@@ -88,7 +89,8 @@
         android:src="@drawable/ic_heart_line_icon"
         app:layout_constraintEnd_toEndOf="@id/bgImageView"
         app:layout_constraintTop_toTopOf="@id/bgImageView"
-        app:tint="@color/red_main" />
+        app:tint="@color/red_main"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/likeTextView"
@@ -99,7 +101,8 @@
         app:layout_constraintStart_toStartOf="@id/likeImageButton"
         app:layout_constraintEnd_toEndOf="@id/likeImageButton"
         android:textSize="14sp"
-        android:textColor="@color/red_variant"/>
+        android:textColor="@color/red_variant"
+        android:visibility="invisible"/>
 
     <EditText
         android:id="@+id/beaconTitleEditText"

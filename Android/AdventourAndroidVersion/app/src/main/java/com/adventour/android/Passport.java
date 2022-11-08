@@ -13,9 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +45,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -56,13 +52,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
 
 public class Passport extends AppCompatActivity {
     
@@ -92,7 +84,7 @@ public class Passport extends AppCompatActivity {
     ProgressBar progressBar;
     ImageView cakeIconImageView, profPicImageView;
 
-    int profilePicReferece;
+    int profilePicReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +116,8 @@ public class Passport extends AppCompatActivity {
         queryString = new ArrayList<>();
 
         handleAuth();
-
         populatePassport();
 
-        Log.d("OnCreate", "Data length: " + String.valueOf(GlobalVars.previousAdventourArrayList.size()));
         PreviousAdventourRV.setNestedScrollingEnabled(true);
         previousAdventourAdapter = new PreviousAdventourAdapter(context, GlobalVars.previousAdventourArrayList);
         LinearLayoutManager adventourLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -150,7 +140,7 @@ public class Passport extends AppCompatActivity {
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                switchToPassportMoreInfo();
+                switchToEditPassport();
             }
         });
 
@@ -282,7 +272,7 @@ public class Passport extends AppCompatActivity {
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
                         profPicImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
-                        profilePicReferece = toIntExact((long)document.get("androidPfpRef"));
+                        profilePicReference = toIntExact((long)document.get("androidPfpRef"));
 
                         // Set visibility
                         progressBar.setVisibility(View.INVISIBLE);
@@ -491,8 +481,7 @@ public class Passport extends AppCompatActivity {
                                         JSONObject responseData = new JSONObject(response.toString());
                                         JSONArray results = (JSONArray) responseData.get("results");
                                         allData.put("locations", results);
-                                        Log.d("allData", allData.toString());
-                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData, userNickname, profilePicReferece));
+                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData, userNickname, profilePicReference));
 
                                         beaconsAdapter.notifyDataSetChanged();
                                     } catch (Exception e) {
@@ -514,7 +503,7 @@ public class Passport extends AppCompatActivity {
     }
 
 
-    public void switchToPassportMoreInfo()
+    public void switchToEditPassport()
     {
         Intent intent = new Intent(this, EditPassport.class);
         startActivity(intent);

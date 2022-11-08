@@ -55,6 +55,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Objects;
 
 public class StartAdventour extends AppCompatActivity {
@@ -89,12 +91,24 @@ public class StartAdventour extends AppCompatActivity {
     LocationImages locationImages = new LocationImages();
     AutocompleteSupportFragment autocompleteFragment;
 
+    HashMap<String, Integer> drawableIds = new HashMap<String, Integer>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_adventour);
+
+        drawableIds.put("Cheetah", R.drawable.ic_profpic_cheetah);
+        drawableIds.put("Elephant", R.drawable.ic_profpic_elephant);
+        drawableIds.put("Ladybug", R.drawable.ic_profpic_ladybug);
+        drawableIds.put("Fox", R.drawable.ic_profpic_fox);
+        drawableIds.put("Penguin", R.drawable.ic_profpic_penguin);
+        drawableIds.put("Monkey", R.drawable.ic_profpic_monkey);
+
+        Log.d("Drawable Ids: ", drawableIds.toString());
+
 
         // This allows the API call on the main thread.
         // Moving forward we are going to want to put this on its own thread to increase overall app performance :)
