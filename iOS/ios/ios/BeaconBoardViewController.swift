@@ -15,6 +15,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     var beaconLocation = ""
     var lon: Double!
     var lat: Double!
+    var hiddenBeacons: [String]!
     
     
     @IBOutlet weak var popUpMenu: UIButton!
@@ -48,6 +49,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.searchTextField.textColor = UIColor(named: "adv-royalblue")!
         searchBar?.text = self.beaconLocation
         setUpPopUp()
+        getHiddenBeacons()
     }
     
     func setUpPopUp() {
@@ -261,6 +263,11 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                     self.activityIndicator.stopAnimating()
                 } else {
                     for document in querySnapshot!.documents {
+                        
+                        if self.hiddenBeacons.contains(document.documentID) {
+                            continue
+                        }
+                        
                         print("\(document.documentID) => \(document.data())")
                         let documentID = document.documentID
                         allData = document.data()
@@ -342,6 +349,11 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                             }
                         } else {
                             for document in querySnapshot!.documents {
+                                
+                                if self.hiddenBeacons.contains(document.documentID) {
+                                    continue
+                                }
+                                
                                 print("\(document.documentID) => \(document.data())")
                                 let documentID = document.documentID
                                 allData = document.data()
@@ -469,6 +481,26 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                         }
                         
                     }
+            }
+    }
+    
+    func getHiddenBeacons() {
+        
+        let db = Firestore.firestore()
+        db.collection("Adventourists")
+            .document(self.user.uid)
+            .getDocument { snap, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    if let data = snap?.data() {
+                        if let hidden = data["hiddenBeacons"] as? [String] {
+                            self.hiddenBeacons = hidden
+                        }
+                    } else {
+                        self.hiddenBeacons = []
+                    }
+                }
             }
     }
     

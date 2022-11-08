@@ -14,8 +14,12 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
     var locations: [[String: Any]] = []
     var user: User!
     var source: UIViewController!
+    var beaconLocation: String!
+    var isBeacon: Bool!
+    var documentID: String!
     
     @IBOutlet weak var locationsTable: UITableView!
+    @IBOutlet weak var postButton: UIButton!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -33,7 +37,7 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
         getAdventourData()
-        // Do any additional setup after loading the view.
+        checkBeacon()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,8 +65,30 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? BeaconPostViewController {
+            dest.locations = self.locations
+            dest.beaconLocation = self.beaconLocation
+            dest.isBeacon = self.isBeacon
+            dest.isEditing = true
+            dest.source = self
+            dest.beaconInfo["documentID"] = self.documentID
+        }
+    }
+    
+    func checkBeacon() {
+        if let isBeacon = self.isBeacon {
+            if (isBeacon) {
+                self.postButton.isHidden = true
+            } else {
+                self.postButton.isHidden = false
+            }
+        } else {
+            self.postButton.isHidden = false
+        }
+    }
+    
     func getAdventourData() {
-        
         
         self.activityIndicator?.isHidden = false
         

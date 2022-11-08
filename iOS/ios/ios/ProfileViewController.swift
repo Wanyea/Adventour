@@ -108,6 +108,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                 if let vc = storyboard.instantiateViewController(identifier: "AdventourSummary") as? AdventourSummaryViewController {
                     vc.source = self
                     vc.locations = locations
+                    if let beaconLocation = prevAdventours[indexPath.item]["beaconLocation"] as? String {
+                        vc.beaconLocation = beaconLocation
+                    }
+                    if let isBeacon = prevAdventours[indexPath.item]["isBeacon"] as? Bool {
+                        vc.isBeacon = isBeacon
+                    }
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 

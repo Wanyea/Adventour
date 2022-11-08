@@ -377,7 +377,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Beacon Post" id="TNQ-W3-abD">
-                        <barButtonItem key="rightBarButtonItem" title="Report" id="CZZ-G3-VE1">
+                        <barButtonItem key="rightBarButtonItem" title="❗️" id="CZZ-G3-VE1">
                             <color key="tintColor" name="adv-red"/>
                             <connections>
                                 <action selector="reportTapped:" destination="Y6W-OH-hqX" id="FMQ-HQ-ZBP"/>

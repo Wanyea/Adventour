@@ -132,6 +132,7 @@ class StartViewController: UIViewController, UISearchBarDelegate {
             preparePlace()
             destinationVC.ids = self.ids
             destinationVC.beaconLocation = self.beaconLocation
+            destinationVC.source = self
         }
     }
     
@@ -169,14 +170,14 @@ class StartViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func unwindHome(_ segue: UIStoryboardSegue){
-        self.ids?.popFirst()
+        self.ids?.removeLast()
     }
     
     func preparePlace() {
         if self.fsq_id == nil {
             return
         }
-        self.ids?.insert(self.fsq_id, at: 0)
+        self.ids?.append(self.fsq_id)
     }
     
     @objc func websiteTapped() {

@@ -31,6 +31,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var mapView: MKMapView!
     var locations: [[String: Any]] = []
+    var reversedIds: [String] = []
     var ids: [String]!
     
     @IBOutlet weak var locationsTable: UITableView!
@@ -38,6 +39,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     var user: User!
     var beaconLocation: String!
+    var source: StartViewController!
+    var documentID: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +51,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             print("No user")
             self.switchToLoggedOut()
         }
-        
+        self.reversedIds = self.ids.reversed()
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
         
@@ -70,10 +73,19 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         if let destinationVC = segue.destination as? CongratsViewController {
             destinationVC.locations = self.ids
             destinationVC.beaconLocation = self.beaconLocation
+            destinationVC.documentID = self.documentID
         }
-        
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            self.ids.removeLast()
+            source.ids = self.ids
+            
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count + 1
@@ -125,8 +137,10 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YYYY"
         
+        
+        
         let adventour: [String: Any] = [
-            "locations": self.ids.reversed(),
+            "locations": self.ids,
             "beaconLocation": self.beaconLocation,
             "dateCreated": Date(),
             "numLocations": self.locations.count,
@@ -134,7 +148,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let db = Firestore.firestore()
         
-        db.collection("Adventourists")
+        let docRef = db.collection("Adventourists")
             .document(self.user.uid)
             .collection("adventours")
             .addDocument(data: adventour) {
@@ -145,6 +159,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                     print("Document successfully written!")
                 }
             }
+        self.documentID = docRef.documentID
     }
     
     func hideTable() {

@@ -52,6 +52,8 @@ class PrevAdventoursDataSource: NSObject, UITableViewDataSource {
                 } else {
                     cell.location1.text = "This Adventour does not have any locations"
                 }
+            } else {
+                cell.location1.text = ""
             }
             if locations.count > 1 {
                 if let location2 = locations[1] as? [String: Any] {
@@ -61,6 +63,8 @@ class PrevAdventoursDataSource: NSObject, UITableViewDataSource {
                         cell.location2.text = ""
                     }
                 }
+            } else {
+                cell.location2.text = ""
             }
             if locations.count > 2 {
                 if let location3 = locations[2] as? [String: Any] {
@@ -71,6 +75,8 @@ class PrevAdventoursDataSource: NSObject, UITableViewDataSource {
                         
                     }
                 }
+            } else {
+                cell.location3.text = ""
             }
         } else {
             print("No locations")

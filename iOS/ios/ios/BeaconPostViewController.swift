@@ -30,6 +30,8 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     var nickname: String!
     var shouldSave: Bool!
     var isLiked: Bool = false
+    var isBeacon: Bool!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,12 +54,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         self.locationsTable.isHidden = true
         loadBeaconInfo()
         getLocationData()
-        if self.source is BeaconBoardViewController || self.source is ProfileViewController {
-            checkLiked()
-            Task {
-                await setNumLikes()
-            }
-        }
+        checkSource()
         self.likeButton.imageView?.contentMode = .scaleAspectFit
         print("nickname on load: ", self.nickname)
     }
@@ -216,8 +213,8 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBAction func reportTapped(_ sender: Any) {
         let alert = UIAlertController(
-            title: "Report Beacon Post",
-            message: "\nIf you believe content in this Beacon breaks our Terms of Service please press \"Report\". A member of the Adventour team will review your report. If this content is found to break our Terms of Service it will be removed promptly.\n\nThank you for keeping Adventour a safe place for everyone!",
+            title: "Report/Hide Beacon",
+            message: "Would you like to Report or Hide this Beacon post?",
             preferredStyle: .actionSheet
         )
         
@@ -225,7 +222,54 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             title: "Report",
             style: .destructive,
             handler: { _ in
+                let alert = UIAlertController(
+                    title: "Report Beacon",
+                    message: "If you believe content in this Beacon breaks our Terms of Service please press \"Report\". A member of the Adventour team will review your report. If this content is found to break our Terms of Service it will be removed promptly.\n\nThank you for keeping Adventour a safe place for everyone!",
+                    preferredStyle: .actionSheet
+                )
+                alert.addAction(UIAlertAction(
+                    title: "Report",
+                    style: .destructive,
+                    handler: { _ in
+                        self.reportBeaconPost()
+                }))
+                alert.addAction(UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: { _ in
+
+                }))
+                self.present(alert,
+                        animated: true,
+                        completion: nil
+                )
                 
+        }))
+        alert.addAction(UIAlertAction(
+            title: "Hide",
+            style: .destructive,
+            handler: { _ in
+                let alert = UIAlertController(
+                    title: "Hide Beacon",
+                    message: "If this type of content is not something you wish to see tap Hide.",
+                    preferredStyle: .actionSheet
+                )
+                alert.addAction(UIAlertAction(
+                    title: "Hide",
+                    style: .destructive,
+                    handler: { _ in
+                        
+                }))
+                alert.addAction(UIAlertAction(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: { _ in
+
+                }))
+                self.present(alert,
+                        animated: true,
+                        completion: nil
+                )
         }))
         alert.addAction(UIAlertAction(
             title: "Cancel",
@@ -411,6 +455,22 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    func checkSource() {
+        if self.source is BeaconBoardViewController || self.source is ProfileViewController {
+            checkLiked()
+            Task {
+                await setNumLikes()
+            }
+        }
+        if self.source is AdventourSummaryViewController {
+            self.likeButton.isHidden = true
+            self.numLikes.isHidden = true
+        } else {
+            self.likeButton.isHidden = true
+            self.numLikes.isHidden = true
+        }
+    }
+    
     func saveBeaconData() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/YYYY"
@@ -451,6 +511,12 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                         print("Document successfully written!")
                     }
                 }
+            db.collection("Adventourists")
+                .document(self.user.uid)
+                .collection("adventours")
+                .document(beaconInfo["documentID"] as! String)
+                .setData(["isBeacon": true], merge: true)
+            
             self.locationsTable.reloadData()
         } else {
             print("beacon title: ", self.beaconTitle.text)
@@ -470,10 +536,11 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             
             let db = Firestore.firestore()
             
-            let docRef = db.collection("Adventourists")
+            db.collection("Adventourists")
                 .document(self.user.uid)
                 .collection("beacons")
-                .addDocument(data: beacon) {
+                .document(beaconInfo["documentID"] as! String)
+                .setData(beacon, merge: true) {
                     err in
                     if let err = err {
                         print("Error writing document: \(err)")
@@ -482,8 +549,14 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                 }
             
+            db.collection("Adventourists")
+                .document(self.user.uid)
+                .collection("adventours")
+                .document(beaconInfo["documentID"] as! String)
+                .setData(["isBeacon": true], merge: true)
+            
             let beaconRef = db.collection("Beacons")
-                .document(docRef.documentID)
+                .document(beaconInfo["documentID"] as! String)
             
                 beaconRef.setData(beacon) {
                     err in
@@ -665,7 +738,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             loadUserData()
             // TODO: Load likes
-        } else if self.source is CongratsViewController {
+        } else if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
             loadUserData()
             beaconInfo["dateCreated"] = Date()
             let dateFormatter = DateFormatter()
@@ -697,6 +770,59 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
 
+    func reportBeaconPost() {
+        
+        let params: [String: Any] = [
+            "uid": beaconInfo["uid"] as! String,
+            "id": beaconInfo["documentID"]
+        ]
+        
+        let url = URL(string: "https://adventour-183a0.uc.r.appspot.com/send-email-report")
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
+        
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let data = data {
+                let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let dataDict = dataJsonObject as? [String: Any] {
+                        print(dataDict)
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func hideBeaconPost(withDocumentID documentID: String) {
+        let db = Firestore.firestore()
+        
+        var hiddenBeacons: [String]!
+        
+        db.collection("Adventourists")
+            .document(self.user.uid)
+            .getDocument { snap, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    if let data = snap?.data() {
+                        if let hidden = data["hiddenBeacons"] as? [String] {
+                            hiddenBeacons = hidden
+                        }
+                    } else {
+                        hiddenBeacons = []
+                    }
+                }
+            }
+        hiddenBeacons.append(documentID)
+        
+        db.collection("Adventourists")
+            .document(self.user.uid)
+            .updateData([
+                "hiddenBeacons": hiddenBeacons
+            ])
+    }
     
     func switchToStart() {
         
