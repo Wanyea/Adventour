@@ -59,77 +59,6 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
 
-            <!--
-            <TextView
-                android:id="@+id/searchFilterTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search Filter"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/priceTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Price"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchFilterTextView" />
-
-            <TextView
-                android:id="@+id/dollar1TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="$"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
-
-            <TextView
-                android:id="@+id/dollar2TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="$$"
-                app:layout_constraintEnd_toStartOf="@id/dollar3TextView"
-                app:layout_constraintStart_toEndOf="@+id/dollar1TextView"
-                app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
-
-            <TextView
-                android:id="@+id/dollar3TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$$$"
-                app:layout_constraintEnd_toStartOf="@+id/dollar4TextView"
-                app:layout_constraintStart_toEndOf="@+id/dollar2TextView"
-                app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
-
-            <TextView
-                android:id="@+id/dollar4TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$$$$"
-                app:layout_constraintBottom_toBottomOf="@id/dollar1TextView"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/priceSlider"
-                style="@style/AdventourSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dollar1TextView"
-                android:stepSize="1"
-                android:valueFrom="1"
-                android:valueTo="4"
-                />
-                -->
             <TextView
                 android:id="@+id/popupDistanceTextView"
                 android:layout_width="wrap_content"
@@ -458,6 +387,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/balloonRopeImageView"
                 app:srcCompat="@drawable/ic_ticket_card" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/ticketCardImageView"
+                app:layout_constraintStart_toStartOf="@id/ticketCardImageView"
+                app:layout_constraintTop_toTopOf="@id/ticketCardImageView"
+                app:layout_constraintEnd_toEndOf="@id/ticketCardImageView"
+                android:indeterminate="true"
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/previewImageView"

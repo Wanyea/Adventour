@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ public class StartAdventour extends AppCompatActivity {
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
     ImageView phoneImageView, globeImageView, previewImageView;
+    ProgressBar progressBar;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -149,6 +151,8 @@ public class StartAdventour extends AppCompatActivity {
 
         distanceSlider = findViewById(R.id.distanceSlider);
 
+        progressBar = findViewById(R.id.progressBar);
+
         isSwitchActive = new HashMap<String, String>();
 
 
@@ -171,6 +175,9 @@ public class StartAdventour extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
+               setLocationVisibility(false);
+               progressBar.setVisibility(View.VISIBLE);
+
                jsonBody = new JSONObject();
                getLocation();
            }
@@ -190,6 +197,9 @@ public class StartAdventour extends AppCompatActivity {
         notNowButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               setLocationVisibility(false);
+               progressBar.setVisibility(View.VISIBLE);
+
                GlobalVars.excludes.put(currentFSQId);
                jsonBody = new JSONObject();
                getLocation();
@@ -838,14 +848,8 @@ public class StartAdventour extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("NO LOC W CURR TAGS/LOC", "Exception", e);
                 noLocationTextView.setVisibility(View.VISIBLE);
-                nameTextView.setVisibility(View.INVISIBLE);
-                phoneTextView.setVisibility(View.INVISIBLE);
-                websiteTextView.setVisibility(View.INVISIBLE);
-                descriptionTextView.setVisibility(View.INVISIBLE);
-                ratingBar.setVisibility(View.INVISIBLE);
-                phoneImageView.setVisibility(View.INVISIBLE);
-                globeImageView.setVisibility(View.INVISIBLE);
-                previewImageView.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+                setLocationVisibility(false);
             }
 
         } catch(Exception e) {
@@ -860,15 +864,9 @@ public class StartAdventour extends AppCompatActivity {
         new Thread() {
             public void run() {
                 runOnUiThread(() -> {
-                    nameTextView.setVisibility(View.VISIBLE);
-                    phoneTextView.setVisibility(View.VISIBLE);
-                    websiteTextView.setVisibility(View.VISIBLE);
-                    descriptionTextView.setVisibility(View.VISIBLE);
-                    ratingBar.setVisibility(View.VISIBLE);
-                    phoneImageView.setVisibility(View.VISIBLE);
-                    globeImageView.setVisibility(View.VISIBLE);
-                    previewImageView.setVisibility(View.VISIBLE);
+                    setLocationVisibility(true);
                     noLocationTextView.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
 
                     notNowButton.setEnabled(true);
                     yesButton.setEnabled(true);
@@ -1036,5 +1034,19 @@ public class StartAdventour extends AppCompatActivity {
         finish();
     }
 
+    public void setLocationVisibility(boolean visible) {
+        if (visible) {
+            nameTextView.setVisibility(View.VISIBLE);
+            phoneTextView.setVisibility(View.VISIBLE);
+            websiteTextView.setVisibility(View.VISIBLE);
+            descriptionTextView.setVisibility(View.VISIBLE);
+            ratingBar.setVisibility(View.VISIBLE);
+            phoneImageView.setVisibility(View.VISIBLE);
+            globeImageView.setVisibility(View.VISIBLE);
+            previewImageView.setVisibility(View.VISIBLE);
+        } else {
+
+        }
+    }
 }
 
