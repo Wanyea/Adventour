@@ -639,7 +639,7 @@ public class StartAdventour extends AppCompatActivity {
                 name = data.get("name").toString();
                 rating = Float.parseFloat(data.get("rating").toString()) / 2;
 
-                new Thread() {
+                Runnable phoneRun = new Runnable() {
                     public void run() {
                         try {
                             tel = data.get("tel").toString();
@@ -650,9 +650,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No tel for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable websiteRun = new Runnable() {
                     public void run() {
                         try {
                             website = data.get("website").toString();
@@ -663,9 +663,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No web for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable descRun = new Runnable() {
                     public void run() {
                         try {
                             description = data.get("description").toString();
@@ -674,9 +674,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No des for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable addressRun = new Runnable() {
                     public void run() {
                         try {
                             JSONObject location = (JSONObject) data.get("location");
@@ -686,9 +686,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No address for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable photoRun = new Runnable() {
                     public void run() {
                         try {
                             JSONArray photos = (JSONArray) data.get("photos");
@@ -709,11 +709,11 @@ public class StartAdventour extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                }.start();
+                };
 
                 // Try to get the first image from the API response and pass it into the
                 // LocationImages object.
-                new Thread() {
+                Runnable imageRun = new Runnable() {
                     public void run() {
                         try {
                             JSONArray photos = (JSONArray) data.get("photos");
@@ -798,7 +798,28 @@ public class StartAdventour extends AppCompatActivity {
                         }
 
                     }
-                }.start();
+                };
+
+                Thread t1 = new Thread(phoneRun);
+                Thread t2 = new Thread(websiteRun);
+                Thread t3 = new Thread(descRun);
+                Thread t4 = new Thread(addressRun);
+                Thread t5 = new Thread(photoRun);
+                Thread t6 = new Thread(imageRun);
+
+                t1.start();
+                t2.start();
+                t3.start();
+                t4.start();
+                t5.start();
+                t6.start();
+
+                t1.join();
+                t2.join();
+                t3.join();
+                t4.join();
+                t5.join();
+                t6.join();
 
                 populateCard(name, rating, tel, website, description);
 

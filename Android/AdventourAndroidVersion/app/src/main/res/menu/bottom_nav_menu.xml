@@ -14,12 +14,3 @@
         android:icon="@drawable/beacons_selector"
         android:title="@string/beacons"/>
 </menu>
-
-
-<!--Note for bug:
-Add android:icon="icon_id_here" to each item
-For example:
-<item
-    android:id="@+id/account"
-    android:title="@string/account"
-    android:icon="icon_id_here"/>-->
