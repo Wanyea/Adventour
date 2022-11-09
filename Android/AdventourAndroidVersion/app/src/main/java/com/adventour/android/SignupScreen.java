@@ -490,6 +490,6 @@ public class SignupScreen extends AppCompatActivity {
         imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
 
         refs.androidProfilePicRef = drawableID;
-        profPicImageButton.setForeground(getResources().getDrawable(drawableID));
+        profPicImageButton.setForeground(getResources().getDrawable(drawableID, null));
     }
 }
