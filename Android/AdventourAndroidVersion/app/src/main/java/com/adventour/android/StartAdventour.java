@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ public class StartAdventour extends AppCompatActivity {
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
     ImageView phoneImageView, globeImageView, previewImageView;
+    ProgressBar progressBar;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -149,6 +151,8 @@ public class StartAdventour extends AppCompatActivity {
 
         distanceSlider = findViewById(R.id.distanceSlider);
 
+        progressBar = findViewById(R.id.progressBar);
+
         isSwitchActive = new HashMap<String, String>();
 
 
@@ -171,6 +175,9 @@ public class StartAdventour extends AppCompatActivity {
            @Override
            public void onClick(View view)
            {
+               setLocationVisibility(false);
+               progressBar.setVisibility(View.VISIBLE);
+
                jsonBody = new JSONObject();
                getLocation();
            }
@@ -190,6 +197,9 @@ public class StartAdventour extends AppCompatActivity {
         notNowButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               setLocationVisibility(false);
+               progressBar.setVisibility(View.VISIBLE);
+
                GlobalVars.excludes.put(currentFSQId);
                jsonBody = new JSONObject();
                getLocation();
@@ -639,7 +649,7 @@ public class StartAdventour extends AppCompatActivity {
                 name = data.get("name").toString();
                 rating = Float.parseFloat(data.get("rating").toString()) / 2;
 
-                new Thread() {
+                Runnable phoneRun = new Runnable() {
                     public void run() {
                         try {
                             tel = data.get("tel").toString();
@@ -650,9 +660,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No tel for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable websiteRun = new Runnable() {
                     public void run() {
                         try {
                             website = data.get("website").toString();
@@ -663,9 +673,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No web for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable descRun = new Runnable() {
                     public void run() {
                         try {
                             description = data.get("description").toString();
@@ -674,9 +684,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No des for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable addressRun = new Runnable() {
                     public void run() {
                         try {
                             JSONObject location = (JSONObject) data.get("location");
@@ -686,9 +696,9 @@ public class StartAdventour extends AppCompatActivity {
                             Log.e("No address for location", "Exception", e);
                         }
                     }
-                }.start();
+                };
 
-                new Thread() {
+                Runnable photoRun = new Runnable() {
                     public void run() {
                         try {
                             JSONArray photos = (JSONArray) data.get("photos");
@@ -709,11 +719,11 @@ public class StartAdventour extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                }.start();
+                };
 
                 // Try to get the first image from the API response and pass it into the
                 // LocationImages object.
-                new Thread() {
+                Runnable imageRun = new Runnable() {
                     public void run() {
                         try {
                             JSONArray photos = (JSONArray) data.get("photos");
@@ -798,7 +808,28 @@ public class StartAdventour extends AppCompatActivity {
                         }
 
                     }
-                }.start();
+                };
+
+                Thread t1 = new Thread(phoneRun);
+                Thread t2 = new Thread(websiteRun);
+                Thread t3 = new Thread(descRun);
+                Thread t4 = new Thread(addressRun);
+                Thread t5 = new Thread(photoRun);
+                Thread t6 = new Thread(imageRun);
+
+                t1.start();
+                t2.start();
+                t3.start();
+                t4.start();
+                t5.start();
+                t6.start();
+
+                t1.join();
+                t2.join();
+                t3.join();
+                t4.join();
+                t5.join();
+                t6.join();
 
                 populateCard(name, rating, tel, website, description);
 
@@ -817,14 +848,8 @@ public class StartAdventour extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("NO LOC W CURR TAGS/LOC", "Exception", e);
                 noLocationTextView.setVisibility(View.VISIBLE);
-                nameTextView.setVisibility(View.INVISIBLE);
-                phoneTextView.setVisibility(View.INVISIBLE);
-                websiteTextView.setVisibility(View.INVISIBLE);
-                descriptionTextView.setVisibility(View.INVISIBLE);
-                ratingBar.setVisibility(View.INVISIBLE);
-                phoneImageView.setVisibility(View.INVISIBLE);
-                globeImageView.setVisibility(View.INVISIBLE);
-                previewImageView.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+                setLocationVisibility(false);
             }
 
         } catch(Exception e) {
@@ -839,15 +864,9 @@ public class StartAdventour extends AppCompatActivity {
         new Thread() {
             public void run() {
                 runOnUiThread(() -> {
-                    nameTextView.setVisibility(View.VISIBLE);
-                    phoneTextView.setVisibility(View.VISIBLE);
-                    websiteTextView.setVisibility(View.VISIBLE);
-                    descriptionTextView.setVisibility(View.VISIBLE);
-                    ratingBar.setVisibility(View.VISIBLE);
-                    phoneImageView.setVisibility(View.VISIBLE);
-                    globeImageView.setVisibility(View.VISIBLE);
-                    previewImageView.setVisibility(View.VISIBLE);
+                    setLocationVisibility(true);
                     noLocationTextView.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
 
                     notNowButton.setEnabled(true);
                     yesButton.setEnabled(true);
@@ -1015,5 +1034,19 @@ public class StartAdventour extends AppCompatActivity {
         finish();
     }
 
+    public void setLocationVisibility(boolean visible) {
+        if (visible) {
+            nameTextView.setVisibility(View.VISIBLE);
+            phoneTextView.setVisibility(View.VISIBLE);
+            websiteTextView.setVisibility(View.VISIBLE);
+            descriptionTextView.setVisibility(View.VISIBLE);
+            ratingBar.setVisibility(View.VISIBLE);
+            phoneImageView.setVisibility(View.VISIBLE);
+            globeImageView.setVisibility(View.VISIBLE);
+            previewImageView.setVisibility(View.VISIBLE);
+        } else {
+
+        }
+    }
 }
 
