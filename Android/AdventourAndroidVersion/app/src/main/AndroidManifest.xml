@@ -36,8 +36,7 @@
             android:name=".Passport"
             android:configChanges="orientation"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AdventourAndroidVersion.Menu" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Beacons"
             android:configChanges="orientation"

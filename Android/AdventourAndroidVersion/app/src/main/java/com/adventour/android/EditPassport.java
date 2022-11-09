@@ -3,17 +3,22 @@ package com.adventour.android;
 import static java.lang.Math.toIntExact;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +48,11 @@ public class EditPassport extends AppCompatActivity {
     TextView birthdateTextView;
     Timestamp birthdate;
     int androidPfpRef;
+    CardView popupProfPic;
+    Button doneButton;
+    ImageButton profPicImageButton;
+    ImageButton cheetahImageButton, elephantImageButton, ladybugImageButton, monkeyImageButton, penguinImageButton, foxImageButton;
+    ProfilePictureRefs refs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,18 @@ public class EditPassport extends AppCompatActivity {
 
         birthdateTextView = (TextView) findViewById(R.id.birthdateTextView);
 
+        // Profile picture functionality
+        profPicImageButton = (ImageButton) findViewById(R.id.profPicImageButton);
+        popupProfPic = (CardView) findViewById(R.id.popupProfPic);
+        popupProfPic.setVisibility(View.INVISIBLE);
+        cheetahImageButton = (ImageButton) findViewById(R.id.cheetahImageButton);
+        elephantImageButton = (ImageButton) findViewById(R.id.elephantImageButton);
+        ladybugImageButton = (ImageButton) findViewById(R.id.ladybugImageButton);
+        monkeyImageButton = (ImageButton) findViewById(R.id.monkeyImageButton);
+        penguinImageButton = (ImageButton) findViewById(R.id.penguinImageButton);
+        foxImageButton = (ImageButton) findViewById(R.id.foxImageButton);
+        doneButton = (Button) findViewById(R.id.doneButton);
+        refs = new ProfilePictureRefs(0, "");
 
         saveButton = (FloatingActionButton) findViewById(R.id.saveButton);
         backButton = (ImageView) findViewById(R.id.backButton);
@@ -220,6 +242,57 @@ public class EditPassport extends AppCompatActivity {
             }
         });
 
+        profPicImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { onClickProfPicImageButton(view); }
+        });
+
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupProfPic.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        cheetahImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view)
+            {
+                onClickCheetahImageButton(view);
+            }
+        });
+
+        elephantImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickElephantImageButton(view); }
+        });
+
+        ladybugImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickLadybugImageButton(view); }
+        });
+
+        monkeyImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickMonkeyImageButton(view); }
+        });
+
+        penguinImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickPenguinImageButton(view); }
+        });
+
+        foxImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) { onClickFoxImageButton(view); }
+        });
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,11 +324,15 @@ public class EditPassport extends AppCompatActivity {
 
         // Check if user document exists. If they do in this instance, populate passport wth user data.
         documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
+
+                        int profPicID = toIntExact((long)document.get("androidPfpRef"));
+
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         emailEditText.setText(document.getString("email"));
                         nicknameEditText.setText(document.getString("nickname"));
@@ -263,6 +340,7 @@ public class EditPassport extends AppCompatActivity {
                         lastNameEditText.setText(document.getString("lastName"));
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase((Timestamp) document.get("birthdate")));
                         mantraEditText.setText(document.getString("mantra"));
+                        profPicImageButton.setForeground(getResources().getDrawable(profPicID, null));
 
                         email = emailEditText.getText().toString();
                         nickname = nicknameEditText.getText().toString();
@@ -270,7 +348,7 @@ public class EditPassport extends AppCompatActivity {
                         firstName = firstNameEditText.getText().toString();
                         lastName = lastNameEditText.getText().toString();
                         birthdate = ((Timestamp) document.get("birthdate"));
-                        androidPfpRef = (toIntExact((long)document.get("androidPfpRef")));
+                        androidPfpRef = profPicID;
 
 
                     } else {
@@ -288,5 +366,75 @@ public class EditPassport extends AppCompatActivity {
         Intent intent = new Intent(this, Passport.class);
         startActivity(intent);
         finish();
+    }
+
+    public void onClickProfPicImageButton(View view) {
+        popupProfPic.setVisibility(View.VISIBLE);
+    }
+
+
+    class ProfilePictureRefs
+    {
+        private int androidProfilePicRef;
+        private String iOSProfilePicRef;
+
+        ProfilePictureRefs(int androidProfilePicRef, String iOSProfilePicRef)
+        {
+            this.androidProfilePicRef = androidProfilePicRef;
+            this.iOSProfilePicRef = iOSProfilePicRef;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickCheetahImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_cheetah, cheetahImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickElephantImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_elephant, elephantImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickLadybugImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_ladybug, ladybugImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickMonkeyImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_monkey, monkeyImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickPenguinImageButton(View view) {
+        clearProfPicSelection(view);
+        penguinImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
+        changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickFoxImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void clearProfPicSelection(View view) {
+        cheetahImageButton.setForeground(null);
+        elephantImageButton.setForeground(null);
+        ladybugImageButton.setForeground(null);
+        monkeyImageButton.setForeground(null);
+        penguinImageButton.setForeground(null);
+        foxImageButton.setForeground(null);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void changeProfPic(View view, int drawableID, ImageButton imageButton) {
+
+        clearProfPicSelection(view);
+        imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
+
+        refs.androidProfilePicRef = drawableID;
+        profPicImageButton.setForeground(getResources().getDrawable(drawableID, null));
+        androidPfpRef = drawableID;
     }
 }
