@@ -19,6 +19,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var numLikes: UILabel!
+    @IBOutlet weak var reportHideButton: UIBarButtonItem!
     
     var source: UIViewController!
     var beaconInfo: [String: Any] = [:]
@@ -55,6 +56,11 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         loadBeaconInfo()
         getLocationData()
         checkSource()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
+        
+        
         self.likeButton.imageView?.contentMode = .scaleAspectFit
         print("nickname on load: ", self.nickname)
     }
@@ -78,6 +84,23 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             self.locationDescriptions[description.idx] = description.text
             print(self.locationDescriptions)
         }
+    }
+    
+    @objc func keyboardWillShow(sender: NSNotification) {
+        // Get the size of the keyboard.
+        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+
+            print("keyboard ", keyboardFrame.cgRectValue.origin.y, " frame ", self.view.frame.origin.y)
+            
+            self.view.frame.origin.y = -keyboardHeight + 50
+        }
+         // Move view 150 points upward
+    }
+
+    @objc func keyboardWillHide(sender: NSNotification) {
+         self.view.frame.origin.y = 0 // Move view to original position
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,6 +141,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.descriptionTextView.layer.cornerRadius = 0
         }
         if let locationDescriptions = self.locationDescriptions {
+            
             if  locationDescriptions[indexPath.item] != "" {
                 cell.descriptionTextView.text = locationDescriptions[indexPath.item]
             } else {
@@ -232,6 +256,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                     style: .destructive,
                     handler: { _ in
                         self.reportBeaconPost()
+                        
                 }))
                 alert.addAction(UIAlertAction(
                     title: "Cancel",
@@ -258,7 +283,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                     title: "Hide",
                     style: .destructive,
                     handler: { _ in
-                        
+                        self.hideBeaconPost(withDocumentID: self.beaconInfo["documentID"] as! String)
                 }))
                 alert.addAction(UIAlertAction(
                     title: "Cancel",
@@ -456,18 +481,25 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func checkSource() {
-        if self.source is BeaconBoardViewController || self.source is ProfileViewController {
+        if self.source is BeaconBoardViewController {
             checkLiked()
-            Task {
-                await setNumLikes()
-            }
-        }
-        if self.source is AdventourSummaryViewController {
+            setNumLikes()
+            self.reportHideButton.isEnabled = true
+            
+            
+        } else if self.source is ProfileViewController {
+            checkLiked()
+            setNumLikes()
+            self.reportHideButton.isEnabled = false
+            
+        } else if self.source is AdventourSummaryViewController {
             self.likeButton.isHidden = true
             self.numLikes.isHidden = true
+            self.reportHideButton.isEnabled = false
         } else {
-            self.likeButton.isHidden = true
+            self.likeButton.isEnabled = false
             self.numLikes.isHidden = true
+            self.reportHideButton.isEnabled = false
         }
     }
     
@@ -793,6 +825,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         task.resume()
+        self.hideBeaconPost(withDocumentID: beaconInfo["documentID"] as! String)
     }
     
     func hideBeaconPost(withDocumentID documentID: String) {
@@ -806,22 +839,47 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 if let error = error {
                     print(error)
                 } else {
+                    print("Made it in else")
                     if let data = snap?.data() {
+                        print("data exists")
                         if let hidden = data["hiddenBeacons"] as? [String] {
                             hiddenBeacons = hidden
+                            hiddenBeacons.append(documentID)
+                            db.collection("Adventourists")
+                                .document(self.user.uid)
+                                .updateData([
+                                    "hiddenBeacons": hiddenBeacons
+                                ]) { error in
+                                    self.navigationController?.popToRootViewController(animated: true)
+                                }
+                            
+                        } else {
+                            hiddenBeacons = []
+                            hiddenBeacons.append(documentID)
+                            db.collection("Adventourists")
+                                .document(self.user.uid)
+                                .updateData([
+                                    "hiddenBeacons": hiddenBeacons
+                                ]) { error in
+                                    self.navigationController?.popToRootViewController(animated: true)
+                                }
                         }
                     } else {
                         hiddenBeacons = []
+                        hiddenBeacons.append(documentID)
+                        db.collection("Adventourists")
+                            .document(self.user.uid)
+                            .updateData([
+                                "hiddenBeacons": hiddenBeacons
+                            ]) { error in
+                                self.navigationController?.popToRootViewController(animated: true)
+                            }
                     }
                 }
             }
-        hiddenBeacons.append(documentID)
         
-        db.collection("Adventourists")
-            .document(self.user.uid)
-            .updateData([
-                "hiddenBeacons": hiddenBeacons
-            ])
+        
+        
     }
     
     func switchToStart() {

@@ -62,6 +62,7 @@
 		F0FC39802900E44C008389B7 /* AdventourSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FC397F2900E44C008389B7 /* AdventourSummaryViewController.swift */; };
 		F0FC39842900EB32008389B7 /* AdventourSummaryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FC39832900EB32008389B7 /* AdventourSummaryNavigationController.swift */; };
 		F0FC39862900ECC8008389B7 /* SummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FC39852900ECC8008389B7 /* SummaryTableViewCell.swift */; };
+		F0FDE707291B17A400035F06 /* ProfilePicImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FDE706291B17A400035F06 /* ProfilePicImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		F0FC397F2900E44C008389B7 /* AdventourSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventourSummaryViewController.swift; sourceTree = "<group>"; };
 		F0FC39832900EB32008389B7 /* AdventourSummaryNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdventourSummaryNavigationController.swift; sourceTree = "<group>"; };
 		F0FC39852900ECC8008389B7 /* SummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTableViewCell.swift; sourceTree = "<group>"; };
+		F0FDE706291B17A400035F06 /* ProfilePicImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 				F0E17DE02909FBB200FB05CA /* AdventourTableView.swift */,
 				4AEBFF5D2910257000358A22 /* ProfilePicView.storyboard */,
 				4AEBFF612910265000358A22 /* ProfilePicViewController.swift */,
+				F0FDE706291B17A400035F06 /* ProfilePicImageView.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -554,12 +557,13 @@
 				4A7FD20C28C958D3001C33DF /* ProfileViewController.swift in Sources */,
 				F0AA17E12901C699008B87DC /* BeaconPostTableViewCell.swift in Sources */,
 				F015098C28FF8CC600E4FC32 /* SearchFilterViewController.swift in Sources */,
-				2A9915662901BA56001C5955 /* BeaconBoardController.swift in Sources */,
+				2A9915662901BA56001C5955 /* BeaconBoardViewController.swift in Sources */,
 				4AEBFF622910265000358A22 /* ProfilePicViewController.swift in Sources */,
 				F0E17DDF2909FBA000FB05CA /* BeaconTableView.swift in Sources */,
 				F0EE1DC228F785FF00FF96E8 /* FinishCell.swift in Sources */,
 				F0AF72F5290247D8004F7618 /* BeaconBoardTableViewCell.swift in Sources */,
 				2ADF00AF28C1A084003AB036 /* SignUpViewController.swift in Sources */,
+				F0FDE707291B17A400035F06 /* ProfilePicImageView.swift in Sources */,
 				F0D8780228FB84180054C445 /* BeaconsTableViewCell.swift in Sources */,
 				F0AA17E32901D052008B87DC /* BeaconPostNavigationController.swift in Sources */,
 				2A9EBF8D28B69114009ED151 /* LoginViewController.swift in Sources */,

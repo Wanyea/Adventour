@@ -1,16 +1,16 @@
 //
-//  profilePicImageView.swift
+//  ProfilePicImageView.swift
 //  ios
 //
-//  Created by Cassidy Moore on 11/7/22.
+//  Created by Glenn Hartwell on 11/8/22.
 //
 
 import UIKit
 
-class profilePicImageView: UIImageView {
-    
+class ProfilePicImageView: UIImageView {
+
     var iosPfpRef: String!
-    var androidPfpRef: String!
+    var androidPfpRef: Int!
 
     /*
     // Only override draw() if you perform custom drawing.

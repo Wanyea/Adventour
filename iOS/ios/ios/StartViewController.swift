@@ -4,7 +4,7 @@ import FirebaseAuth
 import GooglePlaces
 
 
-class StartViewController: UIViewController, UISearchBarDelegate {
+class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDelegate {
     
     var beaconLocation = ""
     var lon: Double!
@@ -17,7 +17,7 @@ class StartViewController: UIViewController, UISearchBarDelegate {
     var socialSwitch: UISwitch!
     var outdoorsySwitch: UISwitch!
     var cultureSwitch: UISwitch!
-    var hungrySwitch: UISwitch!
+    var snackishSwitch: UISwitch!
     var romanticSwitch: UISwitch!
     var geekySwitch: UISwitch!
     var spirtualSwitch: UISwitch!
@@ -45,6 +45,8 @@ class StartViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorMessageLabel: UILabel!
     
+    @IBOutlet weak var buttonStack: UIStackView!
+    @IBOutlet weak var startScrollView: UIScrollView!
     // Button Outlets
     @IBOutlet weak var notNow: UIButton!
     
@@ -73,6 +75,7 @@ class StartViewController: UIViewController, UISearchBarDelegate {
         placesClient = GMSPlacesClient.shared()
         self.searchBar?.text = self.beaconLocation
         self.searchBar?.delegate = self
+        self.startScrollView.delegate = self
     }
     
     @IBAction func getCurrentPlace(_ sender: Any){
@@ -107,7 +110,7 @@ class StartViewController: UIViewController, UISearchBarDelegate {
         self.notNow?.layer.shadowColor = UIColor.gray.cgColor
         self.notNow?.layer.borderWidth = 5
         self.notNow?.layer.cornerRadius = 25
-        
+        self.startScrollView.setContentOffset(.zero, animated: true)
         self.fsq_id = nil
         if let ids = self.ids {
             print("Start, These is the ids: ", ids)
@@ -141,6 +144,8 @@ class StartViewController: UIViewController, UISearchBarDelegate {
         self.notNow?.layer.borderColor = UIColor(named: "adv-red")?.cgColor
         self.notNow?.layer.shadowColor = UIColor(named: "adv-redshade")?.cgColor
         getAdventourPlace()
+
+        self.startScrollView.setContentOffset(CGPoint(x: 0, y: startScrollView.contentSize.height - startScrollView.bounds.height + startScrollView.contentInset.bottom), animated: true)
     }
     
     @IBAction func notNowTapped(_ sender: Any) {
@@ -230,6 +235,7 @@ class StartViewController: UIViewController, UISearchBarDelegate {
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             // do stuff
             
+        
             if let data = data {
                 let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                 if let dataDict = dataJsonObject as? [String: Any] {
@@ -329,9 +335,13 @@ class StartViewController: UIViewController, UISearchBarDelegate {
             let culturedString = "10002,10004,10016,10024,10028,10031,10030,10042,17002,17003,10043,17018,10047,10056,11005,17098,17113,11140,12005,12065,12066,12080,12081,16011,16024,16007,16020,16025,16026,16031,17103,16047,"
             categories.append(culturedString)
         }
-        if UserDefaults.standard.bool(forKey: "hungrySwitch") {
-            let hungryString = "13028,13053,13054,13065,13001,13002,13032,13040,13059,13381,13382,"
-            categories.append(hungryString)
+        if UserDefaults.standard.bool(forKey: "snackishSwitch") {
+            let snackishString = "13001,13002,13032,13040,13059,13381,13382,"
+            categories.append(snackishString)
+        }
+        if UserDefaults.standard.bool(forKey: "starvingSwitch") {
+            let starvingString = "13028,13053,13054,13065,"
+            categories.append(starvingString)
         }
         if UserDefaults.standard.bool(forKey: "romanticSwitch") {
             let romanticString = "10004,10016,10024,10023,11140,16005,11073,"
@@ -360,6 +370,10 @@ class StartViewController: UIViewController, UISearchBarDelegate {
         if UserDefaults.standard.bool(forKey: "pamperedSwitch") {
             let pamperedString = "11062,11063,11064,11071,11072,11073,11074,11070,17030,11140,15001,17020,"
             categories.append(pamperedString)
+        }
+        if UserDefaults.standard.bool(forKey: "twentyOneSwitch") {
+            let twentyOneString = "10008,10010,10029,10032,10052,13003,13029,13038,13050,13061,13386,13387,16029,17001"
+            categories.append(twentyOneString)
         }
         print(categories)
         return categories

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,44 +18,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4y-pi-Dbg">
-                                <rect key="frame" x="0.0" y="153" width="414" height="600"/>
+                                <rect key="frame" x="0.0" y="155" width="414" height="600"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_cheetah" translatesAutoresizingMaskIntoConstraints="NO" id="UPn-TQ-5sJ" customClass="profilePicImageView" customModule="ios" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_cheetah" translatesAutoresizingMaskIntoConstraints="NO" id="UPn-TQ-5sJ" customClass="ProfilePicImageView" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="41" y="40" width="134" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="134" id="NPh-tD-kcq"/>
                                             <constraint firstAttribute="height" constant="128" id="pwY-q3-ib9"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_elephant" translatesAutoresizingMaskIntoConstraints="NO" id="dyg-PI-Bcf" customClass="profilePicImageView" customModule="ios" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_elephant" translatesAutoresizingMaskIntoConstraints="NO" id="dyg-PI-Bcf" customClass="ProfilePicImageView" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="239" y="40" width="134" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="134" id="MhZ-eq-3tV"/>
                                             <constraint firstAttribute="height" constant="128" id="efo-Je-7zi"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_fox" translatesAutoresizingMaskIntoConstraints="NO" id="V6P-bA-Z3W" customClass="profilePicImageView" customModule="ios" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_fox" translatesAutoresizingMaskIntoConstraints="NO" id="V6P-bA-Z3W" customClass="ProfilePicImageView" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="41" y="236" width="134" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="Dj9-BL-mWT"/>
                                             <constraint firstAttribute="width" constant="134" id="RJm-yL-pgS"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_ladybug" translatesAutoresizingMaskIntoConstraints="NO" id="UFP-e4-I71" customClass="profilePicImageView" customModule="ios" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_ladybug" translatesAutoresizingMaskIntoConstraints="NO" id="UFP-e4-I71" customClass="ProfilePicImageView" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="239" y="236" width="134" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="134" id="Qbl-Ad-qcp"/>
                                             <constraint firstAttribute="height" constant="128" id="pGd-Ws-D63"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_monkey" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-C6-8yJ" customClass="profilePicImageView" customModule="ios" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_monkey" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-C6-8yJ" customClass="ProfilePicImageView" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="41" y="432" width="134" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="56b-Uv-GjM"/>
                                             <constraint firstAttribute="width" constant="134" id="dXq-GJ-Lwv"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_penguin" translatesAutoresizingMaskIntoConstraints="NO" id="d6k-D8-eYA" customClass="profilePicImageView" customModule="ios" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profpic_penguin" translatesAutoresizingMaskIntoConstraints="NO" id="d6k-D8-eYA" customClass="ProfilePicImageView" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="239" y="432" width="134" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="EVy-FD-04n"/>

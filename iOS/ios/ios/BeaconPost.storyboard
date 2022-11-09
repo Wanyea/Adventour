@@ -274,7 +274,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8kh-Br-PZN" customClass="ScaleSwitch" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="304" y="49" width="51" height="28.5"/>
+                                <rect key="frame" x="307.82499999999999" y="51.137500000000003" width="43.702941176470603" height="24.224999999999994"/>
                                 <color key="onTintColor" name="adv-royalblue"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="scale">
@@ -351,7 +351,7 @@
                             <constraint firstItem="kA6-Vt-Pf7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="Uyj-p5-hmt"/>
                             <constraint firstItem="kA6-Vt-Pf7" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" constant="-3" id="VCb-jt-vAg"/>
                             <constraint firstItem="vTN-Rk-IPW" firstAttribute="centerY" secondItem="gbE-9G-gcS" secondAttribute="centerY" constant="-1" id="VEI-BT-NA9"/>
-                            <constraint firstItem="JBf-Rm-eN7" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" constant="-20" id="Vjs-dE-KKn"/>
+                            <constraint firstItem="JBf-Rm-eN7" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" constant="-20" id="Vjs-dE-KKn" customClass="KeyboardLayoutConstraint"/>
                             <constraint firstItem="kA6-Vt-Pf7" firstAttribute="top" secondItem="QUX-o3-ALc" secondAttribute="bottom" constant="3" id="aNL-WG-DbC"/>
                             <constraint firstItem="kA6-Vt-Pf7" firstAttribute="bottom" secondItem="JBf-Rm-eN7" secondAttribute="bottom" constant="-7" id="cLw-rH-x4T"/>
                             <constraint firstItem="8kh-Br-PZN" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="5" id="cNp-Oh-PEN"/>
@@ -393,8 +393,10 @@
                         <outlet property="locationsTable" destination="kA6-Vt-Pf7" id="jEB-7B-IVz"/>
                         <outlet property="nicknameLabel" destination="gbE-9G-gcS" id="cYy-aZ-h77"/>
                         <outlet property="numLikes" destination="4In-Kq-S7K" id="L8K-e2-MPj"/>
+                        <outlet property="pfp" destination="jtq-nZ-tH2" id="DYs-vS-rPW"/>
                         <outlet property="privateLabel" destination="ARk-2h-kHU" id="3NV-MS-5g0"/>
                         <outlet property="privateSwitch" destination="8kh-Br-PZN" id="9Tg-mr-nb2"/>
+                        <outlet property="reportHideButton" destination="CZZ-G3-VE1" id="2sm-jI-x9t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

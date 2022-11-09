@@ -67,7 +67,9 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? BeaconPostViewController {
+            print("LOCATIONS ", self.locations)
             dest.locations = self.locations
+            dest.ids = self.ids
             dest.beaconLocation = self.beaconLocation
             dest.isBeacon = self.isBeacon
             dest.isEditing = true

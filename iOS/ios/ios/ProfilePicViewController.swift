@@ -10,13 +10,13 @@ import UIKit
 class ProfilePicViewController: UIViewController {
     weak var delegate: ModalViewControllerDelegate?
     
-    @IBOutlet weak var profileCheeta: profilePicImageView!
-    @IBOutlet weak var profileElephant: profilePicImageView!
-    @IBOutlet weak var profileFox: profilePicImageView!
+    @IBOutlet weak var profileCheeta: ProfilePicImageView!
+    @IBOutlet weak var profileElephant: ProfilePicImageView!
+    @IBOutlet weak var profileFox: ProfilePicImageView!
     
-    @IBOutlet weak var profileBug: profilePicImageView!
-    @IBOutlet weak var profileMonkey: profilePicImageView!
-    @IBOutlet weak var profilePenguin: profilePicImageView!
+    @IBOutlet weak var profileBug: ProfilePicImageView!
+    @IBOutlet weak var profileMonkey: ProfilePicImageView!
+    @IBOutlet weak var profilePenguin: ProfilePicImageView!
     
     
 
@@ -32,21 +32,27 @@ class ProfilePicViewController: UIViewController {
         let tap6 = UITapGestureRecognizer(target: self, action: #selector(self.tapDetected))
         profileCheeta?.isUserInteractionEnabled = true
         profileCheeta?.iosPfpRef = "profpic_cheeta"
+        profileCheeta?.androidPfpRef = 2131230902
         profileCheeta?.addGestureRecognizer(tap)
         profileElephant?.isUserInteractionEnabled = true
         profileElephant?.iosPfpRef = "profpic_elephant"
+        profileElephant?.androidPfpRef = 2131230903
         profileElephant?.addGestureRecognizer(tap2)
         profileFox?.isUserInteractionEnabled = true
         profileFox?.iosPfpRef = "profpic_Fox"
+        profileFox?.androidPfpRef = 2131230904
         profileFox?.addGestureRecognizer(tap3)
         profileBug?.isUserInteractionEnabled = true
         profileBug?.iosPfpRef = "profpic_ladybug"
+        profileBug?.androidPfpRef = 2131230905
         profileBug?.addGestureRecognizer(tap4)
         profileMonkey?.isUserInteractionEnabled = true
         profileMonkey?.iosPfpRef = "profpic_monkey"
+        profileMonkey?.androidPfpRef = 2131230906
         profileMonkey?.addGestureRecognizer(tap5)
         profilePenguin?.isUserInteractionEnabled = true
         profilePenguin?.iosPfpRef = "profpic_penguin"
+        profilePenguin?.androidPfpRef = 2131230907
         profilePenguin?.addGestureRecognizer(tap6)
         
     }
@@ -56,8 +62,9 @@ class ProfilePicViewController: UIViewController {
         
         //picture = self.image
         
-        let view = sender.view as! profilePicImageView
+        let view = sender.view as! ProfilePicImageView
         signupData["iosPfpRef"] = view.iosPfpRef
+        signupData["androidPfpRef"] = view.androidPfpRef
         
         picture = view.image
         picFlag = 1

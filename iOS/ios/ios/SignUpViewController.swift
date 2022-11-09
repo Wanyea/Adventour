@@ -28,9 +28,6 @@ var signupData : [String: Any] = [
 class SignUpViewController: UIViewController, ModalViewControllerDelegate{
     
     
-    @IBAction func test(_ sender: Any) {
-        print(signupData)
-    }
     
     @IBOutlet weak var nicknameIcon: UIImageView!
     @IBOutlet weak var emailIcon: UIImageView!
@@ -203,7 +200,7 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
                         db.collection("Adventourists")
                             .document(user.uid)
                             .setData(signupData) { err in
-                                
+                                self.switchToTabController()
                             }
                         
                     } else {
@@ -213,9 +210,6 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
                 
             }
         }
-        
-
-        switchToTabController()
     }
     
    
@@ -453,53 +447,19 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
     
     @objc func verifyBirthdate(_ bithdate: UIDatePicker) {
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        birthdateString = dateFormatter.string(from: birthdate.date)
-        
-        let components = birthdate.calendar.dateComponents([.day, .month, .year], from: birthdate.date)
-        let birthDay = components.day
-        let birthMonth = components.month
-        let birthYear = components.year
-        
-        print("The date selected is: \(birthMonth!)/\(birthDay!)/\(birthYear!)")
-        
-        let currYear = Calendar.current.component(.year, from: Date())
-        let currMonth = Calendar.current.component(.month, from: Date())
-        let currDay = Calendar.current.component(.day, from: Date())
-        
-        if (currYear - birthYear! < 13) {
+        if birthdate.date.age >= 13 {
+            birthdayError.isHidden = true
+            errorMessage.text = ""
+            signUpButton.isEnabled = true
+            //verifyAlert()
+            birthdayFlag = false
+            signupData["birthdate"] = birthdate.date
+        } else {
             birthdayError.isHidden = false
             errorMessage.text = "You must at least 13 years old to sign up!"
             birthdayFlag = true
-        } else {
-            if currYear - birthYear! == 13 {
-                if currMonth < birthMonth! ||
-                    (currMonth == birthMonth! && currDay < birthDay!) {
-                    birthdayError.isHidden = false
-                    errorMessage.text = "You must at least 13 years old to sign up!"
-                    birthdayFlag = true
-                    signUpButton.isEnabled = false
-                } else {
-                    birthdayError.isHidden = true
-                    errorMessage.text = ""
-                    signUpButton.isEnabled = true
-                    //verifyAlert()
-                    birthdayFlag = false
-                    signupData["birthdate"] = birthdate.date
-                    print(signupData["birthday"]!)
-                }
-            } else {
-                birthdayError.isHidden = true
-                errorMessage.text = ""
-                signUpButton.isEnabled = true
-                //verifyAlert()
-                birthdayFlag = false
-                signupData["birthdate"] = birthdate.date
-                
-            }
+            signUpButton.isEnabled = false
         }
-        
         
     }
     func modalControllerWillDisappear(){

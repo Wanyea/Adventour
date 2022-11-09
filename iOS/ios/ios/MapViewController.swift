@@ -26,7 +26,6 @@ extension MapViewController: MapTableViewCellDelegate {
 class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var mapView: MKMapView!
@@ -41,6 +40,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var beaconLocation: String!
     var source: StartViewController!
     var documentID: String!
+    var isAdding: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,13 +77,16 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
+    @IBAction func setAdd(_ sender: Any) {
+        self.isAdding = true
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if self.isMovingFromParent {
+        if self.isMovingFromParent && !self.isAdding {
             self.ids.removeLast()
             source.ids = self.ids
-            
         }
     }
     
@@ -176,7 +179,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let params: [String: Any] = [
             "uid": user!.uid,
-            "ids": self.ids!
+            "ids": self.reversedIds
         ]
         
         if (ids.isEmpty) {

@@ -56,7 +56,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         self.activityIndicatorAdventours?.startAnimating()
         self.activityIndicatorBeacons?.startAnimating()
         self.exitIndicator?.layer.cornerRadius = 3
-        
+        self.prevAdventours = []
+        self.beacons = []
         Task {
             await getUserData()
             await getPrevAdventourData()
@@ -108,11 +109,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                 if let vc = storyboard.instantiateViewController(identifier: "AdventourSummary") as? AdventourSummaryViewController {
                     vc.source = self
                     vc.locations = locations
+                    if let ids = prevAdventours[indexPath.item]["ids"] as? [String] {
+                        print("IDS ARE HERE ", ids)
+                        vc.ids = ids
+                    }
                     if let beaconLocation = prevAdventours[indexPath.item]["beaconLocation"] as? String {
                         vc.beaconLocation = beaconLocation
                     }
                     if let isBeacon = prevAdventours[indexPath.item]["isBeacon"] as? Bool {
                         vc.isBeacon = isBeacon
+                    }
+                    if let documentID = prevAdventours[indexPath.item]["documentID"] as? String {
+                        vc.documentID = documentID
                     }
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
@@ -257,6 +265,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                         let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                                         if let dataDict = dataJsonObject as? [String: Any] {
                                             if let array = dataDict["results"] as? [[String: Any]] {
+                                                allData["ids"] = allData["locations"]
                                                 allData["locations"] = array
                                                 self.prevAdventours.append(allData)
                                                 DispatchQueue.main.async {
@@ -344,6 +353,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                         let dataJsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
                                         if let dataDict = dataJsonObject as? [String: Any] {
                                             if let array = dataDict["results"] as? [[String: Any]] {
+                                                allData["ids"] = allData["locations"]
                                                 allData["locations"] = array
                                                 self.prevAdventours.append(allData)
                                                 DispatchQueue.main.async {

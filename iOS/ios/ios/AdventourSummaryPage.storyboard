@@ -130,9 +130,11 @@
                                     <constraint firstAttribute="width" constant="175" id="JxT-i1-CJT"/>
                                     <constraint firstAttribute="height" constant="50" id="wik-B3-5mU"/>
                                 </constraints>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
                                     <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="20"/>
+                                    <color key="baseBackgroundColor" name="adv-royalblue"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <segue destination="gfU-8T-EwO" kind="show" id="Bsm-xL-hNE"/>
@@ -181,7 +183,7 @@
                 <navigationController storyboardIdentifier="AdventourSummaryNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rig-9r-KxF" customClass="AdventourSummaryNavigationController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zj0-Z5-ax2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <navigationBarAppearance key="standardAppearance">
                             <color key="backgroundColor" name="adv-skyblue"/>
