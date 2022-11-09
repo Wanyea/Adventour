@@ -139,9 +139,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, StartAdventour.class);
-        startActivity(intent);
-        finish();
+        switchToStartAdventour();
     }
 
     public void switchToLoggedOut()
@@ -155,7 +153,6 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     {
         Intent intent = new Intent(this, StartAdventour.class);
         startActivity(intent);
-        finish();
     }
 
     public void switchToCongratulations()

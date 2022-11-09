@@ -500,7 +500,6 @@ public class Passport extends AppCompatActivity {
     {
         Intent intent = new Intent(this, EditPassport.class);
         startActivity(intent);
-        finish();
     }
 
      public void switchToLoggedOut()

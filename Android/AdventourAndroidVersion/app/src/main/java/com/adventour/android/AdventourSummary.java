@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,11 +23,14 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
 
     FirebaseAuth auth;
     FirebaseUser user;
+    FloatingActionButton postBeaconButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adventour_summary);
+
+        postBeaconButton = (FloatingActionButton) findViewById(R.id.postBeaconButton);
 
         handleAuth();
 
@@ -39,6 +44,10 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
         adventourSummaryRV.setLayoutManager(linearLayoutManager);
         adventourSummaryRV.setAdapter(adventourSummaryAdapter);
 
+        postBeaconButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { switchToBeaconPost(); }
+        });
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         // Set Home selected
@@ -60,6 +69,12 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
             }
             return false;
         });
+    }
+
+    public void switchToBeaconPost()
+    {
+        Intent intent = new Intent(this, BeaconPost.class);
+        startActivity(intent);
     }
 
     public void switchToLoggedOut()
