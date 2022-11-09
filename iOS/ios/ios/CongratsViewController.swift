@@ -63,6 +63,8 @@ class CongratsViewController: UIViewController {
     
     var locations: [String]!
     var beaconLocation: String!
+    var documentID: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,16 +85,17 @@ class CongratsViewController: UIViewController {
         }
         if let dest = segue.destination as? AdventourSummaryViewController {
             dest.ids = self.locations
+            dest.documentID = self.documentID
         }
         if let dest = segue.destination as? BeaconPostViewController {
             dest.ids = self.locations
             dest.beaconLocation = self.beaconLocation
             dest.isEditing = true
             dest.source = self
+            dest.beaconInfo["documentID"] = self.documentID
         }
         
     }
-    
     
 }
     

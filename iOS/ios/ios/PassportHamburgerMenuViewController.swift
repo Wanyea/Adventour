@@ -13,6 +13,9 @@ class PassportHamburgerMenuViewController: UIViewController {
     @IBOutlet weak var signOutButton: UIButton!
     @IBOutlet weak var exitIndicator: UIView!
     
+    @IBOutlet weak var termsOfServiceButton: UIButton!
+    @IBOutlet weak var privacyPolicyButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +25,18 @@ class PassportHamburgerMenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.exitIndicator?.layer.cornerRadius = 3
+    }
+    
+    @IBAction func termsTapped(_ sender: Any) {
+        if let url =  URL(string:  "https://adventour.app/terms-of-service") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func privacyTapped(_ sender: Any) {
+        if let url = URL(string: "https://adventour.app/privacy-policy") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func signOutUser(_ sender: Any) {
@@ -73,7 +88,7 @@ class PassportHamburgerMenuViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "socialSwitch")
         UserDefaults.standard.removeObject(forKey: "outdoorsySwitch")
         UserDefaults.standard.removeObject(forKey: "cultureSwitch")
-        UserDefaults.standard.removeObject(forKey: "hungrySwitch")
+        UserDefaults.standard.removeObject(forKey: "snackishSwitch")
         UserDefaults.standard.removeObject(forKey: "romanticSwitch")
         UserDefaults.standard.removeObject(forKey: "geekySwitch")
         UserDefaults.standard.removeObject(forKey: "spirtualSwitch")

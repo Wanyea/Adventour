@@ -15,6 +15,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     var beaconLocation = ""
     var lon: Double!
     var lat: Double!
+    var hiddenBeacons: [String]!
     
     
     @IBOutlet weak var popUpMenu: UIButton!
@@ -48,6 +49,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.searchTextField.textColor = UIColor(named: "adv-royalblue")!
         searchBar?.text = self.beaconLocation
         setUpPopUp()
+        
     }
     
     func setUpPopUp() {
@@ -66,9 +68,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if self.beaconLocation != "" {
-            getMostRecentBeacons()
-        }
+        getHiddenBeacons()
     }
     
     @IBAction func getCurrentPlace(_ sender: Any){
@@ -141,13 +141,13 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         getBeaconPicture(beaconInfo: beacons[indexPath.item], cell: cell)
         setNumLikes(beaconInfo: beacons[indexPath.item], cell: cell)
         checkLiked(beaconInfo: beacons[indexPath.item], cell: cell)
-        loadUserData(cell: cell)
+        loadUserData(beaconInfo: beacons[indexPath.item], cell: cell)
         return cell
     }
     
-    func loadUserData(cell: BeaconBoardTableViewCell) {
+    func loadUserData(beaconInfo: [String: Any], cell: BeaconBoardTableViewCell) {
         let db = Firestore.firestore()
-        db.collection("Adventourists").document(self.user.uid).getDocument { document, error in
+        db.collection("Adventourists").document(beaconInfo["uid"] as! String).getDocument { document, error in
             if let document = document, document.exists {
                 if let data = document.data() {
                     if let nickname = data["nickname"] as? String {
@@ -261,6 +261,14 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                     self.activityIndicator.stopAnimating()
                 } else {
                     for document in querySnapshot!.documents {
+                        
+                        if self.hiddenBeacons != nil {
+                            print("BEFORE CONTAINS CHECK ", document.documentID)
+                            if self.hiddenBeacons.contains(document.documentID) {
+                                continue
+                            }
+                        }
+                        
                         print("\(document.documentID) => \(document.data())")
                         let documentID = document.documentID
                         allData = document.data()
@@ -342,6 +350,14 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                             }
                         } else {
                             for document in querySnapshot!.documents {
+                                
+                                if self.hiddenBeacons != nil {
+                                    print("BEFORE CONTAINS CHECK ", document.documentID)
+                                    if self.hiddenBeacons.contains(document.documentID) {
+                                        continue
+                                    }
+                                }
+                                
                                 print("\(document.documentID) => \(document.data())")
                                 let documentID = document.documentID
                                 allData = document.data()
@@ -472,6 +488,35 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
             }
     }
     
+    func getHiddenBeacons() {
+        
+        let db = Firestore.firestore()
+        db.collection("Adventourists")
+            .document(self.user.uid)
+            .getDocument { snap, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    if let data = snap?.data() {
+                        if let hidden = data["hiddenBeacons"] as? [String] {
+                            print("Hidden beacons ", hidden)
+                            self.hiddenBeacons = hidden
+                            self.beacons = []
+                            if self.beaconLocation != "" {
+                                self.getMostRecentBeacons()
+                            }
+                        }
+                    } else {
+                        self.hiddenBeacons = []
+                        self.beacons = []
+                        if self.beaconLocation != "" {
+                            self.getMostRecentBeacons()
+                        }
+                    }
+                }
+            }
+    }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.searchTextField.endEditing(true)
     }
@@ -510,7 +555,7 @@ extension BeaconBoardViewController: GMSAutocompleteViewControllerDelegate {
       print("Place lon: \(self.lon)")
       self.beaconLocation = place.formattedAddress!
       updateSearch()
-      getMostRecentBeacons()
+      getHiddenBeacons()
       dismiss(animated: true, completion: nil)
     
   }

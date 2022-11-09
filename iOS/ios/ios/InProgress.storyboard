@@ -118,14 +118,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="118" width="320" height="69"/>
+                                                        <rect key="frame" x="0.0" y="118" width="320" height="68.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="68.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HG7-BH-C89">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35.5"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="CXD-ZM-OMz"/>
                                                                         <constraint firstAttribute="width" constant="150" id="VTj-CK-J5e"/>
@@ -217,6 +217,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <action selector="setAdd:" destination="rgq-nB-YmZ" eventType="touchUpInside" id="fzA-eY-GUf"/>
                                     <segue destination="2hB-4n-hwA" kind="unwind" unwindAction="goHomeWithSender:" id="WxO-Wf-ab5"/>
                                 </connections>
                             </button>
@@ -241,13 +242,16 @@
                             <constraint firstItem="jkn-kn-Drg" firstAttribute="bottom" secondItem="3Vb-C1-ke6" secondAttribute="bottom" constant="20" id="zk5-Gv-yEu"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Adventour In Progress" id="wOi-fI-nlf"/>
+                    <navigationItem key="navigationItem" title="Adventour In Progress" id="wOi-fI-nlf">
+                        <barButtonItem key="backBarButtonItem" title="Start Adventour" id="fgo-uz-Bqe"/>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="VoM-sn-jMu" id="CxY-hY-aml"/>
                         <outlet property="addButton" destination="IKB-vm-efy" id="8RN-xx-T1A"/>
                         <outlet property="locationsTable" destination="ioy-om-bZY" id="jUp-Ev-hBe"/>
                         <outlet property="mapView" destination="xKv-Jd-wwd" id="Oi1-Fi-Qcb"/>
+                        <segue destination="2hB-4n-hwA" kind="unwind" unwindAction="unwindHome:" id="RyI-MW-M81"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBm-tF-P4l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -278,7 +282,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-wy-afl">
-                                <rect key="frame" x="60" y="437" width="255" height="34.5"/>
+                                <rect key="frame" x="60" y="437" width="255" height="34"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
@@ -300,7 +304,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24D-uQ-rHa">
-                                <rect key="frame" x="80" y="479.5" width="215" height="34"/>
+                                <rect key="frame" x="80" y="479" width="215" height="34.5"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="View Adventour"/>
@@ -456,8 +460,7 @@
                             <textAttributes key="titleTextAttributes">
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <color key="textColor" name="adv-navyblue"/>
-                                <color key="textShadowColor" name="adv-white"/>
-                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                             </textAttributes>
                         </navigationBarAppearance>
                         <navigationBarAppearance key="scrollEdgeAppearance">
