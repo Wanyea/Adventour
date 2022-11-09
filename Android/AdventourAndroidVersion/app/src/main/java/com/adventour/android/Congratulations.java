@@ -66,6 +66,8 @@ public class Congratulations extends AppCompatActivity {
                 GlobalVars.inProgressModelArrayList.clear();
                 GlobalVars.beaconModelArrayList.clear();
                 GlobalVars.locationDescriptions.clear();
+                GlobalVars.previousAdventourArrayList.clear();
+                GlobalVars.userBeaconsArrayList.clear();
                 switchToStartAdventour();
             }
         });

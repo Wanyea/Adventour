@@ -660,8 +660,10 @@ public class StartAdventour extends AppCompatActivity {
                     public void run() {
                         try {
                             tel = data.get("tel").toString();
+                            Log.d("Telephone", tel);
                         } catch(Exception e) {
                             tel = "N/A";
+                            Log.d("Telephone", tel);
                             Log.e("No tel for location", "Exception", e);
                         }
                     }
@@ -671,8 +673,10 @@ public class StartAdventour extends AppCompatActivity {
                     public void run() {
                         try {
                             website = data.get("website").toString();
+                            Log.d("Website", website);
                         } catch(Exception e) {
                             website = "N/A";
+                            Log.d("Website", website);
                             Log.e("No web for location", "Exception", e);
                         }
                     }
