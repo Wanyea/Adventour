@@ -183,7 +183,7 @@ public class EditPassport extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists())
                             {
-
+                                Log.d("document", document.toString());
                                 changes.put("email", email);
                                 changes.put("nickname", nickname);
                                 changes.put("mantra", mantra);

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,9 +62,9 @@ public class Passport extends AppCompatActivity {
     private static final String TAG = "PassportActivity";
     public String userNickname;
 
-    ImageButton imageButton;
+    ImageButton imageButton, hamburgerMenuImageButton;
 
-    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons;
+    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, deleteAccount;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -86,6 +87,10 @@ public class Passport extends AppCompatActivity {
 
     int profilePicReference;
 
+    boolean isHamburgerMenuOpen = false;
+
+    ConstraintLayout hamburgerMenuPopup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -105,6 +110,9 @@ public class Passport extends AppCompatActivity {
         mantraTextView = (TextView) findViewById(R.id.mantraTextView);
         noPrevAdventours = (TextView) findViewById(R.id.takeAnAdventourTextView);
         noPrevBeacons = (TextView) findViewById(R.id.postABeaconTextView);
+        adventourTOS = (TextView) findViewById(R.id.adventourTOS);
+        logOut = (TextView) findViewById(R.id.logOut);
+        deleteAccount = (TextView) findViewById(R.id.deleteAccount);
 
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
@@ -112,6 +120,10 @@ public class Passport extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         cakeIconImageView = (ImageView) findViewById(R.id.cakeIconImageView);
         profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
+
+        hamburgerMenuPopup = (ConstraintLayout) findViewById(R.id.hamburgerMenuPopup);
+
+        hamburgerMenuImageButton = (ImageButton) findViewById(R.id.hamburgerMenuImageButton);
 
         queryString = new ArrayList<>();
 
@@ -141,6 +153,87 @@ public class Passport extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switchToEditPassport();
+            }
+        });
+
+        hamburgerMenuImageButton.setOnClickListener(new View.OnClickListener() {
+           public void onClick(View v)
+           {
+               if (isHamburgerMenuOpen)
+               {
+                   hamburgerMenuPopup.setVisibility(View.VISIBLE);
+               } else {
+                   hamburgerMenuPopup.setVisibility(View.INVISIBLE);
+               }
+
+               isHamburgerMenuOpen = !isHamburgerMenuOpen;
+           }
+        });
+
+        adventourTOS.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                openAdventourTOS();
+            }
+        });
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(Passport.this);
+                logOutAlertBuilder.setMessage("Are you sure you want to log out?");
+                logOutAlertBuilder.setCancelable(true);
+
+                logOutAlertBuilder.setPositiveButton(
+                        R.string.Yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                FirebaseAuth.getInstance().signOut();
+                                switchToLoggedOut();
+                            }
+                        });
+
+                logOutAlertBuilder.setNegativeButton(
+                        R.string.No,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog logOutAlert = logOutAlertBuilder.create();
+                logOutAlert.show();
+            }
+        });
+
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                // Build AlertDialog that will alert users when they try to delete their account.
+                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(Passport.this);
+                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
+                deleteAccountAlertBuilder.setCancelable(true);
+
+                deleteAccountAlertBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                // DELETE USER DOCUMENT IN FIREBASE.
+                                // switchToLoggedOut();
+                            }
+                        });
+
+                deleteAccountAlertBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
+                deleteAccountAlert.show();
             }
         });
 

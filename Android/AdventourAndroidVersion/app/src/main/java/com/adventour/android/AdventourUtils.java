@@ -101,9 +101,9 @@ public class AdventourUtils {
             return false;
     }
 
-    public static boolean isProfilePictureSelected(int drawableId)
+    public static boolean isProfilePictureSelected(long androidPfpRef)
     {
-        return drawableId != 0;
+        return androidPfpRef != 0;
     }
 }
 
