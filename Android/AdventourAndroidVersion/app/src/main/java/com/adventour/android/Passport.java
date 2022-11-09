@@ -293,12 +293,6 @@ public class Passport extends AppCompatActivity {
 
     public void getPreviousAdventours()
     {
-        /*if (GlobalVars.previousAdventourArrayList.isEmpty())
-        {
-            previousAdventourAdapter.notifyDataSetChanged();
-            return;
-        }*/
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -399,12 +393,6 @@ public class Passport extends AppCompatActivity {
 
     public void getBeaconPosts()
     {
-        /*if (GlobalVars.userBeaconsArrayList.isEmpty())
-        {
-            beaconsAdapter.notifyDataSetChanged();
-            return;
-        }*/
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();

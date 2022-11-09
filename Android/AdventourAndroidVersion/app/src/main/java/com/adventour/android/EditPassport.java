@@ -43,6 +43,7 @@ public class EditPassport extends AppCompatActivity {
     TextView birthdateTextView;
     Timestamp birthdate;
     int androidPfpRef;
+    String iOSPfpRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +181,8 @@ public class EditPassport extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
+                            if (document.exists())
+                            {
 
                                 changes.put("email", email);
                                 changes.put("nickname", nickname);
@@ -189,7 +191,7 @@ public class EditPassport extends AppCompatActivity {
                                 changes.put("lastName", lastName);
                                 changes.put("birthdate", birthdate);
                                 changes.put("androidPfpRef", androidPfpRef);
-                                //TODO: WE NEED TO PUT THE IOS ONE HERE OR IT'LL BE CLEARED ON THEIR END.
+                                changes.put("iOSPfpRef", iOSPfpRef);
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
@@ -208,7 +210,6 @@ public class EditPassport extends AppCompatActivity {
                                                 // Possible ALERT when there is an error prompting users to try again.
                                             }
                                         });
-
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -272,6 +273,11 @@ public class EditPassport extends AppCompatActivity {
                         birthdate = ((Timestamp) document.get("birthdate"));
                         androidPfpRef = (toIntExact((long)document.get("androidPfpRef")));
 
+                        if (document.get("iOSPfpRef") != null) {
+                            iOSPfpRef = (String) document.get("iOSPfpRef");
+                        } else {
+                            iOSPfpRef = "";
+                        }
 
                     } else {
                         Log.d(TAG, "No such document");

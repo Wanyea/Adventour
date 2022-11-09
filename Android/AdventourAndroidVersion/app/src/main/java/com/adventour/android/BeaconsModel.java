@@ -23,7 +23,7 @@ public class BeaconsModel {
     private int profilePicReference;
 
 
-    public BeaconsModel(Map allData, String userNickname, int profilePicReferece) {
+    public BeaconsModel(Map allData, String userNickname, int profilePicReference) {
 
         this.beaconTitle = (String) allData.get("title");
         this.beaconIntro = (String) allData.get("intro");
@@ -47,7 +47,7 @@ public class BeaconsModel {
         }
 
         this.dateCreated = AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
-        this.profilePicReference = profilePicReferece;
+        this.profilePicReference = profilePicReference;
 
         Log.d("Model", dateCreated);
     }

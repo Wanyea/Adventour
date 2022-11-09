@@ -53,6 +53,8 @@ public class Beacons extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacons);
 
+        GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.userBeaconsArrayList.clear();
         handleAuth();
         getBeacons();
 
