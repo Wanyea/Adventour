@@ -77,7 +77,6 @@ public class Congratulations extends AppCompatActivity {
     {
         Intent intent = new Intent(this, BeaconPost.class);
         startActivity(intent);
-        finish();
     }
 
     // Testing only, delete before prod
@@ -85,7 +84,6 @@ public class Congratulations extends AppCompatActivity {
      {
         Intent intent = new Intent(this, AdventourSummary.class);
         startActivity(intent);
-        finish();
     }
 
     public void switchToStartAdventour()

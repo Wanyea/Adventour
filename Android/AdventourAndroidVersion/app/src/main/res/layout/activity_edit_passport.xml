@@ -43,15 +43,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageButton
+                android:id="@+id/profPicImageButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="100dp"
+                app:layout_constraintBottom_toTopOf="@id/longCardImageView"
+                android:src="@drawable/ic_user_icon"
+                android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/blue_main_40" />
+
             <ImageView
                 android:id="@+id/longCardImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profPicImageButton"
                 app:layout_constraintVertical_bias="0.498"
                 app:srcCompat="@drawable/ic_passport_edit_top_card" />
 
@@ -140,6 +154,116 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/popupProfPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_rectangle"
+            android:padding="20dp" >
+
+            <TextView
+                android:id="@+id/profPicTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose a profile picture!"
+                android:textSize="18dp"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/cheetahImageButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_profpic_cheetah"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profPicTextView"
+                android:foreground="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/elephantImageButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/ic_profpic_elephant"
+                app:layout_constraintEnd_toStartOf="@id/ladybugImageButton"
+                app:layout_constraintStart_toEndOf="@id/cheetahImageButton"
+                app:layout_constraintTop_toTopOf="@id/cheetahImageButton"
+                android:foreground="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/ladybugImageButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_profpic_ladybug"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cheetahImageButton"
+                android:foreground="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/monkeyImageButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_profpic_monkey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cheetahImageButton"
+                android:foreground="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/penguinImageButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/ic_profpic_penguin"
+                app:layout_constraintEnd_toStartOf="@id/foxImageButton"
+                app:layout_constraintStart_toEndOf="@id/monkeyImageButton"
+                app:layout_constraintTop_toTopOf="@id/monkeyImageButton"
+                android:foreground="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/foxImageButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:background="@drawable/ic_profpic_fox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/monkeyImageButton"
+                android:foreground="@color/transparent" />
+
+            <Button
+                android:id="@+id/doneButton"
+                android:layout_width="0dp"
+                android:layout_height="58dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/blue_main"
+                android:text="Done"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="100dp"
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monkeyImageButton" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveButton"
