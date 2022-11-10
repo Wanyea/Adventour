@@ -11,7 +11,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
     var lat: Double!
     var excludes: [String] = []
     var user: User!
-    
+    var name: String!
     // Filter Outlets
 
     var socialSwitch: UISwitch!
@@ -155,6 +155,8 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
     
     @IBAction func yesTapped(_ sender: Any) {
         excludes.append(self.fsq_id)
+        //self.lat =
+        //self.lon =
     }
     
     func getAdventourPlace() {
@@ -165,6 +167,9 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
     }
     
     @IBAction func goHome(sender: UIStoryboardSegue){
+        if sender.source is MapViewController {
+            searchBar?.text = name
+        }
         if sender.source is CongratsViewController {
             self.ids = []
             self.excludes = []
@@ -255,6 +260,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
                             
                             if let name = data["name"] as? String {
                                 self.nameLabel?.text = name
+                                self.name = name
                             } else {
                                 self.nameLabel?.text = "This place does not have a name."
                             }
@@ -286,6 +292,16 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
                                 self.distanceLabel.text = String(self.metersToMilesRounded(distanceInMeters: distance)) + " miles away"
                             } else {
                                 self.distanceLabel.text = "Unable to determine distance"
+                            }
+                            if let geocodes = data["geocodes"] as? [String: Any] {
+                                if let main = geocodes["main"] as? [String: Any] {
+                                    if let lat = main["latitude"] as? Double {
+                                        self.lat = lat
+                                    }
+                                    if let lon = main["longitude"] as? Double {
+                                        self.lon = lon
+                                    }
+                                }
                             }
                             if let photos = data["photos"] as? [[String: Any]] {
                                 if photos.count > 0 {

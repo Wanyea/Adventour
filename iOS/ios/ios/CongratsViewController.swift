@@ -74,6 +74,7 @@ class CongratsViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.isTranslucent = true
+        print("appear documentID: ", self.documentID)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,7 +93,9 @@ class CongratsViewController: UIViewController {
             dest.beaconLocation = self.beaconLocation
             dest.isEditing = true
             dest.source = self
+            print("prepare documentID: ", self.documentID)
             dest.beaconInfo["documentID"] = self.documentID
+            print("beaconinfoID: ", dest.beaconInfo["documentID"])
         }
         
     }

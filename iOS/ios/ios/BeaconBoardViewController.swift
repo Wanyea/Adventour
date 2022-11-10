@@ -489,7 +489,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func getHiddenBeacons() {
-        
+        print("gethiddenbeacons called")
         let db = Firestore.firestore()
         db.collection("Adventourists")
             .document(self.user.uid)
@@ -497,15 +497,25 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                 if let error = error {
                     print(error)
                 } else {
+                    print("check 1")
                     if let data = snap?.data() {
                         if let hidden = data["hiddenBeacons"] as? [String] {
                             print("Hidden beacons ", hidden)
                             self.hiddenBeacons = hidden
                             self.beacons = []
+                            print("outside")
+                            if self.beaconLocation != "" {
+                                self.getMostRecentBeacons()
+                                print("inside")
+                            }
+                        } else {
+                            self.hiddenBeacons = []
+                            self.beacons = []
                             if self.beaconLocation != "" {
                                 self.getMostRecentBeacons()
                             }
                         }
+                        
                     } else {
                         self.hiddenBeacons = []
                         self.beacons = []

@@ -174,6 +174,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
 //                        print(mantra)
                         self.mantraLabel?.text = mantra
                     }
+                    if let iosPfpRef = user["iosPfpRef"] as? String {
+                        self.profilePic.image = UIImage(named: iosPfpRef)
+                    }
                     DispatchQueue.main.async {
                         self.activityIndicatorInfo?.stopAnimating()
                         self.showUserInfo()
