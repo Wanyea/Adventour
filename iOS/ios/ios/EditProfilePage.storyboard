@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,7 +39,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hL-hO-EWj">
-                                <rect key="frame" x="10" y="50" width="300" height="332"/>
+                                <rect key="frame" x="10" y="118" width="300" height="332"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Passport_Edit_Top_Card" translatesAutoresizingMaskIntoConstraints="NO" id="cVf-DE-Smr">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="332"/>
@@ -227,17 +226,39 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Birthdate cannot be changed*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shw-IV-psX">
-                                <rect key="frame" x="63" y="390" width="194" height="17"/>
+                                <rect key="frame" x="63" y="458" width="194" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" name="adv-black"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-eD-DnK">
-                                <rect key="frame" x="141" y="415" width="38" height="21"/>
+                                <rect key="frame" x="141" y="483" width="38" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="adv-red"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="3BO-xf-gTw">
+                                <rect key="frame" x="110" y="6" width="100" height="98"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="WLv-nA-oBk"/>
+                                    <constraint firstAttribute="width" secondItem="3BO-xf-gTw" secondAttribute="height" multiplier="1:1" id="sUW-jf-nhs"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2w5-AO-DeC">
+                                <rect key="frame" x="110" y="5" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="RoR-Bp-1BI"/>
+                                    <constraint firstAttribute="width" constant="100" id="XxN-un-ERn"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="">
+                                    <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="GA6-Kl-21X" kind="presentation" id="jT0-W5-JGD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="adv-skyblue"/>
@@ -245,11 +266,15 @@
                             <constraint firstItem="cVf-DE-Smr" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="0zI-JP-TdS"/>
                             <constraint firstItem="cac-eD-DnK" firstAttribute="top" secondItem="Shw-IV-psX" secondAttribute="bottom" constant="8" symbolic="YES" id="2Oj-yp-c7A"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="26o-E6-0rq" secondAttribute="bottom" constant="20" id="EKt-BW-njy"/>
+                            <constraint firstItem="cVf-DE-Smr" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="GT0-fp-YAk"/>
+                            <constraint firstItem="2w5-AO-DeC" firstAttribute="centerY" secondItem="3BO-xf-gTw" secondAttribute="centerY" id="Iu0-RJ-4Tf"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="26o-E6-0rq" secondAttribute="trailing" constant="27" id="MrR-T6-yge"/>
                             <constraint firstItem="Shw-IV-psX" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="O3m-QA-kee"/>
-                            <constraint firstItem="4hL-hO-EWj" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="50" id="Oxd-8p-Ky4"/>
+                            <constraint firstItem="3BO-xf-gTw" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="PBp-ey-gnR"/>
+                            <constraint firstItem="cVf-DE-Smr" firstAttribute="top" secondItem="3BO-xf-gTw" secondAttribute="bottom" constant="13" id="W36-mB-aoP"/>
                             <constraint firstItem="4hL-hO-EWj" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="gZ6-yj-Ua2"/>
                             <constraint firstItem="cac-eD-DnK" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="heQ-1q-1Dt"/>
+                            <constraint firstItem="2w5-AO-DeC" firstAttribute="centerX" secondItem="3BO-xf-gTw" secondAttribute="centerX" id="knN-F4-bqY"/>
                             <constraint firstItem="Shw-IV-psX" firstAttribute="top" secondItem="cVf-DE-Smr" secondAttribute="bottom" constant="8" symbolic="YES" id="ruF-eV-fsG"/>
                         </constraints>
                     </view>
@@ -261,19 +286,29 @@
                         <outlet property="lastName" destination="npV-ba-DMN" id="jrZ-na-FB3"/>
                         <outlet property="mantra" destination="gn1-BK-xjn" id="oKd-rO-cTJ"/>
                         <outlet property="nickname" destination="TtQ-pY-nnR" id="dYz-RX-MdV"/>
+                        <outlet property="profilePic" destination="3BO-xf-gTw" id="Y1J-oa-ztY"/>
                         <segue destination="fVB-Nm-NEC" kind="unwind" identifier="unwindToProfile" unwindAction="unwindToProfile:" id="eL4-fk-tqk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="fVB-Nm-NEC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="66" y="-2"/>
+            <point key="canvasLocation" x="65.625" y="-2.112676056338028"/>
+        </scene>
+        <!--profilePic-->
+        <scene sceneID="khD-KC-jHR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ProfilePicView" referencedIdentifier="profilePic" id="GA6-Kl-21X" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iIQ-Pc-aPw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="777" y="-150"/>
         </scene>
     </scenes>
     <resources>
         <image name="Passport_Edit_Top_Card" width="330" height="368"/>
         <image name="mail" catalog="system" width="128" height="93"/>
-        <image name="person" catalog="system" width="128" height="121"/>
+        <image name="person" catalog="system" width="128" height="117"/>
+        <image name="questionmark" catalog="system" width="96" height="128"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

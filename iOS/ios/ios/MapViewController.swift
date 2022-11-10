@@ -40,6 +40,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var beaconLocation: String!
     var source: StartViewController!
     var documentID: String!
+    var documentRef: DocumentReference!
     var isAdding: Bool = false
     
     override func viewDidLoad() {
@@ -74,6 +75,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             destinationVC.locations = self.ids
             destinationVC.beaconLocation = self.beaconLocation
             destinationVC.documentID = self.documentID
+            print("self destID: ", self.documentID)
+            print("destVC destID", destinationVC.documentID)
         }
     }
     
@@ -151,7 +154,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let db = Firestore.firestore()
         
-        let docRef = db.collection("Adventourists")
+        self.documentRef = db.collection("Adventourists")
             .document(self.user.uid)
             .collection("adventours")
             .addDocument(data: adventour) {
@@ -159,10 +162,13 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 if let err = err {
                     print("Error writing document: \(err)")
                 } else {
+                    self.documentID = self.documentRef.documentID
+                    print("documentID: ", self.documentID)
                     print("Document successfully written!")
+                    self.performSegue(withIdentifier: "congratsSegue", sender: self)
                 }
             }
-        self.documentID = docRef.documentID
+        
     }
     
     func hideTable() {

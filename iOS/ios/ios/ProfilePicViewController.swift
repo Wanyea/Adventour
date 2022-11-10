@@ -8,6 +8,10 @@
 import UIKit
 
 class ProfilePicViewController: UIViewController {
+    var source: UIViewController!
+    var androidPfpRef: Int!
+    var iosPfpRef: String!
+    
     weak var delegate: ModalViewControllerDelegate?
     
     @IBOutlet weak var profileCheeta: ProfilePicImageView!
@@ -31,7 +35,7 @@ class ProfilePicViewController: UIViewController {
         let tap5 = UITapGestureRecognizer(target: self, action: #selector(self.tapDetected))
         let tap6 = UITapGestureRecognizer(target: self, action: #selector(self.tapDetected))
         profileCheeta?.isUserInteractionEnabled = true
-        profileCheeta?.iosPfpRef = "profpic_cheeta"
+        profileCheeta?.iosPfpRef = "profpic_cheetah"
         profileCheeta?.androidPfpRef = 2131230902
         profileCheeta?.addGestureRecognizer(tap)
         profileElephant?.isUserInteractionEnabled = true
@@ -39,7 +43,7 @@ class ProfilePicViewController: UIViewController {
         profileElephant?.androidPfpRef = 2131230903
         profileElephant?.addGestureRecognizer(tap2)
         profileFox?.isUserInteractionEnabled = true
-        profileFox?.iosPfpRef = "profpic_Fox"
+        profileFox?.iosPfpRef = "profpic_fox"
         profileFox?.androidPfpRef = 2131230904
         profileFox?.addGestureRecognizer(tap3)
         profileBug?.isUserInteractionEnabled = true
@@ -57,6 +61,9 @@ class ProfilePicViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "sendProfilePic", sender: self)
+    }
     
     @objc func tapDetected(sender: UITapGestureRecognizer){
         
@@ -65,6 +72,8 @@ class ProfilePicViewController: UIViewController {
         let view = sender.view as! ProfilePicImageView
         signupData["iosPfpRef"] = view.iosPfpRef
         signupData["androidPfpRef"] = view.androidPfpRef
+        self.iosPfpRef = view.iosPfpRef
+        self.androidPfpRef = view.androidPfpRef
         
         picture = view.image
         picFlag = 1
@@ -76,7 +85,10 @@ class ProfilePicViewController: UIViewController {
     }
     
     
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare check")
         if let destinationVC = segue.destination as? SignUpViewController{
             print("1")
             if(picFlag == 0)
@@ -86,8 +98,16 @@ class ProfilePicViewController: UIViewController {
             else{
                 destinationVC.profilePic?.image = picture
             }
+            
+        
         }
         
+        if let destinationVC = segue.destination as? EditProfileViewController{
+            print("edit profile check")
+            destinationVC.profilePic?.image = picture
+            destinationVC.androidPfpRef = (signupData["androidPfpRef"] as! Int)
+            destinationVC.iosPfpRef = (signupData["iosPfpRef"] as! String)
+            }
         
         
         
