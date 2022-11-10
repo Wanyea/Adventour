@@ -61,11 +61,26 @@ public class AdventourUtils {
         if ((month < cal.get(Calendar.MONTH)) || ((month == cal.get(Calendar.MONTH)) && (day < cal.get(Calendar.DAY_OF_MONTH))))
             --age;
 
-        if(age > 13)
+        if(age >= 13)
             return true;
         else
             return false;
 
+    }
+
+    public static boolean isUserOver21Plus(int day, int month, int year)
+    {
+        GregorianCalendar cal = new GregorianCalendar();
+
+        int age = Math.abs(year - cal.get(Calendar.YEAR));
+
+        if ((month < cal.get(Calendar.MONTH)) || ((month == cal.get(Calendar.MONTH)) && (day < cal.get(Calendar.DAY_OF_MONTH))))
+            --age;
+
+        if(age >= 21)
+            return true;
+        else
+            return false;
     }
 
     public static boolean isValidPassword(String password) {

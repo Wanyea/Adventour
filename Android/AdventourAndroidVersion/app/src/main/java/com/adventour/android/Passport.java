@@ -370,31 +370,33 @@ public class Passport extends AppCompatActivity {
                         switch (androidPfpRef)
                         {
                             // Set profile pic image to Cheetah
-                            case 2131230902:
+                            case 0:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_cheetah);
                                     break;
 
                             // Set profile pic image to Elephant
-                            case 2131230903:
+                            case 1:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_elephant);
                                     break;
 
                             // Set profile pic image to Ladybug
-                            case 2131230905:
+                            case 2:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_ladybug);
                                     break;
                             // Set profile pic image to Monkey
-                            case 2131230906:
+                            case 3:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_monkey);
                                     break;
                             // Set profile pic image to Fox
-                            case 2131230904:
+                            case 4:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_fox);
                                     break;
                            // Set profile pic image to Penguin
-                            case 2131230907:
+                            case 5:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_penguin);
                                     break;
+                            default:
+                                profPicImageView.setImageResource(R.drawable.ic_user_icon);
                         }
 
                         // Set visibility
