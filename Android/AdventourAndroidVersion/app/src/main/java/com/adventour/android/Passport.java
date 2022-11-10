@@ -14,16 +14,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 
 import android.widget.ProgressBar;
@@ -58,7 +55,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Passport extends AppCompatActivity {
-    
+
     private static final String TAG = "PassportActivity";
     public String userNickname;
 
@@ -69,9 +66,7 @@ public class Passport extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
 
-
     Context context = this;
-    LinearLayout linearLayout, linearLayout2;
 
     ActionBar actionBar;
 
@@ -82,7 +77,7 @@ public class Passport extends AppCompatActivity {
     PreviousAdventourAdapter previousAdventourAdapter;
     BeaconsAdapter beaconsAdapter;
 
-    ProgressBar progressBar;
+    ProgressBar passportCardProgressBar, previousAdventoursProgressBar, beaconPostsProgressBar;
     ImageView cakeIconImageView, profPicImageView;
 
     int androidPfpRef;
@@ -97,6 +92,8 @@ public class Passport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passport);
 
+        // Dump GlobalVars
+        GlobalVars.beaconBoardArrayList.clear();
 
         context = getApplicationContext();
 
@@ -114,7 +111,10 @@ public class Passport extends AppCompatActivity {
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        passportCardProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        previousAdventoursProgressBar = (ProgressBar) findViewById(R.id.previousAdventoursProgressBar);
+        beaconPostsProgressBar = (ProgressBar) findViewById(R.id.beaconPostsProgressBar);
+
         cakeIconImageView = (ImageView) findViewById(R.id.cakeIconImageView);
         profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
 
@@ -321,7 +321,7 @@ public class Passport extends AppCompatActivity {
                         }
 
                         // Set visibility
-                        progressBar.setVisibility(View.INVISIBLE);
+                        passportCardProgressBar.setVisibility(View.INVISIBLE);
                         profPicImageView.setVisibility(View.VISIBLE);
                         nicknameTextView.setVisibility(View.VISIBLE);
                         cakeIconImageView.setVisibility(View.VISIBLE);
@@ -427,12 +427,17 @@ public class Passport extends AppCompatActivity {
 
                             Log.d("numOfAdventours", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
 
+                            previousAdventoursProgressBar.setVisibility(View.INVISIBLE);
+
                             // Set placeholder if user hasn't taken any Adventours.
-                            if(GlobalVars.previousAdventourArrayList.size() == 0) {
+                            if(GlobalVars.previousAdventourArrayList.size() == 0)
+                            {
                                 noPrevAdventours.setVisibility(View.VISIBLE);
                             } else {
                                 noPrevAdventours.setVisibility(View.INVISIBLE);
                             }
+
+
                         }
                     }
                 });
@@ -527,8 +532,11 @@ public class Passport extends AppCompatActivity {
 
                             Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
 
+                            beaconPostsProgressBar.setVisibility(View.INVISIBLE);
+
                             // Set placeholder if user hasn't posted any Beacons.
-                            if(GlobalVars.userBeaconsArrayList.size() == 0) {
+                            if(GlobalVars.userBeaconsArrayList.size() == 0)
+                            {
                                 noPrevBeacons.setVisibility(View.VISIBLE);
                             } else {
                                 noPrevBeacons.setVisibility(View.INVISIBLE);
@@ -564,7 +572,11 @@ public class Passport extends AppCompatActivity {
 
     public void openAdventourTOS()
     {
-        // Prompt user to navigate to Adventour TOS on our site.
+        String url = "https://adventour.app/terms-of-service";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
 }

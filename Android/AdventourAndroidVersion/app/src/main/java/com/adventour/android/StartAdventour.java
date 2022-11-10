@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
@@ -28,9 +28,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -40,8 +41,12 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.slider.Slider;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,9 +60,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Objects;
 
 public class StartAdventour extends AppCompatActivity {
@@ -66,7 +70,7 @@ public class StartAdventour extends AppCompatActivity {
 
     ImageButton filterButton;
     Slider distanceSlider;
-    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView, noLocationTextView;
+    TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView, noLocationTextView, twentyOneTextView;
     Button beginButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
     ImageView phoneImageView, globeImageView, previewImageView;
@@ -95,19 +99,18 @@ public class StartAdventour extends AppCompatActivity {
 
     HashMap<String, Integer> drawableIds = new HashMap<String, Integer>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_adventour);
 
-        drawableIds.put("Cheetah", R.drawable.ic_profpic_cheetah);
-        drawableIds.put("Elephant", R.drawable.ic_profpic_elephant);
-        drawableIds.put("Ladybug", R.drawable.ic_profpic_ladybug);
-        drawableIds.put("Fox", R.drawable.ic_profpic_fox);
-        drawableIds.put("Penguin", R.drawable.ic_profpic_penguin);
-        drawableIds.put("Monkey", R.drawable.ic_profpic_monkey);
+        drawableIds.put("Cheetah", 0);
+        drawableIds.put("Elephant", 1);
+        drawableIds.put("Ladybug", 2);
+        drawableIds.put("Fox", 4);
+        drawableIds.put("Penguin", 5);
+        drawableIds.put("Monkey", 3);
 
         Log.d("Drawable Ids: ", drawableIds.toString());
 
@@ -119,6 +122,7 @@ public class StartAdventour extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         handleAuth();
+        getUser();
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
@@ -138,6 +142,7 @@ public class StartAdventour extends AppCompatActivity {
         websiteTextView = (TextView) findViewById(R.id.websiteTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionEditText);
         noLocationTextView = (TextView) findViewById(R.id.noLocationsTextView);
+        twentyOneTextView = (TextView) findViewById(R.id.twentyOneTextView);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
@@ -157,7 +162,7 @@ public class StartAdventour extends AppCompatActivity {
         courageousSwitch = findViewById(R.id.courageousSwitch);
         starvingSwitch = findViewById(R.id.starvingSwitch);
         snackSwitch = findViewById(R.id.snackSwitch);
-        twentyOnePlusSwitch = findViewById(R.id.twentyonePlusSwitch);
+        twentyOnePlusSwitch = findViewById(R.id.twentyOnePlusSwitch);
 
         phoneImageView = (ImageView) findViewById(R.id.phoneImageView);
         globeImageView = (ImageView) findViewById(R.id.globeImageView);
@@ -169,9 +174,12 @@ public class StartAdventour extends AppCompatActivity {
 
         isSwitchActive = new HashMap<String, String>();
 
+        websiteTextView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
         // Reset before going back to passport.
         GlobalVars.userBeaconsArrayList.clear();
         GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.beaconBoardArrayList.clear();
 
         if (prevLocation.size() > 0)
         {
@@ -220,10 +228,6 @@ public class StartAdventour extends AppCompatActivity {
                GlobalVars.excludes.put(currentFSQId);
                jsonBody = new JSONObject();
                getLocation();
-//               if (GlobalVars.inProgressModelArrayList.size() > 0) { GlobalVars.inProgressModelArrayList.remove(0); }
-//               if (GlobalVars.adventourLocations.size() > 0) { GlobalVars.adventourLocations.remove(0); }
-//               if (GlobalVars.beaconModelArrayList.size() > 0) { GlobalVars.beaconModelArrayList.remove(0); }
-//               Log.d("EXCLUDE: ", String.join(",", GlobalVars.excludes));
            }
         });
 
@@ -608,7 +612,6 @@ public class StartAdventour extends AppCompatActivity {
         userLocLat = Double.toString(GlobalVars.locationCoordinates.latitude);
         userLocLng = Double.toString(GlobalVars.locationCoordinates.longitude);
         userLoc = userLocLat + "," + userLocLng;
-        Log.i("Ryan Output", userLoc);
 
         try {
 
@@ -616,7 +619,6 @@ public class StartAdventour extends AppCompatActivity {
             jsonBody.put("ll", userLoc);
             jsonBody.put("radius", getDistance());
             jsonBody.put("categories", getCategoriesString());
-            Log.i("Ryan Output", jsonBody.toString());
             jsonBody.put("excludes", getExclude());
 
         } catch (JSONException e) {
@@ -729,7 +731,6 @@ public class StartAdventour extends AppCompatActivity {
                             InputStream input = connection.getInputStream();
                             Bitmap myBitmap = BitmapFactory.decodeStream(input);
                             Log.e("Bitmap","returned");
-                            Log.d("imageURL", imageURL.toString());
                             previewImageView.setImageBitmap(myBitmap);
 
                         } catch (Exception e) {
@@ -850,7 +851,6 @@ public class StartAdventour extends AppCompatActivity {
 
                 populateCard(name, rating, tel, website, description);
 
-
                 try {
                     JSONObject geocodes = (JSONObject) data.get("geocodes");
                     JSONObject main = (JSONObject) geocodes.get("main");
@@ -866,6 +866,16 @@ public class StartAdventour extends AppCompatActivity {
                 Log.e("NO LOC W CURR TAGS/LOC", "Exception", e);
                 noLocationTextView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.INVISIBLE);
+                nameTextView.setVisibility(View.INVISIBLE);
+                phoneTextView.setVisibility(View.INVISIBLE);
+                websiteTextView.setVisibility(View.INVISIBLE);
+                descriptionTextView.setVisibility(View.INVISIBLE);
+                ratingBar.setVisibility(View.INVISIBLE);
+                phoneImageView.setVisibility(View.INVISIBLE);
+                globeImageView.setVisibility(View.INVISIBLE);
+                previewImageView.setVisibility(View.INVISIBLE);
+                yesButton.setEnabled(false);
+                notNowButton.setEnabled(false);
                 setLocationVisibility(false);
             }
 
@@ -899,7 +909,15 @@ public class StartAdventour extends AppCompatActivity {
                     if (website != null)
                     {
                         websiteTextView.setText(website);
-                        Linkify.addLinks(websiteTextView, Linkify.WEB_URLS);
+
+                        websiteTextView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(website));
+                                startActivity(i);
+                            }
+                        });
                     }
 
                     descriptionTextView.setText(description);
@@ -907,6 +925,46 @@ public class StartAdventour extends AppCompatActivity {
                 });
             }
         }.start();
+    }
+
+    public void getUser()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get a reference to the user
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+
+        // Check if user document exists. If they do in this instance, populate passport wth user data.
+        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("START ADVENTOUR", "DocumentSnapshot data: " + document.getData());
+                        Calendar userBirthdate = Calendar.getInstance();
+                        userBirthdate.setTime(((Timestamp) document.get("birthdate")).toDate());
+                        Log.d("calendar date", String.valueOf(userBirthdate.get(Calendar.DATE)));
+                        Log.d("calendar month", String.valueOf(userBirthdate.get(Calendar.MONTH)));
+                        Log.d("calendar year", String.valueOf(userBirthdate.get(Calendar.YEAR)));
+
+                        // Remove "21+" tag if user is not at least 21.
+                        if (!AdventourUtils.isUserOver21Plus(userBirthdate.get(Calendar.DATE), userBirthdate.get(Calendar.MONTH), userBirthdate.get(Calendar.YEAR)))
+                        {
+                            twentyOneTextView.setVisibility(View.INVISIBLE);
+                            twentyOnePlusSwitch.setVisibility(View.INVISIBLE);
+                        }
+
+                    } else {
+                        Log.d("START ADVENTOUR", "No such document");
+                    }
+                } else {
+                    Log.d("START ADVENTOUR", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     String getCategoriesString()

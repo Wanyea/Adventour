@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,12 +51,15 @@ public class Beacons extends AppCompatActivity {
     String nickname;
     Map<String, Object> user;
     String userId;
+    ProgressBar beaconsProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacons);
+
+        beaconsProgressBar = (ProgressBar) findViewById(R.id.beaconsProgressBar);
 
         GlobalVars.previousAdventourArrayList.clear();
         GlobalVars.userBeaconsArrayList.clear();
@@ -260,6 +264,12 @@ public class Beacons extends AppCompatActivity {
 
                             GlobalVars.beaconBoardArrayList.add(new BeaconsModel(allData, nickname, androidPfpRef));
                             beaconBoardAdapter.notifyDataSetChanged();
+
+                            if (GlobalVars.beaconBoardArrayList.size() == 0) {
+                                beaconsProgressBar.setVisibility(View.VISIBLE);
+                            } else {
+                                beaconsProgressBar.setVisibility(View.INVISIBLE);
+                            }
 
                         } else {
                             Log.d("BEACONS", "No such document");
