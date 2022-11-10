@@ -5,10 +5,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -51,7 +49,8 @@ public class SignupScreen extends AppCompatActivity {
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
     EditText nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
-
+    long androidPfpRef;
+    String iOSPfpRef;
     ImageButton profPicImageButton;
     CardView popupProfPic;
     Button doneButton;
@@ -59,13 +58,11 @@ public class SignupScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    ProfilePictureRefs refs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_screen);
-
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -75,6 +72,8 @@ public class SignupScreen extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
+        androidPfpRef = 0;
+        iOSPfpRef = "";
 
         loginTextView = (TextView) findViewById(R.id.loginTextView);
         signupButton = (Button) findViewById(R.id.signupButton);
@@ -108,7 +107,6 @@ public class SignupScreen extends AppCompatActivity {
         penguinImageButton = (ImageButton) findViewById(R.id.penguinImageButton);
         foxImageButton = (ImageButton) findViewById(R.id.foxImageButton);
         doneButton = (Button) findViewById(R.id.doneButton);
-        refs = new ProfilePictureRefs(0, "");
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -195,13 +193,14 @@ public class SignupScreen extends AppCompatActivity {
 
                 // If all fields are valid: create new document in Firebase with the user information.
 
-                if(AdventourUtils.isValidNickname(nickname) &&
+                if (AdventourUtils.isValidNickname(nickname) &&
                    AdventourUtils.isValidEmail(email) &&
                    AdventourUtils.isUserOver13(day, month, year) &&
-                   AdventourUtils.checkPasswordsMatch(password, confirmPassword))
-                {
-                    signUp(nickname, email, password, birthdate, defaultMantra, refs); // Attempt to create user document and add to firebase.
-                }
+                   AdventourUtils.checkPasswordsMatch(password, confirmPassword) &&
+                   AdventourUtils.isProfilePictureSelected(androidPfpRef))
+                    {
+                        signUp(nickname, email, password, birthdate, defaultMantra, androidPfpRef, iOSPfpRef); // Attempt to create user document and add to firebase.
+                    }
             }
         });
 
@@ -224,37 +223,53 @@ public class SignupScreen extends AppCompatActivity {
             public void onClick(View view)
             {
                 onClickCheetahImageButton(view);
+                androidPfpRef = 2131230902;
             }
         });
 
         elephantImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickElephantImageButton(view); }
+            public void onClick(View view) {
+                onClickElephantImageButton(view);
+                androidPfpRef = 2131230903;
+            }
         });
 
         ladybugImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickLadybugImageButton(view); }
+            public void onClick(View view) {
+                onClickLadybugImageButton(view);
+                androidPfpRef = 2131230905;
+            }
         });
 
         monkeyImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickMonkeyImageButton(view); }
+            public void onClick(View view) {
+                onClickMonkeyImageButton(view);
+                androidPfpRef = 2131230906;
+            }
         });
 
         penguinImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickPenguinImageButton(view); }
+            public void onClick(View view) {
+                onClickPenguinImageButton(view);
+                androidPfpRef = 2131230907;
+            }
         });
 
         foxImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickFoxImageButton(view); }
+            public void onClick(View view) {
+                onClickFoxImageButton(view);
+                androidPfpRef = 2131230904;
+            }
         });
     }
 
@@ -365,7 +380,7 @@ public class SignupScreen extends AppCompatActivity {
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, ProfilePictureRefs refs) {
+    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, long androidPfpRef, String iOSPfpRef) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
@@ -373,7 +388,8 @@ public class SignupScreen extends AppCompatActivity {
         adventourist.put("birthdate", birthdate);
         adventourist.put("isPrivate", true);
         adventourist.put("mantra", defaultMantra);
-        adventourist.put("androidPfpRef", refs.androidProfilePicRef);
+        adventourist.put("androidPfpRef", androidPfpRef);
+        adventourist.put("iOSPfpRef", iOSPfpRef);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -396,7 +412,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, ProfilePictureRefs refs) {
+    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, long androidPfpRef, String iOSPfpRef) {
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -406,7 +422,7 @@ public class SignupScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            addUserToFirestore(nickname, email, birthdate, defaultMantra, refs);
+                            addUserToFirestore(nickname, email, birthdate, defaultMantra, androidPfpRef, iOSPfpRef);
                             switchToHome();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -427,19 +443,6 @@ public class SignupScreen extends AppCompatActivity {
     public void onClickProfPicImageButton(View view) {
         popupProfPic.setVisibility(View.VISIBLE);
     }
-
-
-  class ProfilePictureRefs
-  {
-      private int androidProfilePicRef;
-      private String iOSProfilePicRef;
-
-      ProfilePictureRefs(int androidProfilePicRef, String iOSProfilePicRef)
-      {
-          this.androidProfilePicRef = androidProfilePicRef;
-          this.iOSProfilePicRef = iOSProfilePicRef;
-      }
-  }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickCheetahImageButton(View view) {
@@ -488,8 +491,6 @@ public class SignupScreen extends AppCompatActivity {
 
         clearProfPicSelection(view);
         imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-
-        refs.androidProfilePicRef = drawableID;
         profPicImageButton.setForeground(getResources().getDrawable(drawableID, null));
     }
 }

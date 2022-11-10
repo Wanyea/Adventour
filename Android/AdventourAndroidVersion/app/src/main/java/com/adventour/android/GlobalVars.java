@@ -20,4 +20,5 @@ public class GlobalVars
     public static String selectedLocationID = "";
     public static LatLng locationCoordinates;
     public static ArrayList<String> locationDescriptions = new ArrayList<String>();
+    public static ArrayList<BeaconsModel> beaconBoardArrayList = new ArrayList<BeaconsModel>();
 }

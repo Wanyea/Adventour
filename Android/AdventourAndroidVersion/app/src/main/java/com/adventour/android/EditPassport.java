@@ -48,16 +48,20 @@ public class EditPassport extends AppCompatActivity {
     TextView birthdateTextView;
     Timestamp birthdate;
     int androidPfpRef;
+    String iOSPfpRef;
     CardView popupProfPic;
     Button doneButton;
     ImageButton profPicImageButton;
     ImageButton cheetahImageButton, elephantImageButton, ladybugImageButton, monkeyImageButton, penguinImageButton, foxImageButton;
-    ProfilePictureRefs refs;
+  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_passport);
+
+        GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.userBeaconsArrayList.clear();
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
@@ -78,7 +82,6 @@ public class EditPassport extends AppCompatActivity {
         penguinImageButton = (ImageButton) findViewById(R.id.penguinImageButton);
         foxImageButton = (ImageButton) findViewById(R.id.foxImageButton);
         doneButton = (Button) findViewById(R.id.doneButton);
-        refs = new ProfilePictureRefs(0, "");
 
         saveButton = (FloatingActionButton) findViewById(R.id.saveButton);
         backButton = (ImageView) findViewById(R.id.backButton);
@@ -202,8 +205,9 @@ public class EditPassport extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-
+                            if (document.exists())
+                            {
+                                Log.d("document", document.toString());
                                 changes.put("email", email);
                                 changes.put("nickname", nickname);
                                 changes.put("mantra", mantra);
@@ -211,7 +215,7 @@ public class EditPassport extends AppCompatActivity {
                                 changes.put("lastName", lastName);
                                 changes.put("birthdate", birthdate);
                                 changes.put("androidPfpRef", androidPfpRef);
-                                //TODO: WE NEED TO PUT THE IOS ONE HERE OR IT'LL BE CLEARED ON THEIR END.
+                                changes.put("iOSPfpRef", iOSPfpRef);
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
@@ -230,7 +234,6 @@ public class EditPassport extends AppCompatActivity {
                                                 // Possible ALERT when there is an error prompting users to try again.
                                             }
                                         });
-
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -260,37 +263,53 @@ public class EditPassport extends AppCompatActivity {
             public void onClick(View view)
             {
                 onClickCheetahImageButton(view);
+                //androidPfpRef = 2131230902;
             }
         });
 
         elephantImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickElephantImageButton(view); }
+            public void onClick(View view) {
+                onClickElephantImageButton(view);
+                //androidPfpRef = 2131230903;
+            }
         });
 
         ladybugImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickLadybugImageButton(view); }
+            public void onClick(View view) {
+                onClickLadybugImageButton(view);
+                //androidPfpRef = 2131230905;
+            }
         });
 
         monkeyImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickMonkeyImageButton(view); }
+            public void onClick(View view) {
+                onClickMonkeyImageButton(view);
+                //androidPfpRef = 2131230906;
+            }
         });
 
         penguinImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickPenguinImageButton(view); }
+            public void onClick(View view) {
+                onClickPenguinImageButton(view);
+                //androidPfpRef = 2131230907;
+            }
         });
 
         foxImageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) { onClickFoxImageButton(view); }
+            public void onClick(View view) {
+                onClickFoxImageButton(view);
+                //androidPfpRef = 2131230904;
+            }
         });
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -300,17 +319,6 @@ public class EditPassport extends AppCompatActivity {
                 alert.show();
             }
         });
-
-/*      // Supposed to handle back button gesture but doesn't work on my Pixel 6, maybe only works with physical android buttons?
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
-            }
-        };
-
-*/
     }
 
     public void populateUserPassport()
@@ -340,7 +348,39 @@ public class EditPassport extends AppCompatActivity {
                         lastNameEditText.setText(document.getString("lastName"));
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase((Timestamp) document.get("birthdate")));
                         mantraEditText.setText(document.getString("mantra"));
-                        profPicImageButton.setForeground(getResources().getDrawable(profPicID, null));
+
+                        androidPfpRef = toIntExact((long)document.get("androidPfpRef"));
+
+                        switch (androidPfpRef)
+                        {
+                            // Set profile pic image to Cheetah
+                            case 2131230902:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_cheetah, null));
+                                    break;
+
+                            // Set profile pic image to Elephant
+                            case 2131230903:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_elephant, null));
+                                    break;
+
+                            // Set profile pic image to Ladybug
+                            case 2131230905:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_ladybug, null));
+                                    break;
+                            // Set profile pic image to Monkey
+                            case 2131230906:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_monkey, null));
+                                    break;
+                            // Set profile pic image to Fox
+                            case 2131230904:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_fox, null));
+                                    break;
+                            // Set profile pic image to Penguin
+                            case 2131230907:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_penguin, null));
+                                    break;
+                        }
+
 
                         email = emailEditText.getText().toString();
                         nickname = nicknameEditText.getText().toString();
@@ -350,6 +390,11 @@ public class EditPassport extends AppCompatActivity {
                         birthdate = ((Timestamp) document.get("birthdate"));
                         androidPfpRef = profPicID;
 
+                        if (document.get("iOSPfpRef") != null) {
+                            iOSPfpRef = (String) document.get("iOSPfpRef");
+                        } else {
+                            iOSPfpRef = "";
+                        }
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -372,49 +417,41 @@ public class EditPassport extends AppCompatActivity {
         popupProfPic.setVisibility(View.VISIBLE);
     }
 
-
-    class ProfilePictureRefs
-    {
-        private int androidProfilePicRef;
-        private String iOSProfilePicRef;
-
-        ProfilePictureRefs(int androidProfilePicRef, String iOSProfilePicRef)
-        {
-            this.androidProfilePicRef = androidProfilePicRef;
-            this.iOSProfilePicRef = iOSProfilePicRef;
-        }
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickCheetahImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_cheetah, cheetahImageButton);
+        androidPfpRef = 2131230902;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickElephantImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_elephant, elephantImageButton);
+        androidPfpRef = 2131230903;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickLadybugImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_ladybug, ladybugImageButton);
+        androidPfpRef = 2131230905;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickMonkeyImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_monkey, monkeyImageButton);
+        androidPfpRef = 2131230906;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickPenguinImageButton(View view) {
         clearProfPicSelection(view);
-        penguinImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
         changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
+        androidPfpRef = 2131230907;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickFoxImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
+        androidPfpRef = 2131230904;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -433,8 +470,7 @@ public class EditPassport extends AppCompatActivity {
         clearProfPicSelection(view);
         imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
 
-        refs.androidProfilePicRef = drawableID;
         profPicImageButton.setForeground(getResources().getDrawable(drawableID, null));
-        androidPfpRef = drawableID;
+
     }
 }

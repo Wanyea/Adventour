@@ -32,9 +32,28 @@ public class PreviousAdventourAdapter extends RecyclerView.Adapter<PreviousAdven
     public void onBindViewHolder(@NonNull PreviousAdventourAdapter.ViewHolder holder, int position)
     {
         PreviousAdventourModel model = PreviousAdventourArrayList.get(position);
-        holder.firstLocation.setText(model.getFirstLocation());
-        holder.secondLocation.setText(model.getSecondLocation());
-        holder.thirdLocation.setText(model.getThirdLocation());
+
+        if (model.getFirstLocation() != null)
+        {
+            holder.firstLocation.setText(model.getFirstLocation());
+        } else {
+            holder.firstLocation.setText("");
+        }
+
+        if (model.getSecondLocation() != null)
+        {
+            holder.secondLocation.setText(model.getSecondLocation());
+        } else {
+            holder.secondLocation.setText("");
+        }
+
+        if (model.getThirdLocation() != null)
+        {
+            holder.thirdLocation.setText(model.getThirdLocation());
+        } else {
+            holder.thirdLocation.setText("");
+        }
+
         holder.dateCreated.setText(model.getDateCreated());
     }
 

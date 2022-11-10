@@ -100,6 +100,11 @@ public class AdventourUtils {
         else
             return false;
     }
+
+    public static boolean isProfilePictureSelected(long androidPfpRef)
+    {
+        return androidPfpRef != 0;
+    }
 }
 
 
