@@ -73,7 +73,6 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
                 GlobalVars.locationDescriptions.set(position, s.toString());
-                Log.d("print locDes: ", GlobalVars.locationDescriptions.toString());
             }
         });
     }

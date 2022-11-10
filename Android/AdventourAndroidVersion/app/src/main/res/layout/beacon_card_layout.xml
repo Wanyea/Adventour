@@ -14,15 +14,14 @@
 
         <ImageView
             android:id="@+id/authorImageView"
-            android:clickable="true"
             android:layout_width="20dp"
             android:layout_height="20dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:src="@color/transparent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/authorTextView"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/authorImageView"
@@ -90,6 +89,18 @@
             android:textSize="16dp"
             android:maxLines="6"
             android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/beaconDate"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="6"
+            android:textSize="16dp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@id/likeImageButton"
+            app:layout_constraintStart_toEndOf="@+id/authorTextView"
+            tools:layout_editor_absoluteY="20dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

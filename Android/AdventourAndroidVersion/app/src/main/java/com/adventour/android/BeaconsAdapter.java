@@ -30,9 +30,45 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull BeaconsAdapter.ViewHolder holder, int position) {
         BeaconsModel model = beaconsArrayList.get(position);
-        holder.firstLocation.setText(model.getFirstLocation());
-        holder.secondLocation.setText(model.getSecondLocation());
-        holder.thirdLocation.setText(model.getThirdLocation());
+
+        holder.beaconTitle.setText(model.getBeaconTitle());
+        holder.beaconIntro.setText(model.getBeaconIntro());
+        holder.beaconAuthor.setText(model.getBeaconAuthor());
+        holder.beaconImage.setImageBitmap(model.getBeaconBitmap());
+        holder.beaconCreatedDate.setText(model.getDateCreated());
+
+        switch (model.getAndroidPfpRef())
+        {
+            // Set profile pic image to Cheetah
+            case 2131230902:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_cheetah);
+                    break;
+
+            // Set profile pic image to Elephant
+            case 2131230903:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_elephant);
+                    break;
+
+            // Set profile pic image to Ladybug
+            case 2131230905:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_ladybug);
+                    break;
+
+            // Set profile pic image to Monkey
+            case 2131230906:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_monkey);
+                    break;
+
+            // Set profile pic image to Fox
+            case 2131230904:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_fox);
+                    break;
+
+            // Set profile pic image to Penguin
+            case 2131230907:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_penguin);
+                    break;
+        }
     }
 
     @Override
@@ -41,15 +77,21 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView firstLocation;
-        private final TextView secondLocation;
-        private final TextView thirdLocation;
+        private final TextView beaconTitle;
+        private final TextView beaconIntro;
+        private final TextView beaconAuthor;
+        private final ImageView beaconImage;
+        private final ImageView authorImageView;
+        private final TextView beaconCreatedDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            firstLocation = itemView.findViewById(R.id.firstLocation);
-            secondLocation = itemView.findViewById(R.id.secondLocation);
-            thirdLocation = itemView.findViewById(R.id.thirdLocation);
+            beaconTitle = itemView.findViewById(R.id.beaconTitleTextView);
+            beaconIntro = itemView.findViewById(R.id.beaconDescriptionTextView);
+            beaconAuthor = itemView.findViewById(R.id.authorTextView);
+            beaconImage = itemView.findViewById(R.id.locationImageView);
+            beaconCreatedDate = itemView.findViewById(R.id.beaconDate);
+            authorImageView = itemView.findViewById(R.id.authorImageView);
         }
 
     }

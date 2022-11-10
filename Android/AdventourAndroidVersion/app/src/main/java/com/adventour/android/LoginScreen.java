@@ -40,7 +40,8 @@ public class LoginScreen extends AppCompatActivity {
 
         // Check for user logged in
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser != null)
+        {
             Intent intent = new Intent(this, StartAdventour.class);
             startActivity(intent);
             finish();
