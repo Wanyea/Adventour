@@ -99,9 +99,6 @@ public class Passport extends AppCompatActivity {
 
 
         context = getApplicationContext();
-        linearLayout = findViewById(R.id.linearLayout);
-        linearLayout2 = findViewById(R.id.linearLayout2);
-
 
         imageButton = (ImageButton) findViewById(R.id.imageButton);
 

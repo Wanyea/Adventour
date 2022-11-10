@@ -8,12 +8,6 @@
     tools:context=".Passport">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        />
-
-    <ImageView
         android:id="@+id/cloud_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -152,44 +146,6 @@
                 app:layout_constraintBottom_toBottomOf="@id/passportCardImageView"
                 android:indeterminate="true" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/previousAdventourScrollView"
-                android:layout_width="wrap_content"
-                android:layout_height="240dp"
-                android:fillViewport="true"
-                app:layout_constraintBottom_toTopOf="@id/myLitBeaconsScrollView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passportCardImageView">
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:focusableInTouchMode="true">
-
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/myLitBeaconsScrollView"
-                android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/previousAdventourScrollView">
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-
             <TextView
                 android:id="@+id/previousAdventoursHeader"
                 android:layout_width="wrap_content"
@@ -198,10 +154,9 @@
                 android:text="Previous Adventours"
                 android:textSize="20sp"
                 android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:paddingTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:layout_constraintBottom_toTopOf="@id/previousAdventourScrollView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passportCardImageView" />
@@ -218,20 +173,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previousAdventoursHeader" />
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/previousAdventoursScrollview"
+                app:layout_constraintHeight_max="450dp"
                 app:layout_constraintBottom_toTopOf="@id/myLitBeaconsHeader"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/takeAnAdventourTextView" >
+                app:layout_constraintTop_toBottomOf="@+id/previousAdventoursHeader" >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/previousAdventourRV"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             <TextView
                 android:id="@+id/myLitBeaconsHeader"
@@ -241,11 +198,10 @@
                 android:text="My Lit Beacons"
                 android:textSize="20sp"
                 android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                app:layout_constraintBottom_toTopOf="@id/myLitBeaconsScrollView"
+                android:paddingTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/previousAdventourScrollView" />
+                app:layout_constraintTop_toBottomOf="@id/previousAdventoursScrollview" />
 
             <TextView
                 android:id="@+id/postABeaconTextView"
@@ -259,10 +215,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/myLitBeaconsHeader" />
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/beaconPostScrollView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintHeight_max="450dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/myLitBeaconsHeader" >
@@ -272,7 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             <TextView
                 android:id="@+id/passportTitleTextView"
