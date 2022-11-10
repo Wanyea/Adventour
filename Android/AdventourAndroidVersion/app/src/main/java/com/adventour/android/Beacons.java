@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,12 +47,19 @@ public class Beacons extends AppCompatActivity {
 
 
     BeaconsAdapter beaconBoardAdapter;
+    int androidPfpRef;
+    String nickname;
+    Map<String, Object> user;
+    String userId;
+    ProgressBar beaconsProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacons);
+
+        beaconsProgressBar = (ProgressBar) findViewById(R.id.beaconsProgressBar);
 
         GlobalVars.previousAdventourArrayList.clear();
         GlobalVars.userBeaconsArrayList.clear();
@@ -202,7 +210,6 @@ public class Beacons extends AppCompatActivity {
                                     allData.put("locations", results);
                                     setBeaconModel(allData);
 
-                                    beaconBoardAdapter.notifyDataSetChanged();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Log.e("getBeaconPosts", e.toString());
@@ -219,11 +226,19 @@ public class Beacons extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         try {
-            Map<String, Object> user = (Map<String, Object>) allData.get("author");
-            String userId = (String) user.get("uid");
+            if (allData.get("author") != null)
+            {
+                user = (Map<String, Object>) allData.get("author");
+
+                if (user.get("uid") != null)
+                {
+                    userId = (String) user.get("uid");
+                }
+            }
 
             // Get a reference to the user that posted
             DocumentReference documentRef = db.collection("Adventourists").document(userId);
+
             // Check if user document exists. If they do in this instance, populate passport wth user data.
             documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -232,10 +247,29 @@ public class Beacons extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d("BEACONS", "DocumentSnapshot data: " + document.getData());
-                            String nickname = (String) document.get("nickname");
 
-                            int androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                            if (document.get("nickname") != null)
+                            {
+                                nickname = (String) document.get("nickname");
+                            } else {
+                                nickname = "Adventourist";
+                            }
+
+                            if (document.get("androidPfpRef") != null)
+                            {
+                                androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                            } else {
+                                androidPfpRef = 6; // The case where a user does not have a profile pic.
+                            }
+
                             GlobalVars.beaconBoardArrayList.add(new BeaconsModel(allData, nickname, androidPfpRef));
+                            beaconBoardAdapter.notifyDataSetChanged();
+
+                            if (GlobalVars.beaconBoardArrayList.size() == 0) {
+                                beaconsProgressBar.setVisibility(View.VISIBLE);
+                            } else {
+                                beaconsProgressBar.setVisibility(View.INVISIBLE);
+                            }
 
                         } else {
                             Log.d("BEACONS", "No such document");

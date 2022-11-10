@@ -354,29 +354,29 @@ public class EditPassport extends AppCompatActivity {
                         switch (androidPfpRef)
                         {
                             // Set profile pic image to Cheetah
-                            case 2131230902:
+                            case 0:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_cheetah, null));
                                     break;
 
                             // Set profile pic image to Elephant
-                            case 2131230903:
+                            case 1:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_elephant, null));
                                     break;
 
                             // Set profile pic image to Ladybug
-                            case 2131230905:
+                            case 2:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_ladybug, null));
                                     break;
                             // Set profile pic image to Monkey
-                            case 2131230906:
+                            case 3:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_monkey, null));
                                     break;
                             // Set profile pic image to Fox
-                            case 2131230904:
+                            case 4:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_fox, null));
                                     break;
                             // Set profile pic image to Penguin
-                            case 2131230907:
+                            case 5:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_penguin, null));
                                     break;
                         }
@@ -420,38 +420,38 @@ public class EditPassport extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickCheetahImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_cheetah, cheetahImageButton);
-        androidPfpRef = 2131230902;
+        androidPfpRef = 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickElephantImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_elephant, elephantImageButton);
-        androidPfpRef = 2131230903;
+        androidPfpRef = 1;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickLadybugImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_ladybug, ladybugImageButton);
-        androidPfpRef = 2131230905;
+        androidPfpRef = 2;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickMonkeyImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_monkey, monkeyImageButton);
-        androidPfpRef = 2131230906;
+        androidPfpRef = 3;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickFoxImageButton(View view) {
+        changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
+        androidPfpRef = 4;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickPenguinImageButton(View view) {
         clearProfPicSelection(view);
         changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
-        androidPfpRef = 2131230907;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void onClickFoxImageButton(View view) {
-        changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
-        androidPfpRef = 2131230904;
+        androidPfpRef = 5;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

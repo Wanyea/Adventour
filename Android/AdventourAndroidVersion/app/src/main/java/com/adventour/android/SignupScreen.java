@@ -72,7 +72,7 @@ public class SignupScreen extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        androidPfpRef = 0;
+        androidPfpRef = 6;
         iOSPfpRef = "";
 
         loginTextView = (TextView) findViewById(R.id.loginTextView);
@@ -223,7 +223,6 @@ public class SignupScreen extends AppCompatActivity {
             public void onClick(View view)
             {
                 onClickCheetahImageButton(view);
-                androidPfpRef = 2131230902;
             }
         });
 
@@ -232,7 +231,6 @@ public class SignupScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onClickElephantImageButton(view);
-                androidPfpRef = 2131230903;
             }
         });
 
@@ -241,7 +239,6 @@ public class SignupScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onClickLadybugImageButton(view);
-                androidPfpRef = 2131230905;
             }
         });
 
@@ -250,7 +247,6 @@ public class SignupScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onClickMonkeyImageButton(view);
-                androidPfpRef = 2131230906;
             }
         });
 
@@ -259,7 +255,6 @@ public class SignupScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onClickPenguinImageButton(view);
-                androidPfpRef = 2131230907;
             }
         });
 
@@ -268,7 +263,6 @@ public class SignupScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onClickFoxImageButton(view);
-                androidPfpRef = 2131230904;
             }
         });
     }
@@ -447,33 +441,38 @@ public class SignupScreen extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickCheetahImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_cheetah, cheetahImageButton);
+        androidPfpRef = 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickElephantImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_elephant, elephantImageButton);
+        androidPfpRef = 1;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickLadybugImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_ladybug, ladybugImageButton);
+        androidPfpRef = 2;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickMonkeyImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_monkey, monkeyImageButton);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void onClickPenguinImageButton(View view) {
-        clearProfPicSelection(view);
-        penguinImageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
-        changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
+        androidPfpRef = 3;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onClickFoxImageButton(View view) {
         changeProfPic(view, R.drawable.ic_profpic_fox, foxImageButton);
+        androidPfpRef = 4;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onClickPenguinImageButton(View view) {
+        clearProfPicSelection(view);
+        changeProfPic(view, R.drawable.ic_profpic_penguin, penguinImageButton);
+        androidPfpRef = 5;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

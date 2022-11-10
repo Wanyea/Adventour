@@ -14,16 +14,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 
 import android.widget.ProgressBar;
@@ -58,7 +55,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Passport extends AppCompatActivity {
-    
+
     private static final String TAG = "PassportActivity";
     public String userNickname;
 
@@ -69,9 +66,7 @@ public class Passport extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
 
-
     Context context = this;
-    LinearLayout linearLayout, linearLayout2;
 
     ActionBar actionBar;
 
@@ -82,7 +77,7 @@ public class Passport extends AppCompatActivity {
     PreviousAdventourAdapter previousAdventourAdapter;
     BeaconsAdapter beaconsAdapter;
 
-    ProgressBar progressBar;
+    ProgressBar passportCardProgressBar, previousAdventoursProgressBar, beaconPostsProgressBar;
     ImageView cakeIconImageView, profPicImageView;
 
     int androidPfpRef;
@@ -97,6 +92,8 @@ public class Passport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passport);
 
+        // Dump GlobalVars
+        GlobalVars.beaconBoardArrayList.clear();
 
         context = getApplicationContext();
 
@@ -114,7 +111,10 @@ public class Passport extends AppCompatActivity {
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        passportCardProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        previousAdventoursProgressBar = (ProgressBar) findViewById(R.id.previousAdventoursProgressBar);
+        beaconPostsProgressBar = (ProgressBar) findViewById(R.id.beaconPostsProgressBar);
+
         cakeIconImageView = (ImageView) findViewById(R.id.cakeIconImageView);
         profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
 
@@ -264,83 +264,7 @@ public class Passport extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.hamburger_menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId())
-        {
-            case R.id.adventourTOS:
-                openAdventourTOS(); // Prompts user to navigate to Adventour TOS on our site.
-                return true;
-
-            case R.id.logOut:
-                // Build AlertDialog that will alert users when they try to log out account.
-                AlertDialog.Builder logOutAlertBuilder = new AlertDialog.Builder(this);
-                logOutAlertBuilder.setMessage("Are you sure you want to log out?");
-                logOutAlertBuilder.setCancelable(true);
-
-                logOutAlertBuilder.setPositiveButton(
-                        R.string.Yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                FirebaseAuth.getInstance().signOut();
-                                switchToLoggedOut();
-                            }
-                        });
-
-                logOutAlertBuilder.setNegativeButton(
-                        R.string.No,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog logOutAlert = logOutAlertBuilder.create();
-                logOutAlert.show();
-                return true;
-
-            case R.id.deleteAccount:
-                // Build AlertDialog that will alert users when they try to delete their account.
-                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(this);
-                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-                deleteAccountAlertBuilder.setCancelable(true);
-
-                deleteAccountAlertBuilder.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                // DELETE USER DOCUMENT IN FIREBASE.
-                                // switchToLoggedOut();
-                            }
-                        });
-
-                deleteAccountAlertBuilder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
-                deleteAccountAlert.show();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
     public void populatePassport()
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -367,35 +291,37 @@ public class Passport extends AppCompatActivity {
                         switch (androidPfpRef)
                         {
                             // Set profile pic image to Cheetah
-                            case 2131230902:
+                            case 0:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_cheetah);
                                     break;
 
                             // Set profile pic image to Elephant
-                            case 2131230903:
+                            case 1:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_elephant);
                                     break;
 
                             // Set profile pic image to Ladybug
-                            case 2131230905:
+                            case 2:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_ladybug);
                                     break;
                             // Set profile pic image to Monkey
-                            case 2131230906:
+                            case 3:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_monkey);
                                     break;
                             // Set profile pic image to Fox
-                            case 2131230904:
+                            case 4:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_fox);
                                     break;
                            // Set profile pic image to Penguin
-                            case 2131230907:
+                            case 5:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_penguin);
                                     break;
+                            default:
+                                profPicImageView.setImageResource(R.drawable.ic_user_icon);
                         }
 
                         // Set visibility
-                        progressBar.setVisibility(View.INVISIBLE);
+                        passportCardProgressBar.setVisibility(View.INVISIBLE);
                         profPicImageView.setVisibility(View.VISIBLE);
                         nicknameTextView.setVisibility(View.VISIBLE);
                         cakeIconImageView.setVisibility(View.VISIBLE);
@@ -501,12 +427,17 @@ public class Passport extends AppCompatActivity {
 
                             Log.d("numOfAdventours", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
 
+                            previousAdventoursProgressBar.setVisibility(View.INVISIBLE);
+
                             // Set placeholder if user hasn't taken any Adventours.
-                            if(GlobalVars.previousAdventourArrayList.size() == 0) {
+                            if(GlobalVars.previousAdventourArrayList.size() == 0)
+                            {
                                 noPrevAdventours.setVisibility(View.VISIBLE);
                             } else {
                                 noPrevAdventours.setVisibility(View.INVISIBLE);
                             }
+
+
                         }
                     }
                 });
@@ -601,8 +532,11 @@ public class Passport extends AppCompatActivity {
 
                             Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
 
+                            beaconPostsProgressBar.setVisibility(View.INVISIBLE);
+
                             // Set placeholder if user hasn't posted any Beacons.
-                            if(GlobalVars.userBeaconsArrayList.size() == 0) {
+                            if(GlobalVars.userBeaconsArrayList.size() == 0)
+                            {
                                 noPrevBeacons.setVisibility(View.VISIBLE);
                             } else {
                                 noPrevBeacons.setVisibility(View.INVISIBLE);
@@ -638,7 +572,11 @@ public class Passport extends AppCompatActivity {
 
     public void openAdventourTOS()
     {
-        // Prompt user to navigate to Adventour TOS on our site.
+        String url = "https://adventour.app/terms-of-service";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
 }

@@ -328,16 +328,16 @@
                 app:layout_constraintTop_toBottomOf="@id/starvingSwitch" />
 
             <TextView
-                android:id="@+id/twentyoneTextView"
+                android:id="@+id/twentyOneTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="21+ 🍻"
-                app:layout_constraintBottom_toBottomOf="@id/twentyonePlusSwitch"
+                app:layout_constraintBottom_toBottomOf="@id/twentyOnePlusSwitch"
                 app:layout_constraintStart_toStartOf="@id/chillTextView"
-                app:layout_constraintTop_toTopOf="@id/twentyonePlusSwitch" />
+                app:layout_constraintTop_toTopOf="@id/twentyOnePlusSwitch" />
 
             <Switch
-                android:id="@+id/twentyonePlusSwitch"
+                android:id="@+id/twentyOnePlusSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/chillSwitch"

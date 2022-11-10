@@ -77,8 +77,6 @@ public class BeaconPost extends AppCompatActivity {
                 R.string.Yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        postToBeaconBoard();
-                        storeBeacon();
                         storeAdventour();
                         switchToHome();
                     }
@@ -112,7 +110,7 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
-    public void postToBeaconBoard()
+    public void postToBeaconBoard(String adventourId)
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -133,12 +131,13 @@ public class BeaconPost extends AppCompatActivity {
         db.collection("Adventourists")
                 .document(user.getUid())
                 .collection("Beacons")
-                .add(newBeacon)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document(adventourId)
+                .set(newBeacon)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Beacon Posted", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    public void onSuccess(Void v) {
+                        Log.d("Beacon Posted", "DocumentSnapshot written with ID: " + v);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -149,7 +148,7 @@ public class BeaconPost extends AppCompatActivity {
                 });
     }
 
-    public void storeBeacon()
+    public void storeBeacon(String adventourId)
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -167,16 +166,16 @@ public class BeaconPost extends AppCompatActivity {
         addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
         addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
 
-
         db.collection("Adventourists")
-                .document(user.getUid())
+                .document("user.getUid()")
                 .collection("beacons")
-                .add(addBeacon)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document(adventourId)
+                .set(addBeacon)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Beacon added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                    public void onSuccess(Void v) {
+                        Log.d("Beacon added", "DocumentSnapshot written with ID: " + v);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -209,6 +208,9 @@ public class BeaconPost extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         newAdventour.put("nickname", document.getString("nickname"));
+                        String adventourId = document.getId();
+                        storeBeacon(adventourId);
+                        postToBeaconBoard(adventourId);
                         // TODO: get reference to users profile pic.
                     } else {
                         Log.d(TAG, "No such document");
@@ -222,6 +224,8 @@ public class BeaconPost extends AppCompatActivity {
         newAdventour.put("dateCreated", new Timestamp(new Date()));
         newAdventour.put("locations", GlobalVars.adventourFSQIds);
         newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
+        newAdventour.put("beaconLocation", GlobalVars.selectedLocation);
+        newAdventour.put("isBeacon", true);
 
         //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
         // and users could potentially filter by categories.
@@ -267,34 +271,36 @@ public class BeaconPost extends AppCompatActivity {
                         switch (androidPfpRef)
                         {
                             // Set profile pic image to Cheetah
-                            case 2131230902:
+                            case 0:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_cheetah);
                                     break;
 
                              // Set profile pic image to Elephant
-                            case 2131230903:
+                            case 1:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_elephant);
                                     break;
 
                             // Set profile pic image to Ladybug
-                            case 2131230905:
+                            case 2:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_ladybug);
                                     break;
 
                             // Set profile pic image to Monkey
-                            case 2131230906:
+                            case 3:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_monkey);
                                     break;
 
                             // Set profile pic image to Fox
-                            case 2131230904:
+                            case 4:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_fox);
                                     break;
 
                             // Set profile pic image to Penguin
-                            case 2131230907:
+                            case 5:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_penguin);
                                     break;
+                            default:
+                                authorImageView.setImageResource(R.drawable.ic_user_icon);
                         }
                     } else {
                         Log.d("BEACON POST", "No such document");

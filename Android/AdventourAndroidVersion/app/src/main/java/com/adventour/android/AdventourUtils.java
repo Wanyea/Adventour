@@ -54,18 +54,39 @@ public class AdventourUtils {
     public static boolean isUserOver13(int day, int month, int year)
     {
 
-        GregorianCalendar cal = new GregorianCalendar();
+        Calendar c1 = Calendar.getInstance();
+        c1.set(year, month, day, 0, 0); // as MONTH in calender is 0 based.
 
-        int age = Math.abs(year - cal.get(Calendar.YEAR));
+        Calendar c2 = Calendar.getInstance();
+        int age = c2.get(Calendar.YEAR) - c1.get(Calendar.YEAR);
+        if (c1.get(Calendar.MONTH) > c2.get(Calendar.MONTH) ||
+                (c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) && c1.get(Calendar.DATE) > c2.get(Calendar.DATE))) {
+            age--;
+        }
 
-        if ((month < cal.get(Calendar.MONTH)) || ((month == cal.get(Calendar.MONTH)) && (day < cal.get(Calendar.DAY_OF_MONTH))))
-            --age;
-
-        if(age > 13)
+        if(age >= 13)
             return true;
         else
             return false;
 
+    }
+
+    public static boolean isUserOver21Plus(int day, int month, int year)
+    {
+        Calendar c1 = Calendar.getInstance();
+        c1.set(year, month, day, 0, 0); // as MONTH in calender is 0 based.
+
+        Calendar c2 = Calendar.getInstance();
+        int age = c2.get(Calendar.YEAR) - c1.get(Calendar.YEAR);
+        if (c1.get(Calendar.MONTH) > c2.get(Calendar.MONTH) ||
+                (c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) && c1.get(Calendar.DATE) > c2.get(Calendar.DATE))) {
+            age--;
+        }
+
+        if(age >= 21)
+            return true;
+        else
+            return false;
     }
 
     public static boolean isValidPassword(String password) {
@@ -103,7 +124,7 @@ public class AdventourUtils {
 
     public static boolean isProfilePictureSelected(long androidPfpRef)
     {
-        return androidPfpRef != 0;
+        return androidPfpRef != 6;
     }
 }
 
