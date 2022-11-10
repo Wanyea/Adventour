@@ -55,6 +55,7 @@ public class Beacons extends AppCompatActivity {
 
         GlobalVars.previousAdventourArrayList.clear();
         GlobalVars.userBeaconsArrayList.clear();
+
         handleAuth();
         getBeacons();
 
@@ -232,8 +233,9 @@ public class Beacons extends AppCompatActivity {
                         if (document.exists()) {
                             Log.d("BEACONS", "DocumentSnapshot data: " + document.getData());
                             String nickname = (String) document.get("nickname");
-                            int profilePicReference = toIntExact((long) document.get("androidPfpRef"));
-                            GlobalVars.beaconBoardArrayList.add(new BeaconsModel(allData, nickname, profilePicReference));
+
+                            int androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                            GlobalVars.beaconBoardArrayList.add(new BeaconsModel(allData, nickname, androidPfpRef));
 
                         } else {
                             Log.d("BEACONS", "No such document");

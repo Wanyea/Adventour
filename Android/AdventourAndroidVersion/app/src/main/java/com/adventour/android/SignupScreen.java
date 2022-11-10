@@ -5,10 +5,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -52,6 +50,7 @@ public class SignupScreen extends AppCompatActivity {
     EditText nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
     long androidPfpRef;
+    String iOSPfpRef;
     ImageButton profPicImageButton;
     CardView popupProfPic;
     Button doneButton;
@@ -74,6 +73,7 @@ public class SignupScreen extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         androidPfpRef = 0;
+        iOSPfpRef = "";
 
         loginTextView = (TextView) findViewById(R.id.loginTextView);
         signupButton = (Button) findViewById(R.id.signupButton);
@@ -199,7 +199,7 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword) &&
                    AdventourUtils.isProfilePictureSelected(androidPfpRef))
                     {
-                        signUp(nickname, email, password, birthdate, defaultMantra, androidPfpRef); // Attempt to create user document and add to firebase.
+                        signUp(nickname, email, password, birthdate, defaultMantra, androidPfpRef, iOSPfpRef); // Attempt to create user document and add to firebase.
                     }
             }
         });
@@ -380,7 +380,7 @@ public class SignupScreen extends AppCompatActivity {
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, long androidPfpRef) {
+    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, long androidPfpRef, String iOSPfpRef) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
@@ -389,6 +389,7 @@ public class SignupScreen extends AppCompatActivity {
         adventourist.put("isPrivate", true);
         adventourist.put("mantra", defaultMantra);
         adventourist.put("androidPfpRef", androidPfpRef);
+        adventourist.put("iOSPfpRef", iOSPfpRef);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -411,7 +412,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, long androidPfpRef) {
+    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, long androidPfpRef, String iOSPfpRef) {
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -421,7 +422,7 @@ public class SignupScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            addUserToFirestore(nickname, email, birthdate, defaultMantra, androidPfpRef);
+                            addUserToFirestore(nickname, email, birthdate, defaultMantra, androidPfpRef, iOSPfpRef);
                             switchToHome();
                         } else {
                             // If sign in fails, display a message to the user.

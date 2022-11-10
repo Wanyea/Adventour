@@ -20,10 +20,9 @@ public class BeaconsModel {
     private String beaconAuthor;
     private Bitmap beaconBitmap;
     private String dateCreated;
-    private int profilePicReference;
+    private int androidPfpRef;
 
-
-    public BeaconsModel(Map allData, String userNickname, int profilePicReference) {
+    public BeaconsModel(Map allData, String userNickname, int androidPfpRef) {
 
         this.beaconTitle = (String) allData.get("title");
         this.beaconIntro = (String) allData.get("intro");
@@ -47,7 +46,7 @@ public class BeaconsModel {
         }
 
         this.dateCreated = AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
-        this.profilePicReference = profilePicReference;
+        this.androidPfpRef = androidPfpRef;
 
         Log.d("Model", dateCreated);
     }
@@ -92,11 +91,11 @@ public class BeaconsModel {
         this.beaconBitmap = beaconBitmap;
     }
 
-    public int getProfilePicReference() {
-        return profilePicReference;
+    public int getAndroidPfpRef() {
+        return androidPfpRef;
     }
 
-    public void setProfilePicReference(int profilePicReference) {
-        this.profilePicReference = profilePicReference;
+    public void setProfilePicReference(int androidPfpRef) {
+        this.androidPfpRef = androidPfpRef;
     }
 }

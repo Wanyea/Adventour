@@ -36,7 +36,39 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         holder.beaconAuthor.setText(model.getBeaconAuthor());
         holder.beaconImage.setImageBitmap(model.getBeaconBitmap());
         holder.beaconCreatedDate.setText(model.getDateCreated());
-        holder.authorImageView.setImageResource(model.getProfilePicReference());
+
+        switch (model.getAndroidPfpRef())
+        {
+            // Set profile pic image to Cheetah
+            case 2131230902:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_cheetah);
+                    break;
+
+            // Set profile pic image to Elephant
+            case 2131230903:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_elephant);
+                    break;
+
+            // Set profile pic image to Ladybug
+            case 2131230905:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_ladybug);
+                    break;
+
+            // Set profile pic image to Monkey
+            case 2131230906:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_monkey);
+                    break;
+
+            // Set profile pic image to Fox
+            case 2131230904:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_fox);
+                    break;
+
+            // Set profile pic image to Penguin
+            case 2131230907:
+                holder.authorImageView.setImageResource(R.drawable.ic_profpic_penguin);
+                    break;
+        }
     }
 
     @Override

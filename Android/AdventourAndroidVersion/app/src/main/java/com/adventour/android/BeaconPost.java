@@ -46,6 +46,8 @@ public class BeaconPost extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
 
+    int androidPfpRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -259,7 +261,41 @@ public class BeaconPost extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d("BEACON POST", "DocumentSnapshot data: " + document.getData());
                         authorTextView.setText(document.getString("nickname"));
-                        authorImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
+
+                        androidPfpRef = toIntExact((long)document.get("androidPfpRef"));
+
+                        switch (androidPfpRef)
+                        {
+                            // Set profile pic image to Cheetah
+                            case 2131230902:
+                                authorImageView.setImageResource(R.drawable.ic_profpic_cheetah);
+                                    break;
+
+                             // Set profile pic image to Elephant
+                            case 2131230903:
+                                authorImageView.setImageResource(R.drawable.ic_profpic_elephant);
+                                    break;
+
+                            // Set profile pic image to Ladybug
+                            case 2131230905:
+                                authorImageView.setImageResource(R.drawable.ic_profpic_ladybug);
+                                    break;
+
+                            // Set profile pic image to Monkey
+                            case 2131230906:
+                                authorImageView.setImageResource(R.drawable.ic_profpic_monkey);
+                                    break;
+
+                            // Set profile pic image to Fox
+                            case 2131230904:
+                                authorImageView.setImageResource(R.drawable.ic_profpic_fox);
+                                    break;
+
+                            // Set profile pic image to Penguin
+                            case 2131230907:
+                                authorImageView.setImageResource(R.drawable.ic_profpic_penguin);
+                                    break;
+                        }
                     } else {
                         Log.d("BEACON POST", "No such document");
                     }

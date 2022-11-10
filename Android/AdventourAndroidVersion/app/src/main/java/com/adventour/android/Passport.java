@@ -85,7 +85,7 @@ public class Passport extends AppCompatActivity {
     ProgressBar progressBar;
     ImageView cakeIconImageView, profPicImageView;
 
-    int profilePicReference;
+    int androidPfpRef;
 
     boolean isHamburgerMenuOpen = false;
 
@@ -364,8 +364,38 @@ public class Passport extends AppCompatActivity {
                         userNickname = document.getString("nickname");
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
-                        profPicImageView.setImageResource(toIntExact((long)document.get("androidPfpRef")));
-                        profilePicReference = toIntExact((long)document.get("androidPfpRef"));
+
+                        androidPfpRef = toIntExact((long)document.get("androidPfpRef"));
+
+                        switch (androidPfpRef)
+                        {
+                            // Set profile pic image to Cheetah
+                            case 2131230902:
+                                profPicImageView.setImageResource(R.drawable.ic_profpic_cheetah);
+                                    break;
+
+                            // Set profile pic image to Elephant
+                            case 2131230903:
+                                profPicImageView.setImageResource(R.drawable.ic_profpic_elephant);
+                                    break;
+
+                            // Set profile pic image to Ladybug
+                            case 2131230905:
+                                profPicImageView.setImageResource(R.drawable.ic_profpic_ladybug);
+                                    break;
+                            // Set profile pic image to Monkey
+                            case 2131230906:
+                                profPicImageView.setImageResource(R.drawable.ic_profpic_monkey);
+                                    break;
+                            // Set profile pic image to Fox
+                            case 2131230904:
+                                profPicImageView.setImageResource(R.drawable.ic_profpic_fox);
+                                    break;
+                           // Set profile pic image to Penguin
+                            case 2131230907:
+                                profPicImageView.setImageResource(R.drawable.ic_profpic_penguin);
+                                    break;
+                        }
 
                         // Set visibility
                         progressBar.setVisibility(View.INVISIBLE);
@@ -473,6 +503,7 @@ public class Passport extends AppCompatActivity {
                             }
 
                             Log.d("numOfAdventours", String.valueOf(GlobalVars.previousAdventourArrayList.size()));
+
                             // Set placeholder if user hasn't taken any Adventours.
                             if(GlobalVars.previousAdventourArrayList.size() == 0) {
                                 noPrevAdventours.setVisibility(View.VISIBLE);
@@ -562,7 +593,7 @@ public class Passport extends AppCompatActivity {
                                         JSONObject responseData = new JSONObject(response.toString());
                                         JSONArray results = (JSONArray) responseData.get("results");
                                         allData.put("locations", results);
-                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData, userNickname, profilePicReference));
+                                        GlobalVars.userBeaconsArrayList.add(new BeaconsModel(allData, userNickname, androidPfpRef));
 
                                         beaconsAdapter.notifyDataSetChanged();
                                     } catch (Exception e) {
@@ -572,6 +603,7 @@ public class Passport extends AppCompatActivity {
                             }
 
                             Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
+
                             // Set placeholder if user hasn't posted any Beacons.
                             if(GlobalVars.userBeaconsArrayList.size() == 0) {
                                 noPrevBeacons.setVisibility(View.VISIBLE);
@@ -583,14 +615,13 @@ public class Passport extends AppCompatActivity {
                 });
     }
 
-
     public void switchToEditPassport()
     {
         Intent intent = new Intent(this, EditPassport.class);
         startActivity(intent);
     }
 
-     public void switchToLoggedOut()
+    public void switchToLoggedOut()
     {
         Intent intent = new Intent(this, LoggedOut.class);
         startActivity(intent);
@@ -602,7 +633,6 @@ public class Passport extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        Log.d("PASSPORT USER", user.toString());
         if (user == null)
         {
             switchToLoggedOut();
