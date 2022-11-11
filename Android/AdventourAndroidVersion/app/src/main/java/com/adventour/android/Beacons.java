@@ -138,7 +138,6 @@ public class Beacons extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Get all Beacons from Beacon Board.
-        Log.d("getBeacons in BEACONS", "Calling database...");
         db.collection("Beacons")
                 .get()
                 .addOnFailureListener(new OnFailureListener() {
@@ -150,8 +149,7 @@ public class Beacons extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.d("getBeacons in BEACONS", "Completed calling database...");
-                        if (task.isSuccessful())
+                         if (task.isSuccessful())
                         {
                             Log.d("getBeacons in BEACONS", "Documents retrieved!");
                             for (QueryDocumentSnapshot beacons : task.getResult())
@@ -283,6 +281,94 @@ public class Beacons extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void checkLiked()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get all Beacons from Beacon Board.
+        db.collection("Beacons")
+                .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("getBeacons in BEACONS", "Failed calling database...");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            Log.d("getBeacons in BEACONS", "Documents retrieved!");
+                            for (QueryDocumentSnapshot beacons : task.getResult())
+                            {
+                                Map<String, Object> allData = new HashMap<>();
+                                allData = beacons.getData();
+                                allData.put("documentID", beacons.getId());
+
+                                Log.d("BEACON DATA", "all beacon data: " + allData);
+                                ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
+                                Log.d("getBeacons in BEACONS", locations.toString());
+
+                                JSONObject requestBody = new JSONObject();
+
+                                try
+                                {
+                                    requestBody.put("ids", new JSONArray(locations));
+                                    requestBody.put("uid", user.getUid());
+                                } catch (JSONException e) {
+                                    Log.e("getBeacons in BEACONS Error", e.toString());
+                                }
+
+                                try {
+                                    URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                                    conn.setDoOutput(true);
+                                    conn.setInstanceFollowRedirects(false);
+                                    conn.setRequestMethod("POST");
+                                    conn.setRequestProperty("Content-Type", "application/json");
+                                    conn.setRequestProperty("Accept", "application/json");
+                                    conn.setUseCaches(false);
+
+                                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                    wr.writeBytes(requestBody.toString());
+                                    wr.flush();
+                                    wr.close();
+                                    requestBody = null;
+
+                                    System.out.println("\nSending 'POST' request to URL : " + url);
+
+                                    InputStream it = conn.getInputStream();
+                                    InputStreamReader inputs = new InputStreamReader(it);
+
+                                    BufferedReader in = new BufferedReader(inputs);
+                                    String inputLine;
+                                    StringBuffer response = new StringBuffer();
+
+                                    while ((inputLine = in.readLine()) != null) {
+                                        response.append(inputLine);
+                                    }
+
+                                    in.close();
+                                    JSONObject responseData = new JSONObject(response.toString());
+                                    JSONArray results = (JSONArray) responseData.get("results");
+                                    allData.put("locations", results);
+                                    setBeaconModel(allData);
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e("getBeaconPosts", e.toString());
+                                }
+                            }
+                            Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
+                        }
+                    }
+                });
     }
 }
 
