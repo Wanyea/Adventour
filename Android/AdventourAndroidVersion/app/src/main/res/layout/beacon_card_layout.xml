@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="262.5dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/transparent"
+    app:cardElevation="0dp" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_beacon_card"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:background="@drawable/ic_beacon_card" >
 
         <ImageView
             android:id="@+id/authorImageView"

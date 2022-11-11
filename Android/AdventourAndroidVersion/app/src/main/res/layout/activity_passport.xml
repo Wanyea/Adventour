@@ -31,17 +31,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cloud_2" />
 
-    <ImageButton
-        android:id="@+id/hamburgerMenuImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_hamburger_menu_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/navy_main" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
 
@@ -98,18 +87,20 @@
                 android:id="@+id/previousAdventoursProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
-                app:layout_constraintEnd_toEndOf="@id/passportCardImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previousAdventoursHeader"
+                android:layout_marginVertical="30dp"
                 android:indeterminate="true" />
 
             <ProgressBar
                 android:id="@+id/beaconPostsProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
-                app:layout_constraintEnd_toEndOf="@id/passportCardImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/myLitBeaconsHeader"
+                android:layout_marginVertical="30dp"
                 android:indeterminate="true" />
 
             <TextView
@@ -164,8 +155,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="My Lit Beacons"
                 android:textSize="20sp"
-                android:paddingBottom="10dp"
-                android:paddingTop="30dp"
+                android:layout_marginTop="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previousAdventoursScrollview" />
@@ -190,6 +180,7 @@
                 app:layout_constraintHeight_max="450dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/myLitBeaconsHeader" >
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -292,7 +283,7 @@
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/hamburgerMenuPopup"
@@ -345,5 +336,16 @@
             app:layout_constraintTop_toBottomOf="@id/logOut" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/hamburgerMenuImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_hamburger_menu_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/navy_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,7 +72,7 @@ public class StartAdventour extends AppCompatActivity {
     ImageButton filterButton;
     Slider distanceSlider;
     TextView nameTextView, distanceTextView, phoneTextView, websiteTextView, descriptionTextView, noLocationTextView, twentyOneTextView;
-    Button beginButton, doneButton, notNowButton, yesButton;
+    Button goButton, doneButton, notNowButton, yesButton;
     RatingBar ratingBar;
     ImageView phoneImageView, globeImageView, previewImageView;
     ProgressBar progressBar;
@@ -133,7 +133,7 @@ public class StartAdventour extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.start_adventour);
 
         filterButton = (ImageButton) findViewById(R.id.filterButton);
-        beginButton = (Button) findViewById(R.id.beginButton);
+        goButton = (Button) findViewById(R.id.goButton);
         doneButton = (Button) findViewById(R.id.doneButton);
         notNowButton = (Button) findViewById(R.id.notNowButton);
         yesButton = (Button) findViewById(R.id.yesButton);
@@ -200,10 +200,17 @@ public class StartAdventour extends AppCompatActivity {
             }
         });
 
-        beginButton.setOnClickListener(new View.OnClickListener() {
+        goButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view)
            {
+               scrollView.postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                   }
+               },1000);
+
                setLocationVisibility(false);
                progressBar.setVisibility(View.VISIBLE);
 
@@ -217,7 +224,7 @@ public class StartAdventour extends AppCompatActivity {
            public void onClick(View view)
            {
                if (isLocationSelected() && isTagSelected())
-                   beginButton.setEnabled(true);
+                   goButton.setEnabled(true);
 
                popupFilter.setVisibility(View.INVISIBLE);
            }
@@ -293,7 +300,7 @@ public class StartAdventour extends AppCompatActivity {
                 GlobalVars.locationCoordinates = place.getLatLng();
 
                 if(isTagSelected())
-                    beginButton.setEnabled(true);
+                    goButton.setEnabled(true);
 
                 Log.i("Start Adventour", "Place: " + GlobalVars.selectedLocation + ", " + GlobalVars.selectedLocationID + ", " + GlobalVars.locationCoordinates);
             }
@@ -892,6 +899,7 @@ public class StartAdventour extends AppCompatActivity {
     public void populateCard(String name, float rating, String tel, String website, String description)
     {
         Context c = this;
+
         new Thread() {
             public void run() {
                 runOnUiThread(() -> {
@@ -929,15 +937,6 @@ public class StartAdventour extends AppCompatActivity {
                 });
             }
         }.start();
-
-        scrollView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-            }
-        },1000);
-
-        
     }
 
     public void getUser()

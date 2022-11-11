@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import android.widget.ImageView;
@@ -79,6 +80,7 @@ public class Passport extends AppCompatActivity {
 
     ProgressBar passportCardProgressBar, previousAdventoursProgressBar, beaconPostsProgressBar;
     ImageView cakeIconImageView, profPicImageView;
+    TextView myLitBeaconsHeader;
 
     View outsideView;
 
@@ -119,6 +121,7 @@ public class Passport extends AppCompatActivity {
 
         cakeIconImageView = (ImageView) findViewById(R.id.cakeIconImageView);
         profPicImageView = (ImageView) findViewById(R.id.profPicImageView);
+        myLitBeaconsHeader = (TextView) findViewById(R.id.myLitBeaconsHeader);
 
         hamburgerMenuPopup = (ConstraintLayout) findViewById(R.id.hamburgerMenuPopup);
 
@@ -162,11 +165,11 @@ public class Passport extends AppCompatActivity {
            {
                if (isHamburgerMenuOpen)
                {
+                   hamburgerMenuPopup.setVisibility(View.GONE);
+                   outsideView.setVisibility(View.GONE);
+               } else {
                    hamburgerMenuPopup.setVisibility(View.VISIBLE);
                    outsideView.setVisibility(View.VISIBLE);
-               } else {
-                   hamburgerMenuPopup.setVisibility(View.INVISIBLE);
-                   outsideView.setVisibility(View.INVISIBLE);
                }
 
                isHamburgerMenuOpen = !isHamburgerMenuOpen;
@@ -268,8 +271,9 @@ public class Passport extends AppCompatActivity {
         outsideView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hamburgerMenuPopup.setVisibility(View.INVISIBLE);
-                outsideView.setVisibility(View.INVISIBLE);
+                hamburgerMenuPopup.setVisibility(View.GONE);
+                outsideView.setVisibility(View.GONE);
+                isHamburgerMenuOpen = false;
             }
         });
     }
@@ -341,6 +345,10 @@ public class Passport extends AppCompatActivity {
                         cakeIconImageView.setVisibility(View.VISIBLE);
                         birthdateTextView.setVisibility(View.VISIBLE);
                         mantraTextView.setVisibility(View.VISIBLE);
+
+                        // Update constraint
+                        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
+                        params.topMargin = 60;
                     } else {
                         Log.d(TAG, "No such document");
                     }
