@@ -77,6 +77,7 @@ public class BeaconPost extends AppCompatActivity {
                 R.string.Yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Log.d("ConfirmDialogue", "Yes/No dialogue opened");
                         storeAdventour();
                         switchToHome();
                     }
@@ -128,9 +129,7 @@ public class BeaconPost extends AppCompatActivity {
         newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
         newBeacon.put("beaconLocation", GlobalVars.selectedLocation);
 
-        db.collection("Adventourists")
-                .document(user.getUid())
-                .collection("Beacons")
+        db.collection("Beacons")
                 .document(adventourId)
                 .set(newBeacon)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -167,7 +166,7 @@ public class BeaconPost extends AppCompatActivity {
         addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
 
         db.collection("Adventourists")
-                .document("user.getUid()")
+                .document(user.getUid())
                 .collection("beacons")
                 .document(adventourId)
                 .set(addBeacon)
@@ -209,8 +208,8 @@ public class BeaconPost extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         newAdventour.put("nickname", document.getString("nickname"));
                         String adventourId = document.getId();
-                        storeBeacon(adventourId);
-                        postToBeaconBoard(adventourId);
+                        Log.d(TAG, "adventourID: " + adventourId);
+                        Log.d(TAG, "Confirming that adventourID is printed before continuing");
                         // TODO: get reference to users profile pic.
                     } else {
                         Log.d(TAG, "No such document");
@@ -239,6 +238,8 @@ public class BeaconPost extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                        storeBeacon(documentReference.getId());
+                        postToBeaconBoard(documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
