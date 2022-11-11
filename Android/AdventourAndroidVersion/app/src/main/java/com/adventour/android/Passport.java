@@ -80,6 +80,8 @@ public class Passport extends AppCompatActivity {
     ProgressBar passportCardProgressBar, previousAdventoursProgressBar, beaconPostsProgressBar;
     ImageView cakeIconImageView, profPicImageView;
 
+    View outsideView;
+
     int androidPfpRef;
 
     boolean isHamburgerMenuOpen = false;
@@ -124,6 +126,8 @@ public class Passport extends AppCompatActivity {
 
         queryString = new ArrayList<>();
 
+        outsideView = (View) findViewById(R.id.outsideView);
+
         handleAuth();
         populatePassport();
 
@@ -159,8 +163,10 @@ public class Passport extends AppCompatActivity {
                if (isHamburgerMenuOpen)
                {
                    hamburgerMenuPopup.setVisibility(View.VISIBLE);
+                   outsideView.setVisibility(View.VISIBLE);
                } else {
                    hamburgerMenuPopup.setVisibility(View.INVISIBLE);
+                   outsideView.setVisibility(View.INVISIBLE);
                }
 
                isHamburgerMenuOpen = !isHamburgerMenuOpen;
@@ -257,6 +263,14 @@ public class Passport extends AppCompatActivity {
                     return true;
             }
             return false;
+        });
+
+        outsideView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hamburgerMenuPopup.setVisibility(View.INVISIBLE);
+                outsideView.setVisibility(View.INVISIBLE);
+            }
         });
     }
 

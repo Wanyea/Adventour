@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -75,6 +76,7 @@ public class StartAdventour extends AppCompatActivity {
     RatingBar ratingBar;
     ImageView phoneImageView, globeImageView, previewImageView;
     ProgressBar progressBar;
+    ScrollView scrollView;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -175,6 +177,8 @@ public class StartAdventour extends AppCompatActivity {
         isSwitchActive = new HashMap<String, String>();
 
         websiteTextView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         // Reset before going back to passport.
         GlobalVars.userBeaconsArrayList.clear();
@@ -925,6 +929,15 @@ public class StartAdventour extends AppCompatActivity {
                 });
             }
         }.start();
+
+        scrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        },1000);
+
+        
     }
 
     public void getUser()
