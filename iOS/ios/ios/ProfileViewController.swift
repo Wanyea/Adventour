@@ -11,6 +11,9 @@ import FirebaseFirestore
 
 class ProfileViewController: UIViewController, UITableViewDelegate {
     
+    var adventourNextPageListener: ListenerRegistration!
+    var beaconNextPageListener: ListenerRegistration!
+    
     var user: User!
     @IBOutlet weak var exitIndicator: UIView!
     
@@ -139,6 +142,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                     vc.nickname = self.nicknameLabel.text!
                     print("vc nickname: ", vc.nickname)
                     self.navigationController?.pushViewController(vc, animated: true)
+                    
                 }
                 
             }
@@ -205,7 +209,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     }
     
     func getNextPagePrevAdventours() {
-        self.adventourQuery.addSnapshotListener { (snapshot, error) in
+        self.adventourNextPageListener = self.adventourQuery.addSnapshotListener { (snapshot, error) in
             guard let snapshot = snapshot else {
                 print("\(error.debugDescription)")
                 return
@@ -290,6 +294,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                         }
                         sem.wait()
 //                        print("This is all the data: ", allData ?? "None")
+                        self.adventourNextPageListener.remove()
                     }
                 }
             }
@@ -383,7 +388,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     }
     
     func getNextPageBeacons() {
-        self.beaconQuery.addSnapshotListener { (snapshot, error) in
+        self.beaconNextPageListener = self.beaconQuery.addSnapshotListener { (snapshot, error) in
             guard let snapshot = snapshot else {
                 print("\(error.debugDescription)")
                 return
@@ -470,6 +475,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                             }
                         }
                         sem.wait()
+                        self.beaconNextPageListener.remove()
                     }
                 }
             }

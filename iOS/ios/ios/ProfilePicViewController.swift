@@ -36,27 +36,27 @@ class ProfilePicViewController: UIViewController {
         let tap6 = UITapGestureRecognizer(target: self, action: #selector(self.tapDetected))
         profileCheeta?.isUserInteractionEnabled = true
         profileCheeta?.iosPfpRef = "profpic_cheetah"
-        profileCheeta?.androidPfpRef = 2131230902
+        profileCheeta?.androidPfpRef = 0
         profileCheeta?.addGestureRecognizer(tap)
         profileElephant?.isUserInteractionEnabled = true
         profileElephant?.iosPfpRef = "profpic_elephant"
-        profileElephant?.androidPfpRef = 2131230903
+        profileElephant?.androidPfpRef = 1
         profileElephant?.addGestureRecognizer(tap2)
         profileFox?.isUserInteractionEnabled = true
         profileFox?.iosPfpRef = "profpic_fox"
-        profileFox?.androidPfpRef = 2131230904
+        profileFox?.androidPfpRef = 4
         profileFox?.addGestureRecognizer(tap3)
         profileBug?.isUserInteractionEnabled = true
         profileBug?.iosPfpRef = "profpic_ladybug"
-        profileBug?.androidPfpRef = 2131230905
+        profileBug?.androidPfpRef = 2
         profileBug?.addGestureRecognizer(tap4)
         profileMonkey?.isUserInteractionEnabled = true
         profileMonkey?.iosPfpRef = "profpic_monkey"
-        profileMonkey?.androidPfpRef = 2131230906
+        profileMonkey?.androidPfpRef = 3
         profileMonkey?.addGestureRecognizer(tap5)
         profilePenguin?.isUserInteractionEnabled = true
         profilePenguin?.iosPfpRef = "profpic_penguin"
-        profilePenguin?.androidPfpRef = 2131230907
+        profilePenguin?.androidPfpRef = 5
         profilePenguin?.addGestureRecognizer(tap6)
         
     }
@@ -103,10 +103,13 @@ class ProfilePicViewController: UIViewController {
         }
         
         if let destinationVC = segue.destination as? EditProfileViewController{
-            print("edit profile check")
-            destinationVC.profilePic?.image = picture
-            destinationVC.androidPfpRef = (signupData["androidPfpRef"] as! Int)
-            destinationVC.iosPfpRef = (signupData["iosPfpRef"] as! String)
+            if signupData["androidPfpRef"] != nil {
+                destinationVC.androidPfpRef = (signupData["androidPfpRef"] as! Int)
+            }
+            if signupData["iosPfpRef"] != nil {
+                destinationVC.iosPfpRef = (signupData["iosPfpRef"] as! String)
+            }
+            
             }
         
         

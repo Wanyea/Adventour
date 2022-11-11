@@ -12,6 +12,9 @@ import FirebaseFirestore
 
 class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    var listener: ListenerRegistration!
+    var nextPageListener: ListenerRegistration!
+    
     var beaconLocation = ""
     var lon: Double!
     var lat: Double!
@@ -192,12 +195,14 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
-        query.addSnapshotListener { snap, error in
+        self.listener = query.addSnapshotListener { snap, error in
             if snap!.isEmpty {
                 cell.likeIcon.image = UIImage(systemName: "heart")
+                self.listener.remove()
                 
             } else {
-                    cell.likeIcon.image = UIImage(systemName: "heart.fill")
+                cell.likeIcon.image = UIImage(systemName: "heart.fill")
+                self.listener.remove()
             }
         }
     }
@@ -231,7 +236,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func getNextPageBeacons() {
-        self.query.addSnapshotListener { (snapshot, error) in
+        self.nextPageListener = self.query.addSnapshotListener { (snapshot, error) in
             guard let snapshot = snapshot else {
                 print("\(error.debugDescription)")
                 return
@@ -313,6 +318,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                         }
                         
                         sem.wait()
+                        self.nextPageListener.remove()
                     }
                 }
             }

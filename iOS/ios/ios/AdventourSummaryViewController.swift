@@ -59,8 +59,20 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
         if let rating = locations[indexPath.item]["rating"] as? Double {
             cell.cosmosView.rating = rating / 2
         }
+        let sem = DispatchSemaphore(value: 0)
+        if let photos = locations[indexPath.item]["photos"] as? [[String: Any]] {
+            if photos.count > 0 {
+                let photo = photos[0]
+                if let prefix = photo["prefix"] as? String {
+                    if let suffix = photo["suffix"] as? String {
+                        let url = prefix + "original" + suffix
+                        cell.img.loadFrom(URLAddress: url, semaphore: sem)
+                    }
+                }
+            }
+        }
+        sem.wait()
         
-        // Safely unwrap Json Dictionary
         
         return cell
     }

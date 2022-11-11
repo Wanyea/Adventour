@@ -46,7 +46,10 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
         if let pfpSegue = segue.source as? ProfilePicViewController {
             self.androidPfpRef = pfpSegue.androidPfpRef
             self.iosPfpRef = pfpSegue.iosPfpRef
-            self.profilePic?.image = UIImage(named: iosPfpRef)
+            if self.iosPfpRef != nil {
+                self.profilePic?.image = UIImage(named: iosPfpRef)
+            }
+            
 
             
         }
@@ -146,7 +149,7 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
     
     func modalControllerWillDisappear(){
         
-        self.profilePic?.image = picture
+        //self.profilePic?.image = picture
         
         //signupData["iosPfpRef"] = String(profileChoice)
     }
