@@ -21,9 +21,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var numLikes: UILabel!
     @IBOutlet weak var reportHideButton: UIBarButtonItem!
     
-    var source: UIViewController!
+   
+    weak var source: UIViewController!
     var beaconInfo: [String: Any] = [:]
-    var user: User!
+    weak var user: User!
     var locations: [[String: Any]] = []
     var locationDescriptions: [String]!
     var ids: [String] = []
@@ -32,6 +33,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     var shouldSave: Bool!
     var isLiked: Bool = false
     var isBeacon: Bool!
+    var listener: ListenerRegistration!
 
     
     override func viewDidLoad() {
@@ -57,12 +59,15 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         getLocationData()
         checkSource()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil);
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
+        //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil);
+        //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
         
         
         self.likeButton.imageView?.contentMode = .scaleAspectFit
         print("nickname on load: ", self.nickname)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,22 +91,22 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    @objc func keyboardWillShow(sender: NSNotification) {
-        // Get the size of the keyboard.
-        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-
-            print("keyboard ", keyboardFrame.cgRectValue.origin.y, " frame ", self.view.frame.origin.y)
-            
-            self.view.frame.origin.y = -keyboardHeight + 50
-        }
-         // Move view 150 points upward
-    }
-
-    @objc func keyboardWillHide(sender: NSNotification) {
-         self.view.frame.origin.y = 0 // Move view to original position
-    }
+//    @objc func keyboardWillShow(sender: NSNotification) {
+//        // Get the size of the keyboard.
+//        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardRectangle = keyboardFrame.cgRectValue
+//            let keyboardHeight = keyboardRectangle.height
+//
+//            print("keyboard ", keyboardFrame.cgRectValue.origin.y, " frame ", self.view.frame.origin.y)
+//
+//            self.view.frame.origin.y = -keyboardHeight + 50
+//        }
+//         // Move view 150 points upward
+//    }
+//
+//    @objc func keyboardWillHide(sender: NSNotification) {
+//         self.view.frame.origin.y = 0 // Move view to original position
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
@@ -124,9 +129,9 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = locationsTable.dequeueReusableCell(withIdentifier: "BeaconPostTableCell", for: indexPath) as! BeaconPostTableViewCell
         // Load location description
+        
         cell.descriptionTextView.delegate = self
         cell.descriptionTextView.idx = indexPath.item
         if self.isEditing {
@@ -324,10 +329,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func saveLike() {
         print("DOC ID: ", beaconInfo["documentID"])
         let db = Firestore.firestore()
-        var query: Query = db.collection("Likes")
+        weak var query: Query? = db.collection("Likes")
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
-        query.getDocuments { snap, error in
+        query!.getDocuments { snap, error in
             if let error = error {
                         print("Error getting documents: \(error)")
             } else if snap!.isEmpty {
@@ -372,18 +377,21 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func checkLiked() {
         
         let db = Firestore.firestore()
-        var query: Query = db.collection("Likes")
+        weak var query: Query? = db.collection("Likes")
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
-        query.addSnapshotListener { snap, error in
+        listener = query!.addSnapshotListener { snap, error in
             if snap!.isEmpty {
                 self.isLiked = false
                 self.likeButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
+                self.listener.remove()
             } else {
                 self.isLiked = true
                 self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
+                self.listener.remove()
             }
+            
         }
     }
     
@@ -489,7 +497,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             
         } else if self.source is ProfileViewController {
             checkLiked()
-            setNumLikes()
+            //setNumLikes()
             self.reportHideButton.isEnabled = false
             
         } else if self.source is AdventourSummaryViewController {

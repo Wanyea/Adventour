@@ -135,10 +135,10 @@
                                 </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O57-cu-Xev">
-                                <rect key="frame" x="30" y="51" width="335" height="51"/>
+                                <rect key="frame" x="30" y="51" width="315" height="51"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Choose a location..." translatesAutoresizingMaskIntoConstraints="NO" id="dKb-2d-Pne">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="51"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="51"/>
                                         <color key="barTintColor" name="adv-skyblue"/>
                                         <textInputTraits key="textInputTraits" textContentType="address-level1+2"/>
                                         <userDefinedRuntimeAttributes>
@@ -170,7 +170,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlb-lW-sSH">
-                                <rect key="frame" x="30" y="51" width="335" height="51"/>
+                                <rect key="frame" x="30" y="51" width="315" height="51"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain"/>
                                 <connections>
@@ -198,7 +198,7 @@
                             <constraint firstItem="c1v-CM-3M2" firstAttribute="bottom" secondItem="dNJ-e9-WPf" secondAttribute="bottom" id="EEs-NX-f4m"/>
                             <constraint firstItem="vlb-lW-sSH" firstAttribute="centerY" secondItem="dKb-2d-Pne" secondAttribute="centerY" id="HKx-6H-sST"/>
                             <constraint firstItem="vlb-lW-sSH" firstAttribute="leading" secondItem="dKb-2d-Pne" secondAttribute="leading" id="Olh-ZV-268"/>
-                            <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="O57-cu-Xev" secondAttribute="trailing" constant="10" id="Qth-W5-P7h"/>
+                            <constraint firstItem="c1v-CM-3M2" firstAttribute="trailing" secondItem="O57-cu-Xev" secondAttribute="trailing" constant="30" id="Qth-W5-P7h"/>
                             <constraint firstItem="2LC-55-DF2" firstAttribute="centerY" secondItem="bBp-T1-6M5" secondAttribute="centerY" id="RRw-eT-iZd"/>
                             <constraint firstItem="O57-cu-Xev" firstAttribute="top" secondItem="c1v-CM-3M2" secondAttribute="top" constant="7" id="b7o-HL-4dJ"/>
                             <constraint firstItem="2LC-55-DF2" firstAttribute="leading" secondItem="c1v-CM-3M2" secondAttribute="leading" constant="50" id="g8x-WQ-fMV"/>
@@ -247,7 +247,7 @@
                             <color key="backgroundColor" name="adv-skyblue"/>
                             <color key="shadowColor" name="adv-skyblue"/>
                             <textAttributes key="titleTextAttributes">
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" name="adv-navyblue"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                             </textAttributes>
@@ -257,7 +257,7 @@
                             <color key="backgroundColor" name="adv-skyblue"/>
                             <color key="shadowColor" name="adv-skyblue"/>
                             <textAttributes key="titleTextAttributes">
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" name="adv-navyblue"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                             </textAttributes>
