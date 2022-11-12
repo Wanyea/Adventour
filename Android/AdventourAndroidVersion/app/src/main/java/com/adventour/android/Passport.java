@@ -320,36 +320,44 @@ public class Passport extends AppCompatActivity {
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase(((Timestamp)document.get("birthdate"))));
                         mantraTextView.setText(document.getString("mantra"));
 
-                        androidPfpRef = toIntExact((long)document.get("androidPfpRef"));
-
-                        switch (androidPfpRef)
+                        // Set androidPfpRef for Profile Picture
+                        if (document.get("androidPfpRef") != null)
                         {
+                            androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                        } else if (document.get("iOSPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else {
+                            androidPfpRef = 6; // Default PFP Pic
+                        }
+
+                        // Set image resource according to androidPfpRef
+                        switch (androidPfpRef) {
                             // Set profile pic image to Cheetah
                             case 0:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_cheetah);
-                                    break;
+                                break;
 
                             // Set profile pic image to Elephant
                             case 1:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_elephant);
-                                    break;
+                                break;
 
                             // Set profile pic image to Ladybug
                             case 2:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_ladybug);
-                                    break;
+                                break;
                             // Set profile pic image to Monkey
                             case 3:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_monkey);
-                                    break;
+                                break;
                             // Set profile pic image to Fox
                             case 4:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_fox);
-                                    break;
-                           // Set profile pic image to Penguin
+                                break;
+                            // Set profile pic image to Penguin
                             case 5:
                                 profPicImageView.setImageResource(R.drawable.ic_profpic_penguin);
-                                    break;
+                                break;
                             default:
                                 profPicImageView.setImageResource(R.drawable.ic_user_icon);
                         }

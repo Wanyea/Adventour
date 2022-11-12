@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.view.Window;
@@ -25,13 +26,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InProgress extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -124,6 +137,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
            @Override
            public void onClick(View view)
            {
+                storeAdventour();
                 switchToCongratulations();
            }
         });
@@ -197,5 +211,81 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         });
+    }
+
+    public void storeAdventour()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final Calendar today = Calendar.getInstance();
+        Map<String, Object> newAdventour= new HashMap<>();
+
+        newAdventour.put("dateCreated", new Timestamp(new Date()));
+        newAdventour.put("locations", GlobalVars.adventourFSQIds);
+        newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
+        newAdventour.put("adventourLocations", GlobalVars.adventourLocations);
+        newAdventour.put("isBeacon", false);
+
+        //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
+        // and users could potentially filter by categories.
+
+        db.collection("Adventourists")
+                .document(user.getUid())
+                .collection("adventours")
+                .add(newAdventour)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                        storeBeacon(documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Failed to add Adventour", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void storeBeacon(String adventourId)
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> addBeacon = new HashMap<>();
+        addBeacon.put("dateCreated", new Timestamp(new Date()));
+        addBeacon.put("dateUpdated", new Timestamp(new Date()));
+        addBeacon.put("locations", GlobalVars.adventourFSQIds);
+        addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
+        addBeacon.put("uid", user.getUid());
+        addBeacon.put("title", "Beacon Title");
+        addBeacon.put("intro", "This is where you can give your Beacon a meaningful description!");
+        addBeacon.put("isPrivate", true);
+        addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
+        addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+
+        db.collection("Adventourists")
+                .document(user.getUid())
+                .collection("beacons")
+                .document(adventourId)
+                .set(addBeacon)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    @Override
+                    public void onSuccess(Void v) {
+                        Log.d("Beacon added", "DocumentSnapshot written with ID: " + v);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Failed to add beacon", "Error adding document", e);
+                    }
+                });
     }
 }

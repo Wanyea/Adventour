@@ -126,6 +126,27 @@ public class AdventourUtils {
     {
         return androidPfpRef != 6;
     }
+
+    public static int iOSToAndroidPfpRef(String iOSPfpRef)
+    {
+        switch (iOSPfpRef)
+        {
+            case "profpic_cheetah":
+                return 0;
+            case "profpic_elephant":
+                return 1;
+            case "profpic_ladybug":
+                return 2;
+            case "profpic_monkey":
+                return 3;
+            case "profpic_fox":
+                return 4;
+            case "profpic_penguin":
+                return 5;
+            default:
+                return 6;
+        }
+    }
 }
 
 

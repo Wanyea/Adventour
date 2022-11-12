@@ -227,10 +227,13 @@ public class Beacons extends AppCompatActivity {
             if (allData.get("author") != null)
             {
                 user = (Map<String, Object>) allData.get("author");
+                Log.d("user ", user.toString());
 
                 if (user.get("uid") != null)
                 {
                     userId = (String) user.get("uid");
+                    Log.d("uid ", userId);
+
                 }
             }
 
@@ -256,8 +259,13 @@ public class Beacons extends AppCompatActivity {
                             if (document.get("androidPfpRef") != null)
                             {
                                 androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                                Log.d("Android Pfp Ref ", String.valueOf(androidPfpRef));
+                            } else if (document.get("iOSPfpRef") != null) {
+                                androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String) document.get("iOSPfpRef"));
+                                Log.d("iOS Pfp Ref ", String.valueOf(androidPfpRef));
                             } else {
-                                androidPfpRef = 6; // The case where a user does not have a profile pic.
+                                androidPfpRef = 6; // The case where a user does not have a profile pic on Android nor iOS.
+                                Log.d("No Pfp Ref ", String.valueOf(androidPfpRef));
                             }
 
                             GlobalVars.beaconBoardArrayList.add(new BeaconsModel(allData, nickname, androidPfpRef));
