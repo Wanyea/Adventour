@@ -134,6 +134,22 @@ public class Passport extends AppCompatActivity {
         PreviousAdventourRV.setAdapter(previousAdventourAdapter);
         getPreviousAdventours();
 
+        PreviousAdventourRV.setNestedScrollingEnabled(false);
+        PreviousAdventourRV.addOnItemTouchListener(
+                new PreviousAdventourClickListener(this, PreviousAdventourRV, new PreviousAdventourClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.d("PreviousAdventourClick", "onItemClicked triggered, " + GlobalVars.previousAdventourArrayList.get(position).getAdventourId());
+                        switchToAdventourSummary(position);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Log.d("PreviousAdventourClick", "onLongItemClicked triggered");
+                    }
+                })
+        );
+
         BeaconPostRV.setNestedScrollingEnabled(true);
         beaconsAdapter = new BeaconsAdapter(context, GlobalVars.userBeaconsArrayList);
         LinearLayoutManager beaconsLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -579,4 +595,50 @@ public class Passport extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void switchToAdventourSummary(int position) {
+        final String TAG = "makingAdventourSummary";
+        Context c = this;
+        String adventourID = GlobalVars.previousAdventourArrayList.get(position).getAdventourId();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get a reference to the user
+        Log.d(TAG, "Calling database...");
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+        documentRef.collection("adventours")
+                .document(adventourID)
+                .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Failed calling database");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Log.d(TAG, "Completed calling database");
+                        if (task.isSuccessful())
+                        {
+                            Log.d(TAG, "Documents retrieved!");
+
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            ArrayList<Object> adventourLocations = (ArrayList<Object>) documentSnapshot.get("adventourLocations");
+                            Log.d(TAG, adventourLocations.toString());
+
+                            for (Object obj : adventourLocations) {
+                                HashMap<String, String> map = (HashMap<String,String>) obj;
+                                AdventourSummaryModel model = new AdventourSummaryModel(map.get("name"), map.get("description"));
+                                GlobalVars.adventourLocations.add(model);
+                            }
+
+                            Intent intent = new Intent(c, AdventourSummary.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
+    }
 }

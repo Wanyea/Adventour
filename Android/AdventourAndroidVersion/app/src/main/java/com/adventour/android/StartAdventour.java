@@ -1120,7 +1120,14 @@ public class StartAdventour extends AppCompatActivity {
             globeImageView.setVisibility(View.VISIBLE);
             previewImageView.setVisibility(View.VISIBLE);
         } else {
-
+            nameTextView.setVisibility(View.INVISIBLE);
+            phoneTextView.setVisibility(View.INVISIBLE);
+            websiteTextView.setVisibility(View.INVISIBLE);
+            descriptionTextView.setVisibility(View.INVISIBLE);
+            ratingBar.setVisibility(View.INVISIBLE);
+            phoneImageView.setVisibility(View.INVISIBLE);
+            globeImageView.setVisibility(View.INVISIBLE);
+            previewImageView.setVisibility(View.INVISIBLE);
         }
     }
 }

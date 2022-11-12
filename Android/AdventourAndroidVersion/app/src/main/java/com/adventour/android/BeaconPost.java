@@ -223,6 +223,7 @@ public class BeaconPost extends AppCompatActivity {
         newAdventour.put("dateCreated", new Timestamp(new Date()));
         newAdventour.put("locations", GlobalVars.adventourFSQIds);
         newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
+        newAdventour.put("adventourLocations", GlobalVars.adventourLocations);
         newAdventour.put("beaconLocation", GlobalVars.selectedLocation);
         newAdventour.put("isBeacon", true);
 

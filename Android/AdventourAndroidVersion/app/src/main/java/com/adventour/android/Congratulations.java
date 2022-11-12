@@ -129,6 +129,7 @@ public class Congratulations extends AppCompatActivity {
         newAdventour.put("dateCreated", new Timestamp(new Date()));
         newAdventour.put("locations", GlobalVars.adventourFSQIds);
         newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
+        newAdventour.put("adventourLocations", GlobalVars.adventourLocations);
         newAdventour.put("isBeacon", false);
 
         //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
