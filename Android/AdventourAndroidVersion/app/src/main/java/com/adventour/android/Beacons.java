@@ -61,6 +61,7 @@ public class Beacons extends AppCompatActivity {
 
         beaconsProgressBar = (ProgressBar) findViewById(R.id.beaconsProgressBar);
 
+        // Dump Global Vars
         GlobalVars.previousAdventourArrayList.clear();
         GlobalVars.userBeaconsArrayList.clear();
 
@@ -251,16 +252,16 @@ public class Beacons extends AppCompatActivity {
                                 nickname = "Adventourist";
                             }
 
-                            if (document.get("androidPfpRef") != null)
+                            if (AdventourUtils.isValidAndroidPfpRef(document))
                             {
                                 androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
                                 Log.d("Android Pfp Ref ", String.valueOf(androidPfpRef));
-                            } else if (document.get("iosPfpRef") != null) {
+                            } else if (AdventourUtils.isValidIOSPfpRef(document)) {
                                 androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String) document.get("iosPfpRef"));
                                 Log.d("ios Pfp Ref ", String.valueOf(androidPfpRef));
                             } else {
                                 androidPfpRef = 6; // The case where a user does not have a profile pic on Android nor iOS.
-                                Log.d("No Pfp Ref ", String.valueOf(androidPfpRef));
+                                Log.d("No Pfp Or Invalid Pfp Ref ", String.valueOf(androidPfpRef));
                             }
 
                             GlobalVars.beaconBoardArrayList.add(new BeaconsModel(allData, nickname, androidPfpRef));

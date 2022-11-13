@@ -67,6 +67,7 @@ public class BeaconPost extends AppCompatActivity {
         authorImageView = (ImageView) findViewById(R.id.authorImageView);
 
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
+
         getUserNickname();
         
         AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);

@@ -1,9 +1,12 @@
 package com.adventour.android;
 
+import static java.lang.Math.toIntExact;
+
 import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -146,6 +149,22 @@ public class AdventourUtils {
             default:
                 return 6;
         }
+    }
+
+    public static boolean isValidAndroidPfpRef(DocumentSnapshot response)
+    {
+        if (response.get("androidPfpRef") != null)
+        {
+            int androidPfpRef = toIntExact((long) response.get("androidPfpRef"));
+                return androidPfpRef == 0 || androidPfpRef == 1 || androidPfpRef == 2 || androidPfpRef == 3 || androidPfpRef == 4 || androidPfpRef == 5;
+        }
+
+        return false;
+    }
+
+    public static boolean isValidIOSPfpRef(DocumentSnapshot response)
+    {
+        return response.get("iosPfpRef") != null;
     }
 }
 

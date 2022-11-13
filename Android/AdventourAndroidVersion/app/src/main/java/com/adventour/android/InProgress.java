@@ -219,7 +219,6 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Calendar today = Calendar.getInstance();
         Map<String, Object> newAdventour= new HashMap<>();
 
         newAdventour.put("dateCreated", new Timestamp(new Date()));

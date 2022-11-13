@@ -107,6 +107,10 @@ public class StartAdventour extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_adventour);
 
+        // Dump Global Vars
+        GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.userBeaconsArrayList.clear();
+
         drawableIds.put("Cheetah", 0);
         drawableIds.put("Elephant", 1);
         drawableIds.put("Ladybug", 2);
@@ -115,7 +119,6 @@ public class StartAdventour extends AppCompatActivity {
         drawableIds.put("Monkey", 3);
 
         Log.d("Drawable Ids: ", drawableIds.toString());
-
 
         // This allows the API call on the main thread.
         // Moving forward we are going to want to put this on its own thread to increase overall app performance :)

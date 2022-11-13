@@ -111,7 +111,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
             beaconIntro = itemView.findViewById(R.id.beaconDescriptionTextView);
             beaconAuthor = itemView.findViewById(R.id.authorTextView);
             beaconImage = itemView.findViewById(R.id.locationImageView);
-            beaconCreatedDate = itemView.findViewById(R.id.beaconDate);
+            beaconCreatedDate = itemView.findViewById(R.id.beaconPostDate);
             authorImageView = itemView.findViewById(R.id.authorImageView);
             likeImageButton = itemView.findViewById(R.id.likeImageButton);
         }
