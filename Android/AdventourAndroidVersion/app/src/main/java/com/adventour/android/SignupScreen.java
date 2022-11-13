@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +46,7 @@ public class SignupScreen extends AppCompatActivity {
     String nickname, email, password, confirmPassword;
     Date birthdate;
     Button signupButton;
-    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView, birthdateDatePicker, profPicSignupErrorTextView;
+    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView, birthdateDatePicker, profPicSignupErrorTextView, privacyPolicyTOSTextView;
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
     EditText nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
@@ -85,6 +86,9 @@ public class SignupScreen extends AppCompatActivity {
         passwordErrorTextView = (TextView) findViewById(R.id.passwordSignupErrorTextView);
         confirmPasswordErrorTextView = (TextView) findViewById(R.id.confirmPasswordSignupErrorTextView);
         profPicSignupErrorTextView = (TextView) findViewById(R.id.profPicSignupErrorTextView);
+
+        privacyPolicyTOSTextView = (TextView) findViewById(R.id.privacyPolicyTOSTextView);
+        privacyPolicyTOSTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         nicknameErrorImageView = (ImageView) findViewById(R.id.nicknameSignupErrorIcon);
         emailErrorImageView = (ImageView) findViewById(R.id.emailSignupErrorIcon);
