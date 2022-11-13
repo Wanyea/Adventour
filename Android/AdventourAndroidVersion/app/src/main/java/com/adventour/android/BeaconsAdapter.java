@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<BeaconsModel> beaconsArrayList;
+    boolean isLikePressed = true;
 
     public BeaconsAdapter(Context context, ArrayList<BeaconsModel> beaconsArrayList) {
         this.context = context;
@@ -72,6 +73,22 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
             default:
                 holder.authorImageView.setImageResource(R.drawable.ic_user_icon);
         }
+
+        holder.likeImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+
+                if(isLikePressed)
+                {
+                    holder.likeImageButton.setImageResource(R.drawable.ic_heart_fill_icon);
+                } else {
+                    holder.likeImageButton.setImageResource(R.drawable.ic_heart_line_icon);
+                }
+
+                isLikePressed = !isLikePressed;
+            }
+        });
     }
 
     @Override
@@ -86,6 +103,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         private final ImageView beaconImage;
         private final ImageView authorImageView;
         private final TextView beaconCreatedDate;
+        private final ImageView likeImageButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +113,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
             beaconImage = itemView.findViewById(R.id.locationImageView);
             beaconCreatedDate = itemView.findViewById(R.id.beaconDate);
             authorImageView = itemView.findViewById(R.id.authorImageView);
+            likeImageButton = itemView.findViewById(R.id.likeImageButton);
         }
 
     }

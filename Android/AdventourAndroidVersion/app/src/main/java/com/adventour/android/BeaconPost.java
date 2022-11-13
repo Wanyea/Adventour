@@ -193,33 +193,6 @@ public class BeaconPost extends AppCompatActivity {
 
         Map<String, Object> newAdventour= new HashMap<>();
 
-        // Get a reference to the user
-        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
-
-        // Check if user document exists. If they do in this instance, attach users nickname and profile pic.
-        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            private static final String TAG = "BEACON POST";
-
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        newAdventour.put("nickname", document.getString("nickname"));
-                        String adventourId = document.getId();
-                        Log.d(TAG, "adventourID: " + adventourId);
-                        Log.d(TAG, "Confirming that adventourID is printed before continuing");
-                        // TODO: get reference to users profile pic.
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
         newAdventour.put("dateCreated", new Timestamp(new Date()));
         newAdventour.put("locations", GlobalVars.adventourFSQIds);
         newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
@@ -268,16 +241,24 @@ public class BeaconPost extends AppCompatActivity {
                         Log.d("BEACON POST", "DocumentSnapshot data: " + document.getData());
                         authorTextView.setText(document.getString("nickname"));
 
-                        androidPfpRef = toIntExact((long)document.get("androidPfpRef"));
-
-                        switch (androidPfpRef)
+                        // Set androidPfpRef for Profile Picture
+                        if (document.get("androidPfpRef") != null)
                         {
+                            androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                        } else if (document.get("iOSPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else {
+                            androidPfpRef = 6; // Default PFP Pic
+                        }
+
+                        // Set image resource according to androidPfpRef
+                        switch (androidPfpRef) {
                             // Set profile pic image to Cheetah
                             case 0:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_cheetah);
                                     break;
 
-                             // Set profile pic image to Elephant
+                            // Set profile pic image to Elephant
                             case 1:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_elephant);
                                     break;
@@ -286,17 +267,14 @@ public class BeaconPost extends AppCompatActivity {
                             case 2:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_ladybug);
                                     break;
-
                             // Set profile pic image to Monkey
                             case 3:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_monkey);
                                     break;
-
                             // Set profile pic image to Fox
                             case 4:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_fox);
                                     break;
-
                             // Set profile pic image to Penguin
                             case 5:
                                 authorImageView.setImageResource(R.drawable.ic_profpic_penguin);
