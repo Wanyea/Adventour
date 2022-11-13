@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
+class EditProfileViewController: UIViewController{
     var androidPfpRef: Int!
     var iosPfpRef: String!
 
@@ -24,6 +24,9 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
     @IBOutlet weak var birthdate: UITextField!
     @IBOutlet weak var error: UILabel!
     
+    @IBOutlet weak var saveButton: UIButton!
+    
+    
     var dataError: Bool = false
     
     override func viewDidLoad() {
@@ -34,6 +37,11 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
             self.user = user
         }
         getUserData()
+        email?.addTarget(self, action: #selector(verifyUpdate(_:)), for: .editingChanged)
+        nickname?.addTarget(self, action: #selector(verifyUpdate(_:)), for: .editingChanged)
+        firstName?.addTarget(self, action: #selector(verifyUpdate(_:)), for: .editingChanged)
+        lastName?.addTarget(self, action: #selector(verifyUpdate(_:)), for: .editingChanged)
+        mantra?.addTarget(self, action: #selector(verifyUpdate(_:)), for: .editingChanged)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -58,10 +66,8 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
     @IBAction func saveTapped(_ sender: Any) {
         if (!dataError) {
             updateUserData()
-            self.performSegue(withIdentifier: "unwindToProfile", sender: self)
-        } else {
-            
         }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -122,21 +128,37 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
     }
     
     func updateUserData() {
-        let db = Firestore.firestore()
+        Auth.auth().currentUser?.updateEmail(to: email.text!) { error in
+            if error != nil {
+                self.error.text = "Unable to update user info, please try again later"
+                self.error.isHidden = false
+            }
+            else {
+                self.error.text = ""
+                self.error.isHidden = true
+                let db = Firestore.firestore()
+                
+                let params: [String: Any] = [
+                    "nickname": self.nickname!.text,
+                    "email": self.email!.text,
+                    "firstName": self.firstName!.text,
+                    "lastName": self.lastName!.text,
+                    "mantra": self.getMantra(),
+                    "androidPfpRef": self.androidPfpRef,
+                    "iosPfpRef": self.iosPfpRef,
+                ]
+                
+                db.collection("Adventourists")
+                    .document(self.user.uid)
+                    .updateData(params) { error in
+                        if error == nil {
+                            self.performSegue(withIdentifier: "unwindToProfile", sender: self)
+                        }
+                    }
+            }
+            
+        }
         
-        let params: [String: Any] = [
-            "nickname": self.nickname!.text,
-            "email": self.email!.text,
-            "firstName": self.firstName!.text,
-            "lastName": self.lastName!.text,
-            "mantra": getMantra(),
-            "androidPfpRef": self.androidPfpRef,
-            "iosPfpRef": self.iosPfpRef,
-        ]
-        
-        db.collection("Adventourists")
-            .document(self.user.uid)
-            .updateData(params)
     }
     
     func getMantra() -> String {
@@ -147,11 +169,133 @@ class EditProfileViewController: UIViewController, ModalViewControllerDelegate {
         }
     }
     
-    func modalControllerWillDisappear(){
+    func verifyNickname() -> Bool  {
+        if nickname.text!.count > 16 || nickname.text! == ""{
+            return false
+        } else {
+            return true
+            
+        }
+    }
+    
+    func verifyFirstName() -> Bool  {
         
-        //self.profilePic?.image = picture
+        let firstNamePattern = #"^[a-zA-Z]*$"#
         
-        //signupData["iosPfpRef"] = String(profileChoice)
+        var result = firstName.text!.range(
+            of: firstNamePattern,
+            options: .regularExpression
+        )
+        
+        let validFirstName = (result != nil)
+        
+        if (!validFirstName) {
+            return false
+        } else {
+            return true
+        }
+        
+    }
+    
+    func verifyLastName() -> Bool  {
+        
+        let lastNamePattern = #"^[a-zA-Z]*$"#
+        
+        var result = lastName.text!.range(
+            of: lastNamePattern,
+            options: .regularExpression
+        )
+        
+        let validLastName = (result != nil)
+        
+        if (!validLastName) {
+            return false
+        } else {
+            return true
+            
+        }
+        
+    }
+    
+    func verifyMantra() -> Bool  {
+        if mantra.text!.count > 30 || mantra.text! == ""{
+            return false
+            
+            
+        } else {
+            return true
+        
+            
+            //verifyAlert()
+            
+        }
+    }
+    
+    func verifyEmail() -> Bool {
+//        verify that email has @ and period
+//        if email.text == nil || email.text == "" {
+//            emailError.isHidden = true
+//            errorMessage.text = ""
+//            verifyAlert()
+//            return
+//        }
+        
+        let emailPattern = #"^\S+@\S+\.\S+$"#
+        
+        var result = email.text!.range(
+            of: emailPattern,
+            options: .regularExpression
+        )
+        
+        let validEmail = (result != nil)
+        
+        if (!validEmail) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    @objc func verifyUpdate(_ textField: UITextField) {
+        print("verify update")
+        if !verifyEmail() {
+            print("verify email")
+            error.text = "Please enter a valid email"
+            error.isHidden = false
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor.lightGray
+        }
+        else if !verifyNickname() {
+            print("verify nickname")
+            error.text = "Nickname must be 16 characters or less."
+            error.isHidden = false
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor.lightGray
+        }
+        else if !verifyFirstName() {
+            error.text = "First names must consist of only letters."
+            error.isHidden = false
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor.lightGray
+        }
+        else if !verifyLastName() {
+            error.text = "Last names must consist of only letters."
+            error.isHidden = false
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor.lightGray
+        }
+        else if !verifyMantra() {
+            error.text = "Mantra must be 30 characters or less."
+            error.isHidden = false
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor.lightGray
+        }
+        else {
+            error.text = ""
+            error.isHidden = true
+            saveButton.isEnabled = true
+            saveButton.backgroundColor = UIColor(named: "adv-royalblue")
+        }
     }
 
 }

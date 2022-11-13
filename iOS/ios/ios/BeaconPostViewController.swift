@@ -780,10 +780,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             if let isPrivate = beaconInfo["isPrivate"] as? Bool {
                 self.privateSwitch.isOn = isPrivate
             }
-            loadUserData()
+            loadUserData(uid: beaconInfo["uid"] as! String)
             // TODO: Load likes
         } else if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
-            loadUserData()
+            loadUserData(uid: self.user.uid)
             beaconInfo["dateCreated"] = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/YYYY"
@@ -793,9 +793,9 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func loadUserData() {
+    func loadUserData(uid: String) {
         let db = Firestore.firestore()
-        db.collection("Adventourists").document(self.user.uid).getDocument { document, error in
+        db.collection("Adventourists").document(uid).getDocument { document, error in
             if let document = document, document.exists {
                 if let data = document.data() {
                     if let nickname = data["nickname"] as? String {

@@ -51,13 +51,13 @@
                                             <constraint firstAttribute="height" constant="30" id="wkh-nh-BB9"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nickname" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TtQ-pY-nnR">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nickname" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TtQ-pY-nnR">
                                         <rect key="frame" x="68" y="60" width="196" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="196" id="IZ0-wK-2bY"/>
                                             <constraint firstAttribute="height" constant="33" id="o3N-pc-JQO"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="email"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="____________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUL-Kh-N8d">
@@ -77,7 +77,7 @@
                                             <constraint firstAttribute="height" constant="27.5" id="cEl-QH-ptQ"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KFe-R6-nJ7">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KFe-R6-nJ7">
                                         <rect key="frame" x="69" y="96.5" width="196" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="6PB-I6-3h8"/>
@@ -126,7 +126,7 @@
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bab-jx-74o">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bab-jx-74o">
                                         <rect key="frame" x="69" y="169" width="196" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Lbb-9f-xie"/>
@@ -145,7 +145,7 @@
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="npV-ba-DMN">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="npV-ba-DMN">
                                         <rect key="frame" x="69" y="203" width="196" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="196" id="ZTJ-EI-RXc"/>
@@ -164,7 +164,7 @@
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mantra" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gn1-BK-xjn">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mantra" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gn1-BK-xjn">
                                         <rect key="frame" x="69" y="237" width="196" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="5mQ-Br-PN0"/>
@@ -231,7 +231,7 @@
                                 <color key="textColor" name="adv-black"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-eD-DnK">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-eD-DnK">
                                 <rect key="frame" x="141" y="482.5" width="38" height="20"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <color key="textColor" name="adv-red"/>
@@ -266,6 +266,7 @@
                             <constraint firstItem="cVf-DE-Smr" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="0zI-JP-TdS"/>
                             <constraint firstItem="cac-eD-DnK" firstAttribute="top" secondItem="Shw-IV-psX" secondAttribute="bottom" constant="8" symbolic="YES" id="2Oj-yp-c7A"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="26o-E6-0rq" secondAttribute="bottom" constant="20" id="EKt-BW-njy"/>
+                            <constraint firstItem="26o-E6-0rq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cac-eD-DnK" secondAttribute="trailing" constant="1" id="FQx-ts-mkU"/>
                             <constraint firstItem="cVf-DE-Smr" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="GT0-fp-YAk"/>
                             <constraint firstItem="2w5-AO-DeC" firstAttribute="centerY" secondItem="3BO-xf-gTw" secondAttribute="centerY" id="Iu0-RJ-4Tf"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="26o-E6-0rq" secondAttribute="trailing" constant="27" id="MrR-T6-yge"/>
@@ -287,6 +288,7 @@
                         <outlet property="mantra" destination="gn1-BK-xjn" id="oKd-rO-cTJ"/>
                         <outlet property="nickname" destination="TtQ-pY-nnR" id="dYz-RX-MdV"/>
                         <outlet property="profilePic" destination="3BO-xf-gTw" id="Y1J-oa-ztY"/>
+                        <outlet property="saveButton" destination="26o-E6-0rq" id="tUL-Si-UTn"/>
                         <segue destination="fVB-Nm-NEC" kind="unwind" identifier="unwindToProfile" unwindAction="unwindToProfile:" id="eL4-fk-tqk"/>
                     </connections>
                 </viewController>

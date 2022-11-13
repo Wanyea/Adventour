@@ -66,8 +66,11 @@
                                                         <constraint firstAttribute="height" constant="20" id="NEx-eT-Wsw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQ4-C3-dIT">
-                                                    <rect key="frame" x="169.5" y="62" width="94" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQ4-C3-dIT">
+                                                    <rect key="frame" x="164" y="62" width="105" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="105" id="v4W-XN-V5L"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" name="adv-navyblue"/>
                                                     <nil key="highlightedColor"/>
@@ -114,6 +117,7 @@
                                                 <constraint firstItem="KJt-LZ-jc8" firstAttribute="centerY" secondItem="cAt-eN-IvY" secondAttribute="centerY" id="dNi-pi-zi9"/>
                                                 <constraint firstItem="FvS-GA-oQT" firstAttribute="centerY" secondItem="KJt-LZ-jc8" secondAttribute="centerY" id="eog-5b-fkK"/>
                                                 <constraint firstItem="sUh-QZ-11N" firstAttribute="leading" secondItem="FvS-GA-oQT" secondAttribute="trailing" constant="8" symbolic="YES" id="mHK-RO-6so"/>
+                                                <constraint firstItem="FvS-GA-oQT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cAt-eN-IvY" secondAttribute="trailing" constant="1" id="qk1-Wu-arK"/>
                                                 <constraint firstItem="sUh-QZ-11N" firstAttribute="centerY" secondItem="KJt-LZ-jc8" secondAttribute="centerY" id="t06-nd-gKr"/>
                                                 <constraint firstItem="sUh-QZ-11N" firstAttribute="top" secondItem="Edp-in-5DC" secondAttribute="top" constant="17" id="u64-7P-O1F"/>
                                                 <constraint firstItem="6RQ-vn-Hsm" firstAttribute="leading" secondItem="Edp-in-5DC" secondAttribute="leading" constant="17" id="uQG-cJ-DlX"/>

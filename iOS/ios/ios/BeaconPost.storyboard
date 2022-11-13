@@ -376,8 +376,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Beacon Post" id="TNQ-W3-abD">
-                        <barButtonItem key="rightBarButtonItem" id="CZZ-G3-VE1">
-                            <imageReference key="image" image="exclamationmark" catalog="system" symbolScale="large"/>
+                        <barButtonItem key="rightBarButtonItem" image="exclamationmark.bubble" catalog="system" id="CZZ-G3-VE1">
                             <color key="tintColor" name="adv-red"/>
                             <connections>
                                 <action selector="reportTapped:" destination="Y6W-OH-hqX" id="FMQ-HQ-ZBP"/>
@@ -443,7 +442,7 @@
     </designables>
     <resources>
         <image name="beacon_card_2" width="1921" height="2786"/>
-        <image name="exclamationmark" catalog="system" width="46" height="128"/>
+        <image name="exclamationmark.bubble" catalog="system" width="128" height="110"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="highlighter" catalog="system" width="128" height="119"/>
         <image name="pencil" catalog="system" width="128" height="113"/>

@@ -45,8 +45,11 @@
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Passport_Card-1" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-lj-3ma">
                                                         <rect key="frame" x="0.0" y="3" width="321" height="209"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te8-tP-ImB">
-                                                        <rect key="frame" x="148" y="60" width="80.5" height="20"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te8-tP-ImB">
+                                                        <rect key="frame" x="148" y="60" width="130" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="130" id="BcD-KE-FcI"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -320,10 +323,10 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Balloon_Transparent" translatesAutoresizingMaskIntoConstraints="NO" id="Sap-bR-VpT">
-                                                                    <rect key="frame" x="17" y="50" width="128" height="128"/>
+                                                                    <rect key="frame" x="17" y="50" width="96" height="128"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="128" id="HSz-RY-g3O"/>
-                                                                        <constraint firstAttribute="width" constant="128" id="uHD-7s-IJj"/>
+                                                                        <constraint firstAttribute="width" constant="96" id="uHD-7s-IJj"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hhR-tx-t5z">
@@ -339,7 +342,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon Title Long" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnP-OF-hU1">
-                                                                    <rect key="frame" x="152" y="62" width="124" height="20"/>
+                                                                    <rect key="frame" x="120" y="62" width="156" height="20"/>
                                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                                     <color key="textColor" name="adv-navyblue"/>
                                                                     <nil key="highlightedColor"/>
@@ -357,7 +360,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the beacon description it can be however long and we'll just truncate it." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5L-ER-2M1">
-                                                                    <rect key="frame" x="155" y="92.5" width="118" height="85"/>
+                                                                    <rect key="frame" x="123" y="92.5" width="150" height="85"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="85" id="BQ7-9n-DYq"/>
                                                                     </constraints>
@@ -388,6 +391,7 @@
                                                                 <constraint firstItem="Sap-bR-VpT" firstAttribute="top" secondItem="00e-1G-ZC7" secondAttribute="bottom" constant="13" id="eZp-VI-XNL"/>
                                                                 <constraint firstItem="94E-wq-G2r" firstAttribute="leading" secondItem="aHt-DI-V6f" secondAttribute="leading" constant="3" id="h3f-sU-AFE"/>
                                                                 <constraint firstAttribute="trailing" secondItem="KnP-OF-hU1" secondAttribute="trailing" constant="10" id="iCS-mW-zhd"/>
+                                                                <constraint firstItem="bjF-UI-xEL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NIC-eL-Kqg" secondAttribute="trailing" constant="1" id="oNE-s3-7PD"/>
                                                                 <constraint firstItem="Sap-bR-VpT" firstAttribute="leading" secondItem="aHt-DI-V6f" secondAttribute="leading" constant="17" id="oWT-FQ-imp"/>
                                                                 <constraint firstItem="00e-1G-ZC7" firstAttribute="leading" secondItem="aHt-DI-V6f" secondAttribute="leading" constant="17" id="rUc-c9-dbG"/>
                                                                 <constraint firstItem="bjF-UI-xEL" firstAttribute="centerY" secondItem="00e-1G-ZC7" secondAttribute="centerY" id="uKv-fL-LDj"/>
