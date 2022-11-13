@@ -47,6 +47,7 @@ public class BeaconPost extends AppCompatActivity {
     FirebaseUser user;
 
     int androidPfpRef;
+    boolean fromPassport = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,11 @@ public class BeaconPost extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && (boolean) extras.get("fromPassport")) {
+            fromPassport = true;
+        }
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
         authorTextView = (TextView) findViewById(R.id.authorTextView);
@@ -93,7 +99,12 @@ public class BeaconPost extends AppCompatActivity {
         RecyclerView beaconPostRV = findViewById(R.id.beaconPostRV);
         beaconPostRV.setNestedScrollingEnabled(true);
 
-        BeaconPostAdapter BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
+        BeaconPostAdapter BeaconPostAdapter;
+        if (fromPassport) {
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
+        } else {
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
@@ -118,16 +129,31 @@ public class BeaconPost extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> newBeacon = new HashMap<>();
-        newBeacon.put("dateCreated", new Timestamp(new Date()));
-        newBeacon.put("dateUpdated", new Timestamp(new Date()));
-        newBeacon.put("locations", GlobalVars.adventourFSQIds);
-        newBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
-        newBeacon.put("uid", user.getUid());
-        newBeacon.put("title", beaconTitleEditText.getText().toString());
-        newBeacon.put("intro", beaconIntroEditText.getText().toString());
-        newBeacon.put("isPrivate", isPrivate.isChecked());
-        newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
-        newBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+
+        if (fromPassport) {
+            newBeacon.put("dateCreated", new Timestamp(new Date()));
+            newBeacon.put("dateUpdated", new Timestamp(new Date()));
+            newBeacon.put("locations", GlobalVars.adventourFSQIdsPassport);
+            newBeacon.put("numLocations", GlobalVars.adventourFSQIdsPassport.size());
+            newBeacon.put("uid", user.getUid());
+            newBeacon.put("title", beaconTitleEditText.getText().toString());
+            newBeacon.put("intro", beaconIntroEditText.getText().toString());
+            newBeacon.put("isPrivate", isPrivate.isChecked());
+            newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
+            newBeacon.put("beaconLocation", GlobalVars.selectedLocationPassport);
+
+        } else {
+            newBeacon.put("dateCreated", new Timestamp(new Date()));
+            newBeacon.put("dateUpdated", new Timestamp(new Date()));
+            newBeacon.put("locations", GlobalVars.adventourFSQIds);
+            newBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
+            newBeacon.put("uid", user.getUid());
+            newBeacon.put("title", beaconTitleEditText.getText().toString());
+            newBeacon.put("intro", beaconIntroEditText.getText().toString());
+            newBeacon.put("isPrivate", isPrivate.isChecked());
+            newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
+            newBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+        }
 
         db.collection("Beacons")
                 .document(adventourId)
@@ -154,16 +180,30 @@ public class BeaconPost extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> addBeacon = new HashMap<>();
-        addBeacon.put("dateCreated", new Timestamp(new Date()));
-        addBeacon.put("dateUpdated", new Timestamp(new Date()));
-        addBeacon.put("locations", GlobalVars.adventourFSQIds);
-        addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
-        addBeacon.put("uid", user.getUid());
-        addBeacon.put("title", beaconTitleEditText.getText().toString());
-        addBeacon.put("intro", beaconIntroEditText.getText().toString());
-        addBeacon.put("isPrivate", isPrivate.isChecked());
-        addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
-        addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+
+        if (fromPassport) {
+            addBeacon.put("dateCreated", new Timestamp(new Date()));
+            addBeacon.put("dateUpdated", new Timestamp(new Date()));
+            addBeacon.put("locations", GlobalVars.adventourFSQIdsPassport);
+            addBeacon.put("numLocations", GlobalVars.adventourFSQIdsPassport.size());
+            addBeacon.put("uid", user.getUid());
+            addBeacon.put("title", beaconTitleEditText.getText().toString());
+            addBeacon.put("intro", beaconIntroEditText.getText().toString());
+            addBeacon.put("isPrivate", isPrivate.isChecked());
+            addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
+            addBeacon.put("beaconLocation", GlobalVars.selectedLocationPassport);
+        } else {
+            addBeacon.put("dateCreated", new Timestamp(new Date()));
+            addBeacon.put("dateUpdated", new Timestamp(new Date()));
+            addBeacon.put("locations", GlobalVars.adventourFSQIds);
+            addBeacon.put("numLocations", GlobalVars.adventourFSQIds.size());
+            addBeacon.put("uid", user.getUid());
+            addBeacon.put("title", beaconTitleEditText.getText().toString());
+            addBeacon.put("intro", beaconIntroEditText.getText().toString());
+            addBeacon.put("isPrivate", isPrivate.isChecked());
+            addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
+            addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+        }
 
         db.collection("Adventourists")
                 .document(user.getUid())
@@ -193,12 +233,46 @@ public class BeaconPost extends AppCompatActivity {
 
         Map<String, Object> newAdventour= new HashMap<>();
 
-        newAdventour.put("dateCreated", new Timestamp(new Date()));
-        newAdventour.put("locations", GlobalVars.adventourFSQIds);
-        newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
-        newAdventour.put("adventourLocations", GlobalVars.adventourLocations);
-        newAdventour.put("beaconLocation", GlobalVars.selectedLocation);
-        newAdventour.put("isBeacon", true);
+        // Get a reference to the user
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+
+        // Check if user document exists. If they do in this instance, attach users nickname and profile pic.
+        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            private static final String TAG = "BEACON POST";
+
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        newAdventour.put("nickname", document.getString("nickname"));
+                        String adventourId = document.getId();
+                        Log.d(TAG, "adventourID: " + adventourId);
+                        Log.d(TAG, "Confirming that adventourID is printed before continuing");
+                        // TODO: get reference to users profile pic.
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        if (fromPassport) {
+            newAdventour.put("dateCreated", new Timestamp(new Date()));
+            newAdventour.put("locations", GlobalVars.adventourFSQIdsPassport);
+            newAdventour.put("numLocations", GlobalVars.adventourFSQIdsPassport.size());
+            newAdventour.put("beaconLocation", GlobalVars.selectedLocationPassport);
+            newAdventour.put("isBeacon", true);
+        } else {
+            newAdventour.put("dateCreated", new Timestamp(new Date()));
+            newAdventour.put("locations", GlobalVars.adventourFSQIds);
+            newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
+            newAdventour.put("beaconLocation", GlobalVars.selectedLocation);
+            newAdventour.put("isBeacon", true);
+        }
 
         //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
         // and users could potentially filter by categories.

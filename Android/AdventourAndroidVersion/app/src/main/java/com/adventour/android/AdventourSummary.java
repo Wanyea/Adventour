@@ -37,7 +37,13 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
         RecyclerView adventourSummaryRV = findViewById(R.id.adventourSummaryRV);
         adventourSummaryRV.setNestedScrollingEnabled(false);
 
-        AdventourSummaryAdapter adventourSummaryAdapter = new AdventourSummaryAdapter(this, GlobalVars.adventourLocations);
+        AdventourSummaryAdapter adventourSummaryAdapter;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && (boolean) extras.get("fromPassport")) {
+            adventourSummaryAdapter = new AdventourSummaryAdapter(this, GlobalVars.adventourLocationsPassport);
+        } else {
+            adventourSummaryAdapter = new AdventourSummaryAdapter(this, GlobalVars.adventourLocations);
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
@@ -74,6 +80,11 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
     public void switchToBeaconPost()
     {
         Intent intent = new Intent(this, BeaconPost.class);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && (boolean) extras.get("fromPassport")) {
+            intent.putExtra("fromPassport", true);
+        }
+
         startActivity(intent);
     }
 

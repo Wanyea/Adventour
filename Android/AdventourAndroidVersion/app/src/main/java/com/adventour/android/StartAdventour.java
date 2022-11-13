@@ -25,6 +25,7 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -604,7 +605,8 @@ public class StartAdventour extends AppCompatActivity {
         });
     }
 
-    public class LocationImages
+    @Keep
+    public static class LocationImages
     {
         Bitmap locationOne;
         Bitmap locationTwo;
