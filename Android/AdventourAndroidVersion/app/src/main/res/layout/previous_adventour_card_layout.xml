@@ -27,36 +27,79 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/firstBullet"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_alignTop="@id/firstLocation"
+            android:layout_alignBottom="@id/firstLocation"
+            android:src="@drawable/shape_circle"
+            app:tint="@color/red_variant" />
+
         <TextView
             android:id="@+id/firstLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dateTextView"
-            android:layout_alignLeft="@id/dateTextView"
+            android:layout_alignLeft="@id/firstBullet"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
             android:text="Location"
             android:textColor="@color/red_variant"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/secondBullet"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_alignTop="@id/secondLocation"
+            android:layout_alignBottom="@id/secondLocation"
+            android:src="@drawable/shape_circle"
+            app:tint="@color/red_variant" />
 
         <TextView
             android:id="@+id/secondLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/firstLocation"
-            android:layout_alignLeft="@id/dateTextView"
+            android:layout_alignLeft="@id/firstLocation"
             android:text="Location"
             android:textColor="@color/red_variant"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/thirdBullet"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_alignTop="@id/thirdLocation"
+            android:layout_alignBottom="@id/thirdLocation"
+            android:src="@drawable/shape_circle"
+            app:tint="@color/red_variant" />
 
         <TextView
             android:id="@+id/thirdLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/secondLocation"
-            android:layout_alignLeft="@id/dateTextView"
+            android:layout_alignLeft="@id/firstLocation"
             android:text="Location"
             android:textColor="@color/red_variant"
             android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/tapToView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/thirdLocation"
+            android:layout_marginTop="15dp"
+            android:layout_alignLeft="@id/dateTextView"
+            android:text="Tap for more info!"
+            android:textStyle="italic"
+            android:textColor="@color/red_variant"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

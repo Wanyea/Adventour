@@ -369,10 +369,6 @@ public class Passport extends AppCompatActivity {
                         cakeIconImageView.setVisibility(View.VISIBLE);
                         birthdateTextView.setVisibility(View.VISIBLE);
                         mantraTextView.setVisibility(View.VISIBLE);
-
-                        // Update constraint
-                        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
-                        params.topMargin = 60;
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -584,8 +580,16 @@ public class Passport extends AppCompatActivity {
                             if(GlobalVars.userBeaconsArrayList.size() == 0)
                             {
                                 noPrevBeacons.setVisibility(View.VISIBLE);
+
+                                // Update constraint
+                                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
+                                params.topMargin = 120;
                             } else {
                                 noPrevBeacons.setVisibility(View.INVISIBLE);
+
+                                // Update constraint
+                                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
+                                params.topMargin = 60;
                             }
                         }
                     }
