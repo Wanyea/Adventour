@@ -42,25 +42,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/beaconsProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/searchBar"
-        android:indeterminate="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/searchBar"
+    <!--<fragment
+        android:id="@+id/beacon_board_autocomplete_fragment"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-
+        android:layout_marginEnd="10dp"
         android:background="@drawable/edit_text_round"
 
         android:drawableLeft="@drawable/ic_magnifying_glass_icon"
@@ -70,9 +58,34 @@
         android:inputType="text"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/beaconBoardTitleTextView" />
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        tools:ignore="MissingClass" />-->
+
+
+    <ProgressBar
+        android:id="@+id/beaconsProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/beaconBoardTitleTextView"
+        android:indeterminate="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<ImageView
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text_round"
+        app:layout_constraintEnd_toEndOf="@id/beacon_board_autocomplete_fragment"
+        app:layout_constraintStart_toStartOf="@id/beacon_board_autocomplete_fragment"
+        app:layout_constraintTop_toTopOf="@id/beacon_board_autocomplete_fragment"
+        app:layout_constraintBottom_toBottomOf="@id/beacon_board_autocomplete_fragment"/>-->
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

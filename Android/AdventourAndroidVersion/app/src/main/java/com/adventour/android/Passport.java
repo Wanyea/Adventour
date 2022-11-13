@@ -62,7 +62,7 @@ public class Passport extends AppCompatActivity {
 
     ImageButton imageButton, hamburgerMenuImageButton;
 
-    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, deleteAccount;
+    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, privacyPolicy;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -90,11 +90,26 @@ public class Passport extends AppCompatActivity {
 
     ConstraintLayout hamburgerMenuPopup;
 
+    HashMap<String, String> isSwitchActive = new HashMap<>();
+    int distance = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passport);
+
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+            Log.d("InProgress isSwitch", isSwitchActive.toString());
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            Log.d("InProgress distance", String.valueOf(distance));
+        }
 
         // Dump GlobalVars
         GlobalVars.beaconBoardArrayList.clear();
@@ -110,7 +125,7 @@ public class Passport extends AppCompatActivity {
         noPrevBeacons = (TextView) findViewById(R.id.postABeaconTextView);
         adventourTOS = (TextView) findViewById(R.id.adventourTOS);
         logOut = (TextView) findViewById(R.id.logOut);
-        deleteAccount = (TextView) findViewById(R.id.deleteAccount);
+        privacyPolicy = (TextView) findViewById(R.id.privacyPolicy);
 
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
@@ -228,34 +243,10 @@ public class Passport extends AppCompatActivity {
             }
         });
 
-        deleteAccount.setOnClickListener(new View.OnClickListener() {
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                // Build AlertDialog that will alert users when they try to delete their account.
-                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(Passport.this);
-                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-                deleteAccountAlertBuilder.setCancelable(true);
-
-                deleteAccountAlertBuilder.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                // DELETE USER DOCUMENT IN FIREBASE.
-                                // switchToLoggedOut();
-                            }
-                        });
-
-                deleteAccountAlertBuilder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
-                deleteAccountAlert.show();
+                openPrivacyPolicy();
             }
         });
 
@@ -273,11 +264,17 @@ public class Passport extends AppCompatActivity {
                 case R.id.passport:
                     return true;
                 case R.id.start_adventour:
-                    startActivity(new Intent(getApplicationContext(), StartAdventour.class));
+                    Intent startAdventourIntent = new Intent(getApplicationContext(), StartAdventour.class);
+                    startAdventourIntent.putExtra("isSwitchActive", isSwitchActive);
+                    startAdventourIntent.putExtra("distance", distance);
+                    startActivity(startAdventourIntent);
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.beacons:
-                    startActivity(new Intent(getApplicationContext(), Beacons.class));
+                    Intent beaconsIntent = new Intent(getApplicationContext(), Beacons.class);
+                    beaconsIntent.putExtra("isSwitchActive", isSwitchActive);
+                    beaconsIntent.putExtra("distance", distance);
+                    startActivity(beaconsIntent);
                     overridePendingTransition(0, 0);
                     return true;
             }
@@ -619,6 +616,15 @@ public class Passport extends AppCompatActivity {
     public void openAdventourTOS()
     {
         String url = "https://adventour.app/terms-of-service";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
+    public void openPrivacyPolicy()
+    {
+        String url = "https://adventour.app/privacy-policy";
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));

@@ -107,9 +107,11 @@ public class StartAdventour extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_adventour);
 
+
         // Dump Global Vars
-        GlobalVars.previousAdventourArrayList.clear();
         GlobalVars.userBeaconsArrayList.clear();
+        GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.beaconBoardArrayList.clear();
 
         drawableIds.put("Cheetah", 0);
         drawableIds.put("Elephant", 1);
@@ -177,16 +179,22 @@ public class StartAdventour extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        isSwitchActive = new HashMap<String, String>();
-
         websiteTextView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
-        // Reset before going back to passport.
-        GlobalVars.userBeaconsArrayList.clear();
-        GlobalVars.previousAdventourArrayList.clear();
-        GlobalVars.beaconBoardArrayList.clear();
+        isSwitchActive = new HashMap<String, String>();
+
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            distanceSlider.setValue(distance);
+        }
 
         if (prevLocation.size() > 0)
         {
@@ -278,7 +286,8 @@ public class StartAdventour extends AppCompatActivity {
         autocompleteFragment.setHint("Enter location");
         autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
 
-        if (!Objects.equals(GlobalVars.selectedLocation, "")) {
+        if (!Objects.equals(GlobalVars.selectedLocation, ""))
+        {
             autocompleteFragment.setText(GlobalVars.selectedLocation);
         }
 
@@ -322,13 +331,19 @@ public class StartAdventour extends AppCompatActivity {
             switch(item.getItemId())
             {
                 case R.id.passport:
-                    startActivity(new Intent(getApplicationContext(), Passport.class));
+                    Intent passportIntent = new Intent(getApplicationContext(), Passport.class);
+                    passportIntent.putExtra("isSwitchActive", isSwitchActive);
+                    passportIntent.putExtra("distance", distance);
+                    startActivity(passportIntent);
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.start_adventour:
                     return true;
                 case R.id.beacons:
-                    startActivity(new Intent(getApplicationContext(), Beacons.class));
+                    Intent beaconsIntent = new Intent(getApplicationContext(), Beacons.class);
+                    beaconsIntent.putExtra("isSwitchActive", isSwitchActive);
+                    beaconsIntent.putExtra("distance", distance);
+                    startActivity(beaconsIntent);
                     overridePendingTransition(0,0);
                     return true;
             }
@@ -355,6 +370,8 @@ public class StartAdventour extends AppCompatActivity {
 
     public void onClickFilterButton(View view) {
         popupFilter.setVisibility(View.VISIBLE);
+
+        Log.d("clicked filter", isSwitchActive.toString());
 
         if((isSwitchActive.get("social")) != null && isSwitchActive.get("social").equals("true"))
         {
@@ -1090,8 +1107,8 @@ public class StartAdventour extends AppCompatActivity {
 
     public Integer getDistance()
     {
-        return (int)(distance * 1609.344);
-    } // Miles --> Meters
+        return (int)(distance * 1609.344); // Miles --> Meters
+    }
 
     public JSONArray getExclude()
     {
@@ -1101,6 +1118,10 @@ public class StartAdventour extends AppCompatActivity {
     public void switchToInProgress()
     {
         Intent intent = new Intent(this, InProgress.class);
+        intent.putExtra("isSwitchActive", isSwitchActive);
+        intent.putExtra("distance", distance);
+        Log.d("switchTOIP", isSwitchActive.toString());
+        Log.d("switchTOIP", String.valueOf(distance));
         startActivity(intent);
         finish();
     }

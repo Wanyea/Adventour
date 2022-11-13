@@ -70,6 +70,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
                 holder.authorImageView.setImageResource(R.drawable.ic_profpic_penguin);
                     break;
 
+            // Set profile pic image to default
             default:
                 holder.authorImageView.setImageResource(R.drawable.ic_user_icon);
         }

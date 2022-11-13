@@ -1,5 +1,6 @@
 package com.adventour.android;
 
+import static com.adventour.android.BuildConfig.MAPS_API_KEY;
 import static java.lang.Math.toIntExact;
 
 import androidx.annotation.NonNull;
@@ -9,17 +10,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,9 +47,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Beacons extends AppCompatActivity {
 
@@ -49,9 +58,13 @@ public class Beacons extends AppCompatActivity {
     BeaconsAdapter beaconBoardAdapter;
     int androidPfpRef;
     String nickname;
-    Map<String, Object> user;
     String userId;
     ProgressBar beaconsProgressBar;
+    AutocompleteSupportFragment autocompleteFragment;
+    String selectedBeaconLocation;
+    PlacesClient placesClient;
+    HashMap<String, String> isSwitchActive = new HashMap<>();
+    int distance = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +72,82 @@ public class Beacons extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacons);
 
-        beaconsProgressBar = (ProgressBar) findViewById(R.id.beaconsProgressBar);
+        handleAuth();
 
         // Dump Global Vars
         GlobalVars.previousAdventourArrayList.clear();
         GlobalVars.userBeaconsArrayList.clear();
 
-        handleAuth();
+        beaconsProgressBar = (ProgressBar) findViewById(R.id.beaconsProgressBar);
+
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+            Log.d("InProgress isSwitch", isSwitchActive.toString());
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            Log.d("InProgress distance", String.valueOf(distance));
+        }
+
+        // Initialize places client
+        Places.initialize(this, MAPS_API_KEY);
+        placesClient = Places.createClient(this);
+
+
+        //TODO: FIX ERROR WITH AUTOCOMPLETE FRAGMENT --> FILTER BEACONS BY CITY/MOST RECENT/LEAST RECENT. REMOVE THIS CALL ONCE FRAGMENT CALLS IT.
         getBeacons();
-        checkLiked();
+
+        // Initialize the AutocompleteSupportFragment.
+
+        //autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.beacon_board_autocomplete_fragment);
+
+        // Specify the types of place data to return.
+        /*autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+        autocompleteFragment.setCountry("US");
+        autocompleteFragment.setActivityMode(AutocompleteActivityMode.OVERLAY);
+        autocompleteFragment.setHint("Enter location");
+
+
+        if (!Objects.equals(GlobalVars.selectedLocation, ""))
+        {
+            autocompleteFragment.setText(selectedBeaconLocation);
+        }
+
+        ((EditText) autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)).setTextSize(18.0f);
+        ((EditText) autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)).setHintTextColor(Color.BLACK);
+
+        autocompleteFragment.getView().findViewById(com.google.android.libraries.places.R.id.places_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view) {
+                        autocompleteFragment.setText("");
+                        view.setVisibility(View.GONE);
+                    }
+                });
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                selectedBeaconLocation = String.valueOf(place.getAddress());
+                getBeacons(selectedBeaconLocation);
+
+                Log.i("Beacons", "Place: " + selectedBeaconLocation);
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+                // TODO: Handle the error.
+                Log.i("Beacons", "An error occurred: " + status);
+            }
+        });*/
+
+
+        //checkLiked();
 
         RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
@@ -91,11 +171,17 @@ public class Beacons extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.passport:
-                    startActivity(new Intent(getApplicationContext(), Passport.class));
+                    Intent passportIntent = new Intent(getApplicationContext(), Passport.class);
+                    passportIntent.putExtra("isSwitchActive", isSwitchActive);
+                    passportIntent.putExtra("distance", distance);
+                    startActivity(passportIntent);
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.start_adventour:
-                    startActivity(new Intent(getApplicationContext(), StartAdventour.class));
+                    Intent startAdventourIntent = new Intent(getApplicationContext(), StartAdventour.class);
+                    startAdventourIntent.putExtra("isSwitchActive", isSwitchActive);
+                    startAdventourIntent.putExtra("distance", distance);
+                    startActivity(startAdventourIntent);
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.beacons:
@@ -135,6 +221,7 @@ public class Beacons extends AppCompatActivity {
     }
 
     public void getBeacons() {
+        // Log.d("Inside getBeacons, loc: ", selectedBeaconLocation);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
