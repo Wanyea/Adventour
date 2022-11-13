@@ -324,8 +324,8 @@ public class Passport extends AppCompatActivity {
                         if (document.get("androidPfpRef") != null)
                         {
                             androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
-                        } else if (document.get("iOSPfpRef") != null) {
-                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else if (document.get("iosPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iosPfpRef"));
                         } else {
                             androidPfpRef = 6; // Default PFP Pic
                         }

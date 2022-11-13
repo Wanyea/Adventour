@@ -48,7 +48,6 @@ public class BeaconsModel {
         this.dateCreated = AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
         this.androidPfpRef = androidPfpRef;
 
-        Log.d("Model", dateCreated);
     }
 
     public String getDateCreated() {

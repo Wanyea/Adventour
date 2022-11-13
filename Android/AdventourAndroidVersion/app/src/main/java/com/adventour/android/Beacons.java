@@ -66,6 +66,7 @@ public class Beacons extends AppCompatActivity {
 
         handleAuth();
         getBeacons();
+        checkLiked();
 
         RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
@@ -158,7 +159,7 @@ public class Beacons extends AppCompatActivity {
                                 allData = beacons.getData();
                                 allData.put("documentID", beacons.getId());
 
-                                Log.d("BEACON DATA", "all beacon data: " + allData);
+                                Log.d("Beacon Data", "All Beacon data: " + allData);
                                 ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
                                 Log.d("getBeacons in BEACONS", locations.toString());
 
@@ -224,30 +225,24 @@ public class Beacons extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         try {
-            if (allData.get("author") != null)
+
+            if (allData.get("uid") != null)
             {
-                user = (Map<String, Object>) allData.get("author");
-                Log.d("user ", user.toString());
-
-                if (user.get("uid") != null)
-                {
-                    userId = (String) user.get("uid");
-                    Log.d("uid ", userId);
-
-                }
+                userId = (String) allData.get("uid");
             }
 
             // Get a reference to the user that posted
             DocumentReference documentRef = db.collection("Adventourists").document(userId);
 
-            // Check if user document exists. If they do in this instance, populate passport wth user data.
+            // Check if user document exists. If they do in this instance, get user info to populate passport.
             documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            Log.d("BEACONS", "DocumentSnapshot data: " + document.getData());
+                            Log.d("User Id", document.getId());
+                            Log.d("setBeaconModel in Beacons", "DocumentSnapshot data: " + document.getData());
 
                             if (document.get("nickname") != null)
                             {
@@ -260,9 +255,9 @@ public class Beacons extends AppCompatActivity {
                             {
                                 androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
                                 Log.d("Android Pfp Ref ", String.valueOf(androidPfpRef));
-                            } else if (document.get("iOSPfpRef") != null) {
-                                androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String) document.get("iOSPfpRef"));
-                                Log.d("iOS Pfp Ref ", String.valueOf(androidPfpRef));
+                            } else if (document.get("iosPfpRef") != null) {
+                                androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String) document.get("iosPfpRef"));
+                                Log.d("ios Pfp Ref ", String.valueOf(androidPfpRef));
                             } else {
                                 androidPfpRef = 6; // The case where a user does not have a profile pic on Android nor iOS.
                                 Log.d("No Pfp Ref ", String.valueOf(androidPfpRef));
@@ -278,10 +273,10 @@ public class Beacons extends AppCompatActivity {
                             }
 
                         } else {
-                            Log.d("BEACONS", "No such document");
+                            Log.d("setBeaconModel in Beacons", "No such document");
                         }
                     } else {
-                        Log.d("BEACONS", "get failed with ", task.getException());
+                        Log.d("setBeaconModel in Beacons", "get failed with ", task.getException());
                     }
                 }
             });
@@ -293,87 +288,33 @@ public class Beacons extends AppCompatActivity {
 
     public void checkLiked()
     {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Get all Beacons from Beacon Board.
         db.collection("Beacons")
                 .get()
-                .addOnFailureListener(new OnFailureListener() {
+                .addOnFailureListener(new OnFailureListener()
+                {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("getBeacons in BEACONS", "Failed calling database...");
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Log.d("checkLiked in Beacons", "Failed calling database...");
                     }
                 })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
                         if (task.isSuccessful())
                         {
-                            Log.d("getBeacons in BEACONS", "Documents retrieved!");
-                            for (QueryDocumentSnapshot beacons : task.getResult())
+                            Log.d("checkLiked in Beacons", "Documents retrieved!");
+                            for (QueryDocumentSnapshot likes : task.getResult())
                             {
                                 Map<String, Object> allData = new HashMap<>();
-                                allData = beacons.getData();
-                                allData.put("documentID", beacons.getId());
+                                allData = likes.getData();
+                                Log.d("Likes Data", "all likes data: " + allData);
 
-                                Log.d("BEACON DATA", "all beacon data: " + allData);
-                                ArrayList<String> locations = (ArrayList<String>) allData.get("locations");
-                                Log.d("getBeacons in BEACONS", locations.toString());
-
-                                JSONObject requestBody = new JSONObject();
-
-                                try
-                                {
-                                    requestBody.put("ids", new JSONArray(locations));
-                                    requestBody.put("uid", user.getUid());
-                                } catch (JSONException e) {
-                                    Log.e("getBeacons in BEACONS Error", e.toString());
-                                }
-
-                                try {
-                                    URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
-                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                                    conn.setDoOutput(true);
-                                    conn.setInstanceFollowRedirects(false);
-                                    conn.setRequestMethod("POST");
-                                    conn.setRequestProperty("Content-Type", "application/json");
-                                    conn.setRequestProperty("Accept", "application/json");
-                                    conn.setUseCaches(false);
-
-                                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                                    wr.writeBytes(requestBody.toString());
-                                    wr.flush();
-                                    wr.close();
-                                    requestBody = null;
-
-                                    System.out.println("\nSending 'POST' request to URL : " + url);
-
-                                    InputStream it = conn.getInputStream();
-                                    InputStreamReader inputs = new InputStreamReader(it);
-
-                                    BufferedReader in = new BufferedReader(inputs);
-                                    String inputLine;
-                                    StringBuffer response = new StringBuffer();
-
-                                    while ((inputLine = in.readLine()) != null) {
-                                        response.append(inputLine);
-                                    }
-
-                                    in.close();
-                                    JSONObject responseData = new JSONObject(response.toString());
-                                    JSONArray results = (JSONArray) responseData.get("results");
-                                    allData.put("locations", results);
-                                    setBeaconModel(allData);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e("getBeaconPosts", e.toString());
-                                }
                             }
-                            Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
                         }
                     }
                 });

@@ -238,15 +238,15 @@ public class BeaconPost extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d("BEACON POST", "DocumentSnapshot data: " + document.getData());
+                        Log.d("Beacon Post", "DocumentSnapshot data: " + document.getData());
                         authorTextView.setText(document.getString("nickname"));
 
                         // Set androidPfpRef for Profile Picture
                         if (document.get("androidPfpRef") != null)
                         {
                             androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
-                        } else if (document.get("iOSPfpRef") != null) {
-                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else if (document.get("iosPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iosPfpRef"));
                         } else {
                             androidPfpRef = 6; // Default PFP Pic
                         }
@@ -283,10 +283,10 @@ public class BeaconPost extends AppCompatActivity {
                                 authorImageView.setImageResource(R.drawable.ic_user_icon);
                         }
                     } else {
-                        Log.d("BEACON POST", "No such document");
+                        Log.d("Beacon Post", "No such document");
                     }
                 } else {
-                    Log.d("BEACON POST", "get failed with ", task.getException());
+                    Log.d("Beacon Post", "get failed with ", task.getException());
                 }
             }
         });
