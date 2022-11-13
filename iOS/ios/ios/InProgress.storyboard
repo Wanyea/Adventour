@@ -58,7 +58,7 @@
                                                                     <color key="tintColor" name="adv-orange"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="Show on Map">
-                                                                        <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                                        <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                                     </buttonConfiguration>
                                                                     <connections>
                                                                         <action selector="showOnMap:" destination="jyL-Pc-aGg" eventType="touchUpInside" id="MN6-VE-t1B"/>
@@ -70,12 +70,12 @@
                                                                         <constraint firstAttribute="height" constant="28" id="Bjo-KD-ikw"/>
                                                                         <constraint firstAttribute="width" constant="291" id="PUl-N2-T0b"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dUb-ca-Q1E">
-                                                                    <rect key="frame" x="287" y="37.5" width="15" height="16"/>
+                                                                    <rect key="frame" x="286" y="37.5" width="15" height="16"/>
                                                                     <color key="tintColor" name="adv-red"/>
                                                                     <accessibility key="accessibilityConfiguration">
                                                                         <bool key="isElement" value="YES"/>
@@ -86,10 +86,10 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHm-Xz-njT">
-                                                                    <rect key="frame" x="162" y="29" width="133" height="35"/>
+                                                                    <rect key="frame" x="162" y="30" width="132" height="34"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="Get Directions">
-                                                                        <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                                        <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                                         <color key="baseForegroundColor" name="adv-red"/>
                                                                     </buttonConfiguration>
                                                                     <connections>
@@ -117,14 +117,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FinishedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FinishCell" id="ugM-h7-Wmq" customClass="FinishCell" customModule="ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="112.5" width="320" height="65"/>
+                                                        <rect key="frame" x="0.0" y="112.5" width="320" height="63"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugM-h7-Wmq" id="yon-n5-Pv2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HG7-BH-C89">
-                                                                    <rect key="frame" x="85" y="16.5" width="150" height="31.5"/>
+                                                                    <rect key="frame" x="85" y="16.5" width="150" height="29.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="CXD-ZM-OMz"/>
                                                                         <constraint firstAttribute="width" constant="150" id="VTj-CK-J5e"/>
@@ -133,7 +133,14 @@
                                                                     </constraints>
                                                                     <color key="tintColor" name="adv-royalblue"/>
                                                                     <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="filled" title="Finish!" cornerStyle="capsule">
+                                                                    <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                                                        <attributedString key="attributedTitle">
+                                                                            <fragment content="Finish!">
+                                                                                <attributes>
+                                                                                    <font key="NSFont" size="13" name="Helvetica"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                        </attributedString>
                                                                         <color key="baseBackgroundColor" name="adv-royalblue"/>
                                                                     </buttonConfiguration>
                                                                     <variation key="default">
@@ -267,8 +274,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-wP-A39">
-                                <rect key="frame" x="69" y="94" width="237" height="39"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="31"/>
+                                <rect key="frame" x="63" y="94" width="249" height="38"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="31"/>
                                 <color key="textColor" name="adv-royalblue"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" name="adv-white"/>
@@ -284,7 +291,10 @@
                                 <rect key="frame" x="60" y="447" width="255" height="31"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Post Beacon"/>
+                                    </attributedString>
                                     <color key="baseBackgroundColor" name="adv-royalblue"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
@@ -306,7 +316,11 @@
                                 <rect key="frame" x="80" y="486" width="215" height="31"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="View Adventour"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="View Adventour"/>
+                                    </attributedString>
+                                </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBorder" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
@@ -348,7 +362,11 @@
                                 <rect key="frame" x="130" y="525" width="115" height="31"/>
                                 <color key="tintColor" name="adv-royalblue"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Home" cornerStyle="capsule"/>
+                                <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Home"/>
+                                    </attributedString>
+                                </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBorder" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
@@ -457,7 +475,7 @@
                             <color key="backgroundColor" name="adv-skyblue"/>
                             <color key="shadowColor" name="adv-skyblue"/>
                             <textAttributes key="titleTextAttributes">
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" name="adv-navyblue"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                             </textAttributes>
@@ -466,7 +484,7 @@
                             <color key="backgroundColor" name="adv-skyblue"/>
                             <color key="shadowColor" name="adv-skyblue"/>
                             <textAttributes key="titleTextAttributes">
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" name="adv-navyblue"/>
                                 <color key="textShadowColor" name="adv-white"/>
                                 <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>

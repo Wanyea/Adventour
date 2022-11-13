@@ -22,9 +22,9 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var reportHideButton: UIBarButtonItem!
     
    
-    weak var source: UIViewController!
+    var source: UIViewController!
     var beaconInfo: [String: Any] = [:]
-    weak var user: User!
+    var user: User!
     var locations: [[String: Any]] = []
     var locationDescriptions: [String]!
     var ids: [String] = []
@@ -329,7 +329,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func saveLike() {
         print("DOC ID: ", beaconInfo["documentID"])
         let db = Firestore.firestore()
-        weak var query: Query? = db.collection("Likes")
+        var query: Query? = db.collection("Likes")
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
         query!.getDocuments { snap, error in
@@ -377,11 +377,11 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func checkLiked() {
         
         let db = Firestore.firestore()
-        weak var query: Query? = db.collection("Likes")
+        var query: Query = db.collection("Likes")
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
-        listener = query!.addSnapshotListener { snap, error in
+        self.listener = query.addSnapshotListener { snap, error in
             if snap!.isEmpty {
                 self.isLiked = false
                 self.likeButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
@@ -493,21 +493,25 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             checkLiked()
             setNumLikes()
             self.reportHideButton.isEnabled = true
+            self.reportHideButton.tintColor = UIColor(named: "adv-red")
             
             
         } else if self.source is ProfileViewController {
             checkLiked()
-            //setNumLikes()
+            setNumLikes()
             self.reportHideButton.isEnabled = false
+            self.reportHideButton.tintColor = UIColor(named: "adv-skyblue")
             
         } else if self.source is AdventourSummaryViewController {
             self.likeButton.isHidden = true
             self.numLikes.isHidden = true
             self.reportHideButton.isEnabled = false
+            self.reportHideButton.tintColor = UIColor(named: "adv-skyblue")
         } else {
             self.likeButton.isEnabled = false
             self.numLikes.isHidden = true
             self.reportHideButton.isEnabled = false
+            self.reportHideButton.tintColor = UIColor(named: "adv-skyblue")
         }
     }
     

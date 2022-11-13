@@ -15,6 +15,8 @@ class BeaconsDataSource: NSObject, UITableViewDataSource {
     
     var user: User!
     
+    var listener: ListenerRegistration!
+    
     init(withDataSource data: [[String: Any]]) {
         self.data = data
         
@@ -101,12 +103,14 @@ class BeaconsDataSource: NSObject, UITableViewDataSource {
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
-        query.addSnapshotListener { snap, error in
+        self.listener = query.addSnapshotListener { snap, error in
             if snap!.isEmpty {
                 cell.likeIcon.image = UIImage(systemName: "heart")
+                self.listener.remove()
                 
             } else {
-                    cell.likeIcon.image = UIImage(systemName: "heart.fill")
+                cell.likeIcon.image = UIImage(systemName: "heart.fill")
+                self.listener.remove()
             }
         }
     }

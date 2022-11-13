@@ -49,6 +49,8 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
     @IBOutlet weak var startScrollView: UIScrollView!
     // Button Outlets
     @IBOutlet weak var notNow: UIButton!
+    @IBOutlet weak var yesButton: UIButton!
+    
     
     var fsq_id: String!
     var ids: [String]? = []
@@ -110,6 +112,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
         self.notNow?.layer.shadowColor = UIColor.gray.cgColor
         self.notNow?.layer.borderWidth = 5
         self.notNow?.layer.cornerRadius = 25
+        self.yesButton?.isEnabled = false
         self.startScrollView.setContentOffset(.zero, animated: true)
         self.fsq_id = nil
         if let ids = self.ids {
@@ -143,6 +146,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
         self.notNow.isEnabled = true
         self.notNow?.layer.borderColor = UIColor(named: "adv-red")?.cgColor
         self.notNow?.layer.shadowColor = UIColor(named: "adv-redshade")?.cgColor
+        self.yesButton?.isEnabled = true
         getAdventourPlace()
 
         self.startScrollView.setContentOffset(CGPoint(x: 0, y: startScrollView.contentSize.height - startScrollView.bounds.height + startScrollView.contentInset.bottom), animated: true)

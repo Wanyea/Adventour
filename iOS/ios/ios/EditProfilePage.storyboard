@@ -66,7 +66,7 @@
                                             <constraint firstAttribute="width" constant="275" id="KXc-4i-RWl"/>
                                             <constraint firstAttribute="height" constant="21" id="k2V-J6-JAX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -83,7 +83,7 @@
                                             <constraint firstAttribute="height" constant="33" id="6PB-I6-3h8"/>
                                             <constraint firstAttribute="width" constant="196" id="GwO-xN-h18"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="email"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="____________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9u8-fJ-EHc">
@@ -92,7 +92,7 @@
                                             <constraint firstAttribute="width" constant="275" id="PtT-eU-FE9"/>
                                             <constraint firstAttribute="height" constant="21" id="hTd-7o-Q9U"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -113,7 +113,7 @@
                                             <constraint firstAttribute="width" constant="196" id="0dd-me-BM7"/>
                                             <constraint firstAttribute="height" constant="33" id="bWD-hf-NwM"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="____________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1gf-7m-tZX">
@@ -122,7 +122,7 @@
                                             <constraint firstAttribute="height" constant="21" id="BtB-7v-dLX"/>
                                             <constraint firstAttribute="width" constant="275" id="RlQ-bz-RTP"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -132,7 +132,7 @@
                                             <constraint firstAttribute="height" constant="33" id="Lbb-9f-xie"/>
                                             <constraint firstAttribute="width" constant="196" id="feZ-N3-H3j"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="email"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="____________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Meo-ZQ-ObQ">
@@ -141,7 +141,7 @@
                                             <constraint firstAttribute="width" constant="275" id="9XQ-Pa-xIl"/>
                                             <constraint firstAttribute="height" constant="21" id="vYv-rr-6Cs"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -151,7 +151,7 @@
                                             <constraint firstAttribute="width" constant="196" id="ZTJ-EI-RXc"/>
                                             <constraint firstAttribute="height" constant="33" id="hb8-S6-3Dk"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="email"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="____________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqi-bQ-gI6">
@@ -160,7 +160,7 @@
                                             <constraint firstAttribute="height" constant="21" id="F9u-3d-CuB"/>
                                             <constraint firstAttribute="width" constant="275" id="Jlb-Bu-iaH"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -170,7 +170,7 @@
                                             <constraint firstAttribute="height" constant="33" id="5mQ-Br-PN0"/>
                                             <constraint firstAttribute="width" constant="196" id="Myo-JB-2qn"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="email"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="____________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O20-wh-o2D">
@@ -179,7 +179,7 @@
                                             <constraint firstAttribute="width" constant="275" id="2Z8-Tu-eWU"/>
                                             <constraint firstAttribute="height" constant="21" id="4zT-pH-p6d"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <color key="textColor" name="adv-royalblueshade"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -226,14 +226,14 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Birthdate cannot be changed*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shw-IV-psX">
-                                <rect key="frame" x="63" y="458" width="194" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="68" y="458" width="184.5" height="16.5"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <color key="textColor" name="adv-black"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cac-eD-DnK">
-                                <rect key="frame" x="141" y="483" width="38" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="141" y="482.5" width="38" height="20"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <color key="textColor" name="adv-red"/>
                                 <nil key="highlightedColor"/>
                             </label>
