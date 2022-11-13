@@ -63,6 +63,19 @@
                 android:background="@drawable/shape_circle"
                 android:backgroundTint="@color/blue_main_40" />
 
+            <TextView
+                android:id="@+id/profPicSignupErrorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:text="Please choose a profile picture!"
+                android:textColor="@color/red_variant"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profPicImageButton" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nicknameEditText"
                 style="@style/AdventourEditTextLoginSignup"

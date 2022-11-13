@@ -360,7 +360,7 @@
     </androidx.cardview.widget.CardView>
 
     <ScrollView
-        android:id="@+id/scrollView5"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -563,7 +563,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
 
-                app:layout_constraintEnd_toStartOf="@id/beginButton"
+                app:layout_constraintEnd_toStartOf="@id/goButton"
                 app:layout_constraintStart_toEndOf="@id/filterButton"
                 app:layout_constraintTop_toBottomOf="@+id/startAnAdventourTextView"
 
@@ -612,7 +612,7 @@
 
 
             <Button
-                android:id="@+id/beginButton"
+                android:id="@+id/goButton"
                 style="@style/AdventourSmallButton"
                 android:layout_width="60dp"
                 android:layout_marginEnd="30dp"
@@ -625,6 +625,8 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

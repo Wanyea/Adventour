@@ -31,69 +31,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cloud_2" />
 
-    <ImageButton
-        android:id="@+id/hamburgerMenuImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_hamburger_menu_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/navy_main" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/hamburgerMenuPopup"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="20dp"
-        android:paddingBottom="15dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/hamburgerMenuImageButton"
-        app:layout_constraintTop_toBottomOf="@id/hamburgerMenuImageButton">
-
-        <TextView
-            android:id="@+id/adventourTOS"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:text="Terms of Service"
-            android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/logOut"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:text="Log out"
-            android:textSize="16dp"
-            android:textColor="@color/red_variant"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/adventourTOS" />
-
-        <TextView
-            android:id="@+id/deleteAccount"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
-            android:clickable="true"
-            android:textStyle="bold"
-            android:textColor="@color/red_variant"
-            android:gravity="center_vertical"
-            android:text="Delete account"
-            android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logOut" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
 
@@ -150,18 +87,20 @@
                 android:id="@+id/previousAdventoursProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
-                app:layout_constraintEnd_toEndOf="@id/passportCardImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previousAdventoursHeader"
+                android:layout_marginVertical="30dp"
                 android:indeterminate="true" />
 
             <ProgressBar
                 android:id="@+id/beaconPostsProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
-                app:layout_constraintEnd_toEndOf="@id/passportCardImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/myLitBeaconsHeader"
+                android:layout_marginVertical="30dp"
                 android:indeterminate="true" />
 
             <TextView
@@ -216,8 +155,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="My Lit Beacons"
                 android:textSize="20sp"
-                android:paddingBottom="10dp"
-                android:paddingTop="30dp"
+                android:layout_marginTop="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previousAdventoursScrollview" />
@@ -242,6 +180,7 @@
                 app:layout_constraintHeight_max="450dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/myLitBeaconsHeader" >
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -336,5 +275,77 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/outsideView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hamburgerMenuPopup"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:paddingBottom="15dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/hamburgerMenuImageButton"
+        app:layout_constraintTop_toBottomOf="@id/hamburgerMenuImageButton">
+
+        <TextView
+            android:id="@+id/adventourTOS"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:text="Terms of Service"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/logOut"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:text="Log out"
+            android:textSize="16dp"
+            android:textColor="@color/red_variant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/adventourTOS" />
+
+        <TextView
+            android:id="@+id/deleteAccount"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:textColor="@color/red_variant"
+            android:gravity="center_vertical"
+            android:text="Delete account"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logOut" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/hamburgerMenuImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_hamburger_menu_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/navy_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
