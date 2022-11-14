@@ -242,7 +242,6 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         newAdventour.put("dateCreated", new Timestamp(new Date()));
         newAdventour.put("locations", GlobalVars.adventourFSQIds);
         newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
-        newAdventour.put("adventourLocations", GlobalVars.adventourLocations);
         newAdventour.put("isBeacon", false);
 
         //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
@@ -257,7 +256,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        storeBeacon(documentReference.getId());
+//                        storeBeacon(documentReference.getId()); // Why this called?
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

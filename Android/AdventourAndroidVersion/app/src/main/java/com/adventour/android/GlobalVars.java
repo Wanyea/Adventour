@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class GlobalVars
 {
+    public static boolean adventourInProgress = false;
+
     // Clear these after each Adventour.
     public static JSONArray excludes = new JSONArray();
     public static ArrayList<String> adventourFSQIds = new ArrayList<String>();
@@ -23,4 +25,10 @@ public class GlobalVars
     public static ArrayList<BeaconsModel> beaconBoardArrayList = new ArrayList<BeaconsModel>();
     public static String lastLocationCoordinates = "";
     public static String lastLocationName = "";
+
+    // For previous adventours in passport
+    public static ArrayList<AdventourSummaryModel> adventourLocationsPassport = new ArrayList<AdventourSummaryModel>();
+    public static ArrayList<BeaconPostModel> beaconModelArrayListPassport = new ArrayList<BeaconPostModel>();
+    public static ArrayList<String> adventourFSQIdsPassport = new ArrayList<String>();
+    public static String selectedLocationPassport = "";
 }
