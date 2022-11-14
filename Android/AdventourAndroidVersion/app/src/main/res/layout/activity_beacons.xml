@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<fragment
+    <fragment
         android:id="@+id/beacon_board_autocomplete_fragment"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -61,9 +61,9 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beaconBoardTitleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/beaconBoardTitleTextView"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        tools:ignore="MissingClass" />-->
+        tools:ignore="MissingClass" />
 
 
     <ProgressBar

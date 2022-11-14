@@ -32,7 +32,7 @@
             android:layout_marginStart="5dp"/>
 
         <ImageView
-            android:id="@+id/likeImageButton"
+            android:id="@+id/likeImageView"
             android:clickable="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -45,9 +45,9 @@
             android:id="@+id/likeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/likeImageButton"
-            app:layout_constraintStart_toStartOf="@id/likeImageButton"
-            app:layout_constraintEnd_toEndOf="@id/likeImageButton"
+            app:layout_constraintTop_toBottomOf="@id/likeImageView"
+            app:layout_constraintStart_toStartOf="@id/likeImageView"
+            app:layout_constraintEnd_toEndOf="@id/likeImageView"
             android:textSize="14sp"
             android:textColor="@color/red_variant"/>
 
@@ -70,10 +70,9 @@
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="beaconTitleTextView"
+            app:layout_constraintBottom_toTopOf="@+id/beaconTitleTextView"
             app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/likeImageButton" />
+            app:layout_constraintTop_toBottomOf="@+id/likeImageView" />
 
         <TextView
             android:id="@+id/beaconTitleTextView"

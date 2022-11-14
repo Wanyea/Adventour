@@ -42,23 +42,6 @@ public class BeaconsModel {
     private int numOfLikes;
     private String documentId;
 
-
-    public class LikeCounter {
-        int numLikeShards;
-
-        public LikeCounter(int numLikeShards) {
-            this.numLikeShards = numLikeShards;
-        }
-    }
-
-    public class LikeShard {
-        int likeCount;
-
-        public LikeShard(int likeCount) {
-            this.likeCount = likeCount;
-        }
-    }
-
     public BeaconsModel(Map allData, String userNickname, int androidPfpRef)
     {
 
@@ -99,33 +82,6 @@ public class BeaconsModel {
         }
     }
 
-    public Task<Void> createLikeCounter(final DocumentReference ref, final int numLikeShards)
-    {
-        // Initialize the counter document, then initialize each shard.
-        return ref.set(new BeaconsModel.LikeCounter(numLikeShards))
-                .continueWithTask(new Continuation<Void, Task<Void>>() {
-                    @Override
-                    public Task<Void> then(@NonNull Task<Void> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-
-                        List<Task<Void>> tasks = new ArrayList<>();
-
-                        // Initialize each shard with count=0
-                        for (int i = 0; i < numLikeShards; i++) {
-                            Task<Void> makeShard = ref.collection("likeShards")
-                                    .document(String.valueOf(i))
-                                    .set(new BeaconsModel.LikeShard(0));
-
-                            tasks.add(makeShard);
-                        }
-
-                        return Tasks.whenAll(tasks);
-                    }
-                });
-    }
-
     public Task<Integer> getNumLikes(String documentId)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -139,7 +95,7 @@ public class BeaconsModel {
                         int count = 0;
                         for (DocumentSnapshot snap : task.getResult())
                         {
-                            BeaconsModel.LikeShard shard = snap.toObject(BeaconsModel.LikeShard.class);
+                            LikeShard shard = snap.toObject(LikeShard.class);
                             count += shard.likeCount;
                         }
                         return count;
@@ -147,42 +103,6 @@ public class BeaconsModel {
                 });
     }
 
-    public void checkLiked(String documentId)
-    {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Likes")
-                .whereEqualTo("uid", user.getUid())
-                .whereEqualTo("beaconID", documentId)
-                .get()
-                .addOnFailureListener(new OnFailureListener()
-                {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                        Log.d("checkLiked in Beacons", "Failed calling database...");
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            Log.d("checkLiked in Beacons", "Documents retrieved!");
-                            for (QueryDocumentSnapshot likes : task.getResult())
-                            {
-                                Map<String, Object> userLikes = new HashMap<>();
-                                userLikes = likes.getData();
-                                Log.d("checkedLike in BeaconsModel", "User likes data: " + userLikes);
-                            }
-                        }
-                    }
-                });
-    }
 
     public String getDateCreated() {
         return dateCreated;

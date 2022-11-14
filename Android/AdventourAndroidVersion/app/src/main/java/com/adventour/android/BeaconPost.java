@@ -19,10 +19,12 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,9 +32,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BeaconPost extends AppCompatActivity {
@@ -47,6 +51,7 @@ public class BeaconPost extends AppCompatActivity {
     FirebaseUser user;
 
     int androidPfpRef;
+    int numLikeShards = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,9 +135,10 @@ public class BeaconPost extends AppCompatActivity {
         newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
         newBeacon.put("beaconLocation", GlobalVars.selectedLocation);
 
-        db.collection("Beacons")
-                .document(adventourId)
-                .set(newBeacon)
+        DocumentReference beaconRef = db.collection("Beacons").document(adventourId);
+        createLikeCounter(beaconRef, numLikeShards);
+
+        beaconRef.set(newBeacon)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
@@ -291,6 +297,33 @@ public class BeaconPost extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public Task<Void> createLikeCounter(final DocumentReference beaconRef, final int numLikeShards)
+    {
+        // Initialize the counter document, then initialize each shard.
+        return beaconRef.set(new LikeCounter(numLikeShards))
+                .continueWithTask(new Continuation<Void, Task<Void>>() {
+                    @Override
+                    public Task<Void> then(@NonNull Task<Void> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        List<Task<Void>> tasks = new ArrayList<>();
+
+                        // Initialize each shard with count=0
+                        for (int i = 0; i < numLikeShards; i++) {
+                            Task<Void> makeShard = beaconRef.collection("likeShards")
+                                    .document(String.valueOf(i))
+                                    .set(new LikeShard(0));
+
+                            tasks.add(makeShard);
+                        }
+
+                        return Tasks.whenAll(tasks);
+                    }
+                });
     }
 
     public void switchToHome()

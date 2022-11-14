@@ -10,19 +10,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,9 +50,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Beacons extends AppCompatActivity {
 
@@ -61,9 +69,6 @@ public class Beacons extends AppCompatActivity {
     PlacesClient placesClient;
     HashMap<String, String> isSwitchActive = new HashMap<>();
     int distance = 1;
-    int numLikeShards = 10;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,16 +100,12 @@ public class Beacons extends AppCompatActivity {
         Places.initialize(this, MAPS_API_KEY);
         placesClient = Places.createClient(this);
 
-
-        //TODO: FIX ERROR WITH AUTOCOMPLETE FRAGMENT --> FILTER BEACONS BY CITY/MOST RECENT/LEAST RECENT. REMOVE THIS CALL ONCE FRAGMENT CALLS IT.
-        //getBeacons();
-
         // Initialize the AutocompleteSupportFragment.
 
-        //autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.beacon_board_autocomplete_fragment);
+        autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.beacon_board_autocomplete_fragment);
 
         // Specify the types of place data to return.
-        /*autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
         autocompleteFragment.setCountry("US");
         autocompleteFragment.setActivityMode(AutocompleteActivityMode.OVERLAY);
         autocompleteFragment.setHint("Enter location");
@@ -122,7 +123,8 @@ public class Beacons extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener()
                 {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View view)
+                    {
                         autocompleteFragment.setText("");
                         view.setVisibility(View.GONE);
                     }
@@ -143,7 +145,7 @@ public class Beacons extends AppCompatActivity {
                 // TODO: Handle the error.
                 Log.i("Beacons", "An error occurred: " + status);
             }
-        });*/
+        });
 
         RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
@@ -216,8 +218,8 @@ public class Beacons extends AppCompatActivity {
         finish();
     }
 
-    public void getBeacons() {
-        // Log.d("Inside getBeacons, loc: ", selectedBeaconLocation);
+    public void getBeacons(String selectedBeaconLocation) {
+        Log.d("Inside getBeacons, loc: ", selectedBeaconLocation);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
