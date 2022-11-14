@@ -36,8 +36,9 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
         self.hideTable()
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
+        self.postButton.isHidden = true
         getAdventourData()
-        checkBeacon()
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -137,6 +138,7 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
                             DispatchQueue.main.async {
                                 self.locationsTable.reloadData()
                                 self.showTable()
+                                self.checkBeacon()
                                 self.activityIndicator.stopAnimating()
                                 
                             }
