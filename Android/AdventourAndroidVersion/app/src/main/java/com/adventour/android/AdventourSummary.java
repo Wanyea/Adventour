@@ -77,12 +77,29 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && (boolean) extras.get("fromPassport")) {
+            Intent intent = new Intent(this, Passport.class);
+            intent.putExtra("fromAdventourSummary", true);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(this, Congratulations.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+
     public void switchToBeaconPost()
     {
         Intent intent = new Intent(this, BeaconPost.class);
         Bundle extras = getIntent().getExtras();
         if (extras != null && (boolean) extras.get("fromPassport")) {
             intent.putExtra("fromPassport", true);
+            intent.putExtra("adventourID", (String) extras.get("adventourID"));
         }
 
         startActivity(intent);

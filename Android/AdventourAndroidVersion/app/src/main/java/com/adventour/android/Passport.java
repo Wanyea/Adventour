@@ -101,6 +101,8 @@ public class Passport extends AppCompatActivity {
 
         // Dump GlobalVars
         GlobalVars.beaconBoardArrayList.clear();
+        GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.userBeaconsArrayList.clear();
         clearPassportGlobalVals();
 
         context = getApplicationContext();
@@ -739,6 +741,7 @@ public class Passport extends AppCompatActivity {
 
                             Intent intent = new Intent(c, AdventourSummary.class);
                             intent.putExtra("fromPassport", true);
+                            intent.putExtra("adventourID", adventourID);
                             startActivity(intent);
                             finish();
                         }

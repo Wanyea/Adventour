@@ -122,6 +122,21 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null && (boolean) extras.get("fromAdventourSummary")) {
+//            Intent intent = new Intent(this, AdventourSummary.class);
+//            intent.putExtra("fromBeaconPost", true);
+//            startActivity(intent);
+//            finish();
+//        } else {
+//            Intent intent = new Intent(this, Congratulations.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//    }
+
     public void postToBeaconBoard(String adventourId)
     {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -260,42 +275,45 @@ public class BeaconPost extends AppCompatActivity {
             }
         });
 
+        // If adventour is in db already or not
         if (fromPassport) {
             newAdventour.put("dateCreated", new Timestamp(new Date()));
             newAdventour.put("locations", GlobalVars.adventourFSQIdsPassport);
             newAdventour.put("numLocations", GlobalVars.adventourFSQIdsPassport.size());
             newAdventour.put("beaconLocation", GlobalVars.selectedLocationPassport);
             newAdventour.put("isBeacon", true);
+
+            storeBeacon((String) getIntent().getExtras().get("adventourID"));
+            postToBeaconBoard((String) getIntent().getExtras().get("adventourID"));
         } else {
             newAdventour.put("dateCreated", new Timestamp(new Date()));
             newAdventour.put("locations", GlobalVars.adventourFSQIds);
             newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
             newAdventour.put("beaconLocation", GlobalVars.selectedLocation);
             newAdventour.put("isBeacon", true);
-        }
 
+            db.collection("Adventourists")
+                    .document(user.getUid())
+                    .collection("adventours")
+                    .add(newAdventour)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
+                            storeBeacon(documentReference.getId());
+                            postToBeaconBoard(documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("Failed to add Adventour", "Error adding document", e);
+                        }
+                    });
+        }
         //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
         // and users could potentially filter by categories.
-
-        db.collection("Adventourists")
-                .document(user.getUid())
-                .collection("adventours")
-                .add(newAdventour)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        storeBeacon(documentReference.getId());
-                        postToBeaconBoard(documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Failed to add Adventour", "Error adding document", e);
-                    }
-                });
     }
 
     public void getUserNickname() {

@@ -57,7 +57,7 @@ public class Congratulations extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                storeAdventour();
+//                storeAdventour(); // Duplicate, this was already called in InProgress
 
                 // Get Start Adventour Activity for next Adventour.
                 GlobalVars.adventourLocations.clear();
