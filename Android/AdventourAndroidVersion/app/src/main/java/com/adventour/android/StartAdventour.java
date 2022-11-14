@@ -89,7 +89,7 @@ public class StartAdventour extends AppCompatActivity {
     HashMap<String, String> isSwitchActive;
     ArrayList<String> prevLocation = new ArrayList<>();
 
-    Integer distance = 0;
+    int distance = 1;
     String currentFSQId;
 
     JSONObject jsonBody = new JSONObject();

@@ -10,28 +10,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,10 +44,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Beacons extends AppCompatActivity {
 
@@ -64,7 +60,10 @@ public class Beacons extends AppCompatActivity {
     String selectedBeaconLocation;
     PlacesClient placesClient;
     HashMap<String, String> isSwitchActive = new HashMap<>();
-    int distance = 0;
+    int distance = 1;
+    int numLikeShards = 10;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +97,7 @@ public class Beacons extends AppCompatActivity {
 
 
         //TODO: FIX ERROR WITH AUTOCOMPLETE FRAGMENT --> FILTER BEACONS BY CITY/MOST RECENT/LEAST RECENT. REMOVE THIS CALL ONCE FRAGMENT CALLS IT.
-        getBeacons();
+        //getBeacons();
 
         // Initialize the AutocompleteSupportFragment.
 
@@ -145,9 +144,6 @@ public class Beacons extends AppCompatActivity {
                 Log.i("Beacons", "An error occurred: " + status);
             }
         });*/
-
-
-        //checkLiked();
 
         RecyclerView beaconsRV = findViewById(R.id.beaconsRV);
         beaconsRV.setNestedScrollingEnabled(false);
@@ -374,38 +370,5 @@ public class Beacons extends AppCompatActivity {
         }
     }
 
-    public void checkLiked()
-    {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Beacons")
-                .get()
-                .addOnFailureListener(new OnFailureListener()
-                {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                        Log.d("checkLiked in Beacons", "Failed calling database...");
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            Log.d("checkLiked in Beacons", "Documents retrieved!");
-                            for (QueryDocumentSnapshot likes : task.getResult())
-                            {
-                                Map<String, Object> allData = new HashMap<>();
-                                allData = likes.getData();
-                                Log.d("Likes Data", "all likes data: " + allData);
-
-                            }
-                        }
-                    }
-                });
-    }
 }
 

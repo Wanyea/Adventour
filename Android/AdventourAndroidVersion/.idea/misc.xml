@@ -62,6 +62,10 @@
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_heart_fill_icon.xml" value="0.2625" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_heart_line_icon.xml" value="0.2625" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_profpic_cheetah.xml" value="0.2605" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon.xml" value="0.2625" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon_blue.xml" value="0.2625" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon_outline.xml" value="0.2625" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/drawable/ic_user_icon_small.xml" value="0.2625" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_adventour_summary.xml" value="0.3625" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacon_post.xml" value="0.33" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_beacons.xml" value="0.2046875" />
@@ -76,7 +80,7 @@
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_signup_screen.xml" value="0.25" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/activity_start_adventour.xml" value="0.31431159420289856" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/adventour_ticket_card_layout.xml" value="0.30833333333333335" />
-        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/beacon_card_layout.xml" value="0.67" />
+        <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/beacon_card_layout.xml" value="0.33" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/beacon_post_card_layout.xml" value="0.25" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/fragment_start_adventour.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/wanye/source/Adventour/Android/AdventourAndroidVersion/app/src/main/res/layout/in_progress_card_layout.xml" value="0.21875" />

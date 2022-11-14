@@ -91,7 +91,7 @@ public class Passport extends AppCompatActivity {
     ConstraintLayout hamburgerMenuPopup;
 
     HashMap<String, String> isSwitchActive = new HashMap<>();
-    int distance = 0;
+    int distance = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

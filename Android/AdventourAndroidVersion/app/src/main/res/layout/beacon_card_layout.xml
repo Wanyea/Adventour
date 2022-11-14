@@ -62,6 +62,20 @@
             android:foreground="@drawable/rectangle_brown_variant"/>
 
         <TextView
+            android:id="@+id/likesTextView"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="beaconTitleTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/likeImageButton" />
+
+        <TextView
             android:id="@+id/beaconTitleTextView"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
