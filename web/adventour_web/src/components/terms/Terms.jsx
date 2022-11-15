@@ -9,18 +9,17 @@ return (
     We want Adventour to be a place where everyone feels like they belong. To help create and facilitate a strong community we have laid out some rules that everyone needs to follow to keep Adventour safe and free of discrimation and hate. You can find our Terms of Service below.
   </p>
   <h2 className='pad'>Terms of Service</h2>
-  <p className='pad'>
+  {/* <p className='pad'>
     As the team does not have a legal advisor for this project, this section is merely a proposed Terms of Service 
     until we get an official version. In no way is this section legally binding while it is still a work in progress.
-  </p>
-  <p className='double-pad bold'>
-    Last updated April 23, 2022
+  </p> */}
+  <p className='pad bold'>
+    Last updated November 14, 2022
   </p>
   <p className='pad'>
-    The following Terms of Service ("Terms'') will apply to users ("you," "your," "user") who access or use 
-    Adventour's ("our," "we," "us") Service through Adventour's mobile application ("Service," "Application"), 
-    whether or not the user has created their own account. These Terms govern your use of our Service. If you do 
-    not agree with these Terms, nor with our Privacy Policy, cease your use of our Service immediately.
+    The following Terms of Service ("Terms'') will apply to users ("you," "your," "user") who access or use Adventour's ("our," "we," "us") 
+    Service through Adventour's mobile application ("Service," "Application"), whether or not the user has created their own account. These 
+    Terms govern your use of our Service. If you do not agree with these Terms, nor with our Privacy Policy, cease your use of our Service immediately.
   </p>
   <p className='pad'>
     These Terms are subject to change. We will notify you of any updates to these Terms and our Privacy Policy 
@@ -106,6 +105,15 @@ return (
                 Application.) We are not responsible for any inaccuracies for a listed Destination, as we are not 
                 official representatives of any Destination. If you spot any inaccuracies, please contact us 
                 immediately.
+              </li>
+          </ol>
+        <li>Reporting</li>
+          <ol className="inner" type='i'>
+              <li>
+                A report function is available on the iOS platform. 
+                If you find any Beacons that violate these terms, 
+                please report the Beacon via the report button and 
+                a member of our moderation team will take appropriate action.
               </li>
           </ol>
       </ol>
