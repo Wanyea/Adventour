@@ -62,11 +62,27 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
     FloatingActionButton addLocationButton;
 
+    HashMap<String, String> isSwitchActive = new HashMap<>();
+    int distance = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_progress);
+
         handleAuth();
+
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+            Log.d("InProgress isSwitch", isSwitchActive.toString());
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            Log.d("InProgress distance", String.valueOf(distance));
+        }
 
         // Google map code
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
@@ -166,6 +182,8 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     public void switchToStartAdventour()
     {
         Intent intent = new Intent(this, StartAdventour.class);
+        intent.putExtra("isSwitchActive", isSwitchActive);
+        intent.putExtra("distance", distance);
         startActivity(intent);
     }
 
@@ -219,13 +237,11 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Calendar today = Calendar.getInstance();
         Map<String, Object> newAdventour= new HashMap<>();
 
         newAdventour.put("dateCreated", new Timestamp(new Date()));
         newAdventour.put("locations", GlobalVars.adventourFSQIds);
         newAdventour.put("numLocations", GlobalVars.adventourFSQIds.size());
-        newAdventour.put("adventourLocations", GlobalVars.adventourLocations);
         newAdventour.put("isBeacon", false);
 
         //TODO: for future versions of the app: it would be nice to store categories here so they can be displayed on the prevAdventour/beacon cards
@@ -240,7 +256,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("New Adventour added", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        storeBeacon(documentReference.getId());
+//                        storeBeacon(documentReference.getId()); // Why this called?
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

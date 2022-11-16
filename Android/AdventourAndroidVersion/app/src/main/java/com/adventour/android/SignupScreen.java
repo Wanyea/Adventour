@@ -46,7 +46,7 @@ public class SignupScreen extends AppCompatActivity {
     String nickname, email, password, confirmPassword;
     Date birthdate;
     Button signupButton;
-    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView, birthdateDatePicker, privacyPolicyTOSTextView;
+    TextView loginTextView, nicknameErrorTextView, emailErrorTextView, birthdateErrorTextView, passwordErrorTextView, confirmPasswordErrorTextView, birthdateDatePicker, profPicSignupErrorTextView, privacyPolicyTOSTextView;
     ImageView nicknameErrorImageView, emailErrorImageView, birthdateErrorImageView, passwordErrorImageView, confirmPasswordErrorImageView;
     EditText nicknameEditText, emailEditText, birthdateEditText, passwordEditText, confirmPasswordEditText;
     int day, month, year;
@@ -85,6 +85,7 @@ public class SignupScreen extends AppCompatActivity {
         birthdateErrorTextView = (TextView) findViewById(R.id.birthdateSignupErrorTextView);
         passwordErrorTextView = (TextView) findViewById(R.id.passwordSignupErrorTextView);
         confirmPasswordErrorTextView = (TextView) findViewById(R.id.confirmPasswordSignupErrorTextView);
+        profPicSignupErrorTextView = (TextView) findViewById(R.id.profPicSignupErrorTextView);
 
         privacyPolicyTOSTextView = (TextView) findViewById(R.id.privacyPolicyTOSTextView);
         privacyPolicyTOSTextView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -156,6 +157,14 @@ public class SignupScreen extends AppCompatActivity {
 
                 birthdate = birthdateCalendar.getTime();
 
+                //Check if profile picture has been selected.
+                if (!AdventourUtils.isProfilePictureSelected(androidPfpRef))
+                {
+                    displayProfilePictureError();
+                } else {
+                    noProfilePictureError();
+                }
+
                 //Check if nickname is valid.
                 if (!AdventourUtils.isValidNickname(nickname))
                 {
@@ -203,7 +212,7 @@ public class SignupScreen extends AppCompatActivity {
                    AdventourUtils.checkPasswordsMatch(password, confirmPassword) &&
                    AdventourUtils.isProfilePictureSelected(androidPfpRef))
                     {
-                        signUp(nickname, email, password, birthdate, defaultMantra, androidPfpRef, iOSPfpRef); // Attempt to create user document and add to firebase.
+                        signUp(nickname, email, password, birthdate, defaultMantra, androidPfpRef); // Attempt to create user document and add to firebase.
                     }
             }
         });
@@ -324,6 +333,10 @@ public class SignupScreen extends AppCompatActivity {
         confirmPasswordErrorImageView.setVisibility(View.VISIBLE);
     }
 
+    private void displayProfilePictureError() {
+        profPicSignupErrorTextView.setVisibility(View.VISIBLE);
+    }
+
 
     private void displaySignUpError() {
         Log.d("BadSignUp", "There was a problem with sign up, please try again later.");
@@ -372,13 +385,18 @@ public class SignupScreen extends AppCompatActivity {
         confirmPasswordErrorImageView.setVisibility(View.INVISIBLE);
     }
 
+    private void noProfilePictureError()
+    {
+        profPicSignupErrorTextView.setVisibility(View.INVISIBLE);
+    }
+
     private void updateLabel(){
         String myFormat = "MM/dd/yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         birthdateDatePicker.setText("Birthdate - " + dateFormat.format(birthdateCalendar.getTime()));
     }
 
-    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, long androidPfpRef, String iOSPfpRef) {
+    private void addUserToFirestore(String nickname, String email, Date birthdate, String defaultMantra, long androidPfpRef) {
 
         Map<String, Object> adventourist = new HashMap<>();
         adventourist.put("nickname", nickname);
@@ -387,7 +405,6 @@ public class SignupScreen extends AppCompatActivity {
         adventourist.put("isPrivate", true);
         adventourist.put("mantra", defaultMantra);
         adventourist.put("androidPfpRef", androidPfpRef);
-        adventourist.put("iOSPfpRef", iOSPfpRef);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -410,8 +427,7 @@ public class SignupScreen extends AppCompatActivity {
 
     }
 
-    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, long androidPfpRef, String iOSPfpRef) {
-
+    private void signUp(String nickname, String email, String password, Date birthdate, String defaultMantra, long androidPfpRef) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -420,7 +436,7 @@ public class SignupScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            addUserToFirestore(nickname, email, birthdate, defaultMantra, androidPfpRef, iOSPfpRef);
+                            addUserToFirestore(nickname, email, birthdate, defaultMantra, androidPfpRef);
                             switchToHome();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -493,7 +509,7 @@ public class SignupScreen extends AppCompatActivity {
     public void changeProfPic(View view, int drawableID, ImageButton imageButton) {
 
         clearProfPicSelection(view);
-        imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant));
+        imageButton.setForeground(getResources().getDrawable(R.drawable.rectangle_blue_variant, null));
         profPicImageButton.setForeground(getResources().getDrawable(drawableID, null));
     }
 }

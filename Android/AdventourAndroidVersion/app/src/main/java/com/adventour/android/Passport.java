@@ -14,6 +14,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +51,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,7 +65,7 @@ public class Passport extends AppCompatActivity {
 
     ImageButton imageButton, hamburgerMenuImageButton;
 
-    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, deleteAccount;
+    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, privacyPolicy;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -90,14 +93,32 @@ public class Passport extends AppCompatActivity {
 
     ConstraintLayout hamburgerMenuPopup;
 
+    HashMap<String, String> isSwitchActive = new HashMap<>();
+    int distance = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passport);
 
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+            Log.d("InProgress isSwitch", isSwitchActive.toString());
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            Log.d("InProgress distance", String.valueOf(distance));
+        }
+
         // Dump GlobalVars
         GlobalVars.beaconBoardArrayList.clear();
+        GlobalVars.previousAdventourArrayList.clear();
+        GlobalVars.userBeaconsArrayList.clear();
+        clearPassportGlobalVals();
 
         context = getApplicationContext();
 
@@ -110,7 +131,7 @@ public class Passport extends AppCompatActivity {
         noPrevBeacons = (TextView) findViewById(R.id.postABeaconTextView);
         adventourTOS = (TextView) findViewById(R.id.adventourTOS);
         logOut = (TextView) findViewById(R.id.logOut);
-        deleteAccount = (TextView) findViewById(R.id.deleteAccount);
+        privacyPolicy = (TextView) findViewById(R.id.privacyPolicy);
 
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
@@ -228,34 +249,10 @@ public class Passport extends AppCompatActivity {
             }
         });
 
-        deleteAccount.setOnClickListener(new View.OnClickListener() {
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                // Build AlertDialog that will alert users when they try to delete their account.
-                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(Passport.this);
-                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-                deleteAccountAlertBuilder.setCancelable(true);
-
-                deleteAccountAlertBuilder.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                // DELETE USER DOCUMENT IN FIREBASE.
-                                // switchToLoggedOut();
-                            }
-                        });
-
-                deleteAccountAlertBuilder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
-                deleteAccountAlert.show();
+                openPrivacyPolicy();
             }
         });
 
@@ -273,11 +270,17 @@ public class Passport extends AppCompatActivity {
                 case R.id.passport:
                     return true;
                 case R.id.start_adventour:
-                    startActivity(new Intent(getApplicationContext(), StartAdventour.class));
+                    Intent startAdventourIntent = new Intent(getApplicationContext(), StartAdventour.class);
+                    startAdventourIntent.putExtra("isSwitchActive", isSwitchActive);
+                    startAdventourIntent.putExtra("distance", distance);
+                    startActivity(startAdventourIntent);
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.beacons:
-                    startActivity(new Intent(getApplicationContext(), Beacons.class));
+                    Intent beaconsIntent = new Intent(getApplicationContext(), Beacons.class);
+                    beaconsIntent.putExtra("isSwitchActive", isSwitchActive);
+                    beaconsIntent.putExtra("distance", distance);
+                    startActivity(beaconsIntent);
                     overridePendingTransition(0, 0);
                     return true;
             }
@@ -324,8 +327,8 @@ public class Passport extends AppCompatActivity {
                         if (document.get("androidPfpRef") != null)
                         {
                             androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
-                        } else if (document.get("iOSPfpRef") != null) {
-                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else if (document.get("iosPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iosPfpRef"));
                         } else {
                             androidPfpRef = 6; // Default PFP Pic
                         }
@@ -629,6 +632,15 @@ public class Passport extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void openPrivacyPolicy()
+    {
+        String url = "https://adventour.app/privacy-policy";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
     public void switchToAdventourSummary(int position) {
         final String TAG = "makingAdventourSummary";
         Context c = this;
@@ -659,20 +671,182 @@ public class Passport extends AppCompatActivity {
                             Log.d(TAG, "Documents retrieved!");
 
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            ArrayList<Object> adventourLocations = (ArrayList<Object>) documentSnapshot.get("adventourLocations");
-                            Log.d(TAG, adventourLocations.toString());
+                            GlobalVars.adventourFSQIdsPassport = (ArrayList<String>) documentSnapshot.get("locations");
+                            GlobalVars.selectedLocationPassport = documentSnapshot.getString("beaconLocation");
 
-                            for (Object obj : adventourLocations) {
-                                HashMap<String, String> map = (HashMap<String,String>) obj;
-                                AdventourSummaryModel model = new AdventourSummaryModel(map.get("name"), map.get("description"));
-                                GlobalVars.adventourLocations.add(model);
+                            Log.d(TAG, GlobalVars.adventourFSQIdsPassport.size() + " adventourFSQIds:" + GlobalVars.adventourFSQIdsPassport);
+
+                            JSONArray results = new JSONArray();
+                            Map<String, Object> allData = new HashMap<>();
+                            JSONObject requestBody = new JSONObject();
+
+                            try
+                            {
+                                requestBody.put("ids", new JSONArray(GlobalVars.adventourFSQIdsPassport));
+                                requestBody.put("uid", user.getUid());
+                            } catch (JSONException e) {
+                                Log.e(TAG, e.toString());
+                            }
+
+                            try {
+                                URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                                conn.setDoOutput(true);
+                                conn.setInstanceFollowRedirects(false);
+                                conn.setRequestMethod("POST");
+                                conn.setRequestProperty("Content-Type", "application/json");
+                                conn.setRequestProperty("Accept", "application/json");
+                                conn.setUseCaches(false);
+
+                                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                wr.writeBytes(requestBody.toString());
+                                wr.flush();
+                                wr.close();
+                                requestBody = null;
+
+                                System.out.println("\nSending 'POST' request to URL : " + url);
+
+                                InputStream it = conn.getInputStream();
+                                InputStreamReader inputs = new InputStreamReader(it);
+
+                                BufferedReader in = new BufferedReader(inputs);
+                                String inputLine;
+                                StringBuffer response = new StringBuffer();
+
+                                while ((inputLine = in.readLine()) != null) {
+                                    response.append(inputLine);
+                                }
+
+                                in.close();
+                                JSONObject responseData = new JSONObject(response.toString());
+//                                System.out.println(responseData);
+                                results = (JSONArray) responseData.get("results");
+//                                allData.put("locations", results);
+//                                System.out.println(allData);
+
+                                for (int i = 0; i < GlobalVars.adventourFSQIdsPassport.size(); i++) {
+                                    JSONObject obj = (JSONObject) results.get(i);
+                                    Log.d(TAG, obj.toString());
+
+                                    String description = "";
+                                    try {
+                                        description = obj.get("description").toString();
+                                    } catch(Exception e) {
+                                        description = "No description available for this location... ";
+                                        Log.e("No des for location", "Exception", e);
+                                    }
+
+                                    GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description));
+                                    Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
+
+                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
+                                    GlobalVars.beaconModelArrayListPassport.add(new BeaconPostModel(obj.getString("name"), Float.parseFloat(obj.get("rating").toString()) / 2, ((JSONObject)obj.get("location")).getString("formatted_address"), description, locationImages));
+                                    Log.d(TAG, "beaconModelArrayList" + GlobalVars.beaconModelArrayListPassport.toString());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(TAG, e.toString());
                             }
 
                             Intent intent = new Intent(c, AdventourSummary.class);
+                            intent.putExtra("fromPassport", true);
+                            intent.putExtra("adventourID", adventourID);
                             startActivity(intent);
                             finish();
                         }
                     }
                 });
+    }
+
+    public StartAdventour.LocationImages getLocationImages(JSONArray photos) {
+        StartAdventour.LocationImages locationImages = new StartAdventour.LocationImages();
+        URL imageOneURL, imageTwoURL, imageThreeURL;
+        HttpURLConnection connectionOne, connectionTwo, connectionThree;
+        InputStream inputOne, inputTwo, inputThree;
+        Bitmap bitmap;
+
+        try {
+            // Try to get first location image.
+            if (photos.length() > 2) {
+                String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+
+                String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
+                String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
+
+                String thirdPrefix = photos.getJSONObject(2).get("prefix").toString();
+                String thirdSuffix = photos.getJSONObject(2).get("suffix").toString();
+
+                imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                connectionOne.setDoInput(true);
+                connectionOne.connect();
+                inputOne = connectionOne.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputOne);
+                locationImages.locationOne = bitmap;
+
+                imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
+                connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
+                connectionTwo.setDoInput(true);
+                connectionTwo.connect();
+                inputTwo = connectionTwo.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputTwo);
+                locationImages.locationTwo = bitmap;
+
+                imageThreeURL = new URL(thirdPrefix + "original" + thirdSuffix);
+                connectionThree = (HttpURLConnection) imageThreeURL.openConnection();
+                connectionThree.setDoInput(true);
+                connectionThree.connect();
+                inputThree = connectionThree.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputThree);
+                locationImages.locationThree = bitmap;
+
+            } else if (photos.length() > 1) {
+                String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+
+                String secondPrefix = photos.getJSONObject(1).get("prefix").toString();
+                String secondSuffix = photos.getJSONObject(1).get("suffix").toString();
+
+                imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                connectionOne.setDoInput(true);
+                connectionOne.connect();
+                inputOne = connectionOne.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputOne);
+                locationImages.locationOne = bitmap;
+
+                imageTwoURL = new URL(secondPrefix + "original" + secondSuffix);
+                connectionTwo = (HttpURLConnection) imageTwoURL.openConnection();
+                connectionTwo.setDoInput(true);
+                connectionTwo.connect();
+                inputTwo = connectionTwo.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputTwo);
+                locationImages.locationTwo = bitmap;
+            } else if (photos.length() > 0) {
+                String firstPrefix = photos.getJSONObject(0).get("prefix").toString();
+                String firstSuffix = photos.getJSONObject(0).get("suffix").toString();
+
+                imageOneURL = new URL(firstPrefix + "original" + firstSuffix);
+                connectionOne = (HttpURLConnection) imageOneURL.openConnection();
+                connectionOne.setDoInput(true);
+                connectionOne.connect();
+                inputOne = connectionOne.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputOne);
+                locationImages.locationOne = bitmap;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return locationImages;
+    }
+
+    public void clearPassportGlobalVals() {
+        GlobalVars.adventourLocationsPassport.clear();
+        GlobalVars.beaconModelArrayListPassport.clear();
+        GlobalVars.adventourFSQIdsPassport.clear();
+        GlobalVars.selectedLocationPassport = "";
     }
 }
