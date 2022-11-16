@@ -248,7 +248,7 @@ public class StartAdventour extends AppCompatActivity {
            public void onClick(View view) {
                GlobalVars.excludes.put(currentFSQId);
                GlobalVars.adventourFSQIds.add(currentFSQId);
-               GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description));
+               GlobalVars.adventourLocations.add(new AdventourSummaryModel(name, description, locationImages.locationOne));
                GlobalVars.inProgressModelArrayList.add(new InProgressModel(name, lat, lon));
                GlobalVars.beaconModelArrayList.add(new BeaconPostModel(name, rating, address, description, locationImages));
                switchToInProgress();

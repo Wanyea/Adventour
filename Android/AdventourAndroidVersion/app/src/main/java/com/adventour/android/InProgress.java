@@ -137,7 +137,7 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
            @Override
            public void onClick(View view)
            {
-                storeAdventour();
+//                storeAdventour();
                 switchToCongratulations();
            }
         });

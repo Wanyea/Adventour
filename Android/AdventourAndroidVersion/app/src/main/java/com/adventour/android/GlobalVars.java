@@ -29,4 +29,5 @@ public class GlobalVars
     public static ArrayList<BeaconPostModel> beaconModelArrayListPassport = new ArrayList<BeaconPostModel>();
     public static ArrayList<String> adventourFSQIdsPassport = new ArrayList<String>();
     public static String selectedLocationPassport = "";
+    public static ArrayList<String> locationDescriptionsPassport = new ArrayList<String>();
 }

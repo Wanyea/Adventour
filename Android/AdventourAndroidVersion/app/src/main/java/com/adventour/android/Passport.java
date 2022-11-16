@@ -170,6 +170,22 @@ public class Passport extends AppCompatActivity {
         BeaconPostRV.setAdapter(beaconsAdapter);
         getBeaconPosts();
 
+        BeaconPostRV.setNestedScrollingEnabled(false);
+        BeaconPostRV.addOnItemTouchListener(
+                new BeaconPostClickListener(this, BeaconPostRV, new BeaconPostClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.d("PreviousAdventourClick", "onItemClicked triggered, " + GlobalVars.userBeaconsArrayList.get(position).getAdventourId());
+                        switchToBeaconPost(position);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Log.d("PreviousAdventourClick", "onLongItemClicked triggered");
+                    }
+                })
+        );
+
         // Action Bar
         actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -710,10 +726,7 @@ public class Passport extends AppCompatActivity {
 
                                 in.close();
                                 JSONObject responseData = new JSONObject(response.toString());
-//                                System.out.println(responseData);
                                 results = (JSONArray) responseData.get("results");
-//                                allData.put("locations", results);
-//                                System.out.println(allData);
 
                                 for (int i = 0; i < GlobalVars.adventourFSQIdsPassport.size(); i++) {
                                     JSONObject obj = (JSONObject) results.get(i);
@@ -727,10 +740,11 @@ public class Passport extends AppCompatActivity {
                                         Log.e("No des for location", "Exception", e);
                                     }
 
-                                    GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description));
+                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
+
+                                    GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description, locationImages.locationOne));
                                     Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
 
-                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
                                     GlobalVars.beaconModelArrayListPassport.add(new BeaconPostModel(obj.getString("name"), Float.parseFloat(obj.get("rating").toString()) / 2, ((JSONObject)obj.get("location")).getString("formatted_address"), description, locationImages));
                                     Log.d(TAG, "beaconModelArrayList" + GlobalVars.beaconModelArrayListPassport.toString());
                                 }
@@ -747,6 +761,132 @@ public class Passport extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void switchToBeaconPost(int position) {
+        final String TAG = "preparingBeaconPost";
+        Context c = this;
+        String adventourID = GlobalVars.userBeaconsArrayList.get(position).getAdventourId();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get a reference to the user
+        Log.d(TAG, "Looking up beacon with id: " + adventourID);
+        DocumentReference documentRef = db.collection("Adventourists").document(user.getUid());
+        documentRef.collection("beacons")
+                .document(adventourID)
+                .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Failed calling database");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Log.d(TAG, "Completed calling database");
+                        if (task.isSuccessful())
+                        {
+                            Log.d(TAG, "Documents retrieved!");
+
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            Log.d(TAG, documentSnapshot.toString());
+                            GlobalVars.adventourFSQIdsPassport = (ArrayList<String>) documentSnapshot.get("locations");
+                            GlobalVars.selectedLocationPassport = documentSnapshot.getString("beaconLocation");
+                            GlobalVars.locationDescriptionsPassport = (ArrayList<String>) documentSnapshot.get("locationDescriptions");
+                            Log.d(TAG, GlobalVars.adventourFSQIds.toString());
+
+                            Log.d(TAG, documentSnapshot.get("numLocations") + " adventourFSQIds:" + GlobalVars.adventourFSQIdsPassport);
+
+                            JSONArray results = new JSONArray();
+                            Map<String, Object> allData = new HashMap<>();
+                            JSONObject requestBody = new JSONObject();
+
+                            try
+                            {
+                                requestBody.put("ids", new JSONArray(GlobalVars.adventourFSQIdsPassport));
+                                requestBody.put("uid", user.getUid());
+                            } catch (JSONException e) {
+                                Log.e(TAG, e.toString());
+                            }
+
+                            try {
+                                URL url = new URL("https://adventour-183a0.uc.r.appspot.com/get-foursquare-places");
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                                conn.setDoOutput(true);
+                                conn.setInstanceFollowRedirects(false);
+                                conn.setRequestMethod("POST");
+                                conn.setRequestProperty("Content-Type", "application/json");
+                                conn.setRequestProperty("Accept", "application/json");
+                                conn.setUseCaches(false);
+
+                                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                                wr.writeBytes(requestBody.toString());
+                                wr.flush();
+                                wr.close();
+                                requestBody = null;
+
+                                System.out.println("\nSending 'POST' request to URL : " + url);
+
+                                InputStream it = conn.getInputStream();
+                                InputStreamReader inputs = new InputStreamReader(it);
+
+                                BufferedReader in = new BufferedReader(inputs);
+                                String inputLine;
+                                StringBuffer response = new StringBuffer();
+
+                                while ((inputLine = in.readLine()) != null) {
+                                    response.append(inputLine);
+                                }
+
+                                in.close();
+                                JSONObject responseData = new JSONObject(response.toString());
+                                results = (JSONArray) responseData.get("results");
+
+                                for (int i = 0; i < GlobalVars.adventourFSQIdsPassport.size(); i++) {
+                                    JSONObject obj = (JSONObject) results.get(i);
+                                    Log.d(TAG, obj.toString());
+
+                                    String description = "";
+//                                    try {
+//                                        description = obj.get("description").toString();
+//                                    } catch(Exception e) {
+//                                        description = "No description available for this location... ";
+//                                        Log.e("No des for location", "Exception", e);
+//                                    }
+
+                                    description = GlobalVars.locationDescriptionsPassport.get(i);
+
+                                    GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description));
+                                    Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
+
+                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
+                                    GlobalVars.beaconModelArrayListPassport.add(new BeaconPostModel(obj.getString("name"), Float.parseFloat(obj.get("rating").toString()) / 2, ((JSONObject)obj.get("location")).getString("formatted_address"), description, locationImages));
+                                    Log.d(TAG, "beaconModelArrayList" + GlobalVars.beaconModelArrayListPassport.toString());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(TAG, e.toString());
+                            }
+
+                            String beaconTitle = documentSnapshot.getString("title");
+                            String beaconIntro = documentSnapshot.getString("intro");
+
+                            Intent intent = new Intent(c, BeaconPost.class);
+                            intent.putExtra("fromPassport", true);
+                            intent.putExtra("adventourID", adventourID);
+                            intent.putExtra("beaconTitle", beaconTitle);
+                            intent.putExtra("beaconIntro", beaconIntro);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
+
     }
 
     public StartAdventour.LocationImages getLocationImages(JSONArray photos) {
@@ -834,9 +974,14 @@ public class Passport extends AppCompatActivity {
     }
 
     public void clearPassportGlobalVals() {
-        GlobalVars.adventourLocationsPassport.clear();
-        GlobalVars.beaconModelArrayListPassport.clear();
-        GlobalVars.adventourFSQIdsPassport.clear();
-        GlobalVars.selectedLocationPassport = "";
+        try{
+            GlobalVars.adventourLocationsPassport.clear();
+            GlobalVars.beaconModelArrayListPassport.clear();
+            GlobalVars.adventourFSQIdsPassport.clear();
+            GlobalVars.selectedLocationPassport = "";
+            GlobalVars.locationDescriptionsPassport.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

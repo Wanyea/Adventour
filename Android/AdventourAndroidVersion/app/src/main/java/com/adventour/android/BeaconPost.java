@@ -101,6 +101,8 @@ public class BeaconPost extends AppCompatActivity {
 
         BeaconPostAdapter BeaconPostAdapter;
         if (fromPassport) {
+            beaconTitleEditText.setText((String) extras.get("beaconTitle"));
+            beaconIntroEditText.setText((String) extras.get("beaconIntro"));
             BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
         } else {
             BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
@@ -122,20 +124,20 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null && (boolean) extras.get("fromAdventourSummary")) {
-//            Intent intent = new Intent(this, AdventourSummary.class);
-//            intent.putExtra("fromBeaconPost", true);
-//            startActivity(intent);
-//            finish();
-//        } else {
-//            Intent intent = new Intent(this, Congratulations.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && (boolean) extras.get("fromPassport")) {
+            Intent intent = new Intent(this, Passport.class);
+            intent.putExtra("fromBeaconPost", true);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(this, Congratulations.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     public void postToBeaconBoard(String adventourId)
     {
@@ -156,7 +158,6 @@ public class BeaconPost extends AppCompatActivity {
             newBeacon.put("isPrivate", isPrivate.isChecked());
             newBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
             newBeacon.put("beaconLocation", GlobalVars.selectedLocationPassport);
-
         } else {
             newBeacon.put("dateCreated", new Timestamp(new Date()));
             newBeacon.put("dateUpdated", new Timestamp(new Date()));
@@ -207,6 +208,7 @@ public class BeaconPost extends AppCompatActivity {
             addBeacon.put("isPrivate", isPrivate.isChecked());
             addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
             addBeacon.put("beaconLocation", GlobalVars.selectedLocationPassport);
+            addBeacon.put("adventourId", adventourId);
         } else {
             addBeacon.put("dateCreated", new Timestamp(new Date()));
             addBeacon.put("dateUpdated", new Timestamp(new Date()));
@@ -218,6 +220,7 @@ public class BeaconPost extends AppCompatActivity {
             addBeacon.put("isPrivate", isPrivate.isChecked());
             addBeacon.put("locationDescriptions", GlobalVars.locationDescriptions);
             addBeacon.put("beaconLocation", GlobalVars.selectedLocation);
+            addBeacon.put("adventourId", adventourId);
         }
 
         db.collection("Adventourists")

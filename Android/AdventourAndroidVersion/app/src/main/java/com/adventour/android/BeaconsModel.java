@@ -20,6 +20,7 @@ public class BeaconsModel {
     private String beaconAuthor;
     private Bitmap beaconBitmap;
     private String dateCreated;
+    private String adventourId;
     private int androidPfpRef;
 
     public BeaconsModel(Map allData, String userNickname, int androidPfpRef) {
@@ -42,6 +43,13 @@ public class BeaconsModel {
             this.beaconBitmap = BitmapFactory.decodeStream(input);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            this.adventourId = (String) allData.get("adventourId");
+        } catch (Error e) {
+            System.out.println("That beacon can't be edited - it's old and missing an ID");
             e.printStackTrace();
         }
 
@@ -97,5 +105,13 @@ public class BeaconsModel {
 
     public void setProfilePicReference(int androidPfpRef) {
         this.androidPfpRef = androidPfpRef;
+    }
+
+    public String getAdventourId() {
+        return this.adventourId;
+    }
+
+    public void setAdventourId(String adventourId) {
+        this.adventourId = adventourId;
     }
 }
