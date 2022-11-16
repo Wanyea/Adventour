@@ -740,7 +740,7 @@ public class Passport extends AppCompatActivity {
                                     GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description));
                                     Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
 
-                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
+                                    LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
                                     GlobalVars.beaconModelArrayListPassport.add(new BeaconPostModel(obj.getString("name"), Float.parseFloat(obj.get("rating").toString()) / 2, ((JSONObject)obj.get("location")).getString("formatted_address"), description, locationImages));
                                     Log.d(TAG, "beaconModelArrayList" + GlobalVars.beaconModelArrayListPassport.toString());
                                 }
@@ -759,8 +759,8 @@ public class Passport extends AppCompatActivity {
                 });
     }
 
-    public StartAdventour.LocationImages getLocationImages(JSONArray photos) {
-        StartAdventour.LocationImages locationImages = new StartAdventour.LocationImages();
+    public LocationImages getLocationImages(JSONArray photos) {
+        LocationImages locationImages = new LocationImages();
         URL imageOneURL, imageTwoURL, imageThreeURL;
         HttpURLConnection connectionOne, connectionTwo, connectionThree;
         InputStream inputOne, inputTwo, inputThree;

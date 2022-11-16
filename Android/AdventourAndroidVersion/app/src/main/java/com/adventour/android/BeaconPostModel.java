@@ -7,9 +7,9 @@ public class BeaconPostModel {
     private float rating;
     private String address;
     private String description;
-    private StartAdventour.LocationImages locationImages;
+    private LocationImages locationImages;
 
-    public BeaconPostModel(String name, float rating, String address, String description, StartAdventour.LocationImages locationImages) {
+    public BeaconPostModel(String name, float rating, String address, String description, LocationImages locationImages) {
         this.name = name;
         this.rating = rating;
         this.address = address;
@@ -49,11 +49,11 @@ public class BeaconPostModel {
         this.description = description;
     }
 
-    public StartAdventour.LocationImages getLocationImages() {
+    public LocationImages getLocationImages() {
         return locationImages;
     }
 
-    public void setLocationImages(StartAdventour.LocationImages locationImages) {
+    public void setLocationImages(LocationImages locationImages) {
         this.locationImages = locationImages;
     }
 }

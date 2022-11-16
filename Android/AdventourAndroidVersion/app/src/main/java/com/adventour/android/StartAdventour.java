@@ -358,20 +358,6 @@ public class StartAdventour extends AppCompatActivity {
 
     }
 
-    public class LocationImages
-    {
-        Bitmap locationOne;
-        Bitmap locationTwo;
-        Bitmap locationThree;
-
-        public void locationImages(Bitmap locationOne, Bitmap locationTwo, Bitmap locationThree)
-        {
-            this.locationOne = locationOne;
-            this.locationTwo = locationTwo;
-            this.locationThree = locationThree;
-        }
-    }
-
     public void getLocation()
     {
         userLocLat = Double.toString(GlobalVars.locationCoordinates.latitude);
