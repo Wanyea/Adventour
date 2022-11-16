@@ -65,7 +65,7 @@ public class Passport extends AppCompatActivity {
 
     ImageButton imageButton, hamburgerMenuImageButton;
 
-    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, deleteAccount;
+    TextView nicknameTextView, birthdateTextView, mantraTextView, noPrevAdventours, noPrevBeacons, adventourTOS, logOut, privacyPolicy;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -93,11 +93,26 @@ public class Passport extends AppCompatActivity {
 
     ConstraintLayout hamburgerMenuPopup;
 
+    HashMap<String, String> isSwitchActive = new HashMap<>();
+    int distance = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passport);
+
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+            Log.d("InProgress isSwitch", isSwitchActive.toString());
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            Log.d("InProgress distance", String.valueOf(distance));
+        }
 
         // Dump GlobalVars
         GlobalVars.beaconBoardArrayList.clear();
@@ -116,7 +131,7 @@ public class Passport extends AppCompatActivity {
         noPrevBeacons = (TextView) findViewById(R.id.postABeaconTextView);
         adventourTOS = (TextView) findViewById(R.id.adventourTOS);
         logOut = (TextView) findViewById(R.id.logOut);
-        deleteAccount = (TextView) findViewById(R.id.deleteAccount);
+        privacyPolicy = (TextView) findViewById(R.id.privacyPolicy);
 
         PreviousAdventourRV = findViewById(R.id.previousAdventourRV);
         BeaconPostRV = findViewById(R.id.beaconPostsRV);
@@ -250,34 +265,10 @@ public class Passport extends AppCompatActivity {
             }
         });
 
-        deleteAccount.setOnClickListener(new View.OnClickListener() {
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                // Build AlertDialog that will alert users when they try to delete their account.
-                AlertDialog.Builder deleteAccountAlertBuilder = new AlertDialog.Builder(Passport.this);
-                deleteAccountAlertBuilder.setMessage("Are you sure you want to delete your account?");
-                deleteAccountAlertBuilder.setCancelable(true);
-
-                deleteAccountAlertBuilder.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                // DELETE USER DOCUMENT IN FIREBASE.
-                                // switchToLoggedOut();
-                            }
-                        });
-
-                deleteAccountAlertBuilder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog deleteAccountAlert = deleteAccountAlertBuilder.create();
-                deleteAccountAlert.show();
+                openPrivacyPolicy();
             }
         });
 
@@ -295,11 +286,17 @@ public class Passport extends AppCompatActivity {
                 case R.id.passport:
                     return true;
                 case R.id.start_adventour:
-                    startActivity(new Intent(getApplicationContext(), StartAdventour.class));
+                    Intent startAdventourIntent = new Intent(getApplicationContext(), StartAdventour.class);
+                    startAdventourIntent.putExtra("isSwitchActive", isSwitchActive);
+                    startAdventourIntent.putExtra("distance", distance);
+                    startActivity(startAdventourIntent);
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.beacons:
-                    startActivity(new Intent(getApplicationContext(), Beacons.class));
+                    Intent beaconsIntent = new Intent(getApplicationContext(), Beacons.class);
+                    beaconsIntent.putExtra("isSwitchActive", isSwitchActive);
+                    beaconsIntent.putExtra("distance", distance);
+                    startActivity(beaconsIntent);
                     overridePendingTransition(0, 0);
                     return true;
             }
@@ -346,8 +343,8 @@ public class Passport extends AppCompatActivity {
                         if (document.get("androidPfpRef") != null)
                         {
                             androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
-                        } else if (document.get("iOSPfpRef") != null) {
-                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else if (document.get("iosPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iosPfpRef"));
                         } else {
                             androidPfpRef = 6; // Default PFP Pic
                         }
@@ -391,10 +388,6 @@ public class Passport extends AppCompatActivity {
                         cakeIconImageView.setVisibility(View.VISIBLE);
                         birthdateTextView.setVisibility(View.VISIBLE);
                         mantraTextView.setVisibility(View.VISIBLE);
-
-                        // Update constraint
-                        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
-                        params.topMargin = 60;
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -606,8 +599,16 @@ public class Passport extends AppCompatActivity {
                             if(GlobalVars.userBeaconsArrayList.size() == 0)
                             {
                                 noPrevBeacons.setVisibility(View.VISIBLE);
+
+                                // Update constraint
+                                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
+                                params.topMargin = 120;
                             } else {
                                 noPrevBeacons.setVisibility(View.INVISIBLE);
+
+                                // Update constraint
+                                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) myLitBeaconsHeader.getLayoutParams();
+                                params.topMargin = 60;
                             }
                         }
                     }
@@ -641,6 +642,15 @@ public class Passport extends AppCompatActivity {
     public void openAdventourTOS()
     {
         String url = "https://adventour.app/terms-of-service";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
+    public void openPrivacyPolicy()
+    {
+        String url = "https://adventour.app/privacy-policy";
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -740,7 +750,7 @@ public class Passport extends AppCompatActivity {
                                         Log.e("No des for location", "Exception", e);
                                     }
 
-                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
+                                    LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
 
                                     GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description, locationImages.locationOne));
                                     Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
@@ -864,7 +874,7 @@ public class Passport extends AppCompatActivity {
                                     GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description));
                                     Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
 
-                                    StartAdventour.LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
+                                    LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
                                     GlobalVars.beaconModelArrayListPassport.add(new BeaconPostModel(obj.getString("name"), Float.parseFloat(obj.get("rating").toString()) / 2, ((JSONObject)obj.get("location")).getString("formatted_address"), description, locationImages));
                                     Log.d(TAG, "beaconModelArrayList" + GlobalVars.beaconModelArrayListPassport.toString());
                                 }
@@ -889,8 +899,9 @@ public class Passport extends AppCompatActivity {
 
     }
 
-    public StartAdventour.LocationImages getLocationImages(JSONArray photos) {
-        StartAdventour.LocationImages locationImages = new StartAdventour.LocationImages();
+
+    public LocationImages getLocationImages(JSONArray photos) {
+        LocationImages locationImages = new LocationImages();
         URL imageOneURL, imageTwoURL, imageThreeURL;
         HttpURLConnection connectionOne, connectionTwo, connectionThree;
         InputStream inputOne, inputTwo, inputThree;

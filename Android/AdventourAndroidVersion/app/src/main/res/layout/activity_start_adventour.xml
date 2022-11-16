@@ -406,6 +406,7 @@
                 android:layout_margin="30dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/sample_4by3"
+                android:foreground="@drawable/rectangle_navy"
                 app:layout_constraintBottom_toBottomOf="@id/ticketCardImageView"
                 app:layout_constraintStart_toStartOf="@id/ticketCardImageView"
                 app:layout_constraintTop_toTopOf="@id/ticketCardImageView"
@@ -625,7 +626,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

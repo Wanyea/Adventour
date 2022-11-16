@@ -23,6 +23,8 @@ public class GlobalVars
     public static LatLng locationCoordinates;
     public static ArrayList<String> locationDescriptions = new ArrayList<String>();
     public static ArrayList<BeaconsModel> beaconBoardArrayList = new ArrayList<BeaconsModel>();
+    public static String lastLocationCoordinates = "";
+    public static String lastLocationName = "";
 
     // For previous adventours in passport
     public static ArrayList<AdventourSummaryModel> adventourLocationsPassport = new ArrayList<AdventourSummaryModel>();

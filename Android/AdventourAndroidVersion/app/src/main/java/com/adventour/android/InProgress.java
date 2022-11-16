@@ -62,11 +62,27 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
 
     FloatingActionButton addLocationButton;
 
+    HashMap<String, String> isSwitchActive = new HashMap<>();
+    int distance = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_progress);
+
         handleAuth();
+
+        if (getIntent().getSerializableExtra("isSwitchActive") != null)
+        {
+            isSwitchActive = (HashMap) getIntent().getSerializableExtra("isSwitchActive");
+            Log.d("InProgress isSwitch", isSwitchActive.toString());
+        }
+
+        if (getIntent().getSerializableExtra("distance") != null)
+        {
+            distance = (int) getIntent().getSerializableExtra("distance");
+            Log.d("InProgress distance", String.valueOf(distance));
+        }
 
         // Google map code
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
@@ -166,6 +182,8 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
     public void switchToStartAdventour()
     {
         Intent intent = new Intent(this, StartAdventour.class);
+        intent.putExtra("isSwitchActive", isSwitchActive);
+        intent.putExtra("distance", distance);
         startActivity(intent);
     }
 
@@ -219,7 +237,6 @@ public class InProgress extends AppCompatActivity implements OnMapReadyCallback 
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Calendar today = Calendar.getInstance();
         Map<String, Object> newAdventour= new HashMap<>();
 
         newAdventour.put("dateCreated", new Timestamp(new Date()));

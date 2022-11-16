@@ -19,10 +19,12 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,9 +32,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BeaconPost extends AppCompatActivity {
@@ -47,6 +51,7 @@ public class BeaconPost extends AppCompatActivity {
     FirebaseUser user;
 
     int androidPfpRef;
+    int numLikeShards = 10;
     boolean fromPassport = false;
 
     @Override
@@ -73,6 +78,7 @@ public class BeaconPost extends AppCompatActivity {
         authorImageView = (ImageView) findViewById(R.id.authorImageView);
 
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
+
         getUserNickname();
         
         AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);
@@ -171,9 +177,10 @@ public class BeaconPost extends AppCompatActivity {
             newBeacon.put("beaconLocation", GlobalVars.selectedLocation);
         }
 
-        db.collection("Beacons")
-                .document(adventourId)
-                .set(newBeacon)
+        DocumentReference beaconRef = db.collection("Beacons").document(adventourId);
+        createLikeCounter(beaconRef, numLikeShards);
+
+        beaconRef.set(newBeacon)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
@@ -333,15 +340,15 @@ public class BeaconPost extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d("BEACON POST", "DocumentSnapshot data: " + document.getData());
+                        Log.d("Beacon Post", "DocumentSnapshot data: " + document.getData());
                         authorTextView.setText(document.getString("nickname"));
 
                         // Set androidPfpRef for Profile Picture
                         if (document.get("androidPfpRef") != null)
                         {
                             androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
-                        } else if (document.get("iOSPfpRef") != null) {
-                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iOSPfpRef"));
+                        } else if (document.get("iosPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iosPfpRef"));
                         } else {
                             androidPfpRef = 6; // Default PFP Pic
                         }
@@ -378,13 +385,40 @@ public class BeaconPost extends AppCompatActivity {
                                 authorImageView.setImageResource(R.drawable.ic_user_icon);
                         }
                     } else {
-                        Log.d("BEACON POST", "No such document");
+                        Log.d("Beacon Post", "No such document");
                     }
                 } else {
-                    Log.d("BEACON POST", "get failed with ", task.getException());
+                    Log.d("Beacon Post", "get failed with ", task.getException());
                 }
             }
         });
+    }
+
+    public Task<Void> createLikeCounter(final DocumentReference beaconRef, final int numLikeShards)
+    {
+        // Initialize the counter document, then initialize each shard.
+        return beaconRef.set(new LikeCounter(numLikeShards))
+                .continueWithTask(new Continuation<Void, Task<Void>>() {
+                    @Override
+                    public Task<Void> then(@NonNull Task<Void> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        List<Task<Void>> tasks = new ArrayList<>();
+
+                        // Initialize each shard with count=0
+                        for (int i = 0; i < numLikeShards; i++) {
+                            Task<Void> makeShard = beaconRef.collection("likeShards")
+                                    .document(String.valueOf(i))
+                                    .set(new LikeShard(0));
+
+                            tasks.add(makeShard);
+                        }
+
+                        return Tasks.whenAll(tasks);
+                    }
+                });
     }
 
     public void switchToHome()
