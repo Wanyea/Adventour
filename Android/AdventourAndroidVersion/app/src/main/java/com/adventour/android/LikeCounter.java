@@ -1,12 +1,11 @@
 package com.adventour.android;
 
-import java.io.Serializable;
-
-public class LikeCounter implements Serializable
+public class LikeCounter
 {
     int numLikeShards;
 
-    public LikeCounter(int numLikeShards) {
+    public LikeCounter(int numLikeShards)
+    {
         this.numLikeShards = numLikeShards;
     }
 }

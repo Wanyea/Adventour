@@ -89,7 +89,6 @@ public class BeaconPost extends AppCompatActivity {
                 R.string.Yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d("ConfirmDialogue", "Yes/No dialogue opened");
                         storeAdventour();
                         switchToHome();
                     }
@@ -107,11 +106,21 @@ public class BeaconPost extends AppCompatActivity {
 
         BeaconPostAdapter BeaconPostAdapter;
         if (fromPassport) {
-            beaconTitleEditText.setText((String) extras.get("beaconTitle"));
-            beaconIntroEditText.setText((String) extras.get("beaconIntro"));
+            if (extras.get("beaconTitle") != null)
+            {
+                beaconTitleEditText.setText((String) extras.get("beaconTitle"));
+            }
+
+            if (extras.get("beaconIntro") != null)
+            {
+                beaconIntroEditText.setText((String) extras.get("beaconIntro"));
+            }
+
             BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
         } else {
             BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
+            beaconTitleEditText.setText("Beacon Title");
+            beaconIntroEditText.setText("This is the introduction. Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -178,13 +187,13 @@ public class BeaconPost extends AppCompatActivity {
         }
 
         DocumentReference beaconRef = db.collection("Beacons").document(adventourId);
-        createLikeCounter(beaconRef, numLikeShards);
 
         beaconRef.set(newBeacon)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
                     public void onSuccess(Void v) {
+                        createLikeCounter(beaconRef, numLikeShards);
                         Log.d("Beacon Posted", "DocumentSnapshot written with ID: " + v);
                     }
                 })
@@ -397,7 +406,9 @@ public class BeaconPost extends AppCompatActivity {
     public Task<Void> createLikeCounter(final DocumentReference beaconRef, final int numLikeShards)
     {
         // Initialize the counter document, then initialize each shard.
-        return beaconRef.set(new LikeCounter(numLikeShards))
+        HashMap<String, Object> counterMap = new HashMap<>();
+        counterMap.put("numLikeShards", numLikeShards);
+        return beaconRef.update(counterMap)
                 .continueWithTask(new Continuation<Void, Task<Void>>() {
                     @Override
                     public Task<Void> then(@NonNull Task<Void> task) throws Exception {

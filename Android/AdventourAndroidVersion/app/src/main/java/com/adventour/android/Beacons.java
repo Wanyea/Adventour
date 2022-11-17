@@ -36,6 +36,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -219,6 +220,8 @@ public class Beacons extends AppCompatActivity {
     }
 
     public void getBeacons(String selectedBeaconLocation) {
+        beaconsProgressBar.setVisibility(View.VISIBLE);
+
         Log.d("Inside getBeacons, loc: ", selectedBeaconLocation);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -226,16 +229,21 @@ public class Beacons extends AppCompatActivity {
 
         // Get all Beacons from Beacon Board.
         db.collection("Beacons")
+                .whereEqualTo("beaconLocation", selectedBeaconLocation)
+                .whereEqualTo("isPrivate", false)
+                .orderBy("dateCreated", Query.Direction.DESCENDING)
                 .get()
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        beaconsProgressBar.setVisibility(View.INVISIBLE);
                         Log.d("getBeacons in BEACONS", "Failed calling database...");
                     }
                 })
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                         beaconsProgressBar.setVisibility(View.INVISIBLE);
                          if (task.isSuccessful())
                         {
                             Log.d("getBeacons in BEACONS", "Documents retrieved!");
