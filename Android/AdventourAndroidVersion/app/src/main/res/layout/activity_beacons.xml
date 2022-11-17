@@ -52,7 +52,6 @@
         android:background="@drawable/edit_text_round"
 
         android:drawableLeft="@drawable/ic_magnifying_glass_icon"
-        android:drawableRight="@drawable/ic_location_icon"
         android:drawablePadding="5dp"
         android:drawableTint="@color/navy_main"
         android:inputType="text"
@@ -77,16 +76,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"/>
-
-    <!--<ImageView
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:background="@drawable/edit_text_round"
-        app:layout_constraintEnd_toEndOf="@id/beacon_board_autocomplete_fragment"
-        app:layout_constraintStart_toStartOf="@id/beacon_board_autocomplete_fragment"
-        app:layout_constraintTop_toTopOf="@id/beacon_board_autocomplete_fragment"
-        app:layout_constraintBottom_toBottomOf="@id/beacon_board_autocomplete_fragment"/>-->
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
