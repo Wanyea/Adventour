@@ -3,5 +3,9 @@
 /server/node_modules/
 /server/firebaseAdmin.json
 
+
+# Ignore web files
+/web/adventour_web/.firebase
+
 # Ignore iOS files
 **/.DS_Store

@@ -384,7 +384,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
             categories.append(sportyString)
         }
         if UserDefaults.standard.bool(forKey: "chillSwitch") {
-            let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12081,19021,16003,16005,10023"
+            let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12081,19021,16003,16005,10023,"
             categories.append(chillString)
         }
         if UserDefaults.standard.bool(forKey: "shoppySwitch") {
@@ -396,7 +396,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
             categories.append(pamperedString)
         }
         if UserDefaults.standard.bool(forKey: "twentyOneSwitch") {
-            let twentyOneString = "10008,10010,10029,10032,10052,13003,13029,13038,13050,13061,13386,13387,16029,17001"
+            let twentyOneString = "10008,10010,10029,10032,10052,13003,13029,13038,13050,13061,13386,13387,16029,17001,"
             categories.append(twentyOneString)
         }
         print(categories)
