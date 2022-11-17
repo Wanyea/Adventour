@@ -766,6 +766,7 @@ public class Passport extends AppCompatActivity {
                             Intent intent = new Intent(c, AdventourSummary.class);
                             intent.putExtra("fromPassport", true);
                             intent.putExtra("fromBeacons", false);
+                            intent.putExtra("fromCongratulations", false);
                             intent.putExtra("adventourID", adventourID);
                             startActivity(intent);
                             finish();
@@ -893,6 +894,7 @@ public class Passport extends AppCompatActivity {
                             intent.putExtra("adventourID", adventourID);
                             intent.putExtra("beaconTitle", beaconTitle);
                             intent.putExtra("beaconIntro", beaconIntro);
+                            intent.putExtra("fromCongratulations", false);
                             startActivity(intent);
                             finish();
                         }

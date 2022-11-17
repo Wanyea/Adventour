@@ -3,6 +3,7 @@ package com.adventour.android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class Congratulations extends AppCompatActivity {
 
     Button postBeaconButton, viewAdventourButton, homeButton;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,10 @@ public class Congratulations extends AppCompatActivity {
 
         postBeaconButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { switchToBeaconPost(); }
+            public void onClick(View view)
+            {
+                switchToBeaconPost();
+            }
         });
 
         viewAdventourButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +87,9 @@ public class Congratulations extends AppCompatActivity {
     public void switchToBeaconPost()
     {
         Intent intent = new Intent(this, BeaconPost.class);
+        intent.putExtra("fromPassport", false);
+        intent.putExtra("fromBeacons", false);
+        intent.putExtra("fromCongratulations", true);
         startActivity(intent);
     }
 

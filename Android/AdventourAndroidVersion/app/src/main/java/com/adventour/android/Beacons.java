@@ -331,9 +331,6 @@ public class Beacons extends AppCompatActivity {
 
                                     description = GlobalVars.locationDescriptionsBeaconBoard.get(i);
 
-//                                    GlobalVars.adventourLocationsPassport.add(new AdventourSummaryModel(obj.getString("name"), description));
-//                                    Log.d(TAG, "adventourLocations: " + GlobalVars.adventourLocationsPassport.toString());
-
                                     LocationImages locationImages = getLocationImages(obj.getJSONArray("photos"));
                                     GlobalVars.beaconModelArrayListBeaconBoard.add(new BeaconPostModel(obj.getString("name"), Float.parseFloat(obj.get("rating").toString()) / 2, ((JSONObject)obj.get("location")).getString("formatted_address"), description, locationImages));
                                     Log.d(TAG, "beaconModelArrayList" + GlobalVars.beaconModelArrayListBeaconBoard.toString());
@@ -349,6 +346,7 @@ public class Beacons extends AppCompatActivity {
                             Intent intent = new Intent(c, BeaconPost.class);
                             intent.putExtra("fromBeacons", true);
                             intent.putExtra("fromPassport", false);
+                            intent.putExtra("fromCongratulations", false);
                             intent.putExtra("adventourID", adventourID);
                             intent.putExtra("beaconTitle", beaconTitle);
                             intent.putExtra("beaconIntro", beaconIntro);
@@ -363,7 +361,6 @@ public class Beacons extends AppCompatActivity {
     public void getBeacons(String selectedBeaconLocation) {
         beaconsProgressBar.setVisibility(View.VISIBLE);
 
-        Log.d("Inside getBeacons, loc: ", selectedBeaconLocation);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -387,8 +384,6 @@ public class Beacons extends AppCompatActivity {
                          beaconsProgressBar.setVisibility(View.INVISIBLE);
                          if (task.isSuccessful())
                          {
-
-                            Log.d("task", task.getResult().toString());
 
                             if (task.getResult().isEmpty())
                             {

@@ -1,6 +1,9 @@
 package com.adventour.android;
 
 import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.google.firebase.Timestamp;
 
 public class BeaconPostModel {
     private String name;

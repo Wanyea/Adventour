@@ -34,7 +34,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +52,11 @@ public class BeaconPost extends AppCompatActivity {
 
     int androidPfpRef;
     int numLikeShards = 10;
+
     boolean fromPassport = false;
     boolean fromBeacons = false;
+    boolean fromCongratulations = false;
+
     String posterNickname = "Adventourist";
 
     @Override
@@ -66,12 +68,21 @@ public class BeaconPost extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         Bundle extras = getIntent().getExtras();
-        posterNickname = (String) extras.get("posterNickname");
-        if (extras != null && (boolean) extras.get("fromPassport")) {
+
+        if (extras != null && (boolean) extras.get("fromCongratulations"))
+        {
+            fromCongratulations = true;
+        }
+
+        if (extras != null && (boolean) extras.get("fromPassport"))
+        {
             fromPassport = true;
         }
-        if (extras != null && (boolean) extras.get("fromBeacons")) {
+
+        if (extras != null && (boolean) extras.get("fromBeacons"))
+        {
             fromBeacons = true;
+            posterNickname = (String) extras.get("posterNickname");
         }
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
@@ -89,7 +100,14 @@ public class BeaconPost extends AppCompatActivity {
         getUserNickname();
 
         AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);
-        postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
+
+        if (fromPassport)
+        {
+            postBeaconAlert.setMessage("Are you sure you want to save your edit to this beacon?");
+        } else {
+            postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
+        }
+
         postBeaconAlert.setCancelable(true);
 
         postBeaconAlert.setPositiveButton(
@@ -303,9 +321,6 @@ public class BeaconPost extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         newAdventour.put("nickname", document.getString("nickname"));
                         String adventourId = document.getId();
-                        Log.d(TAG, "adventourID: " + adventourId);
-                        Log.d(TAG, "Confirming that adventourID is printed before continuing");
-                        // TODO: get reference to users profile pic.
                     } else {
                         Log.d(TAG, "No such document");
                     }

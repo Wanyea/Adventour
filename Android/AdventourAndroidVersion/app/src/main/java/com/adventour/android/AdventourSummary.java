@@ -38,11 +38,19 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
         adventourSummaryRV.setNestedScrollingEnabled(false);
 
         AdventourSummaryAdapter adventourSummaryAdapter;
+
         Bundle extras = getIntent().getExtras();
         if (extras != null && (boolean) extras.get("fromPassport")) {
             adventourSummaryAdapter = new AdventourSummaryAdapter(this, GlobalVars.adventourLocationsPassport);
         } else {
             adventourSummaryAdapter = new AdventourSummaryAdapter(this, GlobalVars.adventourLocations);
+        }
+
+        if (extras != null && (boolean) extras.get("fromPassport"))
+        {
+            postBeaconButton.setVisibility(View.INVISIBLE);
+        } else {
+            postBeaconButton.setVisibility(View.VISIBLE);
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -100,6 +108,7 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
         if (extras != null && (boolean) extras.get("fromPassport")) {
             intent.putExtra("fromPassport", true);
             intent.putExtra("fromBeacons", false);
+            intent.putExtra("fromCongratulations", false);
             intent.putExtra("adventourID", (String) extras.get("adventourID"));
         }
 
