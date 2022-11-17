@@ -68,7 +68,7 @@ public class BeaconsModel {
         }
 
         try {
-            this.adventourId = (String) allData.get("adventourId");
+            this.adventourId = (String) allData.get("documentID");
         } catch (Error e) {
             System.out.println("That beacon can't be edited - it's old and missing an ID");
             e.printStackTrace();

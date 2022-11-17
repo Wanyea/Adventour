@@ -99,6 +99,7 @@ public class AdventourSummary extends AppCompatActivity /*implements OnMapReadyC
         Bundle extras = getIntent().getExtras();
         if (extras != null && (boolean) extras.get("fromPassport")) {
             intent.putExtra("fromPassport", true);
+            intent.putExtra("fromBeacons", false);
             intent.putExtra("adventourID", (String) extras.get("adventourID"));
         }
 

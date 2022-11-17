@@ -53,6 +53,7 @@ public class BeaconPost extends AppCompatActivity {
     int androidPfpRef;
     int numLikeShards = 10;
     boolean fromPassport = false;
+    boolean fromBeacons = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,9 @@ public class BeaconPost extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null && (boolean) extras.get("fromPassport")) {
             fromPassport = true;
+        }
+        if (extras != null && (boolean) extras.get("fromBeacons")) {
+            fromBeacons = true;
         }
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
@@ -105,7 +109,7 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostRV.setNestedScrollingEnabled(true);
 
         BeaconPostAdapter BeaconPostAdapter;
-        if (fromPassport) {
+        if (fromPassport || fromBeacons) {
             if (extras.get("beaconTitle") != null)
             {
                 beaconTitleEditText.setText((String) extras.get("beaconTitle"));
@@ -117,6 +121,13 @@ public class BeaconPost extends AppCompatActivity {
             }
 
             BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
+
+            if (fromBeacons) {
+                postBeaconButton.setVisibility(View.INVISIBLE);
+                beaconTitleEditText.setClickable(false);
+                beaconIntroEditText.setClickable(false);
+                BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard);
+            }
         } else {
             BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
             beaconTitleEditText.setText("Beacon Title");
@@ -141,10 +152,13 @@ public class BeaconPost extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && (boolean) extras.get("fromPassport")) {
+        if (fromPassport) {
             Intent intent = new Intent(this, Passport.class);
             intent.putExtra("fromBeaconPost", true);
+            startActivity(intent);
+            finish();
+        } else if (fromBeacons) {
+            Intent intent = new Intent(this, Beacons.class);
             startActivity(intent);
             finish();
         } else {
