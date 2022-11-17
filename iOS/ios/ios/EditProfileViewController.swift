@@ -130,6 +130,7 @@ class EditProfileViewController: UIViewController{
     func updateUserData() {
         Auth.auth().currentUser?.updateEmail(to: email.text!) { error in
             if error != nil {
+                print(error)
                 self.error.text = "Unable to update user info, please try again later"
                 self.error.isHidden = false
             }

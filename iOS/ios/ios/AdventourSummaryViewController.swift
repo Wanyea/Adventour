@@ -37,8 +37,10 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
         self.locationsTable.delegate = self
         self.locationsTable.dataSource = self
         self.postButton.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getAdventourData()
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,8 +94,10 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func checkBeacon() {
+        print("checking if it's a Beacon")
         if let isBeacon = self.isBeacon {
             if (isBeacon) {
+                print("It is indeed a Beacon")
                 self.postButton.isHidden = true
             } else {
                 self.postButton.isHidden = false
@@ -113,6 +117,7 @@ class AdventourSummaryViewController: UIViewController, UITableViewDelegate, UIT
             self.locationsTable.reloadData()
             self.activityIndicator?.stopAnimating()
             self.locationsTable.isHidden = false
+            self.checkBeacon()
             return
         } else {
             let params: [String: Any] = [

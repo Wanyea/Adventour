@@ -50,6 +50,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
         placesClient = GMSPlacesClient.shared()
         self.searchBar.updateHeight(height: 40)
         self.searchBar.searchTextField.textColor = UIColor(named: "adv-royalblue")!
+        self.errorMessage.text = "Select a location to see others' Beacons!"
         searchBar?.text = self.beaconLocation
         setUpPopUp()
         
@@ -196,7 +197,9 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
         self.listener = query.addSnapshotListener { snap, error in
-            if snap!.isEmpty {
+            if let error = error {
+                print(error)
+            }else if snap!.isEmpty {
                 cell.likeIcon.image = UIImage(systemName: "heart")
                 self.listener.remove()
                 
@@ -222,7 +225,7 @@ class BeaconBoardViewController: UIViewController, UITableViewDelegate, UITableV
                 // Error getting shards
                 // ...
                 return
-            } else {
+            } else if !querySnapshot!.isEmpty {
                 for document in querySnapshot!.documents {
                     let count = document.data()["likes"] as! Int
                     totalCount += count

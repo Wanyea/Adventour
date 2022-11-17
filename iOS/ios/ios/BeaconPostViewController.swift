@@ -470,8 +470,14 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 handler: { _ in
                     self.endEditingBeaconPost()
                     self.saveBeaconData()
+                    self.navigationController?.isNavigationBarHidden = false
+                    self.tabBarController?.tabBar.isHidden = false
+                    self.tabBarController?.tabBar.isTranslucent = false
                     if self.source is CongratsViewController {
-                        self.switchToStart()
+                        self.performSegue(withIdentifier: "goHome", sender: self)
+                    } else if self.source is AdventourSummaryViewController {
+                        self.navigationController?.popToRootViewController(animated: true)
+                        self.performSegue(withIdentifier: "goHome", sender: self)
                     }
                     
             }))
@@ -619,7 +625,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func createLikesCounter(ref: DocumentReference, numShards: Int) {
         ref.setData(["numLikeShards": numShards], merge: true){ (err) in
-            for i in 0...numShards {
+            for i in 0...numShards-1 {
                 ref.collection("likeShards").document(String(i)).setData(["likes": 0])
             }
         }
@@ -676,7 +682,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getAlertTitle() -> String {
-        if self.source is CongratsViewController {
+        if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
             return "Post Beacon"
         } else {
             return "Save Beacon"
@@ -684,7 +690,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getAlertMessage() -> String {
-        if self.source is CongratsViewController {
+        if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
             return "Are you sure you are ready to post your Beacon?"
         } else {
             return "Are you sure you are ready to save your Beacon?"

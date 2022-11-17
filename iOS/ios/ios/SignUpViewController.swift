@@ -190,8 +190,10 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
         Auth.auth().createUser(withEmail: signupData["email"] as! String, password: passwordFirebase) { result, error in
             if error != nil {
                 print("Error creating user: " + error.debugDescription)
-                self.errorMessage.text = error?.localizedDescription
+                self.errorMessage.text = "Unable to create an account. Please check that everything is filled out properly and try again."
+                self.errorMessage.isHidden = false
             } else {
+                self.errorMessage.isHidden = true
                 // Add as Adventourist in Firestore if successful
                 Auth.auth().addStateDidChangeListener { auth, user in
                     if let user = user {

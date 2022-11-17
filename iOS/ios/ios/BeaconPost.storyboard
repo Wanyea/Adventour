@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LBa-l9-GJY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LBa-l9-GJY">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,7 +14,7 @@
         <!--Beacon Post-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="BeaconPost" id="Y6W-OH-hqX" customClass="BeaconPostViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BeaconPost" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="BeaconPostViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +28,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BeaconPostTableCell" rowHeight="316" id="7pq-1m-YP7" customClass="BeaconPostTableViewCell" customModule="ios" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="309" height="316"/>
+                                        <rect key="frame" x="0.0" y="50" width="309" height="316"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7pq-1m-YP7" id="Zge-cb-gAJ">
                                             <rect key="frame" x="0.0" y="0.0" width="309" height="316"/>
@@ -43,8 +44,8 @@
                                                     <color key="textColor" name="adv-royalblue"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV7-Pc-Rbz">
-                                                    <rect key="frame" x="18" y="68.5" width="273" height="24"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV7-Pc-Rbz">
+                                                    <rect key="frame" x="18" y="78.5" width="273" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="IQW-JY-jlK"/>
                                                     </constraints>
@@ -102,7 +103,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tvb-in-39t" customClass="BeaconPostTextView" customModule="ios" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="107.5" width="275" height="69"/>
+                                                    <rect key="frame" x="16" y="117.5" width="275" height="69"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="69" id="Gzm-Fl-Ksm"/>
                                                     </constraints>
@@ -120,13 +121,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </textView>
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ3-h1-PZi">
-                                                    <rect key="frame" x="18" y="181.5" width="273" height="120"/>
+                                                    <rect key="frame" x="18" y="191.5" width="273" height="110"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="cm9-PE-Mof">
-                                                            <rect key="frame" x="0.0" y="0.0" width="810" height="120"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="810" height="110"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scribble" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XxL-Dw-7Kp">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="119"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="109"/>
                                                                     <color key="backgroundColor" name="adv-black"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="250" id="hRO-2l-2SI"/>
@@ -138,7 +139,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </imageView>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="highlighter" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="3IY-Pp-BD3">
-                                                                    <rect key="frame" x="280" y="-1.5" width="250" height="120"/>
+                                                                    <rect key="frame" x="280" y="-1.5" width="250" height="110"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="250" id="7SX-i6-3Ed"/>
@@ -150,7 +151,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </imageView>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="LZd-i6-sYd">
-                                                                    <rect key="frame" x="560" y="2.5" width="250" height="115.5"/>
+                                                                    <rect key="frame" x="560" y="2.5" width="250" height="105.5"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="250" id="s0W-6A-sJN"/>
@@ -178,7 +179,7 @@
                                                 <constraint firstItem="hV7-Pc-Rbz" firstAttribute="leading" secondItem="Zge-cb-gAJ" secondAttribute="leading" constant="18" id="Hwv-0m-QM6"/>
                                                 <constraint firstItem="wQ3-h1-PZi" firstAttribute="top" secondItem="tvb-in-39t" secondAttribute="bottom" constant="5" id="JDv-E5-xjR"/>
                                                 <constraint firstItem="l1L-Zh-2X2" firstAttribute="height" secondItem="qLM-77-8rP" secondAttribute="height" id="JSF-dm-BoV"/>
-                                                <constraint firstItem="hV7-Pc-Rbz" firstAttribute="top" secondItem="l1L-Zh-2X2" secondAttribute="bottom" constant="5" id="N5f-XD-XEh"/>
+                                                <constraint firstItem="hV7-Pc-Rbz" firstAttribute="top" secondItem="l1L-Zh-2X2" secondAttribute="bottom" constant="15" id="N5f-XD-XEh"/>
                                                 <constraint firstItem="wQ3-h1-PZi" firstAttribute="leading" secondItem="Zge-cb-gAJ" secondAttribute="leading" constant="18" id="OvB-bL-9ar"/>
                                                 <constraint firstItem="qLM-77-8rP" firstAttribute="leading" secondItem="Zge-cb-gAJ" secondAttribute="leading" constant="18" id="RUl-CK-Ine"/>
                                                 <constraint firstItem="qLM-77-8rP" firstAttribute="top" secondItem="Zge-cb-gAJ" secondAttribute="top" constant="7.5" id="Sec-Ko-rPD"/>
@@ -396,9 +397,11 @@
                         <outlet property="privateLabel" destination="ARk-2h-kHU" id="3NV-MS-5g0"/>
                         <outlet property="privateSwitch" destination="8kh-Br-PZN" id="9Tg-mr-nb2"/>
                         <outlet property="reportHideButton" destination="CZZ-G3-VE1" id="2sm-jI-x9t"/>
+                        <segue destination="psR-xQ-sNw" kind="unwind" identifier="goHome" unwindAction="goHomeWithSender:" id="z01-aR-Q4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="psR-xQ-sNw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1903.2" y="62.518740629685162"/>
         </scene>
@@ -443,11 +446,11 @@
     <resources>
         <image name="beacon_card_2" width="1921" height="2786"/>
         <image name="exclamationmark.bubble" catalog="system" width="128" height="110"/>
-        <image name="heart" catalog="system" width="128" height="109"/>
-        <image name="highlighter" catalog="system" width="128" height="119"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="highlighter" catalog="system" width="128" height="120"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
-        <image name="person.circle" catalog="system" width="128" height="121"/>
-        <image name="scribble" catalog="system" width="128" height="118"/>
+        <image name="person.circle" catalog="system" width="128" height="123"/>
+        <image name="scribble" catalog="system" width="128" height="117"/>
         <namedColor name="adv-black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -470,7 +473,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

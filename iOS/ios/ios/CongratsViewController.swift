@@ -87,6 +87,7 @@ class CongratsViewController: UIViewController {
         if let dest = segue.destination as? AdventourSummaryViewController {
             dest.ids = self.locations
             dest.documentID = self.documentID
+            dest.beaconLocation = self.beaconLocation
         }
         if let dest = segue.destination as? BeaconPostViewController {
             dest.ids = self.locations

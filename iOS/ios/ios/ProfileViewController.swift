@@ -60,11 +60,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
         self.activityIndicatorBeacons?.startAnimating()
         self.exitIndicator?.layer.cornerRadius = 3
         self.prevAdventours = []
-        self.beacons = []
-        Task {
-            await getUserData()
-            await getPrevAdventourData()
-            await getBeaconsData()
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            Task {
+                await self.getUserData()
+                await self.getPrevAdventourData()
+                await self.getBeaconsData()
+            }
         }
     }
     
@@ -303,14 +305,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     
     func getPrevAdventourData() async {
         
-        if !self.prevAdventours.isEmpty {
-            self.prevAdventoursTable.reloadData()
-            self.activityIndicatorAdventours?.stopAnimating()
-            self.prevAdventoursTable?.isHidden = false
-            self.noAdventoursMessage?.isHidden = true
-            return
-        }
-        
         var allData: [String: Any]!
         
         let sem = DispatchSemaphore(value: 0)
@@ -483,14 +477,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
     }
     
     func getBeaconsData() async {
-        
-        if !self.beacons.isEmpty {
-            self.activityIndicatorBeacons?.stopAnimating()
-            self.beaconsTable?.isHidden = false
-            self.noBeaconsMessage?.isHidden = true
-            return
-        }
-        
+        self.beacons = []
         var allData: [String: Any]!
         
         let sem = DispatchSemaphore(value: 0)
@@ -542,8 +529,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate {
                                         if let dataDict = dataJsonObject as? [String: Any] {
                                             if let array = dataDict["results"] as? [[String: Any]] {
                                                 allData["locations"] = array
-//                                                print("date: ", allData["dateCreated"]!)
+                                                
                                                 self.beacons.append(allData)
+                                                print("data: ", self.beacons)
                                                 DispatchQueue.main.async {
 //                                                    print(allData["numLocations"])
                                                     

@@ -153,8 +153,11 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
     }
     
     @IBAction func notNowTapped(_ sender: Any) {
-        excludes.append(self.fsq_id)
-        getAdventourPlace()
+        if self.fsq_id != nil {
+            excludes.append(self.fsq_id)
+            getAdventourPlace()
+        }
+        
     }
     
     @IBAction func yesTapped(_ sender: Any) {
@@ -173,8 +176,9 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
     @IBAction func goHome(sender: UIStoryboardSegue){
         if sender.source is MapViewController {
             searchBar?.text = name
-        }
-        if sender.source is CongratsViewController {
+        } else if sender.source is CongratsViewController ||
+                    sender.source is BeaconPostViewController {
+            print("IM IN HERE")
             self.ids = []
             self.excludes = []
             self.searchBar.text = ""
@@ -368,7 +372,7 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
             categories.append(romanticString)
         }
         if UserDefaults.standard.bool(forKey: "geekySwitch") {
-            let geekyString = "10003,10015,10018,17018,17022,17091,17027,17135,10044,10054,12080,12081,"
+            let geekyString = "10003,10015,10018,17018,17022,17091,17027,17135,10044,10054,12081,"
             categories.append(geekyString)
         }
         if UserDefaults.standard.bool(forKey: "spirtualSwitch") {
@@ -376,11 +380,11 @@ class StartViewController: UIViewController, UISearchBarDelegate, UIScrollViewDe
             categories.append(spirtualString)
         }
         if UserDefaults.standard.bool(forKey: "sportySwitch") {
-            let sportyString = "10006,10014,10019,10022,10023,10045,10048,18005,18008,18012,18019,18020,18021,18029,18034,17117,18035,18036,18037,18039,18040,18048,18054,18057,18058,18064,18067,19002,"
+            let sportyString = "10006,10014,10019,10022,10023,10045,10048,18005,18008,18012,18019,18020,18021,18029,18034,18035,18036,18037,18039,18040,18048,18054,18057,18058,18064,18067,19002,"
             categories.append(sportyString)
         }
         if UserDefaults.standard.bool(forKey: "chillSwitch") {
-            let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12080,12081,19021,16003,16005,16032,"
+            let chillString = "10003,10006,10015,10020,10024,10025,10045,10056,11005,11073,12081,19021,16003,16005,10023"
             categories.append(chillString)
         }
         if UserDefaults.standard.bool(forKey: "shoppySwitch") {

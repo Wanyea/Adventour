@@ -104,7 +104,10 @@ class BeaconsDataSource: NSObject, UITableViewDataSource {
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
         self.listener = query.addSnapshotListener { snap, error in
-            if snap!.isEmpty {
+            if let error = error {
+                print(error)
+                self.listener.remove()
+            } else if snap!.isEmpty {
                 cell.likeIcon.image = UIImage(systemName: "heart")
                 self.listener.remove()
                 
