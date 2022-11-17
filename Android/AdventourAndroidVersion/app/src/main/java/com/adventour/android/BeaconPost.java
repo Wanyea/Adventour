@@ -53,6 +53,8 @@ public class BeaconPost extends AppCompatActivity {
     int androidPfpRef;
     int numLikeShards = 10;
     boolean fromPassport = false;
+    boolean fromBeacons = false;
+    String posterNickname = "Adventourist";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +65,12 @@ public class BeaconPost extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         Bundle extras = getIntent().getExtras();
+        posterNickname = (String) extras.get("posterNickname");
         if (extras != null && (boolean) extras.get("fromPassport")) {
             fromPassport = true;
+        }
+        if (extras != null && (boolean) extras.get("fromBeacons")) {
+            fromBeacons = true;
         }
 
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
@@ -80,7 +86,7 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
 
         getUserNickname();
-        
+
         AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);
         postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
         postBeaconAlert.setCancelable(true);
@@ -105,7 +111,7 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostRV.setNestedScrollingEnabled(true);
 
         BeaconPostAdapter BeaconPostAdapter;
-        if (fromPassport) {
+        if (fromPassport || fromBeacons) {
             if (extras.get("beaconTitle") != null)
             {
                 beaconTitleEditText.setText((String) extras.get("beaconTitle"));
@@ -116,9 +122,20 @@ public class BeaconPost extends AppCompatActivity {
                 beaconIntroEditText.setText((String) extras.get("beaconIntro"));
             }
 
-            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport, true);
+
+            if (fromBeacons) {
+                postBeaconButton.setVisibility(View.INVISIBLE);
+                beaconTitleEditText.setEnabled(false);
+                beaconIntroEditText.setEnabled(false);
+                isPrivate.setVisibility(View.INVISIBLE);
+                findViewById(R.id.privateTextView).setVisibility(View.INVISIBLE);
+                authorTextView.setText((String) extras.get("posterNickname"));
+                authorImageView.setVisibility(View.INVISIBLE);
+                BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard, false);
+            }
         } else {
-            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList, true);
             beaconTitleEditText.setText("Beacon Title");
             beaconIntroEditText.setText("This is the introduction. Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         }
@@ -141,10 +158,13 @@ public class BeaconPost extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && (boolean) extras.get("fromPassport")) {
+        if (fromPassport) {
             Intent intent = new Intent(this, Passport.class);
             intent.putExtra("fromBeaconPost", true);
+            startActivity(intent);
+            finish();
+        } else if (fromBeacons) {
+            Intent intent = new Intent(this, Beacons.class);
             startActivity(intent);
             finish();
         } else {
@@ -350,7 +370,11 @@ public class BeaconPost extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("Beacon Post", "DocumentSnapshot data: " + document.getData());
-                        authorTextView.setText(document.getString("nickname"));
+                        if (fromBeacons) {
+                            authorTextView.setText(posterNickname);
+                        } else {
+                            authorTextView.setText(document.getString("nickname"));
+                        }
 
                         // Set androidPfpRef for Profile Picture
                         if (document.get("androidPfpRef") != null)
