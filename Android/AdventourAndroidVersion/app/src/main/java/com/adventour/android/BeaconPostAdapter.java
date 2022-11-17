@@ -1,6 +1,8 @@
 package com.adventour.android;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,18 +18,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Viewholder> {
 
     private final Context context;
     private final ArrayList<BeaconPostModel> BeaconPostModelArrayList;
+    private final boolean makeEditable;
 
     // Constructor
-    public BeaconPostAdapter(Context context, ArrayList<BeaconPostModel> BeaconPostModelArrayList)
+    public BeaconPostAdapter(Context context, ArrayList<BeaconPostModel> BeaconPostModelArrayList, boolean makeEditable)
     {
         this.context = context;
         this.BeaconPostModelArrayList = BeaconPostModelArrayList;
-   
+        this.makeEditable = makeEditable;
     }
 
     @NonNull
@@ -55,6 +59,9 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
 
         holder.locationDescriptionEditText.setText(model.getDescription());
+        if (!makeEditable) {
+            holder.locationDescriptionEditText.setEnabled(false);
+        }
 
         if(position >= GlobalVars.locationDescriptions.size())
         {
@@ -71,6 +78,15 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
                 GlobalVars.locationDescriptions.set(position, s.toString());
+            }
+        });
+
+        holder.addressTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:0,0?q=" + holder.addressTextView.getText());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                context.startActivity(intent);
             }
         });
     }

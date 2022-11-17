@@ -32,4 +32,9 @@ public class GlobalVars
     public static ArrayList<String> adventourFSQIdsPassport = new ArrayList<String>();
     public static String selectedLocationPassport = "";
     public static ArrayList<String> locationDescriptionsPassport = new ArrayList<String>();
+
+    // For the Beacon Board
+    public static ArrayList<BeaconPostModel> beaconModelArrayListBeaconBoard = new ArrayList<BeaconPostModel>();
+    public static ArrayList<String> adventourFSQIdsBeaconBoard = new ArrayList<String>();
+    public static ArrayList<String> locationDescriptionsBeaconBoard = new ArrayList<String>();
 }

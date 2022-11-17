@@ -68,7 +68,7 @@ public class BeaconsModel {
         }
 
         try {
-            this.adventourId = (String) allData.get("adventourId");
+            this.adventourId = (String) allData.get("documentID");
         } catch (Error e) {
             System.out.println("That beacon can't be edited - it's old and missing an ID");
             e.printStackTrace();
@@ -77,40 +77,13 @@ public class BeaconsModel {
         this.dateCreated = AdventourUtils.formatBirthdateFromDatabase((Timestamp) allData.get("dateCreated"));
         this.androidPfpRef = androidPfpRef;
 
-        if (allData.get("documentId") != null)
-        {
-            this.numOfLikes = getNumLikes((String) allData.get("documentId")).getResult();
-            Log.d("numOfLikes in BeaconModel", String.valueOf(this.numOfLikes));
-        }
 
-        if (allData.get("documentId") != null)
+        if (allData.get("documentID") != null)
         {
-            this.documentId = (String) allData.get("documentId");
-            Log.d("documentId in BeaconModel", documentId);
+            this.documentId = (String) allData.get("documentID");
+            Log.d("documentID in BeaconModel", documentId);
         }
     }
-
-    public Task<Integer> getNumLikes(String documentId)
-    {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference beaconRef = db.collection("Beacons").document(documentId);
-
-        // Sum the count of each shard in the subcollection
-        return beaconRef.collection("likeShards").get()
-                .continueWith(new Continuation<QuerySnapshot, Integer>() {
-                    @Override
-                    public Integer then(@NonNull Task<QuerySnapshot> task) throws Exception {
-                        int count = 0;
-                        for (DocumentSnapshot snap : task.getResult())
-                        {
-                            LikeShard shard = snap.toObject(LikeShard.class);
-                            count += shard.likeCount;
-                        }
-                        return count;
-                    }
-                });
-    }
-
 
     public String getDateCreated() {
         return dateCreated;

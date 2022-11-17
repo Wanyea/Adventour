@@ -30,10 +30,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +44,9 @@ import java.util.Map;
 
 public class BeaconPost extends AppCompatActivity {
 
-    TextView beaconPostDate, authorTextView;
+    TextView beaconPostDate, authorTextView, likeTextView;
     ImageButton postBeaconButton;
-    ImageView authorImageView;
+    ImageView authorImageView, likeImageView;
     EditText beaconTitleEditText, beaconIntroEditText;
     Switch isPrivate;
 
@@ -52,7 +55,12 @@ public class BeaconPost extends AppCompatActivity {
 
     int androidPfpRef;
     int numLikeShards = 10;
+
     boolean fromPassport = false;
+    boolean fromBeacons = false;
+    boolean fromCongratulations = false;
+
+    String posterNickname = "Adventourist";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +71,27 @@ public class BeaconPost extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         Bundle extras = getIntent().getExtras();
+
+        if (extras != null && (boolean) extras.get("fromCongratulations")) {
+            fromCongratulations = true;
+        }
+
         if (extras != null && (boolean) extras.get("fromPassport")) {
             fromPassport = true;
         }
 
+        if (extras != null && (boolean) extras.get("fromBeacons")) {
+            fromBeacons = true;
+            posterNickname = (String) extras.get("posterNickname");
+        }
+
         beaconPostDate = (TextView) findViewById(R.id.beaconPostDate);
         authorTextView = (TextView) findViewById(R.id.authorTextView);
+        likeTextView = (TextView) findViewById(R.id.likeTextView);
+
         postBeaconButton = (ImageButton) findViewById(R.id.postBeaconButton);
+        likeImageView = (ImageView) findViewById(R.id.likeImageView);
+
         beaconTitleEditText = (EditText) findViewById(R.id.beaconTitleEditText);
         beaconIntroEditText = (EditText) findViewById(R.id.beaconIntroEditText);
 
@@ -80,16 +102,21 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
 
         getUserNickname();
-        
+
         AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);
-        postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
+
+        if (fromPassport) {
+            postBeaconAlert.setMessage("Are you sure you want to save your edit to this beacon?");
+        } else {
+            postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
+        }
+
         postBeaconAlert.setCancelable(true);
 
         postBeaconAlert.setPositiveButton(
                 R.string.Yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d("ConfirmDialogue", "Yes/No dialogue opened");
                         storeAdventour();
                         switchToHome();
                     }
@@ -106,12 +133,32 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostRV.setNestedScrollingEnabled(true);
 
         BeaconPostAdapter BeaconPostAdapter;
-        if (fromPassport) {
-            beaconTitleEditText.setText((String) extras.get("beaconTitle"));
-            beaconIntroEditText.setText((String) extras.get("beaconIntro"));
-            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
+        if (fromPassport || fromBeacons) {
+            if (extras.get("beaconTitle") != null) {
+                beaconTitleEditText.setText((String) extras.get("beaconTitle"));
+            }
+
+            if (extras.get("beaconIntro") != null) {
+                beaconIntroEditText.setText((String) extras.get("beaconIntro"));
+            }
+
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport, true);
+
+            if (fromBeacons) {
+                postBeaconButton.setVisibility(View.INVISIBLE);
+                beaconTitleEditText.setEnabled(false);
+                beaconIntroEditText.setEnabled(false);
+                isPrivate.setVisibility(View.INVISIBLE);
+                findViewById(R.id.privateTextView).setVisibility(View.INVISIBLE);
+                authorTextView.setText((String) extras.get("posterNickname"));
+                authorImageView.setVisibility(View.INVISIBLE);
+                BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard, false);
+                setLikeImageView((String) extras.get("adventourID"), likeImageView);
+            }
         } else {
-            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList, true);
+            beaconTitleEditText.setText("Beacon Title");
+            beaconIntroEditText.setText("This is the introduction. Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -121,21 +168,41 @@ public class BeaconPost extends AppCompatActivity {
 
 
         postBeaconButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view)
-           {
-               AlertDialog alert = postBeaconAlert.create();
-               alert.show();
-           }
+            @Override
+            public void onClick(View view) {
+                AlertDialog alert = postBeaconAlert.create();
+                alert.show();
+            }
         });
-    }
 
+        if (fromPassport || fromBeacons) {
+
+            getNumLikes((String) getIntent().getExtras().get("adventourID")).addOnCompleteListener(new OnCompleteListener<Integer>() {
+                @Override
+                public void onComplete(@NonNull Task<Integer> task) {
+                    Log.d("resultOfChange", String.valueOf(task.getResult()));
+                    likeTextView.setText(String.valueOf(task.getResult()));
+                }
+            });
+
+            likeImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    changeLike((String) getIntent().getExtras().get("adventourID"), likeImageView);
+
+                }
+            });
+        }
+    }
     @Override
     public void onBackPressed() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && (boolean) extras.get("fromPassport")) {
+        if (fromPassport) {
             Intent intent = new Intent(this, Passport.class);
             intent.putExtra("fromBeaconPost", true);
+            startActivity(intent);
+            finish();
+        } else if (fromBeacons) {
+            Intent intent = new Intent(this, Beacons.class);
             startActivity(intent);
             finish();
         } else {
@@ -178,13 +245,13 @@ public class BeaconPost extends AppCompatActivity {
         }
 
         DocumentReference beaconRef = db.collection("Beacons").document(adventourId);
-        createLikeCounter(beaconRef, numLikeShards);
 
         beaconRef.set(newBeacon)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
                     @Override
                     public void onSuccess(Void v) {
+                        createLikeCounter(beaconRef, numLikeShards);
                         Log.d("Beacon Posted", "DocumentSnapshot written with ID: " + v);
                     }
                 })
@@ -273,9 +340,6 @@ public class BeaconPost extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         newAdventour.put("nickname", document.getString("nickname"));
                         String adventourId = document.getId();
-                        Log.d(TAG, "adventourID: " + adventourId);
-                        Log.d(TAG, "Confirming that adventourID is printed before continuing");
-                        // TODO: get reference to users profile pic.
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -341,7 +405,11 @@ public class BeaconPost extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("Beacon Post", "DocumentSnapshot data: " + document.getData());
-                        authorTextView.setText(document.getString("nickname"));
+                        if (fromBeacons) {
+                            authorTextView.setText(posterNickname);
+                        } else {
+                            authorTextView.setText(document.getString("nickname"));
+                        }
 
                         // Set androidPfpRef for Profile Picture
                         if (document.get("androidPfpRef") != null)
@@ -394,10 +462,226 @@ public class BeaconPost extends AppCompatActivity {
         });
     }
 
+    public void saveLike(String documentId)
+    {
+        Log.d("saveLike in BeaconsAdapter", "documentId: " + documentId);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Likes")
+                .whereEqualTo("uid", user.getUid())
+                .whereEqualTo("beaconID", documentId)
+                .get()
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Log.d("saveLike in BeaconAdapter", "Failed calling database...");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            Log.d("result", String.valueOf(task.getResult()));
+
+                            if (task.getResult().isEmpty())
+                            {
+                                Log.d("before querysnap", "hello");
+
+                                Log.d("saveLike in BeaconAdapter", "No snapshot found with this query! Adding a new like...");
+                                HashMap<String, String> newLike = new HashMap<String, String>();
+                                newLike.put("uid", user.getUid());
+                                newLike.put("beaconID", documentId);
+                                db.collection("Likes").add(newLike);
+
+                                Log.d("saveLike in BeaconAdapter", "Calling incrementLikesCounter...");
+                                incrementLikesCounter(documentId, numLikeShards).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        getNumLikes((String) getIntent().getExtras().get("adventourID")).addOnCompleteListener(new OnCompleteListener<Integer>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Integer> task) {
+                                                Log.d("resultOfChange", String.valueOf(task.getResult()));
+                                                likeTextView.setText(String.valueOf(task.getResult()));
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+                });
+    }
+
+    public void deleteLike(String documentId)
+    {
+        Log.d("deleteLike in BeaconsAdapter", "documentId: " + documentId);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Likes")
+                .whereEqualTo("uid", user.getUid())
+                .whereEqualTo("beaconID", documentId)
+                .get()
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Log.d("deleteLike in BeaconAdapter", "Failed calling database...");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        for (QueryDocumentSnapshot document : task.getResult())
+                        {
+                            Log.d("task", document.toString());
+
+                            Log.d("deleteLike in BeaconAdapter", "Removing like...");
+                            db.collection("Likes")
+                                    .document(document.getId())
+                                    .delete();
+
+                            Log.d("deleteLike in BeaconAdapter", "Calling decrementLikesCounter...");
+                            decrementLikesCounter(documentId, numLikeShards).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                getNumLikes((String) getIntent().getExtras().get("adventourID")).addOnCompleteListener(new OnCompleteListener<Integer>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Integer> task) {
+                                        Log.d("resultOfChange", String.valueOf(task.getResult()));
+                                        likeTextView.setText(String.valueOf(task.getResult()));
+                                    }
+                                });
+                            }
+                        });
+                        }
+                    }
+                });
+    }
+
+    public void setLikeImageView(String documentId, ImageView likeImageView)
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Likes")
+                .whereEqualTo("uid", user.getUid())
+                .whereEqualTo("beaconID", documentId)
+                .get()
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Log.d("hasUserLikePost in BeaconsAdapter", "Failed calling database...");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            if (task.getResult().isEmpty())
+                            {
+                                Log.d("hasUserLikePost in BeaconsAdapter", "User has not liked this post.");
+                                likeImageView.setImageResource(R.drawable.ic_heart_line_icon);
+                            } else {
+                                Log.d("hasUserLikePost in BeaconsAdapter", "User has liked this post.");
+                                likeImageView.setImageResource(R.drawable.ic_heart_fill_icon);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void changeLike(String documentId, ImageView likeImageView)
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Likes")
+                .whereEqualTo("uid", user.getUid())
+                .whereEqualTo("beaconID", documentId)
+                .get()
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Log.d("hasUserLikePost in BeaconsAdapter", "Failed calling database...");
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            if (task.getResult().isEmpty())
+                            {
+                                Log.d("hasUserLikePost in BeaconsAdapter", "User has not liked this post previously.");
+                                likeImageView.setImageResource(R.drawable.ic_heart_fill_icon);
+                                saveLike(documentId);
+                            } else {
+                                Log.d("hasUserLikePost in BeaconsAdapter", "User has previously liked this post.");
+                                likeImageView.setImageResource(R.drawable.ic_heart_line_icon);
+                                deleteLike(documentId);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public Task<Void> incrementLikesCounter(String documentId, final int numLikeShards)
+    {
+        Log.d("incrementLikesCounter in BeaconsAdapter", "documentId: " + documentId);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference beaconRef = db.collection("Beacons").document(documentId);
+
+        int shardId = (int) Math.floor(Math.random() * numLikeShards);
+        DocumentReference shardRef = beaconRef.collection("likeShards").document(String.valueOf(shardId));
+
+        return shardRef.update("likes", FieldValue.increment(1));
+    }
+
+    public Task<Void> decrementLikesCounter(String documentId, final int numLikeShards)
+    {
+        Log.d("decrementLikesCounter in BeaconsAdapter", "documentId: " + documentId);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference beaconRef = db.collection("Beacons").document(documentId);
+
+        int shardId = (int) Math.floor(Math.random() * numLikeShards);
+        DocumentReference shardRef = beaconRef.collection("likeShards").document(String.valueOf(shardId));
+
+        return shardRef.update("likes", FieldValue.increment(-1));
+    }
+
     public Task<Void> createLikeCounter(final DocumentReference beaconRef, final int numLikeShards)
     {
         // Initialize the counter document, then initialize each shard.
-        return beaconRef.set(new LikeCounter(numLikeShards))
+        HashMap<String, Object> counterMap = new HashMap<>();
+        counterMap.put("numLikeShards", numLikeShards);
+
+        return beaconRef.set(new LikeCounter(numLikeShards), SetOptions.merge())
                 .continueWithTask(new Continuation<Void, Task<Void>>() {
                     @Override
                     public Task<Void> then(@NonNull Task<Void> task) throws Exception {
@@ -417,6 +701,27 @@ public class BeaconPost extends AppCompatActivity {
                         }
 
                         return Tasks.whenAll(tasks);
+                    }
+                });
+    }
+
+    public Task<Integer> getNumLikes(String documentId)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference beaconRef = db.collection("Beacons").document(documentId);
+
+        // Sum the count of each shard in the subcollection
+        return beaconRef.collection("likeShards").get()
+                .continueWith(new Continuation<QuerySnapshot, Integer>() {
+                    @Override
+                    public Integer then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                        int count = 0;
+                        for (DocumentSnapshot snap : task.getResult())
+                        {
+                            LikeShard shard = snap.toObject(LikeShard.class);
+                            count += shard.likes;
+                        }
+                        return count;
                     }
                 });
     }

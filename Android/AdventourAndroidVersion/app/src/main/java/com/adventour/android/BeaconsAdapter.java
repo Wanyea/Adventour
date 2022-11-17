@@ -10,12 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -93,7 +95,14 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
                 holder.authorImageView.setImageResource(R.drawable.ic_user_icon);
         }
 
-        holder.likesTextView.setText(String.valueOf(model.getNumOfLikes()));
+        getNumLikes(model.getDocumentId()).addOnCompleteListener(new OnCompleteListener<Integer>() {
+            @Override
+            public void onComplete(@NonNull Task<Integer> task)
+            {
+                holder.likesTextView.setText(String.valueOf(task.getResult()));
+            }
+        });
+
 
         // Set Like ImageView when initializing RecyclerView
         setLikeImageView(model.getDocumentId(), holder.likeImageView);
@@ -103,7 +112,15 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
             public void onClick(View view)
             {
                 changeLike(model.getDocumentId(), holder.likeImageView);
-                holder.likesTextView.setText(String.valueOf(model.getNumOfLikes()));
+
+                getNumLikes(model.getDocumentId()).addOnCompleteListener(new OnCompleteListener<Integer>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Integer> task)
+                    {
+                        holder.likesTextView.setText(String.valueOf(task.getResult()));
+                        notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
@@ -140,19 +157,20 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
                     {
                         if (task.isSuccessful())
                         {
+                            Log.d("result", String.valueOf(task.getResult()));
+
                             if (task.getResult().isEmpty())
                             {
-                                for (QueryDocumentSnapshot document : task.getResult())
-                                {
+                                Log.d("before querysnap", "hello");
+
                                     Log.d("saveLike in BeaconAdapter", "No snapshot found with this query! Adding a new like...");
                                     HashMap<String, String> newLike = new HashMap<String, String>();
                                     newLike.put("uid", user.getUid());
-                                    newLike.put("beaconId", documentId);
+                                    newLike.put("beaconID", documentId);
                                     db.collection("Likes").add(newLike);
 
                                     Log.d("saveLike in BeaconAdapter", "Calling incrementLikesCounter...");
                                     incrementLikesCounter(documentId, numLikeShards);
-                                }
                             }
 
                         }
@@ -187,6 +205,8 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
                     {
                         for (QueryDocumentSnapshot document : task.getResult())
                         {
+                            Log.d("task", document.toString());
+
                             Log.d("deleteLike in BeaconAdapter", "Removing like...");
                             db.collection("Likes")
                                     .document(document.getId())
@@ -286,7 +306,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         int shardId = (int) Math.floor(Math.random() * numLikeShards);
         DocumentReference shardRef = beaconRef.collection("likeShards").document(String.valueOf(shardId));
 
-        return shardRef.update("count", FieldValue.increment(1));
+        return shardRef.update("likes", FieldValue.increment(1));
     }
 
     public Task<Void> decrementLikesCounter(String documentId, final int numLikeShards)
@@ -298,7 +318,28 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         int shardId = (int) Math.floor(Math.random() * numLikeShards);
         DocumentReference shardRef = beaconRef.collection("likeShards").document(String.valueOf(shardId));
 
-        return shardRef.update("count", FieldValue.increment(-1));
+        return shardRef.update("likes", FieldValue.increment(-1));
+    }
+
+    public Task<Integer> getNumLikes(String documentId)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference beaconRef = db.collection("Beacons").document(documentId);
+
+        // Sum the count of each shard in the subcollection
+        return beaconRef.collection("likeShards").get()
+                .continueWith(new Continuation<QuerySnapshot, Integer>() {
+                    @Override
+                    public Integer then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                        int count = 0;
+                        for (DocumentSnapshot snap : task.getResult())
+                        {
+                            LikeShard shard = snap.toObject(LikeShard.class);
+                            count += shard.likes;
+                        }
+                        return count;
+                    }
+                });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
