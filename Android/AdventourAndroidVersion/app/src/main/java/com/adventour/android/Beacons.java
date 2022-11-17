@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Continuation;
@@ -70,6 +71,7 @@ public class Beacons extends AppCompatActivity {
     PlacesClient placesClient;
     HashMap<String, String> isSwitchActive = new HashMap<>();
     int distance = 1;
+    TextView errorNoBeaconsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class Beacons extends AppCompatActivity {
         GlobalVars.userBeaconsArrayList.clear();
 
         beaconsProgressBar = (ProgressBar) findViewById(R.id.beaconsProgressBar);
+        errorNoBeaconsTextView = (TextView) findViewById(R.id.errorNoBeaconsTextView);
 
         if (getIntent().getSerializableExtra("isSwitchActive") != null)
         {
@@ -135,6 +138,9 @@ public class Beacons extends AppCompatActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
+                errorNoBeaconsTextView.setVisibility(View.INVISIBLE);
+                GlobalVars.beaconBoardArrayList.clear();
+                beaconBoardAdapter.notifyDataSetChanged();
                 selectedBeaconLocation = String.valueOf(place.getAddress());
                 getBeacons(selectedBeaconLocation);
 
@@ -245,7 +251,17 @@ public class Beacons extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                          beaconsProgressBar.setVisibility(View.INVISIBLE);
                          if (task.isSuccessful())
-                        {
+                         {
+
+                            Log.d("task", task.getResult().toString());
+
+                            if (task.getResult().isEmpty())
+                            {
+                                errorNoBeaconsTextView.setVisibility(View.VISIBLE);
+                            } else {
+                                errorNoBeaconsTextView.setVisibility(View.INVISIBLE);
+                            }
+
                             Log.d("getBeacons in BEACONS", "Documents retrieved!");
                             for (QueryDocumentSnapshot beacons : task.getResult())
                             {
@@ -309,7 +325,7 @@ public class Beacons extends AppCompatActivity {
                                 }
                             }
                             Log.d("numOfUserBeacons", String.valueOf(GlobalVars.userBeaconsArrayList.size()));
-                        }
+                         }
                     }
                 });
     }
@@ -334,7 +350,8 @@ public class Beacons extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+                        if (document.exists())
+                        {
                             Log.d("User Id", document.getId());
                             Log.d("setBeaconModel in Beacons", "DocumentSnapshot data: " + document.getData());
 
