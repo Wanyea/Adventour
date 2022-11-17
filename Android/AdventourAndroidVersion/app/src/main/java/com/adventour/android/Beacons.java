@@ -245,7 +245,6 @@ public class Beacons extends AppCompatActivity {
         Context c = this;
         final String TAG = "PreparingBeacon...";
         String adventourID = GlobalVars.beaconBoardArrayList.get(position).getAdventourId();
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -271,9 +270,7 @@ public class Beacons extends AppCompatActivity {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             Log.d(TAG, documentSnapshot.toString());
                             GlobalVars.adventourFSQIdsBeaconBoard = (ArrayList<String>) documentSnapshot.get("locations");
-//                            GlobalVars.selectedLocationPassport = documentSnapshot.getString("beaconLocation");
                             GlobalVars.locationDescriptionsBeaconBoard = (ArrayList<String>) documentSnapshot.get("locationDescriptions");
-//                            Log.d(TAG, GlobalVars.adventourFSQIds.toString());
 
                             Log.d(TAG, documentSnapshot.get("numLocations") + " adventourFSQIds:" + GlobalVars.adventourFSQIdsBeaconBoard);
 
