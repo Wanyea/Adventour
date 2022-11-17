@@ -73,13 +73,18 @@ public class Congratulations extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        storeAdventour();
+        switchToStartAdventour();
+    }
+
     public void switchToBeaconPost()
     {
         Intent intent = new Intent(this, BeaconPost.class);
         startActivity(intent);
     }
 
-    // Testing only, delete before prod
     public void switchToAdventourSummary()
     {
         Intent intent = new Intent(this, AdventourSummary.class);
