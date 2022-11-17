@@ -74,6 +74,7 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
     var birthdayFlag: Bool!
     var birthdateString: String!
     
+    var listener: AuthStateDidChangeListenerHandle!
     
     var user: User!
     
@@ -195,14 +196,19 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
             } else {
                 self.errorMessage.isHidden = true
                 // Add as Adventourist in Firestore if successful
-                Auth.auth().addStateDidChangeListener { auth, user in
+                self.listener = Auth.auth().addStateDidChangeListener { auth, user in
                     if let user = user {
                         let db = Firestore.firestore()
                         
                         db.collection("Adventourists")
                             .document(user.uid)
                             .setData(signupData) { err in
-                                self.switchToTabController()
+                                if let err = err {
+                                    Auth.auth().removeStateDidChangeListener(self.listener)
+                                } else {
+                                    self.switchToTabController()
+                                    Auth.auth().removeStateDidChangeListener(self.listener)
+                                }
                             }
                         
                     } else {
