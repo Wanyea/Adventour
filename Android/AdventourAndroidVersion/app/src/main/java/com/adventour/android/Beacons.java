@@ -170,7 +170,7 @@ public class Beacons extends AppCompatActivity {
                 new BeaconsClickListener(this, beaconsRV, new BeaconsClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Log.d("Beacons", "onItemClicked triggered, " + GlobalVars.beaconBoardArrayList.get(0).getAdventourId());
+                        Log.d("Beacons", "onItemClicked triggered, " + GlobalVars.beaconBoardArrayList.get(position).getAdventourId());
                         switchToBeaconPost(position);
                     }
 
@@ -346,6 +346,7 @@ public class Beacons extends AppCompatActivity {
                             intent.putExtra("adventourID", adventourID);
                             intent.putExtra("beaconTitle", beaconTitle);
                             intent.putExtra("beaconIntro", beaconIntro);
+                            intent.putExtra("posterNickname", GlobalVars.beaconBoardArrayList.get(position).getBeaconAuthor());
                             startActivity(intent);
                             finish();
                         }

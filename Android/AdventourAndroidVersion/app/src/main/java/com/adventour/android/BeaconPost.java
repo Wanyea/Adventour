@@ -54,6 +54,7 @@ public class BeaconPost extends AppCompatActivity {
     int numLikeShards = 10;
     boolean fromPassport = false;
     boolean fromBeacons = false;
+    String posterNickname = "Adventourist";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class BeaconPost extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         Bundle extras = getIntent().getExtras();
+        posterNickname = (String) extras.get("posterNickname");
         if (extras != null && (boolean) extras.get("fromPassport")) {
             fromPassport = true;
         }
@@ -128,6 +130,8 @@ public class BeaconPost extends AppCompatActivity {
                 beaconIntroEditText.setEnabled(false);
                 isPrivate.setVisibility(View.INVISIBLE);
                 findViewById(R.id.privateTextView).setVisibility(View.INVISIBLE);
+                authorTextView.setText((String) extras.get("posterNickname"));
+                authorImageView.setVisibility(View.INVISIBLE);
                 BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard, false);
             }
         } else {
@@ -366,7 +370,11 @@ public class BeaconPost extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("Beacon Post", "DocumentSnapshot data: " + document.getData());
-                        authorTextView.setText(document.getString("nickname"));
+                        if (fromBeacons) {
+                            authorTextView.setText(posterNickname);
+                        } else {
+                            authorTextView.setText(document.getString("nickname"));
+                        }
 
                         // Set androidPfpRef for Profile Picture
                         if (document.get("androidPfpRef") != null)
