@@ -74,6 +74,19 @@
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         tools:ignore="MissingClass" />
 
+    <TextView
+        android:id="@+id/errorNoBeaconsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:text="No beacons are currently available at this location!"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/beaconsProgressBar"
