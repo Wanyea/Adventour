@@ -84,7 +84,7 @@ public class BeaconPost extends AppCompatActivity {
         beaconPostDate.setText(AdventourUtils.formatBirthdateFromDatabase(new Timestamp(new Date())));
 
         getUserNickname();
-        
+
         AlertDialog.Builder postBeaconAlert = new AlertDialog.Builder(this);
         postBeaconAlert.setMessage("Are you sure you want to post this beacon?");
         postBeaconAlert.setCancelable(true);
@@ -126,6 +126,8 @@ public class BeaconPost extends AppCompatActivity {
                 postBeaconButton.setVisibility(View.INVISIBLE);
                 beaconTitleEditText.setEnabled(false);
                 beaconIntroEditText.setEnabled(false);
+                isPrivate.setVisibility(View.INVISIBLE);
+                findViewById(R.id.privateTextView).setVisibility(View.INVISIBLE);
                 BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard, false);
             }
         } else {
