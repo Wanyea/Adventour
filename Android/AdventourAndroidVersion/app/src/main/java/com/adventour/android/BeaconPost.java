@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -432,7 +433,8 @@ public class BeaconPost extends AppCompatActivity {
         // Initialize the counter document, then initialize each shard.
         HashMap<String, Object> counterMap = new HashMap<>();
         counterMap.put("numLikeShards", numLikeShards);
-        return beaconRef.update(counterMap)
+
+        return beaconRef.set(new LikeCounter(numLikeShards), SetOptions.merge())
                 .continueWithTask(new Continuation<Void, Task<Void>>() {
                     @Override
                     public Task<Void> then(@NonNull Task<Void> task) throws Exception {

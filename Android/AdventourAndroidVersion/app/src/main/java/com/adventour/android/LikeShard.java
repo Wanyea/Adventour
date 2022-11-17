@@ -3,9 +3,10 @@ package com.adventour.android;
 
 public class LikeShard
 {
-    int likeCount;
+    public int likes;
 
     public LikeShard(int likeCount) {
-        this.likeCount = likeCount;
+        this.likes = likes;
     }
+    public LikeShard() {}
 }

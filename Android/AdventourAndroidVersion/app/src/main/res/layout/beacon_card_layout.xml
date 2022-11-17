@@ -33,7 +33,7 @@
 
         <ImageView
             android:id="@+id/likeImageView"
-            android:clickable="true"
+            android:clickable="false"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
@@ -60,7 +60,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@color/transparent"
-            android:foreground="@drawable/rectangle_brown_variant"/>
+            android:foreground="@drawable/rectangle_brown_variant"
+            android:adjustViewBounds="true" />
 
         <TextView
             android:id="@+id/likesTextView"
