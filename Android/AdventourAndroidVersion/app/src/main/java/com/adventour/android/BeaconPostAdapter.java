@@ -21,13 +21,14 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
 
     private final Context context;
     private final ArrayList<BeaconPostModel> BeaconPostModelArrayList;
+    private final boolean makeEditable;
 
     // Constructor
-    public BeaconPostAdapter(Context context, ArrayList<BeaconPostModel> BeaconPostModelArrayList)
+    public BeaconPostAdapter(Context context, ArrayList<BeaconPostModel> BeaconPostModelArrayList, boolean makeEditable)
     {
         this.context = context;
         this.BeaconPostModelArrayList = BeaconPostModelArrayList;
-   
+        this.makeEditable = makeEditable;
     }
 
     @NonNull
@@ -55,6 +56,9 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
 
         holder.locationDescriptionEditText.setText(model.getDescription());
+        if (!makeEditable) {
+            holder.locationDescriptionEditText.setEnabled(false);
+        }
 
         if(position >= GlobalVars.locationDescriptions.size())
         {

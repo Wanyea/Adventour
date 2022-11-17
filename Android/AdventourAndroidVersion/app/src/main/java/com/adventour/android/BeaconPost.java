@@ -120,16 +120,16 @@ public class BeaconPost extends AppCompatActivity {
                 beaconIntroEditText.setText((String) extras.get("beaconIntro"));
             }
 
-            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport);
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListPassport, true);
 
             if (fromBeacons) {
                 postBeaconButton.setVisibility(View.INVISIBLE);
-                beaconTitleEditText.setClickable(false);
-                beaconIntroEditText.setClickable(false);
-                BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard);
+                beaconTitleEditText.setEnabled(false);
+                beaconIntroEditText.setEnabled(false);
+                BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayListBeaconBoard, false);
             }
         } else {
-            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList);
+            BeaconPostAdapter = new BeaconPostAdapter(this, GlobalVars.beaconModelArrayList, true);
             beaconTitleEditText.setText("Beacon Title");
             beaconIntroEditText.setText("This is the introduction. Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         }
