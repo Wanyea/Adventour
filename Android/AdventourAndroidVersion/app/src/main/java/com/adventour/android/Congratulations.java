@@ -57,7 +57,7 @@ public class Congratulations extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                storeAdventour();
+                storeAdventour(); // Duplicate, this was already called in InProgress
 
                 // Get Start Adventour Activity for next Adventour.
                 GlobalVars.adventourLocations.clear();
@@ -73,15 +73,20 @@ public class Congratulations extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        storeAdventour();
+        switchToStartAdventour();
+    }
+
     public void switchToBeaconPost()
     {
         Intent intent = new Intent(this, BeaconPost.class);
         startActivity(intent);
     }
 
-    // Testing only, delete before prod
     public void switchToAdventourSummary()
-     {
+    {
         Intent intent = new Intent(this, AdventourSummary.class);
         startActivity(intent);
     }

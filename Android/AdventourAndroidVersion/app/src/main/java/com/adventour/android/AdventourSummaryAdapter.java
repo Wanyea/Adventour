@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +32,7 @@ public class AdventourSummaryAdapter extends RecyclerView.Adapter<AdventourSumma
         AdventourSummaryModel model = adventourArrayList.get(position);
         holder.locationNameTextView.setText(model.getName());
         holder.descriptionTextView.setText(model.getDescription());
-
+        holder.imageView.setImageBitmap(model.getImage());
     }
 
     @Override
@@ -42,12 +43,13 @@ public class AdventourSummaryAdapter extends RecyclerView.Adapter<AdventourSumma
     public static class Viewholder extends RecyclerView.ViewHolder {
         private final TextView locationNameTextView;
         private final TextView descriptionTextView;
-
+        private final ImageView imageView;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             locationNameTextView = itemView.findViewById(R.id.nameTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionEditText);
+            imageView = itemView.findViewById(R.id.locationImageView);
         }
     }
 }

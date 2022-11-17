@@ -28,6 +28,7 @@
     <string name="settings_menu">settings menu</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="Privacy_Policy_TOS_Signup">By clicking \"Sign up,\" you are agreeing to our <a href="https://adventour.app/privacy-policy">Privacy Policy</a> and our <a href="https://adventour.app/terms-of-service">Terms of Service</a>.</string>
 
 
 </resources>

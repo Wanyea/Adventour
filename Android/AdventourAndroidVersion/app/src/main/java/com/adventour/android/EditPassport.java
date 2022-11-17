@@ -48,7 +48,7 @@ public class EditPassport extends AppCompatActivity {
     TextView birthdateTextView;
     Timestamp birthdate;
     int androidPfpRef;
-    String iOSPfpRef;
+    String iosPfpRef;
     CardView popupProfPic;
     Button doneButton;
     ImageButton profPicImageButton;
@@ -215,7 +215,7 @@ public class EditPassport extends AppCompatActivity {
                                 changes.put("lastName", lastName);
                                 changes.put("birthdate", birthdate);
                                 changes.put("androidPfpRef", androidPfpRef);
-                                changes.put("iOSPfpRef", iOSPfpRef);
+                                changes.put("iosPfpRef", iosPfpRef);
 
                                 db.collection("Adventourists").document(user.getUid())
                                         .set(changes)
@@ -349,10 +349,18 @@ public class EditPassport extends AppCompatActivity {
                         birthdateTextView.setText(AdventourUtils.formatBirthdateFromDatabase((Timestamp) document.get("birthdate")));
                         mantraEditText.setText(document.getString("mantra"));
 
-                        androidPfpRef = toIntExact((long)document.get("androidPfpRef"));
-
-                        switch (androidPfpRef)
+                        // Set androidPfpRef for Profile Picture
+                        if (document.get("androidPfpRef") != null)
                         {
+                            androidPfpRef = toIntExact((long) document.get("androidPfpRef"));
+                        } else if (document.get("iosPfpRef") != null) {
+                            androidPfpRef = AdventourUtils.iOSToAndroidPfpRef((String)document.get("iosPfpRef"));
+                        } else {
+                            androidPfpRef = 6; // Default PFP Pic
+                        }
+
+                        // Set image resource according to androidPfpRef
+                        switch (androidPfpRef) {
                             // Set profile pic image to Cheetah
                             case 0:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_cheetah, null));
@@ -379,8 +387,9 @@ public class EditPassport extends AppCompatActivity {
                             case 5:
                                 profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_profpic_penguin, null));
                                     break;
+                            default:
+                                profPicImageButton.setForeground(getResources().getDrawable(R.drawable.ic_user_icon, null));
                         }
-
 
                         email = emailEditText.getText().toString();
                         nickname = nicknameEditText.getText().toString();
@@ -390,10 +399,10 @@ public class EditPassport extends AppCompatActivity {
                         birthdate = ((Timestamp) document.get("birthdate"));
                         androidPfpRef = profPicID;
 
-                        if (document.get("iOSPfpRef") != null) {
-                            iOSPfpRef = (String) document.get("iOSPfpRef");
+                        if (document.get("iosPfpRef") != null) {
+                            iosPfpRef = (String) document.get("iosPfpRef");
                         } else {
-                            iOSPfpRef = "";
+                            iosPfpRef = "";
                         }
 
                     } else {

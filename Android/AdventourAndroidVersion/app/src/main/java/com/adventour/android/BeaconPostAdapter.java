@@ -54,8 +54,6 @@ public class BeaconPostAdapter extends RecyclerView.Adapter<BeaconPostAdapter.Vi
         holder.locationTwoImageView.setImageBitmap(model.getLocationImages().locationTwo);
         holder.locationThreeImageView.setImageBitmap(model.getLocationImages().locationThree);
 
-        //holder.customEditTextListener.updatePosition(position);
-
         holder.locationDescriptionEditText.setText(model.getDescription());
 
         if(position >= GlobalVars.locationDescriptions.size())

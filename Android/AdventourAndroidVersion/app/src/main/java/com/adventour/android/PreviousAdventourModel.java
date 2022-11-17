@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class PreviousAdventourModel
 {
+    private String adventourID;
     private String firstLocation;
     private String secondLocation;
     private String thirdLocation;
@@ -15,6 +16,8 @@ public class PreviousAdventourModel
 
     public PreviousAdventourModel(Map allData)
         {
+            adventourID = allData.get("documentID").toString();
+
             JSONArray array = (JSONArray) allData.get("locations");
             if (array.length() == 1)
             {
@@ -86,4 +89,6 @@ public class PreviousAdventourModel
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    public String getAdventourId() {return adventourID;}
 }
