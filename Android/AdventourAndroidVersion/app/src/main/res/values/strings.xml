@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Adventour Android Version</string>
+    <string name="beacons">Beacons</string>
+    <string name="start_adventour">Start Adventour</string>
+    <string name="start_an_adventour">Start an Adventour!</string>
+    <string name="account">Account</string>
+    <string name="passport">Passport</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non iaculis urna. Nullam fermentum, eros et mollis auctor, nisl nisi tempus nunc, sed gravida ligula purus vel magna. Proin ut erat ex.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="this_is_the_start_an_adventour_page">This is the start an Adventour page!</string>
+    <string name="this_the_the_account_page">This the the account page!</string>
+    <string name="this_is_the_beacons_page">This is the beacons page!</string>
+    <string name="edit_account_button">Edit Account Button</string>
+    <string name="last_adventour">Last Adventour:</string>
+    <string name="last_online">Last Online:</string>
+    <string name="first_name"><i>First Name</i></string>
+    <string name="middle_name"><i>Middle Name</i></string>
+    <string name="last_name"><i>Last Name</i></string>
+    <string name="_1_xxx_xxx_xxxx"><i>+1 (xxx) xxx-xxxx</i></string>
+    <string name="mantra"><i>Mantra</i></string>
+    <string name="bio"><i>Bio</i></string>
+    <string name="date_joined">Date Joined:</string>
+    <string name="profile_pictures">Profile Pictures:</string>
+    <string name="favorite_beacons">Favorite Beacons</string>
+    <string name="never_recommend">Never Recommend</string>
+    <string name="private_account">Private Account</string>
+    <string name="settings_menu">settings menu</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Privacy_Policy_TOS_Signup">By clicking \"Sign up,\" you are agreeing to our <a href="https://adventour.app/privacy-policy">Privacy Policy</a> and our <a href="https://adventour.app/terms-of-service">Terms of Service</a>.</string>
+
+
+</resources>
