@@ -1,0 +1,20 @@
+PODS:
+  - GooglePlaces (7.2.0)
+  - IQKeyboardManagerSwift (6.5.10)
+
+DEPENDENCIES:
+  - GooglePlaces (= 7.2.0)
+  - IQKeyboardManagerSwift
+
+SPEC REPOS:
+  trunk:
+    - GooglePlaces
+    - IQKeyboardManagerSwift
+
+SPEC CHECKSUMS:
+  GooglePlaces: 590dea495d69431454ea92217033c3184995165d
+  IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
+
+PODFILE CHECKSUM: 6a56ba2b25a63a28b1a763ec1909e835f60d4dec
+
+COCOAPODS: 1.11.0

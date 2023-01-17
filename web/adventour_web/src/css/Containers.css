@@ -1,0 +1,78 @@
+/* Containers.css */
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  gap: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.row-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.even-space {
+  justify-content: space-between;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  align-content: left;
+  justify-content: center;
+
+}
+
+.blue {
+  background-color: blue;
+}
+
+.purple {
+  background-color: purple;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.flex {
+  display: flex;
+  /* gap: var(--gap, 1rem) */
+  /* flex-wrap: wrap; */
+}
+
+@media only screen and (max-width: 1024px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .big {
+    width: 100%;
+  }
+  
+  .med {
+    width: 100%
+  }
+
+}
+

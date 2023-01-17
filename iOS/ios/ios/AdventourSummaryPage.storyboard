@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rig-9r-KxF">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Adventour Summary-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="AdventourSummary" id="Y6W-OH-hqX" customClass="AdventourSummaryViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="y6D-Vw-3ft">
+                                <rect key="frame" x="141.5" y="265.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-BI-oBc">
+                                <rect key="frame" x="23" y="44" width="281" height="414"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SummaryCell" rowHeight="210" id="Tly-Ct-J0I" customClass="SummaryTableViewCell" customModule="ios" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="281" height="210"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tly-Ct-J0I" id="f3P-Oy-j5V">
+                                            <rect key="frame" x="0.0" y="0.0" width="281" height="210"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ticket_Card" translatesAutoresizingMaskIntoConstraints="NO" id="dhX-fb-cph">
+                                                    <rect key="frame" x="7.5" y="5" width="266" height="200"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="200" id="Pkk-nJ-uMC"/>
+                                                        <constraint firstAttribute="width" constant="266" id="Tc7-ri-Ar1"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Name" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnC-ci-IxD">
+                                                    <rect key="frame" x="123.5" y="40" width="139" height="26"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="139" id="31F-yE-6bM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place holder text place holder text place holder text place holder text" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIj-Ip-zNG">
+                                                    <rect key="frame" x="123.5" y="99" width="135" height="69"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="135" id="SkV-L8-Sxt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Balloon_Orig" translatesAutoresizingMaskIntoConstraints="NO" id="Sgz-rq-Fkc">
+                                                    <rect key="frame" x="22.5" y="35" width="100" height="137"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="CvB-dy-sG2"/>
+                                                        <constraint firstAttribute="height" constant="137" id="lCU-6S-SOh"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l40-QB-EAw" customClass="CosmosView" customModule="ios" customModuleProvider="target">
+                                                    <rect key="frame" x="123.5" y="74" width="135" height="20"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="BVb-ho-oph"/>
+                                                        <constraint firstAttribute="width" constant="135" id="mJ5-GD-yxn"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                            <real key="value" value="17"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                                            <color key="value" name="adv-royalblue"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
+                                                            <color key="value" name="adv-white"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                                            <color key="value" name="adv-royalblue"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="emptyBorderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                                            <color key="value" name="adv-royalblue"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cIj-Ip-zNG" firstAttribute="leading" secondItem="Sgz-rq-Fkc" secondAttribute="trailing" constant="1" id="0Hh-fX-nXO"/>
+                                                <constraint firstItem="l40-QB-EAw" firstAttribute="leading" secondItem="Sgz-rq-Fkc" secondAttribute="trailing" constant="1" id="0OH-4O-LP3"/>
+                                                <constraint firstItem="dhX-fb-cph" firstAttribute="centerX" secondItem="f3P-Oy-j5V" secondAttribute="centerX" id="VV0-7N-RX0"/>
+                                                <constraint firstItem="cIj-Ip-zNG" firstAttribute="top" secondItem="dhX-fb-cph" secondAttribute="bottom" constant="-106" id="XPE-qV-fMp"/>
+                                                <constraint firstItem="cIj-Ip-zNG" firstAttribute="top" secondItem="l40-QB-EAw" secondAttribute="bottom" constant="5" id="a9F-tS-pNb"/>
+                                                <constraint firstItem="dhX-fb-cph" firstAttribute="leading" secondItem="Sgz-rq-Fkc" secondAttribute="leading" constant="-15" id="abr-ob-fDg"/>
+                                                <constraint firstItem="Sgz-rq-Fkc" firstAttribute="top" secondItem="dhX-fb-cph" secondAttribute="top" constant="30" id="pbq-VI-UK9"/>
+                                                <constraint firstAttribute="bottom" secondItem="dhX-fb-cph" secondAttribute="bottom" constant="5" id="sUZ-h1-mft"/>
+                                                <constraint firstItem="dhX-fb-cph" firstAttribute="top" secondItem="f3P-Oy-j5V" secondAttribute="top" constant="5" id="srn-Ad-f58"/>
+                                                <constraint firstItem="dhX-fb-cph" firstAttribute="top" secondItem="RnC-ci-IxD" secondAttribute="top" constant="-35" id="vPf-Qt-Wns"/>
+                                                <constraint firstItem="RnC-ci-IxD" firstAttribute="leading" secondItem="Sgz-rq-Fkc" secondAttribute="trailing" constant="1" id="vzv-d9-bjg"/>
+                                                <constraint firstItem="l40-QB-EAw" firstAttribute="top" secondItem="RnC-ci-IxD" secondAttribute="bottom" constant="8" symbolic="YES" id="yPb-Hj-5IA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="cosmosView" destination="l40-QB-EAw" id="2aD-qa-KMv"/>
+                                            <outlet property="descriptionLabel" destination="cIj-Ip-zNG" id="LBs-By-pgI"/>
+                                            <outlet property="img" destination="Sgz-rq-Fkc" id="oCx-ub-Oel"/>
+                                            <outlet property="name" destination="RnC-ci-IxD" id="rOj-Bw-WK4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1X-yj-Jvf">
+                                <rect key="frame" x="72.5" y="468" width="175" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="175" id="JxT-i1-CJT"/>
+                                    <constraint firstAttribute="height" constant="50" id="wik-B3-5mU"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Post Beacon" cornerStyle="capsule">
+                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="20"/>
+                                    <color key="baseBackgroundColor" name="adv-royalblue"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="gfU-8T-EwO" kind="show" id="Bsm-xL-hNE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" name="adv-skyblue"/>
+                        <constraints>
+                            <constraint firstItem="SzF-BI-oBc" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" constant="3.5" id="0T3-hO-i8r"/>
+                            <constraint firstItem="O1X-yj-Jvf" firstAttribute="top" secondItem="SzF-BI-oBc" secondAttribute="bottom" constant="10" id="2Mn-AM-IxJ"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="SzF-BI-oBc" secondAttribute="trailing" constant="16" id="4qe-Vw-Uat"/>
+                            <constraint firstItem="SzF-BI-oBc" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" constant="3.5" id="6Un-Ie-eJW"/>
+                            <constraint firstItem="SzF-BI-oBc" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="23" id="N7a-mg-OPK"/>
+                            <constraint firstItem="y6D-Vw-3ft" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="QtL-y8-Hdo"/>
+                            <constraint firstItem="y6D-Vw-3ft" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="TX6-JC-D1b"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="O1X-yj-Jvf" secondAttribute="bottom" constant="50" id="Wd1-ZA-b8r"/>
+                            <constraint firstItem="O1X-yj-Jvf" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="foB-EO-z2e"/>
+                            <constraint firstItem="SzF-BI-oBc" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="sQG-eJ-8hr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Adventour Summary" id="dfj-CF-8c1"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="y6D-Vw-3ft" id="NuN-jl-31k"/>
+                        <outlet property="locationsTable" destination="SzF-BI-oBc" id="wnC-NZ-ka3"/>
+                        <outlet property="postButton" destination="O1X-yj-Jvf" id="6sd-e2-cpz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="933.84615384615381" y="30.568720379146917"/>
+        </scene>
+        <!--BeaconPost-->
+        <scene sceneID="T3J-4u-CCK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="BeaconPost" referencedIdentifier="BeaconPost" id="gfU-8T-EwO" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="pJD-Oh-Ty5"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2AG-rR-x0V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1116" y="446"/>
+        </scene>
+        <!--Adventour Summary Navigation Controller-->
+        <scene sceneID="EHp-Jx-NnY">
+            <objects>
+                <navigationController storyboardIdentifier="AdventourSummaryNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rig-9r-KxF" customClass="AdventourSummaryNavigationController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zj0-Z5-ax2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                            <textAttributes key="titleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                            <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="10"/>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="0.0"/>
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="adv-skyblue"/>
+                            <color key="shadowColor" name="adv-skyblue"/>
+                            <textAttributes key="titleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                            <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="10"/>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                <color key="textColor" name="adv-royalblue"/>
+                                <color key="textShadowColor" name="adv-white"/>
+                                <offsetWrapper key="textShadowOffset" horizontal="1" vertical="2"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="Hc4-rz-G2O"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sTu-KQ-K7I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4.615384615384615" y="30.568720379146917"/>
+        </scene>
+    </scenes>
+    <designables>
+        <designable name="l40-QB-EAw">
+            <size key="intrinsicContentSize" width="105" height="17"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="Logo_Balloon_Orig" width="1500" height="2492"/>
+        <image name="Ticket_Card" width="1920" height="1440"/>
+        <namedColor name="adv-royalblue">
+            <color red="0.11372549019607843" green="0.40000000000000002" blue="0.75294117647058822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="adv-skyblue">
+            <color red="0.72941176470588232" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="adv-white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
