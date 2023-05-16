@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1049791183650",
+    "project_id": "adventour-183a0",
+    "storage_bucket": "adventour-183a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049791183650:android:fb4065e7762c822b0ec37b",
+        "android_client_info": {
+          "package_name": "com.adventour.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049791183650-9avs6220tm8ojg4e0muufe06m12u24a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJaH9Aeir_3vHNsmH6IRP8JTYgTfFDjDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049791183650-9avs6220tm8ojg4e0muufe06m12u24a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1049791183650-qg7msd96fsvg6iqq1huovn8hgfns031c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.adventour.ios-app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

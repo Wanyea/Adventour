@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupScreen">
+
+    <ImageView
+        android:id="@+id/cloud_1_2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="-100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cloud_1" />
+
+    <ImageView
+        android:id="@+id/cloud_2_2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="-75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_cloud_2" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="50dp"
+            android:paddingTop="35dp"
+            android:paddingBottom="60dp" >
+
+            <TextView
+                android:id="@+id/signupTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Sign up"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/profPicImageButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signupTitleTextView"
+                android:src="@drawable/ic_user_icon"
+                android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/blue_main_40" />
+
+            <TextView
+                android:id="@+id/profPicSignupErrorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please choose a profile picture!"
+                android:textColor="@color/red_variant"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                android:layout_marginStart="-10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profPicImageButton"
+                android:layout_marginTop="10dp" />
+
+            <ImageView
+                android:id="@+id/profPicSignupErrorIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@id/profPicSignupErrorTextView"
+                android:layout_marginStart="5dp"
+                app:layout_constraintTop_toTopOf="@id/profPicSignupErrorTextView"
+                app:srcCompat="@drawable/ic_alert_triangle_icon"
+                app:tint="@color/red_variant" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nicknameEditText"
+                style="@style/AdventourEditTextLoginSignup"
+
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profPicSignupErrorTextView"
+                android:scrollHorizontally="true"
+
+                android:drawableLeft="@drawable/ic_user_icon_small"
+                android:hint="Nickname"
+                />
+
+            <TextView
+                android:id="@+id/nicknameSignupErrorTextView"
+                android:layout_width="269dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="-8dp"
+                android:text="Nickname must be less than 20 characters!"
+                android:textColor="@color/red_variant"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/nicknameEditText"
+                app:layout_constraintTop_toBottomOf="@+id/nicknameEditText" />
+
+            <ImageView
+                android:id="@+id/nicknameSignupErrorIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/nicknameEditText"
+                app:layout_constraintTop_toTopOf="@id/nicknameSignupErrorTextView"
+                app:srcCompat="@drawable/ic_alert_triangle_icon"
+                app:tint="@color/red_variant" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                style="@style/AdventourEditTextLoginSignup"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nicknameEditText"
+                android:scrollHorizontally="true"
+                android:drawableLeft="@drawable/ic_email_icon"
+                android:hint="Email" />
+
+            <TextView
+                android:id="@+id/emailSignupErrorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="-8dp"
+                android:text="Invalid email address!"
+                android:textColor="@color/red_variant"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/emailEditText"
+                app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+
+            <ImageView
+                android:id="@+id/emailSignupErrorIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/emailEditText"
+                app:layout_constraintTop_toTopOf="@id/emailSignupErrorTextView"
+                app:srcCompat="@drawable/ic_alert_triangle_icon"
+                app:tint="@color/red_variant" />
+
+            <TextView
+                android:id="@+id/birthdateTextView"
+                style="@style/AdventourEditTextLoginSignup"
+                android:drawableLeft="@drawable/ic_calendar_icon"
+                android:hint="Birthdate"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emailEditText" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="48dp"
+                android:background="@color/blue_main"
+                app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdateTextView" />
+
+            <TextView
+                android:id="@+id/birthdateSignupErrorTextView"
+                android:layout_width="251dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="-8dp"
+                android:text="You must be at least 13 years old to sign up!"
+                android:textColor="@color/red_variant"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/birthdateTextView"
+                app:layout_constraintTop_toBottomOf="@+id/birthdateTextView" />
+
+            <ImageView
+                android:id="@+id/birthdateSignupErrorIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/birthdateTextView"
+                app:layout_constraintTop_toTopOf="@id/birthdateSignupErrorTextView"
+                app:srcCompat="@drawable/ic_alert_triangle_icon"
+                app:tint="@color/red_variant" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                style="@style/AdventourEditTextLoginSignup"
+                android:drawableLeft="@drawable/ic_lock_icon"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdateTextView" />
+
+            <TextView
+                android:id="@+id/passwordSignupErrorTextView"
+                android:layout_width="277dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="-8dp"
+                android:text="Must have at least 8 characters, an uppercase letter, a lowercase letter, a number, and a special (!@#$&amp;*) character!"
+                android:textColor="@color/red_variant"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+            <ImageView
+                android:id="@+id/passwordSignupErrorIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/passwordEditText"
+                app:layout_constraintTop_toTopOf="@id/passwordSignupErrorTextView"
+                app:srcCompat="@drawable/ic_alert_triangle_icon"
+                app:tint="@color/red_variant" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordEditText"
+                style="@style/AdventourEditTextLoginSignup"
+                android:drawableLeft="@drawable/ic_lock_icon"
+
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:scrollHorizontally="true"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+
+            <TextView
+                android:id="@+id/confirmPasswordSignupErrorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="-8dp"
+                android:text="Passwords do not match!"
+                android:textColor="@color/red_variant"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/confirmPasswordEditText"
+                app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
+
+            <ImageView
+                android:id="@+id/confirmPasswordSignupErrorIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/confirmPasswordEditText"
+                app:layout_constraintTop_toTopOf="@id/confirmPasswordSignupErrorTextView"
+                app:srcCompat="@drawable/ic_alert_triangle_icon"
+                app:tint="@color/red_variant" />
+
+            <TextView
+                android:id="@+id/alreadyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Already have an account?"
+                android:textColor="@color/blue_main"
+                app:layout_constraintBaseline_toBaselineOf="@+id/loginTextView"
+                app:layout_constraintEnd_toStartOf="@+id/loginTextView"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/loginTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="Log in"
+                android:textColor="@color/red_main"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toEndOf="@+id/alreadyTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/signupButton"
+                style="@style/AdventourMainButton"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/blue_main"
+                android:text="SIGN UP"
+                app:layout_constraintTop_toBottomOf="@+id/loginTextView"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/privacyPolicyTOSTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:text="@string/Privacy_Policy_TOS_Signup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signupButton" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/popupProfPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/popup_rectangle"
+                    android:padding="20dp" >
+
+                    <TextView
+                        android:id="@+id/profPicTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose a profile picture!"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/cheetahImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/ic_profpic_cheetah"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/profPicTextView"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/elephantImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/ic_profpic_elephant"
+                        app:layout_constraintEnd_toStartOf="@id/ladybugImageButton"
+                        app:layout_constraintStart_toEndOf="@id/cheetahImageButton"
+                        app:layout_constraintTop_toTopOf="@id/cheetahImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/ladybugImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/ic_profpic_ladybug"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/cheetahImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/monkeyImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/ic_profpic_monkey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cheetahImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/penguinImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/ic_profpic_penguin"
+                        app:layout_constraintEnd_toStartOf="@id/foxImageButton"
+                        app:layout_constraintStart_toEndOf="@id/monkeyImageButton"
+                        app:layout_constraintTop_toTopOf="@id/monkeyImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <ImageButton
+                        android:id="@+id/foxImageButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:clickable="true"
+                        android:background="@drawable/ic_profpic_fox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/monkeyImageButton"
+                        android:foreground="@color/transparent" />
+
+                    <Button
+                        android:id="@+id/doneButton"
+                        android:layout_width="0dp"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/blue_main"
+                        android:text="Done"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="100dp"
+                        app:iconGravity="textStart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/monkeyImageButton" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

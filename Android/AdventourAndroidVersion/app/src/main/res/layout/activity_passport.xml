@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Passport">
+
+    <ImageView
+        android:id="@+id/cloud_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-130dp"
+        android:layout_marginTop="-265dp"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cloud_1" />
+
+    <ImageView
+        android:id="@+id/cloud_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="290dp"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cloud_2" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+
+        app:itemBackground="@color/navy_main"
+        app:itemIconTint="@drawable/navbar_selector"
+        app:itemTextColor="@drawable/navbar_selector"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <ScrollView
+        android:id="@+id/scrollView4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/hamburgerMenuImageButton"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/passportCardImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/passportTitleTextView"
+                app:srcCompat="@drawable/ic_passport_card" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
+                app:layout_constraintEnd_toEndOf="@id/passportCardImageView"
+                app:layout_constraintTop_toTopOf="@id/passportCardImageView"
+                app:layout_constraintBottom_toBottomOf="@id/passportCardImageView"
+                android:indeterminate="true" />
+
+            <ProgressBar
+                android:id="@+id/previousAdventoursProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previousAdventoursHeader"
+                android:layout_marginVertical="30dp"
+                android:indeterminate="true" />
+
+            <ProgressBar
+                android:id="@+id/beaconPostsProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/myLitBeaconsHeader"
+                android:layout_marginVertical="30dp"
+                android:indeterminate="true" />
+
+            <TextView
+                android:id="@+id/previousAdventoursHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Previous Adventours"
+                android:textSize="20sp"
+                android:paddingBottom="10dp"
+                android:paddingTop="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/passportCardImageView" />
+
+            <TextView
+                android:id="@+id/takeAnAdventourTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:gravity="center"
+                android:text="Take an Adventour to see them here!"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previousAdventoursHeader"
+                android:visibility="invisible"/>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/previousAdventoursScrollview"
+                app:layout_constraintHeight_max="450dp"
+                app:layout_constraintBottom_toTopOf="@id/myLitBeaconsHeader"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/previousAdventoursHeader" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/previousAdventourRV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/myLitBeaconsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="My Lit Beacons"
+                android:textSize="20sp"
+                android:paddingBottom="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previousAdventoursScrollview"
+                android:layout_marginTop="120dp" />
+
+            <TextView
+                android:id="@+id/postABeaconTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:gravity="center"
+                android:text="Post a Beacon to see them here!"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/myLitBeaconsHeader"
+                android:visibility="invisible" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/beaconPostScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_max="450dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/myLitBeaconsHeader" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/beaconPostsRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/passportTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Passport"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/passportCardImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="20dp"/>
+
+            <ImageView
+                android:id="@+id/profPicImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="30dp"
+                android:scaleType="centerCrop"
+                android:src="@color/quantum_grey"
+                app:layout_constraintBottom_toBottomOf="@id/passportCardImageView"
+                app:layout_constraintStart_toStartOf="@id/passportCardImageView"
+                app:layout_constraintTop_toTopOf="@id/passportCardImageView"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/nicknameTextView"
+                android:layout_width="160dp"
+                android:layout_height="30dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="20dp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeMinTextSize="14sp"
+                app:layout_constraintTop_toTopOf="@+id/passportCardImageView"
+                android:layout_marginTop="60dp"
+                app:layout_constraintStart_toEndOf="@+id/profPicImageView"
+                android:layout_marginStart="15dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/birthdateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/blue_main"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/cakeIconImageView"
+                android:layout_marginStart="5dp"
+                app:layout_constraintTop_toTopOf="@id/cakeIconImageView"
+                app:layout_constraintBottom_toBottomOf="@id/cakeIconImageView" />
+
+            <ImageView
+                android:id="@+id/cakeIconImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/nicknameTextView"
+                app:layout_constraintTop_toBottomOf="@+id/nicknameTextView"
+                android:layout_marginTop="5dp"
+                app:srcCompat="@drawable/ic_cake_icon"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/mantraTextView"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/nicknameTextView"
+                app:layout_constraintTop_toBottomOf="@id/cakeIconImageView"
+                android:layout_marginTop="5dp"
+                android:maxLines="4"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:contentDescription="@string/edit_account_button"
+                app:layout_constraintEnd_toEndOf="@+id/passportCardImageView"
+                app:layout_constraintTop_toTopOf="@+id/passportCardImageView"
+                app:layout_constraintVertical_bias="0.038"
+                app:srcCompat="@drawable/ic_edit_icon_blue" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/outsideView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hamburgerMenuPopup"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:paddingBottom="15dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/hamburgerMenuImageButton"
+        app:layout_constraintTop_toBottomOf="@id/hamburgerMenuImageButton">
+
+        <TextView
+            android:id="@+id/adventourTOS"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:text="Terms of Service"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/privacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:text="Privacy Policy"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/adventourTOS" />
+
+        <TextView
+            android:id="@+id/logOut"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:text="Log out"
+            android:textSize="16dp"
+            android:textColor="@color/red_variant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/privacyPolicy"  />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/hamburgerMenuImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_hamburger_menu_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/navy_main" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

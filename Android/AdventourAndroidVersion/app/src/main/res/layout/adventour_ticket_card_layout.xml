@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="262.5dp"
+    android:layout_marginBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_ticket_card">
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="171dp"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="locationName"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/descriptionEditText"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="171dp"
+            android:layout_marginTop="122dp"
+            android:fontFamily="@font/roboto"
+            android:text="description"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:maxLines="3"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:id="@+id/locationImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_border"
+            android:layout_marginTop="47dp"
+            android:layout_marginStart="32dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="124dp"
+            android:maxHeight="164dp"
+            app:srcCompat="@drawable/ic_map_scroll"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

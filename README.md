@@ -1,3 +1,12 @@
-# Adventour
+# ![Adventour](Image_Assets/Logo_Adventour_Transparent.png)
+## A simple way to have an adventure! 
 
-I should not be able to edit this file directly ;) - Eric
+**Contributions:**
+* Wanyea Barbel - Project Manager & Android Developer
+* Eric Hartwell - Full Stack Developer (Web & iOS Backend)
+* Nicholas Yardich - iOS Developer 
+* Ryan Maley - Android Developer
+* Dominique Ortega - Resident Artist & Android Developer (Frontend) 
+* Charles Moore - iOS Developer 
+
+### https://adventour.app/
