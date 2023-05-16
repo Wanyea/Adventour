@@ -22,9 +22,9 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var reportHideButton: UIBarButtonItem!
     
    
-    weak var source: UIViewController!
+    var source: UIViewController!
     var beaconInfo: [String: Any] = [:]
-    weak var user: User!
+    var user: User!
     var locations: [[String: Any]] = []
     var locationDescriptions: [String]!
     var ids: [String] = []
@@ -329,7 +329,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func saveLike() {
         print("DOC ID: ", beaconInfo["documentID"])
         let db = Firestore.firestore()
-        weak var query: Query? = db.collection("Likes")
+        var query: Query? = db.collection("Likes")
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
         query!.getDocuments { snap, error in
@@ -377,11 +377,11 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     func checkLiked() {
         
         let db = Firestore.firestore()
-        weak var query: Query? = db.collection("Likes")
+        var query: Query = db.collection("Likes")
             .whereField("uid", isEqualTo: self.user.uid)
             .whereField("beaconID", isEqualTo: beaconInfo["documentID"])
             
-        listener = query!.addSnapshotListener { snap, error in
+        self.listener = query.addSnapshotListener { snap, error in
             if snap!.isEmpty {
                 self.isLiked = false
                 self.likeButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
@@ -470,8 +470,14 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
                 handler: { _ in
                     self.endEditingBeaconPost()
                     self.saveBeaconData()
+                    self.navigationController?.isNavigationBarHidden = false
+                    self.tabBarController?.tabBar.isHidden = false
+                    self.tabBarController?.tabBar.isTranslucent = false
                     if self.source is CongratsViewController {
-                        self.switchToStart()
+                        self.performSegue(withIdentifier: "goHome", sender: self)
+                    } else if self.source is AdventourSummaryViewController {
+                        self.navigationController?.popToRootViewController(animated: true)
+                        self.performSegue(withIdentifier: "goHome", sender: self)
                     }
                     
             }))
@@ -493,21 +499,25 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             checkLiked()
             setNumLikes()
             self.reportHideButton.isEnabled = true
+            self.reportHideButton.tintColor = UIColor(named: "adv-red")
             
             
         } else if self.source is ProfileViewController {
             checkLiked()
-            //setNumLikes()
+            setNumLikes()
             self.reportHideButton.isEnabled = false
+            self.reportHideButton.tintColor = UIColor(named: "adv-skyblue")
             
         } else if self.source is AdventourSummaryViewController {
             self.likeButton.isHidden = true
             self.numLikes.isHidden = true
             self.reportHideButton.isEnabled = false
+            self.reportHideButton.tintColor = UIColor(named: "adv-skyblue")
         } else {
             self.likeButton.isEnabled = false
             self.numLikes.isHidden = true
             self.reportHideButton.isEnabled = false
+            self.reportHideButton.tintColor = UIColor(named: "adv-skyblue")
         }
     }
     
@@ -615,7 +625,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func createLikesCounter(ref: DocumentReference, numShards: Int) {
         ref.setData(["numLikeShards": numShards], merge: true){ (err) in
-            for i in 0...numShards {
+            for i in 0...numShards-1 {
                 ref.collection("likeShards").document(String(i)).setData(["likes": 0])
             }
         }
@@ -672,7 +682,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getAlertTitle() -> String {
-        if self.source is CongratsViewController {
+        if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
             return "Post Beacon"
         } else {
             return "Save Beacon"
@@ -680,7 +690,7 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getAlertMessage() -> String {
-        if self.source is CongratsViewController {
+        if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
             return "Are you sure you are ready to post your Beacon?"
         } else {
             return "Are you sure you are ready to save your Beacon?"
@@ -776,10 +786,10 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
             if let isPrivate = beaconInfo["isPrivate"] as? Bool {
                 self.privateSwitch.isOn = isPrivate
             }
-            loadUserData()
+            loadUserData(uid: beaconInfo["uid"] as! String)
             // TODO: Load likes
         } else if self.source is CongratsViewController || self.source is AdventourSummaryViewController {
-            loadUserData()
+            loadUserData(uid: self.user.uid)
             beaconInfo["dateCreated"] = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/YYYY"
@@ -789,9 +799,9 @@ class BeaconPostViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func loadUserData() {
+    func loadUserData(uid: String) {
         let db = Firestore.firestore()
-        db.collection("Adventourists").document(self.user.uid).getDocument { document, error in
+        db.collection("Adventourists").document(uid).getDocument { document, error in
             if let document = document, document.exists {
                 if let data = document.data() {
                     if let nickname = data["nickname"] as? String {

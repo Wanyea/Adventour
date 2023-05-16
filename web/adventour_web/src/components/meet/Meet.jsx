@@ -7,6 +7,7 @@ import WanyeaPhoto from '../../../../../image_assets/pfp/wanyea.jpg'
 import PatrickPhoto from '../../../../../image_assets/pfp/ryan.jpg'
 import EricPhoto from '../../../../../image_assets/pfp/eric.jpg'
 import DomPhoto from '../../../../../image_assets/pfp/dom.jpg'
+import CharleyPhoto from '../../../../../image_assets/pfp/charley.jpg'
 // import CharleyPhoto from ''
 import { smallScreen } from '../../Constants'
 
@@ -58,7 +59,7 @@ export default function Meet(props) {
           <p>{Charley}</p>
         </div>
         <div className="col center">
-          <img src={WanyeaPhoto} className='photo' />
+          <img src={CharleyPhoto} className='photo' />
         </div>
       </div>
       

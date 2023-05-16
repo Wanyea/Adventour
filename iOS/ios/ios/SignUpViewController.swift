@@ -74,6 +74,7 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
     var birthdayFlag: Bool!
     var birthdateString: String!
     
+    var listener: AuthStateDidChangeListenerHandle!
     
     var user: User!
     
@@ -190,17 +191,24 @@ class SignUpViewController: UIViewController, ModalViewControllerDelegate{
         Auth.auth().createUser(withEmail: signupData["email"] as! String, password: passwordFirebase) { result, error in
             if error != nil {
                 print("Error creating user: " + error.debugDescription)
-                self.errorMessage.text = error?.localizedDescription
+                self.errorMessage.text = "Unable to create an account. Please check that everything is filled out properly and try again."
+                self.errorMessage.isHidden = false
             } else {
+                self.errorMessage.isHidden = true
                 // Add as Adventourist in Firestore if successful
-                Auth.auth().addStateDidChangeListener { auth, user in
+                self.listener = Auth.auth().addStateDidChangeListener { auth, user in
                     if let user = user {
                         let db = Firestore.firestore()
                         
                         db.collection("Adventourists")
                             .document(user.uid)
                             .setData(signupData) { err in
-                                self.switchToTabController()
+                                if let err = err {
+                                    Auth.auth().removeStateDidChangeListener(self.listener)
+                                } else {
+                                    self.switchToTabController()
+                                    Auth.auth().removeStateDidChangeListener(self.listener)
+                                }
                             }
                         
                     } else {

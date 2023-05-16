@@ -108,6 +108,33 @@ const Terms = (props) => {
                 is your own. We are not obligated to take down content any user decides to upload to the Application 
                 unless it breaks our Terms. We are not liable for any harm your Content may cause.
               </li>
+          </ol>
+        <li>Reporting</li>
+          <ol className="inner" type='i'>
+              <li>
+                A report function is available on the iOS platform. 
+                If you find any Beacons that violate these terms, 
+                please report the Beacon via the report button and 
+                a member of our moderation team will take appropriate action.
+              </li>
+          </ol>
+      </ol>
+    <li>Suspension</li>
+      <ol className="inner" type='a'>
+        <li>
+          Any user found breaking these Terms will be suspended immediately. If you believe your account has been 
+          wrongfully terminated, contact us immediately.
+        </li>
+      </ol>
+    <li>Contact us</li>
+      <ol className="inner" type='a'>
+        <li>
+          If you find any user to break these Terms of Service, or if you find any discrepancies with the 
+          Adventour team and our enforcement of these Terms, contact us at dominiqueortega@knights.ucf.edu.
+        </li>
+      </ol>
+  </ol>
+</div>
             </ol>
           <li>Content accuracy</li>
             <ol className="inner" type='i'>
